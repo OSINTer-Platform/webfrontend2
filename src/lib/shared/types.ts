@@ -13,3 +13,15 @@ export interface ArticleBase {
 	read_times: number;
 	id: string
 }
+
+export interface Article extends ArticleBase {
+	author: string;
+	formatted_content: string;
+	content: string;
+	summary: string;
+
+	ml: {
+		similar: Array<string>;
+		cluster: number
+	}
+}
