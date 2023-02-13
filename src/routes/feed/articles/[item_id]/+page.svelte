@@ -1,9 +1,8 @@
 <script lang="ts">
-  import type { PageData } from './$types';
+	import type { PageData } from './$types';
+	import List from "$com/article-list/main.svelte"
 
-  export let data: PageData;
+	export let data: PageData;
 </script>
 
-{#each data.articles as article}
-	<h1 class="text-3xl font-bold underline">{article.title}</h1>
-{/each}
+<List articles={data.articles}/>
