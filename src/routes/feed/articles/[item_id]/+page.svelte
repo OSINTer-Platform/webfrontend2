@@ -5,5 +5,5 @@
 </script>
 
 {#each data.articles as article}
-	<h1>{article.title}</h1>
+	<h1 class="text-3xl font-bold underline">{article.title}</h1>
 {/each}
