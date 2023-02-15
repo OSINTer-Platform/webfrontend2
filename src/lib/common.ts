@@ -1,7 +1,7 @@
 import { config } from '$shared/config';
 import { loggedIn } from '$shared/state';
 
-type Resp = { content: any; ok: boolean; status: number }
+type Resp = { content: any; ok: boolean; status: number };
 
 export async function queryProtected(
     queryURL: string,
