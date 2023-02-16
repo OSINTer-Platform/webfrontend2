@@ -1,61 +1,20 @@
 <script lang="ts">
     import Fa from 'svelte-fa/src/fa.svelte';
-    import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
     import {
-        faHome,
-        faBullhorn,
-        faRss,
-        faDiagramProject,
         faBars,
         faCaretDown,
-        faNewspaper,
     } from '@fortawesome/free-solid-svg-icons/index';
     import {
         faGitlab,
         faGithub,
     } from '@fortawesome/free-brands-svg-icons/index';
 
+    import type { NavItem } from '$shared/nav';
+    import { navItems } from '$shared/nav';
+
     import LogoFull from '$assets/LogoFull.svelte';
     import { AppBar } from '@skeletonlabs/skeleton';
     import { menu } from '@skeletonlabs/skeleton';
-
-    type NavItem = {
-        text: string;
-        route: string;
-        icon: IconDefinition;
-    };
-
-    const navItems: { [key in 'external' | 'internal']: Array<NavItem> } = {
-        external: [
-            {
-                text: 'Homepage',
-                route: '/',
-                icon: faHome,
-            },
-            {
-                text: 'Blog',
-                route: '/blog/',
-                icon: faBullhorn,
-            },
-        ],
-        internal: [
-            {
-                text: 'Feed',
-                route: '/feed/articles',
-                icon: faRss,
-            },
-            {
-                text: 'Article',
-                route: '/article',
-                icon: faNewspaper,
-            },
-            {
-                text: 'Overview',
-                route: '/ml',
-                icon: faDiagramProject,
-            },
-        ],
-    };
 
     const socials: Array<NavItem> = [
         {
