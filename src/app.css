@@ -2,3 +2,8 @@
     --theme-rounded-base: 8px;
     --theme-rounded-container: 4px;
 }
+
+html,
+body {
+    @apply h-full overflow-hidden;
+}

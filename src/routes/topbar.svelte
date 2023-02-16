@@ -1,0 +1,137 @@
+<script lang="ts">
+    import Fa from 'svelte-fa/src/fa.svelte';
+    import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
+    import {
+        faHome,
+        faBullhorn,
+        faRss,
+        faDiagramProject,
+        faBars,
+        faCaretDown,
+        faNewspaper,
+    } from '@fortawesome/free-solid-svg-icons/index';
+    import {
+        faGitlab,
+        faGithub,
+    } from '@fortawesome/free-brands-svg-icons/index';
+
+    import LogoFull from '$assets/LogoFull.svelte';
+    import { AppBar } from '@skeletonlabs/skeleton';
+    import { menu } from '@skeletonlabs/skeleton';
+
+    type NavItem = {
+        text: string;
+        route: string;
+        icon: IconDefinition;
+    };
+
+    const navItems: { [key in 'external' | 'internal']: Array<NavItem> } = {
+        external: [
+            {
+                text: 'Homepage',
+                route: '/',
+                icon: faHome,
+            },
+            {
+                text: 'Blog',
+                route: '/blog/',
+                icon: faBullhorn,
+            },
+        ],
+        internal: [
+            {
+                text: 'Feed',
+                route: '/feed/articles',
+                icon: faRss,
+            },
+            {
+                text: 'Article',
+                route: '/article',
+                icon: faNewspaper,
+            },
+            {
+                text: 'Overview',
+                route: '/ml',
+                icon: faDiagramProject,
+            },
+        ],
+    };
+
+    const socials: Array<NavItem> = [
+        {
+            text: 'Gitlab',
+            route: 'https://gitlab.com/OSINTer',
+            icon: faGitlab,
+        },
+        {
+            text: 'Github',
+            route: 'https://github.com/bertmad3400/OSINTer',
+            icon: faGithub,
+        },
+    ];
+</script>
+
+<AppBar shadow="shadow-lg">
+    <svelte:fragment slot="lead">
+        <div class="flex items-center space-x-4">
+            <!-- Hamburger Menu -->
+            <button on:click={() => {}} class="btn-icon btn-icon-sm lg:!hidden">
+                <Fa icon={faBars} class="text-xl" />
+            </button>
+
+            <!-- Logo -->
+            <a
+                class="lg:!ml-0 w-[38px] lg:w-auto overflow-hidden"
+                href="/"
+                title="Go to Homepage"
+            >
+                <LogoFull />
+            </a>
+        </div>
+    </svelte:fragment>
+    <svelte:fragment slot="trail">
+        <!-- Navigate -->
+        <div class="relative hidden lg:block">
+            <button
+                class="btn hover:variant-soft-primary"
+                use:menu={{ menu: 'features' }}
+            >
+                <span>Navigate</span>
+                <Fa icon={faCaretDown} />
+            </button>
+            <div class="card w-60 py-1 shadow-xl" data-menu="features">
+                <nav class="list-nav divide-y divide-tertiary-500">
+                    {#each Object.values(navItems) as items}
+                        <ul class="p-2">
+                            {#each items as item}
+                                <li>
+                                    <a href={item.route}>
+                                        <span class="w-6 text-center"
+                                            ><Fa icon={item.icon} /></span
+                                        >
+                                        <span>{item.text}</span>
+                                    </a>
+                                </li>
+                            {/each}
+                        </ul>
+                    {/each}
+                </nav>
+            </div>
+        </div>
+
+        <!-- Social -->
+        <section class="flex space-x-2">
+            {#each socials as social}
+                <a
+                    class="btn-icon hover:variant-soft-primary"
+                    title={social.text}
+                    href={social.route}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                >
+                    <Fa icon={social.icon} class="text-2xl" />
+                </a>
+            {/each}
+        </section>
+    </svelte:fragment>
+</AppBar>

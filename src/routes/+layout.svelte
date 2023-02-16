@@ -2,6 +2,12 @@
     import '@skeletonlabs/skeleton/themes/theme-crimson.css';
     import '@skeletonlabs/skeleton/styles/all.css';
     import '../app.css';
+
+    import { AppShell } from '@skeletonlabs/skeleton';
+    import TopBar from './topbar.svelte';
 </script>
 
-<slot />
+<AppShell>
+    <svelte:fragment slot="header"><TopBar /></svelte:fragment>
+    <slot />
+</AppShell>
