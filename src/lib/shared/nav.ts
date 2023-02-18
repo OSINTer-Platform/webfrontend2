@@ -30,7 +30,7 @@ export const navItems: { [key in 'external' | 'internal']: Array<NavItem> } = {
     internal: [
         {
             text: 'Feed',
-            route: '/feed/articles',
+            route: '/feed',
             icon: faRss,
         },
         {
