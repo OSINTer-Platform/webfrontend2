@@ -1,19 +1,19 @@
 <script lang="ts">
     import type { LayoutData } from './$types';
-
-    export let data: LayoutData;
+    import type { Collection, Feed } from '$shared/types';
 
     import Sidebar from '$com/sidebar/feed.svelte';
 
-    const feeds = [
-        {
-            id: 'tesdfdsf',
-            name: 'hest',
-        },
-    ];
+    export let data: LayoutData;
+
+    let feeds: Array<Feed>;
+    $: feeds = data.feeds ? Object.values(data.feeds) : [];
+
+    let collections: Array<Collection>;
+    $: collections = data.collections ? Object.values(data.collections) : [];
 </script>
 
 <div class="flex flex-row min-h-0">
-    <Sidebar {feeds} />
+    <Sidebar {feeds} {collections} />
     <slot />
 </div>
