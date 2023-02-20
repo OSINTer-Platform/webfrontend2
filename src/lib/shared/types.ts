@@ -29,7 +29,7 @@ export interface Article extends ArticleBase {
 export interface ItemBase {
     id: string;
     name: string;
-    owner: string;
+    owner?: string;
 }
 
 export interface Collection extends ItemBase {
@@ -62,4 +62,10 @@ export interface Feed extends ItemBase {
     last_date: string;
 
     source_category: string[];
+}
+
+export interface UserItems {
+    feeds?: ItemBase;
+    collections?: ItemBase;
+    clusters?: ItemBase;
 }

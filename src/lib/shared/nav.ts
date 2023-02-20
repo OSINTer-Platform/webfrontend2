@@ -8,6 +8,16 @@ import {
     faNewspaper,
 } from '@fortawesome/free-solid-svg-icons/index';
 
+export type SidebarOption = {
+    id: string;
+    title: string;
+    list: Array<{
+        href: string;
+        label: string;
+        badge?: string;
+    }>;
+};
+
 export type NavItem = {
     text: string;
     route: string;
