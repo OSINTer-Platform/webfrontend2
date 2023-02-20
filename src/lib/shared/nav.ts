@@ -17,7 +17,7 @@ export type NavItem = {
 export const navItems: { [key in 'external' | 'internal']: Array<NavItem> } = {
     external: [
         {
-            text: 'Homepage',
+            text: 'Home',
             route: '/',
             icon: faHome,
         },
