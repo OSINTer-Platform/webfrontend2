@@ -4,8 +4,7 @@
     import TopBar from './topbar.svelte';
 </script>
 
-
 <div class="z-50 relative">
-	<TopBar />
+    <TopBar />
 </div>
 <slot />

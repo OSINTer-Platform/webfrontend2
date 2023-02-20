@@ -28,7 +28,8 @@
     ];
 </script>
 
-<header class="
+<header
+    class="
 	w-full
 
 	flex
@@ -41,50 +42,58 @@
 	shadow-lg
 
 	p-6
-">
-	<div class="flex items-center gap-8">
-		<!-- Hamburger Menu -->
-		<button on:click={() => {}} class="btn lg:!hidden p-2 rounded-xl">
-			<Fa icon={faBars} class="text-xl" />
-		</button>
+"
+>
+    <div class="flex items-center gap-8">
+        <!-- Hamburger Menu -->
+        <button on:click={() => {}} class="btn lg:!hidden p-2 rounded-xl">
+            <Fa icon={faBars} class="text-xl" />
+        </button>
 
-		<!-- Logo -->
-		<a
-			class="lg:!ml-0 w-[38px] lg:w-auto overflow-hidden"
-			href="/"
-			title="Go to Homepage"
-		>
-			<LogoFull />
-		</a>
-	</div>
+        <!-- Logo -->
+        <a
+            class="lg:!ml-0 w-[38px] lg:w-auto overflow-hidden"
+            href="/"
+            title="Go to Homepage"
+        >
+            <LogoFull />
+        </a>
+    </div>
 
-	<section class="
+    <section
+        class="
 		flex
 		flex-row
 
 		gap-10
-	">
-		<!-- Navigate -->
-		<div class="
+	"
+    >
+        <!-- Navigate -->
+        <div
+            class="
 			relative
 
 			hidden
 			lg:block
 
 			[&:focus-within>div]:block
-		">
-			<button class="
+		"
+        >
+            <button
+                class="
 				btn
 
 				py-2
 				px-6
 
 				rounded-xl
-			">
-				Navigate
-				<Fa icon={faCaretDown} />
-			</button>
-			<div class="
+			"
+            >
+                Navigate
+                <Fa icon={faCaretDown} />
+            </button>
+            <div
+                class="
 				hidden
 				absolute
 
@@ -100,13 +109,16 @@
 				w-64
 
 				shadow-xl
-			">
-				<nav class="divide-y divide-tertiary-500 py-2 px-4">
-					{#each Object.values(navItems) as items}
-						<ul class="py-3">
-							{#each items as item}
-								<li class="w-full text-left">
-									<a href={item.route} class="
+			"
+            >
+                <nav class="divide-y divide-tertiary-500 py-2 px-4">
+                    {#each Object.values(navItems) as items}
+                        <ul class="py-3">
+                            {#each items as item}
+                                <li class="w-full text-left">
+                                    <a
+                                        href={item.route}
+                                        class="
 										flex
 										flex-row
 										gap-6
@@ -121,32 +133,32 @@
 										w-full
 										p-3
 										pl-5
-									">
-										<Fa icon={item.icon} />
-										{item.text}
-									</a>
-								</li>
-							{/each}
-						</ul>
-					{/each}
-				</nav>
-			</div>
-		</div>
+									"
+                                    >
+                                        <Fa icon={item.icon} />
+                                        {item.text}
+                                    </a>
+                                </li>
+                            {/each}
+                        </ul>
+                    {/each}
+                </nav>
+            </div>
+        </div>
 
-		<!-- Social -->
-		<section class="flex items-center gap-2">
-			{#each socials as social}
-				<a
-					class="btn p-2 rounded-full"
-					title={social.text}
-					href={social.route}
-					target="_blank"
-					rel="noreferrer noopener"
-				>
-					<Fa icon={social.icon} class="text-2xl" />
-				</a>
-			{/each}
-		</section>
-	</section>
-
+        <!-- Social -->
+        <section class="flex items-center gap-2">
+            {#each socials as social}
+                <a
+                    class="btn p-2 rounded-full"
+                    title={social.text}
+                    href={social.route}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                >
+                    <Fa icon={social.icon} class="text-2xl" />
+                </a>
+            {/each}
+        </section>
+    </section>
 </header>
