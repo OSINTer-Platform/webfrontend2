@@ -1,5 +1,4 @@
 import { config } from '$shared/config';
-import { loggedIn } from '$shared/state';
 
 type Resp = { content: any; ok: boolean; status: number };
 
@@ -28,11 +27,8 @@ export async function queryProtected(
     };
 
     if (queryResult.status == 401) {
-        loggedIn.set(false);
         response.content = 'User needs to be logged in to access this feature';
     } else {
-        loggedIn.set(true);
-
         try {
             if (queryResult.ok) {
                 response.content = await queryResult.json();
