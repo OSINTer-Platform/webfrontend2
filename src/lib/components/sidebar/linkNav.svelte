@@ -40,7 +40,6 @@
 <section
     class="
 	p-4
-	pb-20
 
 	space-y-2
 
@@ -48,6 +47,8 @@
 
 	border-r
 	border-tertiary-600
+
+	overflow-auto
 "
 >
     {#each navItems as { id, title, list }, i}

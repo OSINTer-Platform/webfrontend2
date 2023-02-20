@@ -18,6 +18,8 @@
 
 	border-r
 	border-tertiary-600
+
+	overflow-auto
 "
 >
     {#each Object.values(navItems) as items}
