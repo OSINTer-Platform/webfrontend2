@@ -13,6 +13,7 @@
     import { navItems } from '$shared/nav';
 
     import LogoFull from '$assets/LogoFull.svelte';
+    import ListMenu from '$com/listMenu.svelte';
 
     const socials: Array<NavItem> = [
         {
@@ -69,16 +70,7 @@
 	"
     >
         <!-- Navigate -->
-        <div
-            class="
-			relative
-
-			hidden
-			lg:block
-
-			[&:focus-within>div]:block
-		"
-        >
+        <ListMenu listOptions={Object.values(navItems)}>
             <button
                 class="
 				btn
@@ -92,59 +84,7 @@
                 Navigate
                 <Fa icon={faCaretDown} />
             </button>
-            <div
-                class="
-				hidden
-				absolute
-
-				top-12
-				right-0
-
-				bg-surface-100
-				rounded-xl
-
-				border-tertiary-500
-				border
-
-				w-64
-
-				shadow-xl
-			"
-            >
-                <nav class="divide-y divide-tertiary-500 py-2 px-4">
-                    {#each Object.values(navItems) as items}
-                        <ul class="py-3">
-                            {#each items as item}
-                                <li class="w-full text-left">
-                                    <a
-                                        href={item.route}
-                                        class="
-										flex
-										flex-row
-										gap-6
-
-										hover:bg-primary-300/25
-
-										items-center
-										justify-start
-
-										rounded-xl
-
-										w-full
-										p-3
-										pl-5
-									"
-                                    >
-                                        <Fa icon={item.icon} />
-                                        {item.text}
-                                    </a>
-                                </li>
-                            {/each}
-                        </ul>
-                    {/each}
-                </nav>
-            </div>
-        </div>
+        </ListMenu>
 
         <!-- Social -->
         <section class="flex items-center gap-2">
