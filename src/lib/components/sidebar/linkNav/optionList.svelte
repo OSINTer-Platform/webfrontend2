@@ -40,13 +40,12 @@
 </div>
 <!-- Navigation List -->
 <nav class="list-nav">
-    <ul>
+    <ul class="space-y-1">
         {#each options.list as { href, label, badge }}
-            {@const selected = $page.url.pathname.endsWith(href)}
+            {@const selected = $page.url.pathname == href}
             <li class="px-2">
                 <a
                     {href}
-                    class:bg-primary-active-token={selected}
                     class="
 					py-2
 					px-4
@@ -56,7 +55,7 @@
 
 					rounded-xl
 
-					hover:bg-primary-500/10
+					{selected ? 'bg-primary-500/25' : 'hover:bg-primary-500/5'}
 				"
                 >
                     {label}
