@@ -4,41 +4,38 @@ import type { Collection, Feed } from '$shared/types';
 import { queryProtected } from '$lib/common';
 import { config } from '$shared/config';
 
-export const load = (async ({ parent }) => {
+export const load = (async ({ parent, fetch }) => {
     const parentData = await parent();
     const user = parentData.user;
 
-    const getFeeds = async (): Promise<{ [key: string]: Feed }> => {
-        const r = await queryProtected('/my/feeds/list');
-        if (r.ok) {
-            return r.content;
-        }
+	const getProtectedData = async (url: string) => {
+		const r = await queryProtected(url)
 
-        return {};
-    };
+		if (r.ok) {
+			return r.content
+		}
 
-    const getCollections = async (): Promise<{ [key: string]: Collection }> => {
-        const r = await queryProtected('/my/collections/list');
-        if (r.ok) {
-            return r.content;
-        }
-
-        return {};
-    };
+		return {};
+	}
 
     if (user) {
-        return {
-            feeds: getFeeds(),
-            collections: getCollections(),
+		const data: {
+			feeds: Promise<{ [key: string]: Feed }>;
+			collections: Promise<{ [key: string]: Collection }>;
+		} = {
+            feeds: getProtectedData('/my/feeds/list'),
+            collections: getProtectedData('/my/collections/list'),
         };
+
+		return data
+
     } else {
-        const r = await fetch(`${config.apiRoot}/user-items/standard`);
+        const r = await fetch(`${config.apiRoot}/user-items/standard/feeds`);
 
         if (r.ok) {
             const content: {
                 feeds: { [key: string]: Feed };
-                collections: { [key: string]: Collection };
-            } = await r.json();
+            } = { feeds : await r.json() } ;
 
             return content;
         }
