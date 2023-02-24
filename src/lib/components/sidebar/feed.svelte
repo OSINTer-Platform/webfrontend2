@@ -19,7 +19,7 @@
         items: Array<ItemBase>
     ): Array<{ href: string; label: string }> {
         return items.map((item) => ({
-            href: `/feed/${item.id}`,
+            href: `/feed/${item._id}`,
             label: item.name,
         }));
     }

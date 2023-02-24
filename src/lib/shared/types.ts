@@ -27,7 +27,7 @@ export interface Article extends ArticleBase {
 }
 
 export interface ItemBase {
-    id: string;
+    _id: string;
     name: string;
     type: string;
     owner?: string;
