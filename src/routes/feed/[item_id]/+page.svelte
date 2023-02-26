@@ -12,6 +12,7 @@
 
     import { config } from '$shared/config';
     import ListMenu from '$com/listMenu.svelte';
+    import ItemDescriptor from './itemDescriptor/main.svelte';
 
     export let data: PageData;
 
@@ -43,15 +44,18 @@
 	flex
 	flex-col
 	items-stretch
+	overflow-auto
+
 "
 >
     <aside
         class="
 		bg-surface-500/30
 		p-12
+		pb-0
 	"
     >
-        <header class="flex justify-between">
+        <header class="flex justify-between mb-10">
             <section class="flex items-end gap-6">
                 <h1 class="text-5xl">{data.currentItem.name}</h1>
                 <span
@@ -95,11 +99,17 @@
                 </div>
             </section>
         </header>
+
+        <ItemDescriptor
+            currentItem={data.currentItem}
+            categories={data.sourceCategories}
+        />
+
+        <Search bind:articleSearch />
     </aside>
 
     <div
         class="
-		overflow-auto
 		bg-surface-100
 	"
     >

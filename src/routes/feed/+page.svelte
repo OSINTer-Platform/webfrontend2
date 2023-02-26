@@ -1,4 +1,4 @@
-<p>
+<p class="overflow-auto">
     sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf
     sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf
     sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf sdfsdf

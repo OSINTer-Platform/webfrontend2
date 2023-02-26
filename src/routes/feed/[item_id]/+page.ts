@@ -1,7 +1,7 @@
 import type { PageLoad } from './$types';
 
 import { config } from '$shared/config';
-import type { ArticleBase, ItemBase } from '$shared/types';
+import type { ArticleBase, ArticleCategories, ItemBase } from '$shared/types';
 import { error } from '@sveltejs/kit';
 
 export const load = (({ params, fetch }) => {
@@ -26,8 +26,14 @@ export const load = (({ params, fetch }) => {
         return handleResponse(r);
     };
 
+    const fetchCategories = async (): Promise<ArticleCategories> => {
+        const r = await fetch(`${config.apiRoot}/articles/categories`);
+        return handleResponse(r);
+    };
+
     return {
         articles: fetchArticles(),
         currentItem: fetchItem(),
+        sourceCategories: fetchCategories(),
     };
 }) satisfies PageLoad;

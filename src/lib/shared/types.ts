@@ -70,3 +70,11 @@ export interface UserItems {
     collections?: ItemBase;
     clusters?: ItemBase;
 }
+
+export interface ArticleCategories {
+    [key: string]: {
+        name: string;
+        image: string;
+        url: string;
+    };
+}
