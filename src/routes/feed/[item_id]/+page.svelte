@@ -7,12 +7,14 @@
         faBars,
         faDownload,
         faPenToSquare,
+        faMagnifyingGlass,
         type IconDefinition,
     } from '@fortawesome/free-solid-svg-icons/index';
 
     import { config } from '$shared/config';
     import ListMenu from '$com/listMenu.svelte';
     import ItemDescriptor from './itemDescriptor/main.svelte';
+    import Search from './search.svelte';
 
     export let data: PageData;
 
@@ -37,6 +39,17 @@
     ];
 
     const btnClass = 'btn p-2 text-lg';
+
+    let articleSearch: string = '';
+
+    $: visibleArticles =
+        articleSearch.length > 0
+            ? data.articles.filter((article) =>
+                  Object.values(article).some((field) =>
+                      field.toLowerCase().includes(articleSearch)
+                  )
+              )
+            : data.articles;
 </script>
 
 <main
@@ -113,6 +126,6 @@
 		bg-surface-100
 	"
     >
-        <List articles={data.articles} />
+        <List articles={visibleArticles} />
     </div>
 </main>
