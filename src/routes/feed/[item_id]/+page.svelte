@@ -60,20 +60,24 @@
 	flex
 	flex-col
 	items-stretch
-	overflow-auto
+	overflow-y-auto
+	overflow-x-hidden
 
 "
 >
     <aside
         class="
 		bg-surface-500/30
-		p-12
-		pb-0
+
+		p-6
+		sm:p-12
+
+		!pb-0
 	"
     >
-        <header class="flex justify-between mb-10">
+        <header class="flex justify-between sm:mb-10 mb-4">
             <section class="flex items-end gap-6">
-                <h1 class="text-5xl">{data.currentItem.name}</h1>
+                <h1 class="sm:text-5xl text-3xl">{data.currentItem.name}</h1>
                 <span
                     class="
 					p-2
@@ -132,6 +136,9 @@
     <div
         class="
 		bg-surface-100
+
+		p-6
+		sm:p-12
 	"
     >
         <List articles={visibleArticles} layout={articleRendering} />
