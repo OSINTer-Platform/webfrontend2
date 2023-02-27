@@ -1,60 +1,122 @@
 <script lang="ts">
+    import SvelteMarkdown from 'svelte-markdown';
+    import { getTimespan } from '$lib/common';
     import type { ArticleBase } from '$shared/types';
 
-    export let article: ArticleBase;
+    export let articles: Array<ArticleBase>;
 </script>
 
-<a
-    href={`/feed/article/${article.id}`}
+<div
     class="
-	grid
-	grid-cols-[10rem_1fr]
+	flex
+	flex-col
+
+	space-y-4
+
+	overflow-auto
 "
 >
-    <img
-        class="
-		object-cover
-		rounded-md
+    {#each articles as article}
+        <hr class="text-tertiary-500" />
 
-		w-32
-		h-32
-		drop-shadow-md
+        <a
+            href={`/feed/article/${article.id}`}
+            class="
+		grid
+		xl:grid-cols-[auto_1fr]
+		md:grid-cols-[auto_1fr]
+
+		grid-cols-1
+		lg:grid-cols-1
+
+		gap-8
+
+		items-center
+
+		p-6
+
+		hover:bg-surface-50
 	"
-        loading="lazy"
-        alt="Article Overview"
-        src={article.image_url}
-    />
+        >
+            <img
+                class="
+			object-cover
+			rounded-md
 
-    <div>
-        <div
-            class="
+			xl:w-32
+			md:w-32
+
+			lg:w-full
+			w-full
+
+			lg:max-h-80
+			max-h-80
+
+			xl:aspect-square
+			md:aspect-square
+
+			aspect-video
+
+
+			drop-shadow-lg
+		"
+                loading="lazy"
+                alt="Article Overview"
+                src={article.image_url}
+            />
+
+            <div
+                class="
 			flex
-			flex-row
-			justify-between
+			flex-col
 
-			font-light
-			text-sm
+			justify-center
 		"
-        >
-            <p>{article.source}</p>
-            <time title={article.publish_date}>{article.publish_date}</time>
-        </div>
+            >
+                <div
+                    class="
+				flex
+				flex-row
+				justify-between
 
-        <h2
-            class="
-			text-2xl
-			font-semibold
-		"
-        >
-            {article.title}
-        </h2>
+				font-light
+				text-xs
 
-        <p
-            class="
-			text-gray-600
-		"
-        >
-            {article.description}
-        </p>
-    </div>
-</a>
+				mb-1
+			"
+                >
+                    <p>{article.source}</p>
+                    <time title={article.publish_date}
+                        >{getTimespan(article.publish_date)}</time
+                    >
+                </div>
+
+                <div>
+                    <h2
+                        class="
+					sm:text-2xl
+					text-xl
+
+					font-semibold
+					[&>strong]:font-semibold
+					[&>strong]:text-primary-600
+				"
+                    >
+                        <SvelteMarkdown source={article.title} isInline />
+                    </h2>
+
+                    <p
+                        class="
+					font-normal
+					text-tertiary-900
+					[&>strong]:font-semibold
+					[&>strong]:text-primary-600
+				"
+                    >
+                        <SvelteMarkdown source={article.description} isInline />
+                    </p>
+                </div>
+            </div>
+        </a>
+    {/each}
+</div>
