@@ -15,6 +15,7 @@
     import ListMenu from '$com/listMenu.svelte';
     import ItemDescriptor from './itemDescriptor/main.svelte';
     import Search from './search.svelte';
+    import Tabs from '$com/tabs.svelte';
 
     export let data: PageData;
 
@@ -39,6 +40,8 @@
     ];
 
     const btnClass = 'btn p-2 text-lg';
+
+    let articleRendering: string = 'large';
 
     let articleSearch: string = '';
 
@@ -119,6 +122,11 @@
         />
 
         <Search bind:articleSearch />
+
+        <Tabs
+            bind:selected={articleRendering}
+            options={{ Large: 'large', 'Title-View': 'title' }}
+        />
     </aside>
 
     <div
@@ -126,6 +134,6 @@
 		bg-surface-100
 	"
     >
-        <List articles={visibleArticles} />
+        <List articles={visibleArticles} layout={articleRendering} />
     </div>
 </main>
