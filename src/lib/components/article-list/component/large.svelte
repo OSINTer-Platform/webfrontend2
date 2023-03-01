@@ -20,7 +20,8 @@
         <hr class="text-tertiary-500" />
 
         <a
-            href={`/feed/article/${article.id}`}
+            data-sveltekit-preload-data="tap"
+            href={`/article/${article.id}`}
             class="
 		grid
 		xl:grid-cols-[auto_1fr]

@@ -16,7 +16,8 @@
 >
     {#each articles as article}
         <a
-            href={`/feed/article/${article.id}`}
+            data-sveltekit-preload-data="tap"
+            href={`/article/${article.id}`}
             class="
 			flex
 			items-center
