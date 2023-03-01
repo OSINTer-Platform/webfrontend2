@@ -8,7 +8,7 @@ export const load = (({ params, fetch }) => {
 
     const fetchArticles = async (): Promise<ArticleBase[]> => {
         const r = await fetch(`${config.apiRoot}/user-items/${params.item_id}/articles`);
-        return handleResponse(r);
+        return (await handleResponse(r));
     };
 
     return {
