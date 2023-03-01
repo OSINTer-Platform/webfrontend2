@@ -7,4 +7,6 @@
 <div class="z-50 relative">
     <TopBar />
 </div>
-<slot />
+<div class="flex flex-row flex-grow items-stretch min-h-0">
+	<slot />
+</div>

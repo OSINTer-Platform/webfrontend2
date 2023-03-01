@@ -13,7 +13,5 @@
     $: collections = data.collections ? Object.values(data.collections) : [];
 </script>
 
-<div class="flex flex-row flex-grow items-stretch min-h-0">
-    <Sidebar {feeds} {collections} />
-    <slot />
-</div>
+<Sidebar {feeds} {collections} />
+<slot />
