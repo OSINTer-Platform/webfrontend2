@@ -38,14 +38,14 @@
             icon: faPenToSquare,
             action: () => {},
         },
-	];
+    ];
 
     const btnClass = 'btn p-2 text-lg';
 </script>
 
 <aside
-	class="
-	bg-surface-500/30
+    class="
+	bg-surface-400/30
 
 	p-6
 	sm:p-12
