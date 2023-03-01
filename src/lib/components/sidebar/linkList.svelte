@@ -8,7 +8,7 @@
 
     import SidebarShell from './shell.svelte';
 
-	export let options: Array<SidebarOption> = []
+    export let options: Array<SidebarOption> = [];
 </script>
 
 <SidebarShell>

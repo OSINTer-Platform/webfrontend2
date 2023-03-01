@@ -8,5 +8,5 @@
     <TopBar />
 </div>
 <div class="flex flex-row flex-grow items-stretch min-h-0">
-	<slot />
+    <slot />
 </div>

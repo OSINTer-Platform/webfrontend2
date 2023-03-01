@@ -1,10 +1,5 @@
 <script lang="ts">
-    import AppSwitcher from './appSwitcher.svelte';
-
-    import LinkNavShell from './linkNav/shell.svelte';
-    import LinkNavOptions from './linkNav/optionList.svelte';
-
-    import SidebarShell from './shell.svelte';
+    import LinkList from '$com/sidebar/linkList.svelte';
 
     import type { ItemBase } from '$shared/types/userItems';
     import type { SidebarOption } from '$shared/nav';
@@ -53,16 +48,8 @@
     ];
 </script>
 
-<SidebarShell>
-    <AppSwitcher />
-
-    {#if showSidebar}
-        <LinkNavShell>
-            {#each options as option}
-                {#if option.list.length > 0}
-                    <LinkNavOptions options={option} />
-                {/if}
-            {/each}
-        </LinkNavShell>
-    {/if}
-</SidebarShell>
+{#if showSidebar}
+    <LinkList {options} />
+{:else}
+    <LinkList />
+{/if}

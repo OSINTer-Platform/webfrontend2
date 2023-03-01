@@ -1,7 +1,6 @@
 <script lang="ts">
-    import Sidebar from '$com/sidebar/feed.svelte';
+    import Sidebar from './sidebar.svelte';
 </script>
 
 <Sidebar />
-<slot/>
-
+<slot />
