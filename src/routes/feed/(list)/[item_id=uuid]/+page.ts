@@ -5,10 +5,11 @@ import type { ArticleBase } from '$shared/types/api';
 import { handleResponse } from '$lib/common';
 
 export const load = (({ params, fetch }) => {
-
     const fetchArticles = async (): Promise<ArticleBase[]> => {
-        const r = await fetch(`${config.apiRoot}/user-items/${params.item_id}/articles`);
-        return (await handleResponse(r));
+        const r = await fetch(
+            `${config.apiRoot}/user-items/${params.item_id}/articles`
+        );
+        return await handleResponse(r);
     };
 
     return {

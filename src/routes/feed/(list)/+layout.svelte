@@ -11,5 +11,5 @@
 	bg-surface-50
 "
 >
-	<slot />
+    <slot />
 </main>

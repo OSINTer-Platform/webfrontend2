@@ -1,10 +1,6 @@
 <script lang="ts">
-    import type {
-        ItemBase,
-        Feed,
-        Collection,
-    } from '$shared/types/userItems';
-	import type {ArticleCategories} from '$shared/types/api'
+    import type { ItemBase, Feed, Collection } from '$shared/types/userItems';
+    import type { ArticleCategories } from '$shared/types/api';
 
     import ListRender from './list.svelte';
     import FeedRender from './feed.svelte';

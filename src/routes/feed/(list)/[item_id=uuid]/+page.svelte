@@ -16,14 +16,13 @@
             : data.articles;
 </script>
 
-
 <div
-	class="
+    class="
 	bg-surface-100
 
 	p-6
 	sm:p-12
 "
 >
-	<List articles={visibleArticles} layout={$articleRender} />
+    <List articles={visibleArticles} layout={$articleRender} />
 </div>

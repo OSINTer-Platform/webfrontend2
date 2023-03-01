@@ -46,13 +46,13 @@ export async function queryProtected(
 }
 
 export async function handleResponse(response: Response) {
-	const json = await response.json();
+    const json = await response.json();
 
-	if (response.ok) {
-		return json;
-	} else {
-		throw error(response.status, json)
-	}
+    if (response.ok) {
+        return json;
+    } else {
+        throw error(response.status, json);
+    }
 }
 
 const epochs: Array<[string, number]> = [

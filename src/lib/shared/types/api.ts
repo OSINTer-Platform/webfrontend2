@@ -26,7 +26,6 @@ export interface Article extends ArticleBase {
     };
 }
 
-
 export interface ArticleCategories {
     [key: string]: {
         name: string;
