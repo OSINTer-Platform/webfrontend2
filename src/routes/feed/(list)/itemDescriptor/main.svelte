@@ -3,8 +3,9 @@
         ItemBase,
         Feed,
         Collection,
-        ArticleCategories,
-    } from '$shared/types';
+    } from '$shared/types/userItems';
+	import type {ArticleCategories} from '$shared/types/api'
+
     import ListRender from './list.svelte';
     import FeedRender from './feed.svelte';
     import CollectionRender from './collection.svelte';

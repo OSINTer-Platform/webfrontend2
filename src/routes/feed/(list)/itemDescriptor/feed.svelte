@@ -1,5 +1,7 @@
 <script lang="ts">
-    import type { ArticleCategories, Feed } from '$shared/types';
+    import type { ArticleCategories } from '$shared/types/api';
+    import type { Feed } from '$shared/types/userItems';
+
     import ListRender from './list.svelte';
 
     export let currentItem: Feed;

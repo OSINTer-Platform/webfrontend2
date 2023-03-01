@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Collection } from '$shared/types';
+    import type { Collection } from '$shared/types/userItems';
     import ListRender from './list.svelte';
 
     export let currentItem: Collection;
