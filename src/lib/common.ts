@@ -1,4 +1,5 @@
 import { config } from '$shared/config';
+import { error } from '@sveltejs/kit';
 
 type Resp = { content: any; ok: boolean; status: number };
 
@@ -42,6 +43,16 @@ export async function queryProtected(
     }
 
     return response;
+}
+
+export async function handleResponse(response: Response) {
+	const json = await response.json();
+
+	if (response.ok) {
+		return json;
+	} else {
+		throw error(response.status, json)
+	}
 }
 
 const epochs: Array<[string, number]> = [
