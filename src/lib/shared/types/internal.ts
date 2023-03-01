@@ -3,5 +3,5 @@ export interface Inbuilt {
     id: string;
     title: string;
     desc: string;
-    url: string;
+    url: URL;
 }

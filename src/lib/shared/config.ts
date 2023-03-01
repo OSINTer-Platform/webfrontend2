@@ -25,7 +25,7 @@ const timeUrl = (interval: Intervals) => {
         first_date: timeAgo[interval].toISOString(),
     });
 
-    return `${config.apiRoot}/articles/search?${params.toString()}`;
+    return new URL(`${config.apiRoot}/articles/search?${params.toString()}`);
 };
 
 export const inbuiltFeeds: { [key: string]: Inbuilt } = {

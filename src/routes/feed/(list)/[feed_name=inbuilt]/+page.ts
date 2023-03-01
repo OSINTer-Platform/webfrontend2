@@ -6,7 +6,7 @@ import type { ArticleBase } from '$shared/types/api';
 
 export const load = (({ params, fetch }) => {
     const fetchArticles = async (): Promise<ArticleBase[]> => {
-        const r = await fetch(inbuiltFeeds[params.feed_name].url);
+        const r = await fetch(inbuiltFeeds[params.feed_name].url.toString());
         return await handleResponse(r);
     };
 
