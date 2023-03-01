@@ -10,7 +10,7 @@ import {
 
 export type SidebarOption = {
     id: string;
-    title: string;
+    title?: string;
     list: Array<{
         href: string;
         label: string;

@@ -10,34 +10,37 @@
 </script>
 
 <!-- Title -->
-<div
-    id={options.id}
-    class="
-
-	mx-2
-	py-2
-	px-4
-
-	flex
-	flex-row
-	justify-between
-	items-center
-
-	btn
-	hover:bg-surface-300/25
-"
->
-    <span
+{#if options.title}
+    <div
+        id={options.id}
         class="
-		text-primary-700
-		dark:text-primary-500
 
-		font-bold
-		uppercase
-	">{options.title}</span
+		mx-2
+		py-2
+		px-4
+
+		flex
+		flex-row
+		justify-between
+		items-center
+
+		btn
+		hover:bg-surface-300/25
+	"
     >
-    <Fa icon={faCaretDown} />
-</div>
+        <span
+            class="
+			text-primary-700
+			dark:text-primary-500
+
+			font-bold
+			uppercase
+		">{options.title}</span
+        >
+        <Fa icon={faCaretDown} />
+    </div>
+{/if}
+
 <!-- Navigation List -->
 <nav class="list-nav">
     <ul class="space-y-1">

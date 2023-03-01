@@ -9,6 +9,8 @@
     import type { ItemBase } from '$shared/types/userItems';
     import type { SidebarOption } from '$shared/nav';
 
+    import { inbuiltFeeds } from '$shared/config';
+
     export let feeds: Array<ItemBase> = [];
     export let collections: Array<ItemBase> = [];
     export let clusters: Array<ItemBase> = [];
@@ -26,6 +28,13 @@
 
     let options: Array<SidebarOption>;
     $: options = [
+        {
+            id: 'inbuilts',
+            list: Object.values(inbuiltFeeds).map(({ title, id }) => ({
+                href: `/feed/${id}`,
+                label: title,
+            })),
+        },
         {
             id: 'feeds',
             title: 'Your feeds',
