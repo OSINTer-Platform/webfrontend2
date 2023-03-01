@@ -1,0 +1,30 @@
+<script lang="ts">
+    import ListMenu from '$com/listMenu.svelte';
+
+    import type { HeaderModOptions } from '$shared/types/internal';
+
+    import Fa from 'svelte-fa/src/fa.svelte';
+    import { faBars } from '@fortawesome/free-solid-svg-icons';
+
+    export let modOptions: Array<HeaderModOptions>;
+
+    const btnClass = 'btn p-2 text-lg';
+</script>
+
+<ListMenu listOptions={[modOptions]}>
+    <button class="{btnClass} xl:hidden lg:block md:hidden block">
+        <Fa icon={faBars} />
+    </button>
+</ListMenu>
+
+<div class="xl:flex lg:hidden md:flex hidden gap-4">
+    {#each modOptions as { text, icon, route, action }}
+        {#if route}
+            <a href={route} title={text} class={btnClass}><Fa {icon} /></a>
+        {:else if action}
+            <button on:click={action} title={text} class={btnClass}
+                ><Fa {icon} /></button
+            >
+        {/if}
+    {/each}
+</div>

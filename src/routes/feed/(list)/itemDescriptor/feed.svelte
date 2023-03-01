@@ -2,7 +2,7 @@
     import type { ArticleCategories } from '$shared/types/api';
     import type { Feed } from '$shared/types/userItems';
 
-    import ListRender from './list.svelte';
+    import ListRender from '$com/article-list/header/detailList.svelte';
 
     export let currentItem: Feed;
     export let categories: ArticleCategories;
