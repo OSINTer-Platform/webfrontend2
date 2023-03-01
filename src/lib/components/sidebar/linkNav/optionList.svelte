@@ -66,6 +66,9 @@
 						py-2
 						px-4
 
+						overflow-hidden
+						truncate
+
 						font-light
 
 						inline-block
