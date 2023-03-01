@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ArticleBase } from '$shared/types';
+    import type { ArticleBase } from '$shared/types/api';
 
     import Large from './component/large.svelte';
     import Title from './component/title.svelte';

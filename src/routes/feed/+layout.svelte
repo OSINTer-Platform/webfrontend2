@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { LayoutData } from './$types';
-    import type { Collection, Feed } from '$shared/types';
+    import type { Collection, Feed } from '$shared/types/userItems';
 
     import Sidebar from '$com/sidebar/feed.svelte';
 

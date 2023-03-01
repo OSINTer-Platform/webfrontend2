@@ -6,7 +6,7 @@
 
     import SidebarShell from './shell.svelte';
 
-    import type { ItemBase } from '$shared/types';
+    import type { ItemBase } from '$shared/types/userItems';
     import type { SidebarOption } from '$shared/nav';
 
     export let feeds: Array<ItemBase> = [];

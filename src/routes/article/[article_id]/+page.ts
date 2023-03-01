@@ -1,7 +1,7 @@
 import type { PageLoad } from './$types';
 
 import { config } from '$shared/config';
-import type { Article } from '$shared/types';
+import type { Article } from '$shared/types/api';
 
 export const load = (({ params, fetch }) => {
     const fetchContent = async (): Promise<Article> => {

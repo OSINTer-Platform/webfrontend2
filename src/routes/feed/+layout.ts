@@ -1,5 +1,5 @@
 import type { LayoutLoad } from './$types';
-import type { Collection, Feed } from '$shared/types';
+import type { Collection, Feed } from '$shared/types/userItems';
 
 import { queryProtected } from '$lib/common';
 import { config } from '$shared/config';
