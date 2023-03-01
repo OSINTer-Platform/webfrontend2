@@ -3,10 +3,11 @@
 
 <section
     class="
+	flex
+	flex-col
+
 	p-4
 	w-80
-
-	space-y-2
 
 	bg-surface-50
 
