@@ -14,13 +14,25 @@ export interface ArticleBase {
     id: string;
 }
 
+export interface ArticleTags {
+	automatic: string[];
+	interresting: {
+		[key: string] : {
+			results: string[]
+			tag: true
+		}
+	}
+}
+
 export interface Article extends ArticleBase {
     author: string;
     formatted_content: string;
     content: string;
-    summary: string;
 
-    ml: {
+	tags: ArticleTags;
+
+    summary?: string;
+    ml?: {
         similar: Array<string>;
         cluster: number;
     };
