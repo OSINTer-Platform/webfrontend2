@@ -1,4 +1,4 @@
-import type { PageLoad } from './$types';
+import type { LayoutLoad } from './$types';
 
 import { config } from '$shared/config';
 import type { Article } from '$shared/types/api';
@@ -30,4 +30,4 @@ export const load = (({ params, fetch }) => {
     return {
         article: fetchContent(),
     };
-}) satisfies PageLoad;
+}) satisfies LayoutLoad;
