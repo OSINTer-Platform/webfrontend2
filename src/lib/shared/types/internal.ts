@@ -1,6 +1,7 @@
 import type { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
-export type ArticleRender = 'large' | 'title';
+export type ArticleListRender = 'large' | 'title';
+
 export interface Inbuilt {
     id: string;
     title: string;

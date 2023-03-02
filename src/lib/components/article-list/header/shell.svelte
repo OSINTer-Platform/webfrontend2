@@ -4,7 +4,7 @@
 
     import type { HeaderModOptions } from '$shared/types/internal';
 
-    import { articleRender, localSearch } from '$shared/state';
+    import { articleListRender, localSearch } from '$shared/state';
     import ModList from './modList.svelte';
 
     export let title: string;
@@ -59,7 +59,7 @@
     <Search bind:articleSearch={$localSearch} />
 
     <Tabs
-        bind:selected={$articleRender}
+        bind:selected={$articleListRender}
         options={{ Large: 'large', 'Title-View': 'title' }}
     />
 </aside>

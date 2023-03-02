@@ -2,7 +2,7 @@
     import type { PageData } from './$types';
     import List from '$com/article-list/main.svelte';
 
-    import { articleRender, localSearch } from '$shared/state';
+    import { articleListRender, localSearch } from '$shared/state';
 
     export let data: PageData;
 
@@ -24,5 +24,5 @@
 	sm:p-12
 "
 >
-    <List articles={visibleArticles} layout={$articleRender} />
+    <List articles={visibleArticles} layout={$articleListRender} />
 </div>

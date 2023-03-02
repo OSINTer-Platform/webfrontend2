@@ -1,14 +1,14 @@
 <script lang="ts">
     import type { ArticleBase } from '$shared/types/api';
-    import type { ArticleRender } from '$shared/types/internal';
+    import type { ArticleListRender } from '$shared/types/internal';
 
     import Large from './component/large.svelte';
     import Title from './component/title.svelte';
 
     export let articles: ArticleBase[] = [];
-    export let layout: ArticleRender = 'large';
+    export let layout: ArticleListRender = 'large';
 
-    const layouts: { [articleRender in ArticleRender]: any } = {
+    const layouts: { [articleListRender in ArticleListRender]: any } = {
         large: Large,
         title: Title,
     };
