@@ -25,7 +25,7 @@
             {#if Array.isArray(value)}
                 <div class="flex flex-wrap gap-2">
                     {#each value as subValue}
-                        <p class="{boxClass} capitalize">{subValue}</p>
+                        <p class="{boxClass} {mono ? 'uppercase' : 'capitalize'}">{subValue}</p>
                     {/each}
                 </div>
             {:else}
