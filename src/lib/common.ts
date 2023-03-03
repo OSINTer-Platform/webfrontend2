@@ -81,7 +81,7 @@ export function filterArticles(articles: ArticleBase[], search: string) {
     if (search.length > 0) {
         articles = articles.filter((article) =>
             Object.values(article).some((field) =>
-                field.toLowerCase().includes(search)
+                field?.toLowerCase?.().includes?.(search)
             )
         );
     }
