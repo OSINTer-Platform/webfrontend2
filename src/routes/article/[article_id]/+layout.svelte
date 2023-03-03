@@ -97,16 +97,17 @@
 		p-6
 		sm:p-12
 		!pb-4
-	">
-		<header
-			class="flex justify-between mb-3"
-		>
-			<h1 class="sm:text-5xl text-3xl xl:max-w-5xl">{data.article.title}</h1>
+	"
+    >
+        <header class="flex justify-between mb-3">
+            <h1 class="sm:text-5xl text-3xl xl:max-w-5xl">
+                {data.article.title}
+            </h1>
 
-			<section class="flex items-end shrink-0">
-				<ModList {modOptions} />
-			</section>
-		</header>
+            <section class="flex items-start shrink-0">
+                <ModList {modOptions} />
+            </section>
+        </header>
 
         <p class="italic font-light">{data.article.description}</p>
 		

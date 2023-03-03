@@ -1,21 +1,49 @@
 <script lang="ts">
     import type { PageData } from './$types';
-    import ArticleRender from '$com/articleRender/main.svelte'
+    import ArticleRender from '$com/articleRender/main.svelte';
 
     export let data: PageData;
 </script>
 
-<article class="
+<section
+    class="
 	flex
-	flex-col
+	flex-row
 
-	max-w-6xl
-	mx-auto
+	p-12
+	gap-12
+"
+>
+    <article
+        class="
+		flex
+		flex-col
 
-	overflow-auto
-">
-	<ArticleRender article={data.article} header={false}/>
-</article>
+		max-w-full
+		min-w-0
 
-<style>
-</style>
+		overflow-x-hidden
+	"
+    >
+        <ArticleRender article={data.article} header={false} />
+    </article>
+
+    <div
+        class="
+		w-96
+
+		h-20
+		bg-primary-500/25
+
+		shrink-0
+
+		sticky
+		top-10
+
+		hidden
+		2xl:block
+	"
+    >
+        Placeholder
+    </div>
+</section>
