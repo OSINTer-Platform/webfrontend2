@@ -116,8 +116,10 @@
 			<hr class="my-4 border-tertiary-700/50" />
 		{/each}
 
-		<DetailList options={tags} mono={true} />
-		<hr class="my-4 border-tertiary-700/50" />
+		{#if Object.values(tags).length > 0}
+			<DetailList options={tags} mono={true} />
+			<hr class="my-4 border-tertiary-700/50" />
+		{/if}
 	</aside>
 	
 	<slot/>
