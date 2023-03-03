@@ -15,13 +15,13 @@ export interface ArticleBase {
 }
 
 export interface ArticleTags {
-	automatic: string[];
-	interresting: {
-		[key: string] : {
-			results: string[]
-			tag: true
-		}
-	}
+    automatic: string[];
+    interresting: {
+        [key: string]: {
+            results: string[];
+            tag: true;
+        };
+    };
 }
 
 export interface Article extends ArticleBase {
@@ -29,7 +29,7 @@ export interface Article extends ArticleBase {
     formatted_content: string;
     content: string;
 
-	tags: ArticleTags;
+    tags: ArticleTags;
 
     summary?: string;
     ml?: {

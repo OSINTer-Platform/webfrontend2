@@ -13,7 +13,7 @@
 
     import {
         faDownload,
-		faXmark
+        faXmark,
     } from '@fortawesome/free-solid-svg-icons/index';
 
     import { config } from '$shared/config';
@@ -21,30 +21,42 @@
     import { redirect } from '@sveltejs/kit';
     import { goto } from '$app/navigation';
 
-	export let data: LayoutData;
+    export let data: LayoutData;
 
-	function getTags(tags: ArticleTags) {
-		const extractedTags: {[key: string]: string[]} = {}
+    function getTags(tags: ArticleTags) {
+        const extractedTags: { [key: string]: string[] } = {};
 
-		if (tags?.automatic && tags.automatic.length > 1) {
-			extractedTags["Automatic Tags"] = tags.automatic
-		}
+        if (tags?.automatic && tags.automatic.length > 1) {
+            extractedTags['Automatic Tags'] = tags.automatic;
+        }
 
-		if (tags?.interresting && Object.keys(tags.interresting).length > 0) {
-			for (const [key, {results}] of Object.entries(tags.interresting)) {
-				extractedTags[key.toUpperCase()] = results
-			}
-		}
+        if (tags?.interresting && Object.keys(tags.interresting).length > 0) {
+            for (const [key, { results }] of Object.entries(
+                tags.interresting
+            )) {
+                extractedTags[key.toUpperCase()] = results;
+            }
+        }
 
-		return extractedTags
-	}
+        return extractedTags;
+    }
 
-	$: overviews = [ 
-		{ "Sources" : [`Medium: ${data.article.source}`, `Author: ${data.article.author}`,], },
-		{ "Dates" : [`Published: ${data.article.publish_date}`, `Scraped: ${data.article.inserted_at}`], },
-	]
+    $: overviews = [
+        {
+            Sources: [
+                `Medium: ${data.article.source}`,
+                `Author: ${data.article.author}`,
+            ],
+        },
+        {
+            Dates: [
+                `Published: ${data.article.publish_date}`,
+                `Scraped: ${data.article.inserted_at}`,
+            ],
+        },
+    ];
 
-	$: tags = getTags(data.article.tags)
+    $: tags = getTags(data.article.tags);
 
     let modOptions: Array<HeaderModOptions>;
 
@@ -57,7 +69,8 @@
         {
             text: `Copy formatted`,
             icon: faPaste,
-            action: () => navigator.clipboard.writeText(data.article.formatted_content),
+            action: () =>
+                navigator.clipboard.writeText(data.article.formatted_content),
         },
         {
             text: 'Download MD',
@@ -68,12 +81,12 @@
             text: 'Close article',
             icon: faXmark,
             action: () => {
-				fullArticles.update((content) => {
-					delete content[data.article.id]
-					return content
-				})
-				goto('/article')
-			},
+                fullArticles.update((content) => {
+                    delete content[data.article.id];
+                    return content;
+                });
+                goto('/article');
+            },
         },
     ];
 </script>
@@ -91,7 +104,8 @@
 	bg-surface-50
 "
 >
-	<aside class="
+    <aside
+        class="
 		bg-surface-400/30
 
 		p-6
@@ -110,18 +124,18 @@
         </header>
 
         <p class="italic font-light">{data.article.description}</p>
-		
-		<hr class="my-4 border-tertiary-700/50" />
-		{#each overviews as overview}
-			<DetailList options={overview} mono={false} />
-			<hr class="my-4 border-tertiary-700/50" />
-		{/each}
 
-		{#if Object.values(tags).length > 0}
-			<DetailList options={tags} mono={true} />
-			<hr class="my-4 border-tertiary-700/50" />
-		{/if}
-	</aside>
-	
-	<slot/>
+        <hr class="my-4 border-tertiary-700/50" />
+        {#each overviews as overview}
+            <DetailList options={overview} mono={false} />
+            <hr class="my-4 border-tertiary-700/50" />
+        {/each}
+
+        {#if Object.values(tags).length > 0}
+            <DetailList options={tags} mono={true} />
+            <hr class="my-4 border-tertiary-700/50" />
+        {/if}
+    </aside>
+
+    <slot />
 </main>
