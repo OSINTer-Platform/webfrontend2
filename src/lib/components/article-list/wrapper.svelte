@@ -11,6 +11,8 @@
     class="
 	bg-surface-100
 
+	grow
+
 	p-6
 	sm:p-12
 "
