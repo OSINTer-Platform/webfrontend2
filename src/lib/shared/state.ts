@@ -1,5 +1,5 @@
 import { persisted } from 'svelte-local-storage-store';
-import type { Writable } from 'svelte/store';
+import { writable, type Writable } from 'svelte/store';
 
 import type { Article } from './types/api';
 import type { ArticleListRender } from './types/internal';
@@ -9,7 +9,7 @@ export const sideOpen: Writable<{ [key: string]: Boolean }> = persisted(
     {}
 );
 
-export const localSearch: Writable<string> = persisted('localSearch', '');
+export const localSearch: Writable<string> = writable('');
 export const articleListRender: Writable<ArticleListRender> = persisted(
     'articleListRender',
     'large'
