@@ -91,51 +91,37 @@
     ];
 </script>
 
-<main
+<aside
     class="
-	flex
-	flex-col
-	grow
+	bg-surface-400/30
 
-	items-stretch
-	overflow-y-auto
-	overflow-x-hidden
-
-	bg-surface-50
+	p-6
+	sm:p-12
+	!pb-4
 "
 >
-    <aside
-        class="
-		bg-surface-400/30
+    <header class="flex justify-between mb-3">
+        <h1 class="sm:text-5xl text-3xl xl:max-w-5xl">
+            {data.article.title}
+        </h1>
 
-		p-6
-		sm:p-12
-		!pb-4
-	"
-    >
-        <header class="flex justify-between mb-3">
-            <h1 class="sm:text-5xl text-3xl xl:max-w-5xl">
-                {data.article.title}
-            </h1>
+        <section class="flex items-start shrink-0">
+            <ModList {modOptions} />
+        </section>
+    </header>
 
-            <section class="flex items-start shrink-0">
-                <ModList {modOptions} />
-            </section>
-        </header>
+    <p class="italic font-light">{data.article.description}</p>
 
-        <p class="italic font-light">{data.article.description}</p>
-
+    <hr class="my-4 border-tertiary-700/50" />
+    {#each overviews as overview}
+        <DetailList options={overview} mono={false} />
         <hr class="my-4 border-tertiary-700/50" />
-        {#each overviews as overview}
-            <DetailList options={overview} mono={false} />
-            <hr class="my-4 border-tertiary-700/50" />
-        {/each}
+    {/each}
 
-        {#if Object.values(tags).length > 0}
-            <DetailList options={tags} mono={true} />
-            <hr class="my-4 border-tertiary-700/50" />
-        {/if}
-    </aside>
+    {#if Object.values(tags).length > 0}
+        <DetailList options={tags} mono={true} />
+        <hr class="my-4 border-tertiary-700/50" />
+    {/if}
+</aside>
 
-    <slot />
-</main>
+<slot />
