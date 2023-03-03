@@ -1,0 +1,1 @@
+Style tables in article render
