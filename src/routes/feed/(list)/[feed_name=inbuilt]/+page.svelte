@@ -3,17 +3,9 @@
     import List from '$com/article-list/main.svelte';
 
     import { articleListRender, localSearch } from '$shared/state';
+    import { filterArticles } from '$lib/common';
 
     export let data: PageData;
-
-    $: visibleArticles =
-        $localSearch.length > 0
-            ? data.articles.filter((article) =>
-                  Object.values(article).some((field) =>
-                      field.toLowerCase().includes($localSearch)
-                  )
-              )
-            : data.articles;
 </script>
 
 <div
@@ -24,5 +16,8 @@
 	sm:p-12
 "
 >
-    <List articles={visibleArticles} layout={$articleListRender} />
+    <List
+        articles={filterArticles(data.articles, $localSearch)}
+        layout={$articleListRender}
+    />
 </div>

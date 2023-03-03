@@ -1,4 +1,5 @@
 import { config } from '$shared/config';
+import type { ArticleBase } from '$shared/types/api';
 import { error } from '@sveltejs/kit';
 
 type Resp = { content: any; ok: boolean; status: number };
@@ -72,4 +73,18 @@ export function getTimespan(origDate: string) {
             return `${timeAmount} ${name}${timeAmount > 1 ? 's' : ''} ago`;
         }
     }
+}
+
+export function filterArticles(articles: ArticleBase[], search: string) {
+    search = search.toLowerCase();
+
+    if (search.length > 0) {
+        articles = articles.filter((article) =>
+            Object.values(article).some((field) =>
+                field.toLowerCase().includes(search)
+            )
+        );
+    }
+
+    return articles;
 }
