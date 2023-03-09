@@ -8,32 +8,15 @@
         faArrowsRotate,
         faDownload,
         faPlus,
-        type IconDefinition,
     } from '@fortawesome/free-solid-svg-icons';
     import type { SearchQuery } from '$shared/types/api';
     import type { PageData } from './$types';
 
-    import { getStandardSearch } from '$shared/config';
+    import { config, getStandardSearch } from '$shared/config';
 
     export let data: PageData;
 
     export let searchQuery: SearchQuery = getStandardSearch();
-
-    export let miscActions: Array<{ icon: IconDefinition; action: Function }> =
-        [
-            {
-                icon: faPlus,
-                action: () => {},
-            },
-            {
-                icon: faDownload,
-                action: () => {},
-            },
-            {
-                icon: faArrowsRotate,
-                action: () => {},
-            },
-        ];
 </script>
 
 <form
@@ -99,7 +82,7 @@
         <hr class="mb-8 mt-3 text-tertiary-500 @5xl/full:hidden" />
 
         <section class="flex gap-4 mx-4">
-            <slot>
+            <slot name="main-button">
                 <button
                     class="
 					btn
@@ -112,16 +95,36 @@
             </slot>
 
             <div class="flex shrink-0 w-fit">
-                {#each miscActions as { icon, action }}
+                <slot name="side-buttons">
+                    <!--
                     <button
-                        on:click={() => action()}
+                        on:click={() => {}}
                         class="
-						btn
-						h-16
-						w-16
-					"><Fa {icon} class="opacity-70 text-sm" /></button
+							btn
+							h-16
+							w-16
+						"><Fa icon={faPlus} class="opacity-70 text-sm" /></button
                     >
-                {/each}
+					-->
+
+                    <button
+                        formaction="{config.apiRoot}/articles/search/export"
+                        class="
+							btn
+							h-16
+							w-16
+						"><Fa icon={faDownload} class="opacity-70 text-sm" /></button
+                    >
+                    <button
+                        type="button"
+                        on:click={() => (searchQuery = getStandardSearch())}
+                        class="
+							btn
+							h-16
+							w-16
+						"><Fa icon={faArrowsRotate} class="opacity-70 text-sm" /></button
+                    >
+                </slot>
             </div>
         </section>
     </div>
