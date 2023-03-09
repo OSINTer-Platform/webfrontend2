@@ -45,3 +45,27 @@ export interface ArticleCategories {
         url: string;
     };
 }
+
+export type SortBy =
+    | ''
+    | 'publish_date'
+    | 'read_times'
+    | 'source'
+    | 'author'
+    | 'inserted_at';
+export type SortOrder = 'desc' | 'asc';
+
+export interface SearchQuery {
+    limit: number;
+
+    sort_by: SortBy | null;
+    sort_order: SortOrder | null;
+
+    search_term: string | null;
+    highlight: boolean;
+
+    first_date: string;
+    last_date: string;
+
+    source_category: string[];
+}
