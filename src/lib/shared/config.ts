@@ -1,3 +1,4 @@
+import type { SearchQuery } from './types/api';
 import type { Inbuilt } from './types/internal';
 
 type O = string | { [key: string]: O };
@@ -47,4 +48,19 @@ export const inbuiltFeeds: { [key: string]: Inbuilt } = {
         desc: 'All the news available from the last 30 days',
         url: timeUrl('month'),
     },
+};
+
+export const standardSearch: SearchQuery = {
+    limit: 100,
+
+    sort_by: 'publish_date',
+    sort_order: 'desc',
+
+    search_term: '',
+    highlight: false,
+
+    first_date: '',
+    last_date: '',
+
+    source_category: [],
 };
