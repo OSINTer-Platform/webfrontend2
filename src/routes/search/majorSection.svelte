@@ -14,6 +14,7 @@
 </script>
 
 <button
+    type="button"
     on:click={() => (open = !open)}
     class="
 	flex

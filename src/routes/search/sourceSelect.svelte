@@ -39,6 +39,7 @@
     </div>
 
     <button
+        type="button"
         on:click={() => (selectedSources = [])}
         class="
 		text-tertiary-700
@@ -49,6 +50,7 @@
 	">Remove Selections ({selectedSources.length})</button
     >
     <button
+        type="button"
         on:click={() => (selectedSources = Object.keys(sourceOptions))}
         class="
 		text-tertiary-700
