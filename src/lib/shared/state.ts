@@ -4,6 +4,14 @@ import { writable, type Writable } from 'svelte/store';
 import type { Article } from './types/api';
 import type { ArticleListRender } from './types/internal';
 
+export const modalState: Writable<{
+    modalType: string | null;
+    modalContent: { [key: string]: any } | null;
+}> = persisted('modalState', {
+    modalType: null,
+    modalContent: null,
+});
+
 export const sideOpen: Writable<{ [key: string]: Boolean }> = persisted(
     'sidebar-open',
     {}
