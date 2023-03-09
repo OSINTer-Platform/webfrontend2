@@ -14,7 +14,7 @@
 
 	bg-surface-100
 
-	@container
+	@container/full
 "
 >
     <slot />

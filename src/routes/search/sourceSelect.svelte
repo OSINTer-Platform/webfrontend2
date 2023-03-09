@@ -45,7 +45,7 @@
 		text-tertiary-700
 		font-semibold
 		text-xs
-		@lg:text-base
+		@lg/half:text-base
 		{noneSelected ? 'cursor-not-allowed' : '!text-primary-500'}
 	">Remove Selections ({selectedSources.length})</button
     >
@@ -56,7 +56,7 @@
 		text-tertiary-700
 		font-semibold
 		text-xs
-		@lg:text-base
+		@lg/half:text-base
 		{allSelected ? 'cursor-not-allowed' : '!text-primary-500'}
 	">Select All</button
     >
@@ -122,7 +122,7 @@
                         <h3
                             class="
 					font-semibold
-					@md:text-xl
+					@:md/half:text-xl
 				"
                         >
                             {name}
@@ -137,7 +137,7 @@
 
 					hover:font-medium
 					text-xs
-					@md:text-base
+					@md/half:text-base
 				">{url.replace('https://', '')}</a
                         >
                     </div>

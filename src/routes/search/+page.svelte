@@ -70,7 +70,7 @@
 		@5xl:border-r
 		@5xl:pr-8
 
-		@container
+		@container/half
 	"
     >
         <MajorSection title="Select Sources">
@@ -87,7 +87,7 @@
 		@5xl:w-1/2
 		@5xl:pl-8
 
-		@container
+		@container/half
 	"
     >
         <MajorSection title="Search Query">

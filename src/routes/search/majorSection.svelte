@@ -35,23 +35,30 @@
     >
         {title}
     </h1>
-    <Fa icon={faCaretDown} />
+    <Fa
+        icon={faCaretDown}
+        class="@5xl/full:hidden transition-transform {open ? '' : '-rotate-90'}"
+    />
 </button>
 
-{#if open}
-    <section
-        transition:slide|local
-        class:seperate
-        class="
-	flex
-	flex-col
+<section
+    transition:slide|local
+    class:seperate
+    class="
+flex
+flex-col
 
-	min-h-0
-	h-full
+min-h-0
 
-	{seperateClass}
+@5xl/full:h-full
+overflow-y-hidden
+{open ? 'h-full' : 'h-0'}
+
+transition-[height]
+duration-700
+
+{seperateClass}
 "
-    >
-        <slot />
-    </section>
-{/if}
+>
+    <slot />
+</section>
