@@ -76,6 +76,8 @@
         <MajorSection title="Select Sources">
             <SourceSelect sourceOptions={data.sourceCategories} />
         </MajorSection>
+
+        <hr class="mb-8 mt-3 text-tertiary-500 @5xl/full:hidden" />
     </div>
 
     <div
@@ -93,6 +95,8 @@
         <MajorSection title="Search Query">
             <SearchPanel {searchQuery} />
         </MajorSection>
+
+        <hr class="mb-8 mt-3 text-tertiary-500 @5xl/full:hidden" />
 
         <section class="flex gap-4 mx-4">
             <slot>
