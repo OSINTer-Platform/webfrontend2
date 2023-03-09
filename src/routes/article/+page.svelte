@@ -7,18 +7,18 @@
     import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
     const modOptions: Array<HeaderModOptions> = [
-		{
-			text: 'Clear stored',
-			icon: faTrashCan,
-			action: () => fullArticles.set({})
-		}
-	]
+        {
+            text: 'Clear stored',
+            icon: faTrashCan,
+            action: () => fullArticles.set({}),
+        },
+    ];
 </script>
 
 <HeaderShell
     title={'Stored articles'}
     description={'A list of the articles you have recently viewed in OSINTer'}
-	{modOptions}
+    {modOptions}
 >
     <hr class="text-tertiary-600/50 sm:my-4" />
 </HeaderShell>
