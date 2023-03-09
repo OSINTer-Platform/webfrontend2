@@ -13,11 +13,11 @@
     import type { SearchQuery } from '$shared/types/api';
     import type { PageData } from './$types';
 
-    import { standardSearch } from '$shared/config';
+    import { getStandardSearch } from '$shared/config';
 
     export let data: PageData;
 
-    export let searchQuery: SearchQuery = standardSearch;
+    export let searchQuery: SearchQuery = getStandardSearch();
 
     export let miscActions: Array<{ icon: IconDefinition; action: Function }> =
         [
