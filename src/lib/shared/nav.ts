@@ -6,6 +6,7 @@ import {
     faRss,
     faDiagramProject,
     faNewspaper,
+    faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons/index';
 
 export type SidebarOption = {
@@ -47,6 +48,11 @@ export const navItems: { [key in 'external' | 'internal']: Array<NavItem> } = {
             text: 'Article',
             route: '/article',
             icon: faNewspaper,
+        },
+        {
+            text: 'Search',
+            route: '/search',
+            icon: faMagnifyingGlass,
         },
         {
             text: 'Overview',
