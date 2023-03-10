@@ -1,28 +1,11 @@
 <script lang="ts">
-    import type { ArticleCategories } from '$shared/types/api';
-    import type { Feed } from '$shared/types/userItems';
+    import type { ArticleCategories, SearchQuery } from '$shared/types/api';
 
     import ListRender from '$com/article-list/header/detailList.svelte';
 
-    export let currentItem: Feed;
+    export let currentItem: SearchQuery;
     export let categories: ArticleCategories;
     const dateFormatter = (date: string) => new Date(date).toLocaleDateString();
-
-    const contentCreator = [
-        { key: 'first_date', formatter: dateFormatter },
-        { key: 'last_date', formatter: dateFormatter },
-
-        { key: 'limit', formatter: null },
-
-        { key: 'search_term', formatter: (param: string) => `"${param}"` },
-        { key: 'highlight', formatter: null },
-
-        {
-            key: 'sort_by',
-            formatter: (param: string) => param.replace('_', ' '),
-        },
-        { key: 'sort_order', formatter: null },
-    ];
 
     $: params = {
         'First Date': currentItem.first_date
@@ -39,7 +22,7 @@
         'Sort Order': currentItem.sort_order,
         'Sort By': currentItem.sort_by
             ? currentItem.sort_by.replace('_', ' ')
-            : null,
+            : 'Best Match',
     };
 
     $: paramStrings = Object.entries(params)
