@@ -2,7 +2,7 @@ import type { PageLoad } from './$types';
 
 import { config } from '$shared/config';
 import type { ArticleBase } from '$shared/types/api';
-import { handleResponse } from '$lib/common';
+import { handleResponse } from '$lib/common/query';
 
 export const load = (({ params, fetch }) => {
     const fetchArticles = async (): Promise<ArticleBase[]> => {

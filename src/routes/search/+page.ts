@@ -1,6 +1,6 @@
 import type { PageLoad } from './$types';
 
-import { handleResponse } from '$lib/common';
+import { handleResponse } from '$lib/common/query';
 import { config } from '$shared/config';
 import type { ArticleCategories } from '$shared/types/api';
 

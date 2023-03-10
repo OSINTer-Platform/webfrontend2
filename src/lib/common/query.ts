@@ -1,5 +1,4 @@
 import { config } from '$shared/config';
-import type { ArticleBase } from '$shared/types/api';
 import { error } from '@sveltejs/kit';
 
 type Resp = { content: any; ok: boolean; status: number };
@@ -54,37 +53,4 @@ export async function handleResponse(response: Response) {
     } else {
         throw error(response.status, json);
     }
-}
-
-const epochs: Array<[string, number]> = [
-    ['year', 31536000],
-    ['month', 2592000],
-    ['day', 86400],
-    ['hour', 3600],
-    ['minute', 60],
-    ['second', 1],
-];
-
-export function getTimespan(origDate: string) {
-    let timeSpan = (Date.now() - Date.parse(origDate)) / 1000;
-    for (let [name, seconds] of epochs) {
-        if (timeSpan > seconds) {
-            let timeAmount = Math.floor(timeSpan / seconds);
-            return `${timeAmount} ${name}${timeAmount > 1 ? 's' : ''} ago`;
-        }
-    }
-}
-
-export function filterArticles(articles: ArticleBase[], search: string) {
-    search = search.toLowerCase();
-
-    if (search.length > 0) {
-        articles = articles.filter((article) =>
-            Object.values(article).some((field) =>
-                field?.toLowerCase?.().includes?.(search)
-            )
-        );
-    }
-
-    return articles;
 }

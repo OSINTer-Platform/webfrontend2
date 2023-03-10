@@ -1,6 +1,6 @@
 <script lang="ts">
     import SvelteMarkdown from 'svelte-markdown';
-    import { getTimespan } from '$lib/common';
+    import { getTimespan } from '$lib/common/math';
     import type { ArticleBase } from '$shared/types/api';
 
     export let articles: Array<ArticleBase>;

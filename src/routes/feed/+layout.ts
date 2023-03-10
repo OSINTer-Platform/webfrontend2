@@ -1,7 +1,7 @@
 import type { LayoutLoad } from './$types';
 import type { Collection, Feed } from '$shared/types/userItems';
 
-import { handleResponse, queryProtected } from '$lib/common';
+import { handleResponse, queryProtected } from '$lib/common/query';
 import { config } from '$shared/config';
 import type { ArticleCategories } from '$shared/types/api';
 

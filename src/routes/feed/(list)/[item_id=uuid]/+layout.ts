@@ -1,4 +1,4 @@
-import { handleResponse } from '$lib/common';
+import { handleResponse } from '$lib/common/query';
 import { config } from '$shared/config';
 import type { ItemBase } from '$shared/types/userItems';
 import type { LayoutLoad } from './$types';

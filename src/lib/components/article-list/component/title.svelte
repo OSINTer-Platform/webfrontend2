@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { getTimespan } from '$lib/common';
+    import { getTimespan } from '$lib/common/math';
     import type { ArticleBase } from '$shared/types/api';
     import SvelteMarkdown from 'svelte-markdown';
 
