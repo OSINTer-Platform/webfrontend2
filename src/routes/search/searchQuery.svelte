@@ -3,6 +3,7 @@
     import OptionSection from './optionSection.svelte';
 
     import type { SearchQuery, SortBy, SortOrder } from '$shared/types/api';
+    import Datetime from '$com/utils/datetime.svelte';
 
     const sortBy: Array<{ value: SortBy; name: string }> = [
         { value: '', name: 'Best Match' },
@@ -34,16 +35,18 @@
                 name="first_date"
                 placeholder=" "
                 class="input"
+                bind:value={searchQuery.first_date}
             />
             <label for="first_date" class="input">First Date</label>
         </div>
 
         <div class="input">
-            <input
+            <Datetime
                 id="last_date"
                 name="last_date"
                 placeholder=" "
                 class="input"
+                bind:value={searchQuery.last_date}
             />
             <label for="last_date" class="input">Last Date</label>
         </div>
