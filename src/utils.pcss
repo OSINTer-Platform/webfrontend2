@@ -22,3 +22,55 @@
 		border-0 focus:outline-none focus:border-0;
     }
 }
+
+select.input,
+input.input {
+    @apply w-full h-4/5 m-auto pl-4
+
+	appearance-none rounded-lg
+	border border-tertiary-700
+	outline outline-2 outline-surface-100
+	bg-surface-50
+
+	text-sm
+
+	disabled:cursor-not-allowed disabled:text-tertiary-600
+
+	transition-all duration-300;
+
+    &:hover:not([disabled]),
+    &:focus:not([disabled]) {
+        @apply border-white outline-primary-500/75;
+    }
+
+    &:hover:not([disabled]) ~ label,
+    &:focus:not([disabled]) ~ label {
+        @apply text-primary-500;
+    }
+
+    &:focus ~ label,
+    &:not(:placeholder-shown) ~ label {
+        @apply bg-surface-100;
+        transform: translateY(-1.7rem) scale(0.85);
+    }
+
+    &[type='number'] {
+        -moz-appearance: textfield;
+    }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        display: none;
+        -webkit-appearance: none;
+        margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    }
+}
+
+label.input {
+    @apply capitalize font-light text-sm
+	pointer-events-none
+	absolute left-4 top-6
+	transition-colors transition-transform;
+
+    transform-origin: 0 50%;
+}

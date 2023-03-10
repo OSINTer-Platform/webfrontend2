@@ -29,13 +29,13 @@
         desc="Enter wanted date interval. Only articles published within this interval will be shown."
     >
         <div class="input">
-            <input
+            <Datetime
                 id="first_date"
                 name="first_date"
                 placeholder=" "
-                class="wide"
+                class="input"
             />
-            <label for="first_date" class="wide">First Date</label>
+            <label for="first_date" class="input">First Date</label>
         </div>
 
         <div class="input">
@@ -43,9 +43,9 @@
                 id="last_date"
                 name="last_date"
                 placeholder=" "
-                class="wide"
+                class="input"
             />
-            <label for="last_date" class="wide">Last Date</label>
+            <label for="last_date" class="input">Last Date</label>
         </div>
     </OptionSection>
 
@@ -59,14 +59,14 @@
                 id="sort_by"
                 name="sort_by"
                 placeholder=" "
-                class="wide"
+                class="input"
             >
                 <option selected disabled>Sort By</option>
                 {#each sortBy as { value, name }}
                     <option {value}>{name}</option>
                 {/each}
             </select>
-            <label for="sort_by" class="wide">Sort By</label>
+            <label for="sort_by" class="input">Sort By</label>
         </div>
 
         <div class="input">
@@ -75,14 +75,14 @@
                 id="sort_order"
                 name="sort_order"
                 placeholder=" "
-                class="wide"
+                class="input"
             >
                 <option selected disabled>Sort Order</option>
                 {#each sortOrder as { value, name }}
                     <option {value}>{name}</option>
                 {/each}
             </select>
-            <label for="sort_order" class="wide">Sort Order</label>
+            <label for="sort_order" class="input">Sort Order</label>
         </div>
     </OptionSection>
 
@@ -95,7 +95,7 @@
                 id="limit"
                 name="limit"
                 placeholder=" "
-                class="wide"
+                class="input"
                 type="number"
                 inputmode="numeric"
                 min="0"
@@ -103,7 +103,7 @@
                 bind:value={searchQuery.limit}
                 title={limitEnabled ? '' : 'Flip switch to enable limit'}
             />
-            <label for="limit" class="wide">Limit</label>
+            <label for="limit" class="input">Limit</label>
 
             <div
                 class="absolute top-5 right-3"
@@ -129,7 +129,7 @@
                 id="search_term"
                 name="search_term"
                 placeholder=" "
-                class="wide"
+                class="input"
                 type="text"
                 bind:value={searchQuery.search_term}
                 on:focus={() => (searchQuery.sort_by = '')}
@@ -138,7 +138,7 @@
                         ? ''
                         : 'publish_date')}
             />
-            <label for="search_term" class="wide">Search Term</label>
+            <label for="search_term" class="input">Search Term</label>
 
             <div
                 class="absolute top-5 right-3"
@@ -155,57 +155,5 @@
 <style lang="scss">
     div.input {
         @apply relative h-16 flex justify-center;
-    }
-
-    select.wide,
-    input.wide {
-        @apply w-full h-4/5 m-auto pl-4
-
-	appearance-none rounded-lg
-	border border-tertiary-700
-	outline outline-2 outline-surface-100
-	bg-surface-50
-
-	text-sm
-
-	disabled:cursor-not-allowed disabled:text-tertiary-600
-
-	transition-all duration-300;
-
-        &:hover:not([disabled]),
-        &:focus:not([disabled]) {
-            @apply border-white outline-primary-500/75;
-        }
-
-        &:hover:not([disabled]) ~ label,
-        &:focus:not([disabled]) ~ label {
-            @apply text-primary-500;
-        }
-
-        &:focus ~ label,
-        &:not(:placeholder-shown) ~ label {
-            @apply bg-surface-100;
-            transform: translateY(-1.7rem) scale(0.85);
-        }
-
-        &[type='number'] {
-            -moz-appearance: textfield;
-        }
-
-        &::-webkit-outer-spin-button,
-        &::-webkit-inner-spin-button {
-            display: none;
-            -webkit-appearance: none;
-            margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-        }
-    }
-
-    label.wide {
-        @apply capitalize font-light text-sm
-	pointer-events-none
-	absolute left-4 top-6
-	transition-colors transition-transform;
-
-        transform-origin: 0 50%;
     }
 </style>
