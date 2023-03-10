@@ -62,10 +62,10 @@ export interface SearchQuery {
     sort_order: SortOrder | null;
 
     search_term: string | null;
-    highlight: boolean;
+    highlight: boolean | null;
 
-    first_date: string;
-    last_date: string;
+    first_date: string | null;
+    last_date: string | null;
 
     source_category: string[];
 }
