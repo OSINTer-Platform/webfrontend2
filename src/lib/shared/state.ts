@@ -1,13 +1,19 @@
 import { persisted } from 'svelte-local-storage-store';
 import { writable, type Writable } from 'svelte/store';
 
-import type { Article } from './types/api';
+import type { Article, ArticleCategories } from './types/api';
 import type { ArticleListRender } from './types/internal';
 
-export const modalState: Writable<{
-    modalType: string | null;
-    modalContent: { [key: string]: any } | null;
-}> = persisted('modalState', {
+export const modalState: Writable<
+    | {
+          modalType: 'article';
+          modalContent: { article: Article; categories: ArticleCategories };
+      }
+    | {
+          modalType: null;
+          modalContent: null;
+      }
+> = persisted('modalState', {
     modalType: null,
     modalContent: null,
 });
