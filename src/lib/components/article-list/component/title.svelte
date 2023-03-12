@@ -1,5 +1,6 @@
 <script lang="ts">
     import { getTimespan } from '$lib/common/math';
+    import { spawnArticleModal } from '$lib/common/state';
     import type { ArticleBase } from '$shared/types/api';
     import SvelteMarkdown from 'svelte-markdown';
 
@@ -16,6 +17,7 @@
 >
     {#each articles as article}
         <a
+            on:click={(e) => spawnArticleModal(e, article.id)}
             data-sveltekit-preload-data="tap"
             href={`/article/${article.id}`}
             class="
