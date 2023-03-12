@@ -2,9 +2,11 @@
     import '../app.css';
 
     import TopBar from './topbar.svelte';
+    import Modals from '$com/modals/all.svelte';
 </script>
 
-<div class="z-50 relative">
+<Modals />
+<div class="z-40 relative">
     <TopBar />
 </div>
 <div class="flex flex-row flex-grow items-stretch min-h-0">
