@@ -1,29 +1,47 @@
 <script lang="ts">
-    import type { Article } from '$shared/types/api';
+    import type { Article, ArticleCategories } from '$shared/types/api';
 
     import SvelteMarkdown from 'svelte-markdown';
 
     export let article: Article;
+    export let articleCategories: ArticleCategories | null = null;
     export let header: Boolean = true;
 
     $: readableDate = new Date(article.publish_date).toLocaleString();
 </script>
 
 {#if header}
-    <div class="flex justify-between items-center">
+    <div class="flex justify-between items-center mb-6">
         <time class="block text-sm opacity-50">{readableDate}</time>
         <span class="text-xs opacity-50">Read {article.read_times} times</span>
     </div>
-    <h1 class="text-4xl">{article.title}</h1>
-    <h4 class="">
-        From {article.source} - Written by {article.author} - -
-    </h4>
+
+    <h1 class="text-5xl font-semibold">{article.title}</h1>
+    {#if articleCategories}
+        <div class="flex gap-4 items-center my-6">
+            <img
+                class="w-14 h-14 object-contain bg-white rounded-md drop-shadow-md"
+                src={articleCategories?.[article.profile]?.image}
+                alt="Source logo"
+            />
+            <ul class="text-tertiary-900 font-medium">
+                <li>
+                    Written by <span class="text-black">{article.author}</span>
+                </li>
+                <li>From <span class="text-black">{article.source}</span></li>
+            </ul>
+        </div>
+    {/if}
 {/if}
 
-<img alt="Main Article" src={article.image_url} class="aspect-video mb-6" />
+<img
+    alt="Main Article"
+    src={article.image_url}
+    class="aspect-video w-full object-cover mb-4"
+/>
 
 {#if header}
-    <h3>{article.description}</h3>
+    <h3 class="text-2xl mb-4">{article.description}</h3>
 {/if}
 
 <div class="article-content text-justify">
@@ -37,6 +55,7 @@
     class="
 	p-6
 
+	w-full
 	uppercase
 	font-bold
 	text-tertiary-800
