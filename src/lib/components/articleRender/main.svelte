@@ -24,7 +24,7 @@
                 src={articleCategories?.[article.profile]?.image}
                 alt="Source logo"
             />
-            <ul class="text-tertiary-900 font-medium">
+            <ul class="text-tertiary-900 text-sm font-medium">
                 <li>
                     Written by <span class="text-black">{article.author}</span>
                 </li>
