@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import { spawnArticleModal } from '$lib/common/state';
 
     export let articleId: string;
@@ -9,6 +10,7 @@
 
 <a
     on:click={(e) => spawnArticleModal(e, articleId)}
+    on:contextmenu|preventDefault={() => goto(`/article/${articleId}`)}
     data-sveltekit-preload-data="tap"
     href={`/article/${articleId}`}
     class={classes}
