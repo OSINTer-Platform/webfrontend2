@@ -54,10 +54,12 @@ export const navItems: { [key in 'external' | 'internal']: Array<NavItem> } = {
             route: '/search',
             icon: faMagnifyingGlass,
         },
+        /*
         {
             text: 'Overview',
             route: '/ml',
             icon: faDiagramProject,
         },
+		*/
     ],
 };
