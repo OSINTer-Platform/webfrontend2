@@ -154,9 +154,3 @@
         </div>
     </OptionSection>
 </div>
-
-<style lang="scss">
-    div.input {
-        @apply relative h-16 flex justify-center;
-    }
-</style>
