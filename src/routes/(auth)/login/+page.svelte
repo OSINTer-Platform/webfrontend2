@@ -1,9 +1,12 @@
 <script lang="ts">
     import Switch from '$utils/switch.svelte';
+    import type { ActionData } from './$types';
 
-    let username: string = '';
+    export let form: ActionData;
+
+    let username: string = form?.username ?? '';
     let password: string = '';
-    let remember: boolean = false;
+    let remember: boolean = form?.remember ?? false;
 
     let formError: string | null;
     $: {
@@ -15,6 +18,12 @@
             formError = null;
         }
     }
+
+    let success = form?.success ?? true;
+    let title = success ? 'Welcome back!' : 'Failure!';
+    let detail =
+        form?.detail ??
+        'Log in down below to continue with your journey into the wonderful world of CTI';
 </script>
 
 <main
@@ -35,11 +44,8 @@
 "
 >
     <header>
-        <h1 class="text-5xl font-semibold">Welcome back!</h1>
-        <p class="font-light">
-            Log in down below to continue with your journey into the wonderful
-            world of CTI
-        </p>
+        <h1 class="text-5xl font-semibold">{title}</h1>
+        <p class="font-light">{detail}</p>
     </header>
 
     <form method="post" class="w-full">
