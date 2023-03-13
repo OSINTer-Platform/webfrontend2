@@ -23,6 +23,22 @@
     }
 }
 
+.link-underline {
+    &:after {
+        content: '';
+        @apply block
+		w-full h-px
+
+		scale-x-0 origin-bottom-right
+		transition-transform duration-300
+		bg-current;
+    }
+
+    &:hover:after {
+        @apply scale-x-100 origin-bottom-left;
+    }
+}
+
 div.input {
     @apply relative h-16 flex justify-center;
 }
