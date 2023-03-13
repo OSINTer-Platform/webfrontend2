@@ -2,7 +2,7 @@
     import SvelteMarkdown from 'svelte-markdown';
     import { getTimespan } from '$lib/common/math';
     import type { ArticleBase } from '$shared/types/api';
-    import { spawnArticleModal } from '$lib/common/state';
+    import Link from './link.svelte';
 
     export let articles: Array<ArticleBase>;
 </script>
@@ -20,10 +20,8 @@
     {#each articles as article}
         <hr class="text-tertiary-500" />
 
-        <a
-            on:click={(e) => spawnArticleModal(e, article.id)}
-            data-sveltekit-preload-data="tap"
-            href={`/article/${article.id}`}
+        <Link
+            articleId={article.id}
             class="
 		grid
 		xl:grid-cols-[auto_1fr]
@@ -120,6 +118,6 @@
                     </p>
                 </div>
             </div>
-        </a>
+        </Link>
     {/each}
 </div>
