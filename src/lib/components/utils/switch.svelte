@@ -1,10 +1,10 @@
 <script lang="ts">
     export let checked: boolean = false;
     export let size: 'xs' | 'sm' | 'base' | 'md' | 'lg' | 'xl' | '2xl' = 'base';
-    export let name = '';
+    export let name: string = '';
 </script>
 
-<label class="group relative cursor-pointer text-{size}">
+<label class="group relative flex items-center cursor-pointer text-{size}">
     <input type="checkbox" class="peer hidden" bind:checked on:change {name} />
     <span
         class="
@@ -22,4 +22,5 @@
 		peer-checked:bg-primary-500
 	"
     />
+    <slot />
 </label>
