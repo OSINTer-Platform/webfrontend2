@@ -1,9 +1,14 @@
 <script lang="ts">
+    import type { LayoutData } from './$types';
+
     import '../app.css';
 
     import TopBar from './topbar.svelte';
     import Modals from '$com/modals/all.svelte';
+    import AppSwitcher from '$com/sidebar/appSwitcher.svelte';
     import { modalState } from '$shared/state';
+
+    export let data: LayoutData;
 
     function handleKeypress(keyName: string) {
         switch (keyName) {
@@ -21,5 +26,8 @@
     <TopBar />
 </div>
 <div class="flex flex-row flex-grow items-stretch min-h-0 relative">
+    {#if !data.customSidebar}
+        <AppSwitcher />
+    {/if}
     <slot />
 </div>

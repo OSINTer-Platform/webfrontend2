@@ -16,9 +16,13 @@
 	overflow-auto
 "
 >
-    <slot />
+    <slot name="nav" />
+    <slot name="content" />
 </div>
 
+<span class="block lg:hidden">
+    <slot name="nav" />
+</span>
 <div
     on:click={() => ($sideOpen = !$sideOpen)}
     on:keyup={() => ($sideOpen = !$sideOpen)}
@@ -60,6 +64,7 @@
 		duration-200
 	"
     >
-        <slot />
+        <slot name="nav" />
+        <slot name="content" />
     </div>
 </div>

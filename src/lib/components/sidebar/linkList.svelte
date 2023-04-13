@@ -12,15 +12,19 @@
 </script>
 
 <SidebarShell>
-    <AppSwitcher />
+    <svelte:fragment slot="nav">
+        <AppSwitcher />
+    </svelte:fragment>
 
-    {#if options.length > 0}
-        <LinkNavShell>
-            {#each options as option}
-                {#if option.list.length > 0}
-                    <LinkNavOptions options={option} />
-                {/if}
-            {/each}
-        </LinkNavShell>
-    {/if}
+    <svelte:fragment slot="content">
+        {#if options.length > 0}
+            <LinkNavShell>
+                {#each options as option}
+                    {#if option.list.length > 0}
+                        <LinkNavOptions options={option} />
+                    {/if}
+                {/each}
+            </LinkNavShell>
+        {/if}
+    </svelte:fragment>
 </SidebarShell>
