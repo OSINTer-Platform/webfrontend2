@@ -16,6 +16,8 @@
     import ListMenu from '$com/listMenu.svelte';
     import { sideOpen } from '$shared/state';
 
+    export let burgerMenu = false;
+
     const socials: Array<NavItem> = [
         {
             text: 'Gitlab',
@@ -48,14 +50,16 @@
 >
     <div class="flex items-center gap-8">
         <!-- Hamburger Menu -->
-        <button
-            on:click={() => {
-                $sideOpen = !$sideOpen;
-            }}
-            class="btn lg:!hidden p-2 rounded-xl"
-        >
-            <Fa icon={faBars} class="text-xl" />
-        </button>
+        {#if burgerMenu}
+            <button
+                on:click={() => {
+                    $sideOpen = !$sideOpen;
+                }}
+                class="btn lg:!hidden p-2 rounded-xl"
+            >
+                <Fa icon={faBars} class="text-xl" />
+            </button>
+        {/if}
 
         <!-- Logo -->
         <a

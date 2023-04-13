@@ -23,7 +23,7 @@
 
 <Modals />
 <div class="z-40 relative">
-    <TopBar />
+    <TopBar burgerMenu={data.customSidebar} />
 </div>
 <div class="flex flex-row flex-grow items-stretch min-h-0 relative">
     {#if !data.customSidebar}
