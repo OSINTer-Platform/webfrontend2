@@ -18,7 +18,8 @@ export const modalState: Writable<
     modalContent: null,
 });
 
-export const sideOpen: Writable<{ [key: string]: Boolean }> = persisted(
+// For controlling the submenus in the sidebar using the ID of the submenu as the key
+export const sideMenuOpen: Writable<{ [key: string]: Boolean }> = persisted(
     'sidebar-open',
     {}
 );

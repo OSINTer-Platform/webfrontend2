@@ -7,18 +7,18 @@
     import { page } from '$app/stores';
 
     import type { SidebarOption } from '$shared/nav';
-    import { sideOpen } from '$shared/state';
+    import { sideMenuOpen } from '$shared/state';
 
     export let options: SidebarOption;
 
-    $: open = $sideOpen[options.id] ?? true;
+    $: open = $sideMenuOpen[options.id] ?? true;
 </script>
 
 <!-- Title -->
 {#if options.title}
     <button
         id={options.id}
-        on:click={() => ($sideOpen[options.id] = !open)}
+        on:click={() => ($sideMenuOpen[options.id] = !open)}
         class="
 
 		mx-2
