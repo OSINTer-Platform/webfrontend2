@@ -7,7 +7,7 @@
 	flex-col
 
 	p-4
-	w-80
+	w-96
 
 	bg-surface-50
 

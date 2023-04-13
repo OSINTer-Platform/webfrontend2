@@ -20,6 +20,6 @@
 <div class="z-40 relative">
     <TopBar />
 </div>
-<div class="flex flex-row flex-grow items-stretch min-h-0">
+<div class="flex flex-row flex-grow items-stretch min-h-0 relative">
     <slot />
 </div>

@@ -18,6 +18,8 @@ export const modalState: Writable<
     modalContent: null,
 });
 
+// For controlling if the sidebar is open on small screens
+export const sideOpen: Writable<Boolean> = writable(false);
 // For controlling the submenus in the sidebar using the ID of the submenu as the key
 export const sideMenuOpen: Writable<{ [key: string]: Boolean }> = persisted(
     'sidebar-open',

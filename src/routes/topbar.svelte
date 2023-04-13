@@ -14,6 +14,7 @@
 
     import LogoFull from '$assets/LogoFull.svelte';
     import ListMenu from '$com/listMenu.svelte';
+    import { sideOpen } from '$shared/state';
 
     const socials: Array<NavItem> = [
         {
@@ -47,7 +48,12 @@
 >
     <div class="flex items-center gap-8">
         <!-- Hamburger Menu -->
-        <button on:click={() => {}} class="btn lg:!hidden p-2 rounded-xl">
+        <button
+            on:click={() => {
+                $sideOpen = !$sideOpen;
+            }}
+            class="btn lg:!hidden p-2 rounded-xl"
+        >
             <Fa icon={faBars} class="text-xl" />
         </button>
 
