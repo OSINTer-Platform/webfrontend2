@@ -81,6 +81,7 @@
                 bind:group={selectedSources}
                 type="checkbox"
                 id="{profileName}-checkbox"
+                name="source_category"
                 value={profileName}
                 class="hidden"
             />
