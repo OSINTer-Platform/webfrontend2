@@ -39,16 +39,17 @@
 	flex
 	flex-row
 	justify-between
+	items-center
 
 	bg-surface-100
 	dark:bg-surface-800
 
 	shadow-lg
 
-	p-6
+	p-4
 "
 >
-    <div class="flex items-center gap-8">
+    <div class="flex items-center gap-2">
         <!-- Hamburger Menu -->
         {#if burgerMenu}
             <button
@@ -63,11 +64,11 @@
 
         <!-- Logo -->
         <a
-            class="lg:!ml-0 w-[38px] lg:w-auto overflow-hidden"
+            class="w-7 lg:w-auto overflow-hidden"
             href="/"
             title="Go to Homepage"
         >
-            <LogoFull />
+            <LogoFull class="h-8 lg:h-10" />
         </a>
     </div>
 
