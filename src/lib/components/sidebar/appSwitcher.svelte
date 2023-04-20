@@ -27,8 +27,9 @@
         <ul>
             {#each items as item}
                 {@const selected =
-                    $page.url.pathname.startsWith(item.route) &&
-                    item.route.length > 1}
+                    ($page.url.pathname.startsWith(item.route) &&
+                        item.route.length > 1) ||
+                    $page.url.pathname == item.route}
                 <li>
                     <a
                         href={item.route}

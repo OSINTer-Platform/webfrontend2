@@ -34,7 +34,7 @@ export const navItems: { [key in 'external' | 'internal']: Array<NavItem> } = {
         },
         {
             text: 'Blog',
-            route: '/blog/',
+            route: '/blog',
             icon: faBullhorn,
         },
     ],
