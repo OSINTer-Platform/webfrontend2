@@ -1,3 +1,5 @@
+export const prerender = true;
+
 import type { LayoutServerLoad } from './$types';
 import type { Post } from '$shared/types/blog';
 import matter from 'gray-matter';
