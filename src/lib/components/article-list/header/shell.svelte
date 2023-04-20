@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Search from './search.svelte';
+    import Search from '$com/utils/search.svelte';
     import Tabs from '$com/tabs.svelte';
 
     import type { HeaderModOptions } from '$shared/types/internal';
@@ -56,7 +56,11 @@
 
     <slot />
 
-    <Search bind:articleSearch={$localSearch} />
+    <Search
+        bind:value={$localSearch}
+        placeholder={'Filter displayed articles'}
+        containerClass={'w-full my-6'}
+    />
 
     <Tabs
         bind:selected={$articleListRender}

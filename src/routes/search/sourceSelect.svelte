@@ -1,4 +1,6 @@
 <script lang="ts">
+    import Search from '$com/utils/search.svelte';
+
     import type { ArticleCategories } from '$shared/types/api';
 
     import Fa from 'svelte-fa/src/fa.svelte';
@@ -24,19 +26,12 @@
 	gap-4
 "
 >
-    <div class="grow search-field">
-        <label for="source-search" class="">
-            <Fa icon={faMagnifyingGlass} />
-        </label>
-
-        <input
-            bind:value={sourceSearch}
-            id="source-search"
-            type="text"
-            placeholder="Search sources..."
-            class="w-26"
-        />
-    </div>
+    <Search
+        bind:value={sourceSearch}
+        placeholder={'Filter sources...'}
+        inputClass={'w-26'}
+        containerClass="grow"
+    />
 
     <button
         type="button"
