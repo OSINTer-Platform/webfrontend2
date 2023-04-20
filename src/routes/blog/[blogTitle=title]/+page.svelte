@@ -4,7 +4,7 @@
     export let data: PageData;
 
     $: postData = data.currentPost.data;
-    $: readableDate = new Date(postData.date).toLocaleString();
+    $: readableDate = postData.date.toLocaleString();
 </script>
 
 <article

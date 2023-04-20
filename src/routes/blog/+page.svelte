@@ -22,15 +22,12 @@
 
     <section class="flex flex-col gap-6">
         {#each data.postList as post}
-            {@const readableDate = new Date(post.data.date).toLocaleDateString(
-                'en-DK',
-                {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                }
-            )}
+            {@const readableDate = post.data.date.toLocaleDateString('en-DK', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            })}
 
             <a
                 href="/blog/{post.data.id}"

@@ -12,10 +12,17 @@ export const load = (async () => {
 
             const matterPost = matter(rawPost);
 
-            const post = {
-                data: { ...matterPost.data, id: fileid },
+            const post: Post = {
+                data: {
+                    id: fileid,
+                    title: matterPost.data.title,
+                    date: new Date(matterPost.data.date),
+                    author: matterPost.data.author,
+                    description: matterPost.data.description,
+                    image: matterPost.data.image,
+                },
                 content: matterPost.content,
-            } as Post;
+            };
 
             return [fileid, post];
         })
