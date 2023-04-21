@@ -1,5 +1,7 @@
 import { config } from '$shared/config';
-import { fullArticles, modalState } from '$state/state';
+import { modalState } from '$state/state';
+import { fullArticles } from '$state/storedArticles';
+
 import type { Article, ArticleCategories } from '$shared/types/api';
 
 export async function spawnArticleModal(e: MouseEvent, id: string) {
