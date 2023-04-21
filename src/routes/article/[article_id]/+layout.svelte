@@ -17,8 +17,7 @@
     } from '@fortawesome/free-solid-svg-icons/index';
 
     import { config } from '$shared/config';
-    import { fullArticles } from '$state/state';
-    import { redirect } from '@sveltejs/kit';
+    import { fullArticles } from '$state/storedArticles';
     import { goto } from '$app/navigation';
 
     export let data: LayoutData;

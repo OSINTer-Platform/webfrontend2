@@ -1,13 +1,16 @@
 <script lang="ts">
     import Sidebar from '$com/sidebar/linkList.svelte';
 
-    import { fullArticles } from '$state/state';
     import type { SidebarOption } from '$shared/nav';
+
+
+    import { filteredArticles } from '$state/storedArticles';
+    import { localSearch } from '$state/storedArticles';
 
     let option: SidebarOption;
     $: option = {
         id: 'articles',
-        list: Object.values($fullArticles).map((article) => ({
+        list: $filteredArticles.map((article) => ({
             href: `/article/${article.id}`,
             label: article.title,
         })),
