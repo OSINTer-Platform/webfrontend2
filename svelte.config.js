@@ -11,6 +11,7 @@ const config = {
         adapter: adapter(),
         alias: {
             $shared: 'src/lib/shared',
+            $state: 'src/lib/shared/state',
             $com: 'src/lib/components',
             $utils: 'src/lib/components/utils',
             $assets: 'src/lib/assets',

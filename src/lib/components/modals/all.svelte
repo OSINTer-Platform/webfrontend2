@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { modalState } from '$shared/state';
+    import { modalState } from '$state/state';
     import Article from './article.svelte';
 </script>
 

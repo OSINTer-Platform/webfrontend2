@@ -1,7 +1,7 @@
 <script lang="ts">
     import Sidebar from '$com/sidebar/linkList.svelte';
 
-    import { fullArticles } from '$shared/state';
+    import { fullArticles } from '$state/state';
     import type { SidebarOption } from '$shared/nav';
 
     let option: SidebarOption;

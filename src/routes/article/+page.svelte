@@ -2,7 +2,7 @@
     import HeaderShell from '$com/article-list/header/shell.svelte';
 
     import List from '$com/article-list/wrapper.svelte';
-    import { fullArticles } from '$shared/state';
+    import { fullArticles } from '$state/state';
     import type { HeaderModOptions } from '$shared/types/internal';
     import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 

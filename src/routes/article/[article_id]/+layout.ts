@@ -4,7 +4,7 @@ import { config } from '$shared/config';
 import type { Article } from '$shared/types/api';
 
 import { get } from 'svelte/store';
-import { fullArticles } from '$shared/state';
+import { fullArticles } from '$state/state';
 
 export const load = (({ params, fetch }) => {
     const fullArticleList = get(fullArticles);

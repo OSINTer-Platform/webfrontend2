@@ -14,7 +14,7 @@
 
     import LogoFull from '$assets/LogoFull.svelte';
     import ListMenu from '$com/listMenu.svelte';
-    import { sideOpen } from '$shared/state';
+    import { sideOpen } from '$state/state';
 
     export let burgerMenu = false;
 

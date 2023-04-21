@@ -17,7 +17,7 @@
     } from '@fortawesome/free-solid-svg-icons/index';
 
     import { config } from '$shared/config';
-    import { fullArticles } from '$shared/state';
+    import { fullArticles } from '$state/state';
     import { redirect } from '@sveltejs/kit';
     import { goto } from '$app/navigation';
 

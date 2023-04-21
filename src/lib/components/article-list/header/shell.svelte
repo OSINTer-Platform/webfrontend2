@@ -4,7 +4,7 @@
 
     import type { HeaderModOptions } from '$shared/types/internal';
 
-    import { articleListRender, localSearch } from '$shared/state';
+    import { articleListRender, localSearch } from '$state/state';
     import ModList from './modList.svelte';
 
     export let title: string;

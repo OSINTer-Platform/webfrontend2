@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { sideOpen } from '$shared/state';
+    import { sideOpen } from '$state/state';
 </script>
 
 <div

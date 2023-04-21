@@ -6,7 +6,7 @@
     import TopBar from './topbar.svelte';
     import Modals from '$com/modals/all.svelte';
     import AppSwitcher from '$com/sidebar/appSwitcher.svelte';
-    import { modalState } from '$shared/state';
+    import { modalState } from '$state/state';
 
     export let data: LayoutData;
 

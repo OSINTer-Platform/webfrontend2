@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { articleListRender, localSearch } from '$shared/state';
+    import { articleListRender, localSearch } from '$state/state';
     import { filterArticles } from '$lib/common/filter';
     import type { ArticleBase } from '$shared/types/api';
     import List from './main.svelte';
