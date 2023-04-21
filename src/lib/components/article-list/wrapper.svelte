@@ -1,6 +1,5 @@
 <script lang="ts">
-    import { articleListRender, localSearch } from '$state/state';
-    import { filterArticles } from '$lib/common/filter';
+    import { articleListRender } from '$state/state';
     import type { ArticleBase } from '$shared/types/api';
     import List from './main.svelte';
 
@@ -17,8 +16,5 @@
 	sm:p-12
 "
 >
-    <List
-        articles={filterArticles(articles, $localSearch)}
-        layout={$articleListRender}
-    />
+    <List {articles} layout={$articleListRender} />
 </div>

@@ -26,13 +26,9 @@ export const sideMenuOpen: Writable<{ [key: string]: Boolean }> = persisted(
     {}
 );
 
-export const localSearch: Writable<string> = writable('');
 export const articleListRender: Writable<ArticleListRender> = persisted(
     'articleListRender',
     'large'
 );
 
-export const fullArticles: Writable<{ [key: string]: Article }> = persisted(
-    'fullArticleList',
-    {}
-);
+export const feedLocalSearch = writable('');
