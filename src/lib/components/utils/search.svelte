@@ -25,7 +25,7 @@
 
     <input
         id="search-field"
-        {value}
+        bind:value
         {placeholder}
         class="
 		grow h-full
