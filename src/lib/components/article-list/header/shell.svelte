@@ -4,12 +4,14 @@
 
     import type { HeaderModOptions } from '$shared/types/internal';
 
-    import { articleListRender, localSearch } from '$state/state';
+    import { articleListRender } from '$state/state';
     import ModList from './modList.svelte';
 
     export let title: string;
     export let badge: string = '';
     export let description: string = '';
+
+    export let searchValue: string = '';
 
     export let modOptions: Array<HeaderModOptions> = [];
 </script>
@@ -57,7 +59,7 @@
     <slot />
 
     <Search
-        bind:value={$localSearch}
+        bind:value={searchValue}
         placeholder={'Filter displayed articles'}
         containerClass={'w-full my-6'}
     />

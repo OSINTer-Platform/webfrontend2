@@ -1,17 +1,18 @@
 <script lang="ts">
     import type { LayoutData } from './$types';
+    import type { HeaderModOptions } from '$shared/types/internal';
 
-    export let data: LayoutData;
-
-    import { config } from '$shared/config';
     import ItemDescriptor from '../itemDescriptor/main.svelte';
     import HeaderShell from '$com/article-list/header/shell.svelte';
 
+    import { config } from '$shared/config';
+    import { feedLocalSearch } from '$state/state';
     import {
         faDownload,
         faPenToSquare,
     } from '@fortawesome/free-solid-svg-icons/index';
-    import type { HeaderModOptions } from '$shared/types/internal';
+
+    export let data: LayoutData;
 
     let modOptions: Array<HeaderModOptions>;
 
@@ -33,6 +34,7 @@
     title={data.currentItem.name}
     badge={data.currentItem.type}
     {modOptions}
+    bind:searchValue={$feedLocalSearch}
 >
     <ItemDescriptor
         currentItem={data.currentItem}

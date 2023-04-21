@@ -1,12 +1,13 @@
 <script lang="ts">
     import type { LayoutData } from './$types';
-
-    export let data: LayoutData;
-
-    import HeaderShell from '$com/article-list/header/shell.svelte';
     import type { HeaderModOptions } from '$shared/types/internal';
 
+    import HeaderShell from '$com/article-list/header/shell.svelte';
+
+    import { feedLocalSearch } from '$state/state';
     import { faDownload } from '@fortawesome/free-solid-svg-icons/index';
+
+    export let data: LayoutData;
 
     let modOptions: Array<HeaderModOptions>;
 
@@ -24,6 +25,7 @@
     badge={'Inbuilt feed'}
     description={data.currentItem.desc}
     {modOptions}
+    bind:searchValue={$feedLocalSearch}
 >
     <hr class="text-tertiary-600/50 sm:my-4" />
 </HeaderShell>

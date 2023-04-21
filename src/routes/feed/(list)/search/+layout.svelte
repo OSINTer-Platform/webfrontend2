@@ -5,8 +5,9 @@
     import FeedRender from '../itemDescriptor/feed.svelte';
     import HeaderShell from '$com/article-list/header/shell.svelte';
 
-    import { faDownload } from '@fortawesome/free-solid-svg-icons/index';
+    import { feedLocalSearch } from '$state/state';
     import { config } from '$shared/config';
+    import { faDownload } from '@fortawesome/free-solid-svg-icons/index';
 
     export let data: LayoutData;
 
@@ -21,7 +22,12 @@
     ];
 </script>
 
-<HeaderShell title={'Custom search'} badge={'Search'} {modOptions}>
+<HeaderShell
+    title={'Custom search'}
+    badge={'Search'}
+    {modOptions}
+    bind:searchValue={$feedLocalSearch}
+>
     <hr class="my-4 border-tertiary-700/50" />
     <FeedRender
         currentItem={data.currentSearch}
