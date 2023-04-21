@@ -1,6 +1,9 @@
 import type { ArticleBase } from '$shared/types/api';
 
-export function filterArticles(articles: ArticleBase[], search: string) {
+export function filterArticles<T extends ArticleBase>(
+    articles: T[],
+    search: string
+): T[] {
     search = search.toLowerCase();
 
     if (search.length > 0) {
