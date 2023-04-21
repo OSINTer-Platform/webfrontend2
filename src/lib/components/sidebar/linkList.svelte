@@ -19,11 +19,13 @@
     <svelte:fragment slot="content">
         {#if options.length > 0}
             <LinkNavShell>
+                <slot name="top" />
                 {#each options as option}
                     {#if option.list.length > 0}
                         <LinkNavOptions options={option} />
                     {/if}
                 {/each}
+                <slot name="bottom" />
             </LinkNavShell>
         {/if}
     </svelte:fragment>
