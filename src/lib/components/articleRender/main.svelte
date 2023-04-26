@@ -1,11 +1,20 @@
 <script lang="ts">
     import type { Article, ArticleCategories } from '$shared/types/api';
+    import type { HeadingList, ParsedEvent } from '$lib/common/ToC';
+
+    import { MDtoToC } from '$lib/common/ToC';
 
     import SvelteMarkdown from 'svelte-markdown';
 
     export let article: Article;
     export let articleCategories: ArticleCategories | null = null;
     export let header: Boolean = true;
+
+    export let headings: HeadingList = [];
+
+    function handleParsed(e: ParsedEvent) {
+        headings = MDtoToC(e);
+    }
 
     $: readableDate = new Date(article.publish_date).toLocaleString();
 </script>
@@ -45,7 +54,10 @@
 {/if}
 
 <div class="article-content text-justify">
-    <SvelteMarkdown source={article.formatted_content} />
+    <SvelteMarkdown
+        source={article.formatted_content}
+        on:parsed={handleParsed}
+    />
 </div>
 
 <hr class="text-tertiary-700/25 mb-8" />

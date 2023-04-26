@@ -38,6 +38,7 @@
 		overflow-x-hidden
 
 		bg-surface-50
+		scroll-smooth
 	"
 >
     <slot />

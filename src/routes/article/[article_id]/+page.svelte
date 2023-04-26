@@ -1,8 +1,12 @@
 <script lang="ts">
+    import type { HeadingList } from '$lib/common/ToC';
     import type { PageData } from './$types';
+
     import ArticleRender from '$com/articleRender/main.svelte';
 
     export let data: PageData;
+
+    let headings: HeadingList = [];
 </script>
 
 <section
@@ -20,30 +24,60 @@
 		flex-col
 
 		max-w-full
+		2xl:max-w-5xl
+		2xl:mx-auto
 		min-w-0
 
 		overflow-x-hidden
 	"
     >
-        <ArticleRender article={data.article} header={false} />
+        <ArticleRender bind:headings article={data.article} header={false} />
     </article>
 
-    <div
-        class="
-		w-96
+    {#if headings.length > 0}
+        <div
+            class="
+			w-96
+			max-h-screen
+			overflow-x-auto
 
-		h-20
-		bg-primary-500/25
+			shrink-0
 
-		shrink-0
+			sticky
+			top-4
 
-		sticky
-		top-10
-
-		hidden
-		2xl:block
-	"
-    >
-        Placeholder
-    </div>
+			hidden
+			2xl:flex
+			flex-col
+		"
+        >
+            <p
+                class="
+				pl-2
+				font-bold
+				text-lg
+			"
+            >
+                In this article
+            </p>
+            {#each headings as heading}
+                <a
+                    href="#{heading.id}"
+                    class="
+					inline-flex items-center
+					h-8 shrink-0
+					px-2
+					overflow-hidden truncate
+					text-sm font-light
+					rounded-md
+					cursor-pointer
+					hover:bg-primary-500/5
+					ml-{3 * heading.depth}
+				"
+                >
+                    {heading.text}
+                </a>
+            {/each}
+        </div>
+    {/if}
 </section>
