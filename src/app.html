@@ -1,15 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+    <!-- prettier-ignore -->
     <head>
         <meta charset="utf-8" />
         <link rel="icon" href="%sveltekit.assets%/favicon.png" />
         <meta name="viewport" content="width=device-width" />
         <meta property="og:locale" content="en_DK" />
+
+		<link class="dual-favicon" rel="icon" type="image/png" sizes="32x32" href="%sveltekit.assets%/favicons/light/favicon-32x32.png">
+		<link class="dual-favicon" rel="icon" type="image/png" sizes="16x16" href="%sveltekit.assets%/favicons/light/favicon-16x16.png">
+		<link class="dual-favicon" rel="shortcut icon" href="%sveltekit.assets%/favicons/light/favicon.ico">
+
+		<link rel="apple-touch-icon" sizes="180x180" href="%sveltekit.assets%/favicons/dark/apple-touch-icon.png">
+		<link rel="manifest" href="%sveltekit.assets%/favicons/dark/site.webmanifest">
+		<link rel="mask-icon" href="%sveltekit.assets%/favicons/dark/safari-pinned-tab.svg" color="#000000">
+		<meta name="msapplication-TileColor" content="#b91d47">
+		<meta name="msapplication-config" content="%sveltekit.assets%/favicons/dark/browserconfig.xml">
+		<meta name="theme-color" content="#000000">
+
         %sveltekit.head%
     </head>
     <body data-sveltekit-preload-data="hover">
         <div class="h-screen overflow-hidden flex flex-col">
             %sveltekit.body%
         </div>
+
+        <script>
+            const usesDarkMode =
+                window.matchMedia('(prefers-color-scheme: dark)').matches ||
+                false;
+            const favicons = Array.from(
+                document.getElementsByClassName('dual-favicon')
+            );
+
+            function switchIcons(darkMode) {
+                favicons.forEach((icon) => {
+                    if (darkMode) {
+                        icon.href = icon.href.replace('light', 'dark');
+                    } else {
+                        icon.href = icon.href.replace('dark', 'light');
+                    }
+                });
+            }
+
+            window
+                .matchMedia('(prefers-color-scheme: dark)')
+                .addEventListener('change', (e) => switchIcons(e.matches));
+            switchIcons(usesDarkMode);
+        </script>
     </body>
 </html>
