@@ -8,6 +8,24 @@
     $: readableDate = postData.date.toLocaleString();
 </script>
 
+<svelte:head>
+    <title>OSINTer Blog - {postData.title}</title>
+    <meta property="og:title" content="OSINTer Blog - {postData.title}" />
+    <meta property="og:description" content={postData.description} />
+    <meta
+        property="og:image"
+        content={postData.image ?? config.images.fullLogo}
+    />
+    <meta property="og:url" content="https://osinter.dk/blog/{postData.id}" />
+
+    <meta property="og:type" content="article" />
+    <meta
+        property="article:published_time"
+        content={postData.date.toISOString()}
+    />
+    <meta property="article:author" content={postData.author} />
+</svelte:head>
+
 <article
     class="
 	flex

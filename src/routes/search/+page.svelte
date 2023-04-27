@@ -19,6 +19,21 @@
     export let searchQuery: SearchQuery = getStandardSearch();
 </script>
 
+<svelte:head>
+    <title>OSINTer - Search in articles</title>
+    <meta
+        property="og:title"
+        content="OSINTer - Search for available articles"
+    />
+    <meta
+        property="og:description"
+        content="Here it's possible to search in the articles stored in this instance of OSINTer"
+    />
+    <meta property="og:image" content={config.images.fullLogo} />
+    <meta property="og:url" content="https://osinter.dk/search" />
+    <meta property="og:type" content="website" />
+</svelte:head>
+
 <form
     action="/feed/search"
     method="get"

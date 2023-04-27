@@ -4,6 +4,18 @@
     export let data: PageData;
 </script>
 
+<svelte:head>
+    <title>OSINTer Blog</title>
+    <meta property="og:title" content="The OSINTer Blog" />
+    <meta
+        property="og:description"
+        content="Keep up with the latest news, releases and improvements for OSINTer, delivered straight to you from the OSINTer core developement team."
+    />
+    <meta property="og:image" content={config.images.fullLogo} />
+    <meta property="og:url" content="https://osinter.dk/blog" />
+    <meta property="og:type" content="website" />
+</svelte:head>
+
 <div
     class="
 	mx-auto
@@ -16,7 +28,7 @@
         The blog for the OSINTer project
     </h1>
     <p class="md:text-lg font-light">
-        Keep up with the latest news, releases and improvements for Skeleton,
+        Keep up with the latest news, releases and improvements for OSINTer,
         delivered straight to you from the OSINTer core developement team.
     </p>
     <hr class="border-surface-300 my-8" />
