@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { config } from '$shared/config';
     import SvelteMarkdown from 'svelte-markdown';
     import type { PageData } from './$types';
     export let data: PageData;
@@ -56,7 +57,7 @@
             <img src={postData.image} alt="Article description" />
         {:else}
             <img
-                src="https://gitlab.com/osinter/osinter/-/raw/master/logo/full.png"
+                src={config.images.fullLogo}
                 alt="Article description"
                 class="aspect-[2/1] w-full object-cover"
             />

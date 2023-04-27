@@ -1,11 +1,17 @@
 import type { SearchQuery } from './types/api';
 import type { Inbuilt } from './types/internal';
 
-type O = string | { [key: string]: O };
-type OTop = { [key: string]: O };
-
-export const config: OTop = {
+export const config: {
+    apiRoot: string;
+    images: {
+        fullLogo: string;
+    };
+} = {
     apiRoot: 'http://127.0.0.1:8000',
+    images: {
+        fullLogo:
+            'https://gitlab.com/osinter/osinter/-/raw/master/logo/full.png',
+    },
 };
 
 const daySeconds = 24 * 60 * 60 * 1000;

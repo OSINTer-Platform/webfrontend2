@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { config } from '$shared/config';
     import type { PageData } from './$types';
     export let data: PageData;
 </script>
@@ -51,8 +52,7 @@
 			"
                 >
                     <img
-                        src={post.data.image ??
-                            'https://gitlab.com/osinter/osinter/-/raw/master/logo/full.png'}
+                        src={post.data.image ?? config.images.fullLogo}
                         alt="Article description"
                         class="
 					aspect-video
