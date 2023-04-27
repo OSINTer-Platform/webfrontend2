@@ -17,17 +17,18 @@ function extractTitleText(token: Token): string {
         token.type == 'text' ||
         !(Array.isArray(token.tokens) && token.tokens.length > 0)
     ) {
-        return token.text ?? token.raw;
+        return token.raw ?? token.text;
     } else {
         return extractTitleText(token.tokens[0]);
     }
 }
 
 function generateHeaderID(text: string): string {
-    return text
+    text = text
         .toLowerCase()
         .replace(/\s/g, '-')
         .replace(/[^a-zA-Z0-9_-]/g, '');
+    return text;
 }
 
 export function MDtoToC(e: ParsedEvent): HeadingList {
