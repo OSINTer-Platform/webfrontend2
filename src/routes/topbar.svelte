@@ -56,7 +56,7 @@
                 on:click={() => {
                     $sideOpen = !$sideOpen;
                 }}
-                class="btn lg:!hidden p-2 rounded-xl"
+                class="btn xl:!hidden p-2 rounded-xl"
             >
                 <Fa icon={faBars} class="text-xl" />
             </button>
@@ -64,11 +64,11 @@
 
         <!-- Logo -->
         <a
-            class="w-7 lg:w-auto overflow-hidden"
+            class="w-7 xl:w-auto overflow-hidden"
             href="/"
             title="Go to Homepage"
         >
-            <LogoFull class="h-8 lg:h-10" />
+            <LogoFull class="h-8 xl:h-10" />
         </a>
     </div>
 

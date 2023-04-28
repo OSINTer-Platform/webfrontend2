@@ -6,7 +6,7 @@
     class="
 	hidden
 
-	lg:grid
+	xl:grid
 	grid-cols-[auto_1fr]
 
 	shrink-0
@@ -20,7 +20,7 @@
     <slot name="content" />
 </div>
 
-<span class="block lg:hidden">
+<span class="hidden lg:block xl:hidden">
     <slot name="nav" />
 </span>
 <div
@@ -28,7 +28,7 @@
     on:keyup={() => ($sideOpen = !$sideOpen)}
     class="
 	{$sideOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}
-	lg:hidden
+	xl:hidden
 
 	flex
 	absolute

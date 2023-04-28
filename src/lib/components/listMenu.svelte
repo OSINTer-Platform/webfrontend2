@@ -11,6 +11,8 @@
         }>
     > = [];
 
+	export let containerClass: string = '';
+
     const buttonCss =
         'flex flex-row gap-6 hover:bg-primary-300/25 items-center justify-start rounded-xl w-full p-3 pl-5';
 </script>
@@ -18,9 +20,6 @@
 <div
     class="
 	relative
-
-	hidden
-	lg:block
 
 	[&:focus-within>div]:block
 "

@@ -11,7 +11,7 @@
     const btnClass = 'btn p-2 text-lg';
 </script>
 
-<ListMenu listOptions={[modOptions]}>
+<ListMenu listOptions={[modOptions]} containerClass={'hidden lg:block'}>
     <button class="{btnClass} xl:hidden lg:block md:hidden block">
         <Fa icon={faBars} />
     </button>
