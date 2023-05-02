@@ -1,8 +1,8 @@
-import { config } from '$shared/config';
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
 import * as set_cookie_parser from 'set-cookie-parser';
+import { PUBLIC_API_BASE } from '$env/static/public';
 
 export const actions = {
     default: async ({ request, cookies, fetch }) => {
@@ -33,7 +33,7 @@ export const actions = {
         }
 
         const r = await fetch(
-            `${config.apiRoot}/auth/login?remember_me=${encodeURIComponent(
+            `${PUBLIC_API_BASE}/auth/login?remember_me=${encodeURIComponent(
                 remember
             )}`,
             {

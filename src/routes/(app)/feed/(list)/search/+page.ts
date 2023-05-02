@@ -2,13 +2,15 @@ import type { PageLoad } from './$types';
 
 import { handleResponse } from '$lib/common/query';
 import type { ArticleBase } from '$shared/types/api';
-import { config } from '$shared/config';
+import { PUBLIC_API_BASE } from '$env/static/public';
 
 export const load = (async ({ fetch, parent }) => {
     const { searchUrl } = await parent();
 
     const fetchArticles = async (): Promise<ArticleBase[]> => {
-        const r = await fetch(`${config.apiRoot}/articles/search?${searchUrl}`);
+        const r = await fetch(
+            `${PUBLIC_API_BASE}/articles/search?${searchUrl}`
+        );
         return await handleResponse(r);
     };
 

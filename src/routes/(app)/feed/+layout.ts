@@ -2,17 +2,17 @@ import type { LayoutLoad } from './$types';
 import type { Collection, Feed } from '$shared/types/userItems';
 
 import { handleResponse, queryProtected } from '$lib/common/query';
-import { config } from '$shared/config';
 import type { ArticleCategories } from '$shared/types/api';
+import { PUBLIC_API_BASE } from '$env/static/public';
 
 export const load = (async ({ parent, fetch }) => {
     const fetchCategories = async (): Promise<ArticleCategories> => {
-        const r = await fetch(`${config.apiRoot}/articles/categories`);
+        const r = await fetch(`${PUBLIC_API_BASE}/articles/categories`);
         return await handleResponse(r);
     };
 
     const getStandardFeeds = async (): Promise<{ [key: string]: Feed }> => {
-        const r = await fetch(`${config.apiRoot}/user-items/standard/feeds`);
+        const r = await fetch(`${PUBLIC_API_BASE}/user-items/standard/feeds`);
         return await handleResponse(r);
     };
 

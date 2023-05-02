@@ -16,9 +16,9 @@
         faXmark,
     } from '@fortawesome/free-solid-svg-icons/index';
 
-    import { config } from '$shared/config';
     import { fullArticles } from '$state/storedArticles';
     import { goto } from '$app/navigation';
+    import { PUBLIC_API_BASE } from '$env/static/public';
 
     export let data: LayoutData;
 
@@ -74,7 +74,7 @@
         {
             text: 'Download MD',
             icon: faDownload,
-            route: `${config.apiRoot}/articles/${data.article.id}/export`,
+            route: `${PUBLIC_API_BASE}/articles/${data.article.id}/export`,
         },
         {
             text: 'Close article',

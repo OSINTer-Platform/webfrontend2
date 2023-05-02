@@ -1,9 +1,9 @@
+import { PUBLIC_API_BASE } from '$env/static/public';
 import type { LayoutLoad } from './$types';
-import { config } from '$shared/config';
 
 export const load = (async ({ fetch }) => {
     const getUserObject = async () => {
-        const r = await fetch(`${config.apiRoot}/auth/status`);
+        const r = await fetch(`${PUBLIC_API_BASE}/auth/status`);
         return r.ok ? r.json() : null;
     };
 

@@ -1,4 +1,4 @@
-import { config } from '$shared/config';
+import { PUBLIC_API_BASE } from '$env/static/public';
 import { error } from '@sveltejs/kit';
 
 type Resp = { content: any; ok: boolean; status: number };
@@ -12,7 +12,7 @@ export async function queryProtected(
         'Content-Type': 'application/json',
     });
 
-    const request = new Request(`${config.apiRoot}${queryURL}`, {
+    const request = new Request(`${PUBLIC_API_BASE}${queryURL}`, {
         method: method,
         headers: headers,
         credentials: 'include',

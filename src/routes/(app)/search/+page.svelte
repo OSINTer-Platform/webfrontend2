@@ -13,6 +13,7 @@
     import type { PageData } from './$types';
 
     import { config, getStandardSearch } from '$shared/config';
+    import { PUBLIC_API_BASE } from '$env/static/public';
 
     export let data: PageData;
 
@@ -123,7 +124,7 @@
 					-->
 
                     <button
-                        formaction="{config.apiRoot}/articles/search/export"
+                        formaction="{PUBLIC_API_BASE}/articles/search/export"
                         class="
 							btn
 							h-16

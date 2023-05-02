@@ -1,12 +1,12 @@
+import { PUBLIC_API_BASE } from '$env/static/public';
 import { handleResponse } from '$lib/common/query';
-import { config } from '$shared/config';
 import type { ItemBase } from '$shared/types/userItems';
 import type { LayoutLoad } from './$types';
 
 export const load = (async ({ params, fetch }) => {
     const fetchItem = async (): Promise<ItemBase> => {
         const r = await fetch(
-            `${config.apiRoot}/user-items/${params.item_id}/content`
+            `${PUBLIC_API_BASE}/user-items/${params.item_id}/content`
         );
         return await handleResponse(r);
     };

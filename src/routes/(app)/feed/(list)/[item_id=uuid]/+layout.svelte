@@ -5,12 +5,12 @@
     import ItemDescriptor from '../itemDescriptor/main.svelte';
     import HeaderShell from '$com/article-list/header/shell.svelte';
 
-    import { config } from '$shared/config';
     import { feedLocalSearch } from '$state/state';
     import {
         faDownload,
         faPenToSquare,
     } from '@fortawesome/free-solid-svg-icons/index';
+    import { PUBLIC_API_BASE } from '$env/static/public';
 
     export let data: LayoutData;
 
@@ -20,7 +20,7 @@
         {
             text: 'Download',
             icon: faDownload,
-            route: `${config.apiRoot}/user-items/${data.currentItem._id}/export`,
+            route: `${PUBLIC_API_BASE}/user-items/${data.currentItem._id}/export`,
         },
         {
             text: `Modify ${data.currentItem.type}`,

@@ -6,8 +6,8 @@
     import HeaderShell from '$com/article-list/header/shell.svelte';
 
     import { feedLocalSearch } from '$state/state';
-    import { config } from '$shared/config';
     import { faDownload } from '@fortawesome/free-solid-svg-icons/index';
+    import { PUBLIC_API_BASE } from '$env/static/public';
 
     export let data: LayoutData;
 
@@ -17,7 +17,7 @@
         {
             text: 'Download',
             icon: faDownload,
-            route: `${config.apiRoot}/articles/search/export?${data.searchUrl}`,
+            route: `${PUBLIC_API_BASE}/articles/search/export?${data.searchUrl}`,
         },
     ];
 </script>
