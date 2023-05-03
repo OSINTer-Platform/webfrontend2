@@ -4,12 +4,7 @@
     export { classes as class };
 </script>
 
-<svg
-    x="0px"
-    y="0px"
-    viewBox="0 0 606.59149 141.39213"
-    class="{classes} dark:hidden"
->
+<svg x="0px" y="0px" viewBox="0 0 606.59149 141.39213" class={classes}>
     <style type="text/css" id="style124">
         .st0 {
             fill: #ffffff;
@@ -50,12 +45,7 @@
     />
 </svg>
 
-<svg
-    x="0px"
-    y="0px"
-    viewBox="0 0 606.59149 141.39213"
-    class="{classes} dark:block hidden"
->
+<svg x="0px" y="0px" viewBox="0 0 606.59149 141.39213" class="{classes} hidden">
     <style type="text/css" id="style124">
         .st0 {
             fill: #ffffff;

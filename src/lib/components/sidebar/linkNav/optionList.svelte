@@ -37,7 +37,6 @@
         <span
             class="
 			text-primary-700
-			dark:text-primary-500
 
 			font-bold
 			uppercase

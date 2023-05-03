@@ -39,7 +39,6 @@
 
 	prose-sm
 	md:prose
-	dark:prose-invert
 
 	prose-h1:font-bold
 	prose-h1:text-5xl

@@ -42,7 +42,6 @@
 	items-center
 
 	bg-surface-100
-	dark:bg-surface-800
 
 	shadow-lg
 
