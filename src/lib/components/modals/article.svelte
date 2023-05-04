@@ -7,10 +7,12 @@
     export let articleCategories: ArticleCategories;
 </script>
 
-<Modal class="w-[80vw] h-[90vh] !bg-surface-200">
+<Modal class="w-[80vw] h-[90vh] bg-surface-200 dark:bg-surface-700">
     <article
         class="
 		bg-surface-100
+		dark:bg-surface-800
+
 		py-8
 		px-16
 		mx-auto
