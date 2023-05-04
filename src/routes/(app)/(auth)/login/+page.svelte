@@ -43,7 +43,7 @@
 	items-center
 "
 >
-    <header>
+    <header class="dark:text-white">
         <h1 class="text-5xl font-semibold">{title}</h1>
         <p class="font-light">{detail}</p>
     </header>
@@ -76,7 +76,7 @@
         <div class="flex justify-between w-full">
             <Switch bind:checked={remember} size="sm" name="remember">
                 <span
-                    class="font-light text-sm ml-2 flex items-center leading-4"
+                    class="font-light text-sm ml-2 flex items-center leading-4 dark:text-white"
                     >Remember Me</span
                 >
             </Switch>
@@ -101,11 +101,16 @@
 			border-primary-400
 
 			text-primary-700
+			dark:text-primary-400
 			text-lg
 			font-light
 
 			disabled:border-surface-700/10
 			disabled:text-surface-700/50
+			
+			dark:disabled:border-surface-400
+			dark:disabled:text-surface-300
+
 			disabled:cursor-not-allowed
 			disabled:scale-100
 		"
@@ -114,10 +119,10 @@
         >
     </form>
 
-    <p class="font-light block w-fit mt-4">
+    <p class="font-light block w-fit mt-4 dark:text-white">
         Not a user yet? <a
             href="/signup"
-            class="link-underline text-primary-600 w-fit inline-block"
+            class="link-underline text-primary-600 dark:text-primary-400 w-fit inline-block"
             >Sign up here</a
         >
     </p>

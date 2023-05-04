@@ -93,6 +93,10 @@
 <aside
     class="
 	bg-surface-400/30
+	dark:bg-surface-900
+
+	dark:border-b
+	dark:border-surface-400
 
 	p-6
 	sm:p-12
@@ -100,7 +104,7 @@
 "
 >
     <header class="flex justify-between mb-3">
-        <h1 class="sm:text-5xl text-3xl xl:max-w-5xl">
+        <h1 class="sm:text-5xl text-3xl xl:max-w-5xl dark:text-white">
             {data.article.title}
         </h1>
 
@@ -109,7 +113,9 @@
         </section>
     </header>
 
-    <p class="italic font-light">{data.article.description}</p>
+    <p class="italic font-light dark:font-medium dark:text-white">
+        {data.article.description}
+    </p>
 
     <hr class="my-4 border-tertiary-700/50" />
     {#each overviews as overview}

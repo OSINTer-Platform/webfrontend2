@@ -59,6 +59,8 @@
 			hidden
 			2xl:flex
 			flex-col
+
+			dark:text-white
 		"
         >
             <p
@@ -83,6 +85,7 @@
 					cursor-pointer
 					hover:bg-primary-500/5
 					ml-{3 * heading.depth}
+					dark:font-medium
 				"
                 >
                     {heading.text}

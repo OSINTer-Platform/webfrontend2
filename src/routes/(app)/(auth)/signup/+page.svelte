@@ -37,7 +37,7 @@
 	items-center
 "
 >
-    <header>
+    <header class="dark:text-white">
         <h1 class="text-5xl font-semibold">Hi there!</h1>
         <p class="font-light">
             Sign up below to start your own journey into the wonderful world of
@@ -96,7 +96,7 @@
             <label for="email" class="input">Email - (Optional)</label>
 
             <a
-                href="/blog/post/why-do-we-keep-emails/"
+                href="/blog/why-do-we-keep-emails/"
                 title="Why do we keep emails?"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -131,11 +131,17 @@
 			border-primary-400
 
 			text-primary-700
+			dark:text-primary-400
+
 			text-lg
 			font-light
 
 			disabled:border-surface-700/10
 			disabled:text-surface-700/50
+
+			dark:disabled:border-surface-400
+			dark:disabled:text-surface-300
+
 			disabled:cursor-not-allowed
 			disabled:scale-100
 		"
@@ -144,10 +150,10 @@
         >
     </form>
 
-    <p class="font-light block w-fit mt-4">
+    <p class="font-light block w-fit mt-4 dark:text-white">
         Already have a user? <a
             href="/login"
-            class="link-underline text-primary-600 w-fit inline-block"
+            class="link-underline text-primary-600 dark:text-primary-400 w-fit inline-block"
             >Log in here</a
         >
     </p>
