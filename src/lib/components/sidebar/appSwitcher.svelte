@@ -20,6 +20,7 @@
 
 	border-r
 	border-tertiary-600
+	dark:border-surface-400
 
 	overflow-auto
 	shrink-0

@@ -11,8 +11,6 @@
 
 	shrink-0
 
-	bg-surface-50
-
 	overflow-auto
 "
 >
@@ -40,6 +38,7 @@
 	w-screen
 
 	bg-black/25
+	dark:bg-black/50
 
 	transition-all
 	duration-200
@@ -55,8 +54,6 @@
 		grid-cols-[auto_1fr]
 
 		h-full
-
-		bg-surface-50
 
 		overflow-auto
 
