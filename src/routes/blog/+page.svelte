@@ -24,10 +24,10 @@
 	px-6
 "
 >
-    <h1 class="md:text-4xl text-3xl font-medium mb-2">
+    <h1 class="md:text-4xl text-3xl font-medium mb-2 dark:text-white">
         The blog for the OSINTer project
     </h1>
-    <p class="md:text-lg font-light">
+    <p class="md:text-lg font-light dark:text-white">
         Keep up with the latest news, releases and improvements for OSINTer,
         delivered straight to you from the OSINTer core developement team.
     </p>
@@ -51,6 +51,7 @@
 			md:p-6
 
 			hover:bg-surface-200
+			dark:hover:bg-surface-500
 		"
             >
                 <article
@@ -78,7 +79,7 @@
 				"
                     />
                     <div class="md:py-4 md:flex flex-col justify-between">
-                        <div>
+                        <div class="dark:text-white">
                             <time class="text-sm font-light"
                                 >{readableDate}</time
                             >
@@ -89,7 +90,8 @@
                                 {post.data.description}
                             </p>
                         </div>
-                        <span class="text-sm font-bold opacity-40 capitalize"
+                        <span
+                            class="text-sm font-bold opacity-40 capitalize dark:text-white"
                             >{post.data.author}</span
                         >
                     </div>

@@ -37,8 +37,11 @@
 	m-auto
 	p-12
 
+	prose
 	prose-sm
 	md:prose
+	dark:prose-invert
+	dark:md:prose-invert
 
 	prose-h1:font-bold
 	prose-h1:text-5xl
