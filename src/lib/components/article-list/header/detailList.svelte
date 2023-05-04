@@ -5,7 +5,7 @@
     export let mono = true;
 
     const boxClass =
-        'text-xs py-1 px-2 inline block w-fit bg-primary-500/20 border border-primary-600 rounded-md truncate';
+        'text-xs py-1 px-2 inline block w-fit bg-primary-500/20 border border-primary-600 rounded-md truncate dark:text-white';
 </script>
 
 <div
@@ -19,7 +19,9 @@
 >
     {#each Object.entries(options) as [name, value]}
         {#if value}
-            <p class="border-r border-tertiary-700/30 text-xs sm:text-base">
+            <p
+                class="border-r border-tertiary-700/30 text-xs sm:text-base dark:text-white"
+            >
                 {name}:
             </p>
             {#if Array.isArray(value)}

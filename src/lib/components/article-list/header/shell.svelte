@@ -19,6 +19,10 @@
 <aside
     class="
 	bg-surface-400/30
+	dark:bg-surface-900
+
+	dark:border-b
+	dark:border-surface-400
 
 	p-6
 	sm:p-12
@@ -30,7 +34,7 @@
         class="flex justify-between {description ? 'mb-3' : 'sm:mb-10 mb-4'}"
     >
         <section class="flex items-end gap-6">
-            <h1 class="sm:text-5xl text-3xl">{title}</h1>
+            <h1 class="sm:text-5xl text-3xl dark:text-white">{title}</h1>
             {#if badge}
                 <span
                     class="
@@ -39,6 +43,9 @@
 
 					bg-surface-900
 					text-surface-50
+
+					dark:bg-surface-50
+					dark:text-surface-900
 
 					text-xs
 					font-bold
@@ -53,7 +60,9 @@
         </section>
     </header>
     {#if description}
-        <p class="italic font-light">{description}</p>
+        <p class="italic font-light dark:font-medium dark:text-white">
+            {description}
+        </p>
     {/if}
 
     <slot />

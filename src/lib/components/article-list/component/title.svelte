@@ -26,10 +26,12 @@
 			md:p-2
 			p-1
 
-			border-tertiary-500
 			border-t
+			border-tertiary-500
+			dark:border-surface-400
 
 			hover:bg-surface-50
+			dark:hover:bg-surface-500
 		"
         >
             <p
@@ -46,6 +48,8 @@
 
 			w-1/12
 			shrink-0
+			dark:text-white
+			dark:font-medium
 		"
             >
                 {article.source}
@@ -70,6 +74,8 @@
 				font-semibold
 				shrink-0
 
+				dark:text-white
+
 				[&>strong]:font-semibold
 				[&>strong]:text-primary-600
 			"
@@ -85,6 +91,8 @@
 				leading-6
 				text-tertiary-800
 
+				dark:text-white
+
 				[&>strong]:font-semibold
 				[&>strong]:text-primary-400
 			"
@@ -94,7 +102,7 @@
             </div>
             <time
                 title={article.publish_date}
-                class="text-xs font-extralight shrink-0"
+                class="text-xs font-extralight shrink-0 dark:text-white dark:font-medium"
                 >{getTimespan(article.publish_date)}</time
             >
         </Link>
