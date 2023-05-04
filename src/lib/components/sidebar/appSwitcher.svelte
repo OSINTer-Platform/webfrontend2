@@ -12,8 +12,10 @@
 	h-full
 
 	bg-surface-50
+	dark:bg-surface-800
 
-	divide-tertiary-400
+	divide-surface-200
+	dark:divide-surface-500
 	divide-y
 
 	border-r
@@ -45,6 +47,8 @@
 						justify-center
 
 						text-center
+						
+						{selected ? 'bg-primary-500 dark:text-white' : ''}
 					"
                     >
                         <Fa icon={item.icon} size="lg" />
