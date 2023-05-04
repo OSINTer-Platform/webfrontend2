@@ -10,7 +10,7 @@
         class="
 		flex items-center
 		p-[0.1875em] h-[1.5em] w-[2.25em]
-		rounded-full bg-tertiary-400
+		rounded-full bg-tertiary-400 dark:bg-surface-600 dark:border dark:border-white/25
 		duration-300 ease-in-out
 
 		after:h-[1.125em] after:w-[1.125em]

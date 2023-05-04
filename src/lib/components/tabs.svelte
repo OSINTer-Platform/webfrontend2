@@ -22,6 +22,9 @@
 
 			border-primary-500
 
+			dark:text-white
+			dark:hover:bg-primary-500/40
+
 		"
             class:border-b-4={value == selected}
         >
