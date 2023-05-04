@@ -37,22 +37,24 @@
         type="button"
         on:click={() => (selectedSources = [])}
         class="
-		text-tertiary-700
 		font-semibold
 		text-xs
 		@lg/half:text-base
-		{noneSelected ? 'cursor-not-allowed' : '!text-primary-500'}
+		{noneSelected
+            ? 'cursor-not-allowed opacity-75 text-surface-400 dark:text-white/80'
+            : 'text-primary-400'}
 	">Remove Selections ({selectedSources.length})</button
     >
     <button
         type="button"
         on:click={() => (selectedSources = Object.keys(sourceOptions))}
         class="
-		text-tertiary-700
 		font-semibold
 		text-xs
 		@lg/half:text-base
-		{allSelected ? 'cursor-not-allowed' : '!text-primary-500'}
+		{allSelected
+            ? 'cursor-not-allowed opacity-75 text-surface-400 dark:text-white/80'
+            : 'text-primary-400'}
 	">Select All</button
     >
 </div>
@@ -91,7 +93,9 @@
 
 			cursor-pointer
 
-			{selected ? 'bg-primary-300/30' : 'hover:bg-surface-200'}
+			{selected
+                        ? 'bg-primary-300/30 dark:bg-primary-500/30'
+                        : 'hover:bg-surface-200 dark:hover:bg-surface-500'}
 		"
                 >
                     <img
@@ -119,6 +123,7 @@
                             class="
 					font-semibold
 					@:md/half:text-xl
+					dark:text-white
 				"
                         >
                             {name}
@@ -130,8 +135,11 @@
                             class="
 					font-light
 					text-tertiary-900
+					dark:text-white/75
+					dark:font-medium
 
 					hover:font-medium
+					dark:hover:text-white
 					text-xs
 					@md/half:text-base
 				">{url.replace('https://', '')}</a

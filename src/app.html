@@ -42,10 +42,10 @@
                 });
             }
 
-            // window
-            //    .matchMedia('(prefers-color-scheme: dark)')
-            //    .addEventListener('change', (e) => switchIcons(e.matches));
-            //switchIcons(usesDarkMode);
+            window
+                .matchMedia('(prefers-color-scheme: dark)')
+                .addEventListener('change', (e) => switchIcons(e.matches));
+            switchIcons(usesDarkMode);
         </script>
     </body>
 </html>

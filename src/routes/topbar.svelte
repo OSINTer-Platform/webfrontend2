@@ -42,6 +42,10 @@
 	items-center
 
 	bg-surface-100
+	dark:bg-surface-800
+
+	dark:border-b
+	dark:border-surface-300
 
 	shadow-lg
 

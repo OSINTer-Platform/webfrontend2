@@ -31,7 +31,6 @@
         in:fly={{ y: 50 }}
         out:fly={{ y: 50 }}
         class="
-		bg-white
 		overflow-auto
 		cursor-auto
 		{classes}

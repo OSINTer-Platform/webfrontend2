@@ -23,6 +23,7 @@
 	overflow-x-hidden
 
 	bg-surface-50
+	dark:bg-surface-800
 "
 >
     {#if $navigating && showLoader}

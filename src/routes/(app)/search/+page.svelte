@@ -66,6 +66,7 @@
 		@5xl:overflow-auto
 
 		border-tertiary-500
+		dark:border-surface-400
 		@5xl:border-r
 		@5xl:pr-8
 
@@ -76,7 +77,9 @@
             <SourceSelect sourceOptions={data.sourceCategories} />
         </MajorSection>
 
-        <hr class="mb-8 mt-3 text-tertiary-500 @5xl/full:hidden" />
+        <hr
+            class="mb-8 mt-3 text-tertiary-500 dark:text-surface-400 @5xl/full:hidden"
+        />
     </div>
 
     <div
@@ -95,7 +98,9 @@
             <SearchPanel {searchQuery} />
         </MajorSection>
 
-        <hr class="mb-8 mt-3 text-tertiary-500 @5xl/full:hidden" />
+        <hr
+            class="mb-8 mt-3 text-tertiary-500 dark:text-surface-400 @5xl/full:hidden"
+        />
 
         <section class="flex gap-4 mx-4">
             <slot name="main-button">
@@ -106,6 +111,7 @@
 					grow
 
 					font-light
+					dark:font-bold
 				">Search Content</button
                 >
             </slot>

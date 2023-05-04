@@ -32,11 +32,13 @@
 
 		btn
 		hover:bg-surface-300/25
+		dark:hover:bg-surface-400/25
 	"
     >
         <span
             class="
 			text-primary-700
+			dark:text-primary-500
 
 			font-bold
 			uppercase
@@ -74,6 +76,9 @@
 						w-full
 
 						rounded-xl
+
+						dark:text-white
+						dark:font-medium
 
 						{selected ? 'bg-primary-500/25' : 'hover:bg-primary-500/5'}
 					"

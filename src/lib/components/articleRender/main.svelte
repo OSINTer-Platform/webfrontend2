@@ -20,12 +20,14 @@
 </script>
 
 {#if header}
-    <div class="flex justify-between items-center mb-6">
-        <time class="block text-sm opacity-50">{readableDate}</time>
-        <span class="text-xs opacity-50">Read {article.read_times} times</span>
+    <div
+        class="flex justify-between items-center mb-6 opacity-50 dark:opacity-75 dark:text-white"
+    >
+        <time class="block text-sm">{readableDate}</time>
+        <span class="text-xs">Read {article.read_times} times</span>
     </div>
 
-    <h1 class="text-5xl font-semibold">{article.title}</h1>
+    <h1 class="text-5xl font-semibold dark:text-white">{article.title}</h1>
     {#if articleCategories}
         <div class="flex gap-4 items-center my-6">
             <img
@@ -33,11 +35,19 @@
                 src={articleCategories?.[article.profile]?.image}
                 alt="Source logo"
             />
-            <ul class="text-tertiary-900 text-sm font-medium">
+            <ul class="text-tertiary-900 text-sm font-medium dark:text-white">
                 <li>
-                    Written by <span class="text-black">{article.author}</span>
+                    Written by <span
+                        class="text-black dark:text-primary-400 dark:font-bold"
+                        >{article.author}</span
+                    >
                 </li>
-                <li>From <span class="text-black">{article.source}</span></li>
+                <li>
+                    From <span
+                        class="text-black dark:text-primary-400 dark:font-bold"
+                        >{article.source}</span
+                    >
+                </li>
             </ul>
         </div>
     {/if}
@@ -50,7 +60,7 @@
 />
 
 {#if header}
-    <h3 class="text-2xl mb-4">{article.description}</h3>
+    <h3 class="text-2xl mb-4 dark:text-white">{article.description}</h3>
 {/if}
 
 <div class="article-content text-justify">
@@ -71,6 +81,7 @@
 	uppercase
 	font-bold
 	text-tertiary-800
+	dark:text-white/90
 
 	border
 	border-tertiary-700/50
@@ -89,7 +100,7 @@
 <style lang="scss">
     div.article-content {
         :global(*) {
-            @apply max-w-full mb-6;
+            @apply max-w-full mb-6 dark:text-white;
         }
 
         :global(ul) {
@@ -104,7 +115,7 @@
         :global(p),
         :global(a),
         :global(li) {
-            @apply font-light;
+            @apply font-light dark:font-medium;
         }
 
         :global(h1) {

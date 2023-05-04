@@ -11,10 +11,8 @@
         }>
     > = [];
 
-    export let containerClass: string = '';
-
     const buttonCss =
-        'flex flex-row gap-6 hover:bg-primary-300/25 items-center justify-start rounded-xl w-full p-3 pl-5';
+        'flex flex-row gap-6 hover:bg-primary-300/25 items-center justify-start rounded-xl w-full p-3 pl-5 dark:text-white dark:hover:bg-primary-500/40';
 </script>
 
 <div
@@ -35,6 +33,8 @@
 		right-0
 
 		bg-surface-100
+		dark:bg-surface-800
+
 		rounded-xl
 
 		border-tertiary-500

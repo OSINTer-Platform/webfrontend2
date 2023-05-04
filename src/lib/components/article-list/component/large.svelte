@@ -37,6 +37,7 @@
 		p-6
 
 		hover:bg-surface-50
+		dark:hover:bg-surface-500
 	"
         >
             <img
@@ -82,6 +83,7 @@
 
 				font-light
 				text-xs
+				dark:text-white
 
 				mb-1
 			"
@@ -97,6 +99,7 @@
                         class="
 					sm:text-2xl
 					text-xl
+					dark:text-white
 
 					font-semibold
 					[&>strong]:font-semibold
@@ -110,6 +113,7 @@
                         class="
 					font-normal
 					text-tertiary-900
+					dark:text-white/80
 					[&>strong]:font-semibold
 					[&>strong]:text-primary-600
 				"

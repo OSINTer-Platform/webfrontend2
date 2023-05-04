@@ -25,12 +25,14 @@
 	px-4
 
 	btn
+
 "
 >
     <h1
         class="
 		font-light
 		text-xl
+		dark:font-bold
 	"
     >
         {title}

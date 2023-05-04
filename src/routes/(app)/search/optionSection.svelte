@@ -20,6 +20,9 @@
 	border-tertiary-500/75
 
 	mb-4
+
+	dark:text-white
+	dark:font-medium
 "
 >
     {title}
