@@ -13,7 +13,7 @@
 
     $: modOptions = [
         {
-            text: 'Download',
+            title: 'Download',
             icon: faDownload,
             route: `${data.currentItem.url.origin}${data.currentItem.url.pathname}/export${data.currentItem.url.search}`,
         },

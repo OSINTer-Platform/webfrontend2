@@ -53,7 +53,7 @@
 					"
                     >
                         <Fa icon={item.icon} size="lg" />
-                        <span class="font-bold text-xs">{item.text}</span>
+                        <span class="font-bold text-xs">{item.title}</span>
                     </a>
                 </li>
             {/each}

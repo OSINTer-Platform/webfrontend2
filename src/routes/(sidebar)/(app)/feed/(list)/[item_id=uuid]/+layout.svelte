@@ -18,12 +18,12 @@
 
     $: modOptions = [
         {
-            text: 'Download',
+            title: 'Download',
             icon: faDownload,
             route: `${PUBLIC_API_BASE}/user-items/${data.currentItem._id}/export`,
         },
         {
-            text: `Modify ${data.currentItem.type}`,
+            title: `Modify ${data.currentItem.type}`,
             icon: faPenToSquare,
             action: () => {},
         },

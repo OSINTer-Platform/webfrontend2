@@ -10,7 +10,7 @@ export interface Inbuilt {
 }
 
 export interface HeaderModOptions {
-    text: string;
+    title: string;
     icon: IconDefinition;
     action?: Function;
     route?: string;

@@ -61,23 +61,23 @@
 
     $: modOptions = [
         {
-            text: `Copy raw`,
+            title: `Copy raw`,
             icon: faClipboard,
             action: () => navigator.clipboard.writeText(data.article.content),
         },
         {
-            text: `Copy formatted`,
+            title: `Copy formatted`,
             icon: faPaste,
             action: () =>
                 navigator.clipboard.writeText(data.article.formatted_content),
         },
         {
-            text: 'Download MD',
+            title: 'Download MD',
             icon: faDownload,
             route: `${PUBLIC_API_BASE}/articles/${data.article.id}/export`,
         },
         {
-            text: 'Close article',
+            title: 'Close article',
             icon: faXmark,
             action: () => {
                 fullArticles.update((content) => {

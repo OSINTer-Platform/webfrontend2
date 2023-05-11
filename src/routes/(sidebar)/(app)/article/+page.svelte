@@ -14,7 +14,7 @@
 
     const modOptions: Array<HeaderModOptions> = [
         {
-            text: 'Clear stored',
+            title: 'Clear stored',
             icon: faTrashCan,
             action: () => fullArticles.set({}),
         },

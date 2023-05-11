@@ -20,7 +20,8 @@ export type SidebarOption = {
 };
 
 export type NavItem = {
-    text: string;
+    title: string;
+    description?: string;
     route: string;
     icon: IconDefinition;
 };
@@ -28,35 +29,43 @@ export type NavItem = {
 export const navItems: { [key in 'external' | 'internal']: Array<NavItem> } = {
     external: [
         {
-            text: 'Home',
+            title: 'Home',
+            description: 'The homepage for OSINTer',
             route: '/',
             icon: faHome,
         },
         {
-            text: 'Blog',
+            title: 'Blog',
+            description:
+                'Blog which will contain updates on the direction for OSINTer',
             route: '/blog',
             icon: faBullhorn,
         },
     ],
     internal: [
         {
-            text: 'Feed',
+            title: 'Feeds',
+            description: 'Access one of the feeds integrated in OSINTer',
             route: '/feed',
             icon: faRss,
         },
         {
-            text: 'Article',
+            title: 'Articles',
+            description:
+                'Browse the articles you have previously viewed on OSINTer',
             route: '/article',
             icon: faNewspaper,
         },
         {
-            text: 'Search',
+            title: 'Search',
+            description:
+                'Create your own search-query to gain specific insights',
             route: '/search',
             icon: faMagnifyingGlass,
         },
         /*
         {
-            text: 'Overview',
+            title: 'Overview',
             route: '/ml',
             icon: faDiagramProject,
         },

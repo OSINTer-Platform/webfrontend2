@@ -20,12 +20,12 @@
 
     const socials: Array<NavItem> = [
         {
-            text: 'Gitlab',
+            title: 'Gitlab',
             route: 'https://gitlab.com/OSINTer',
             icon: faGitlab,
         },
         {
-            text: 'Github',
+            title: 'Github',
             route: 'https://github.com/bertmad3400/OSINTer',
             icon: faGithub,
         },
@@ -105,7 +105,7 @@
             {#each socials as social}
                 <a
                     class="btn p-2 rounded-full"
-                    title={social.text}
+                    title={social.title}
                     href={social.route}
                     target="_blank"
                     rel="noreferrer noopener"

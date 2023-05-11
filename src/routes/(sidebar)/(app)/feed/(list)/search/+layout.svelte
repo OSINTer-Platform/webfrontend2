@@ -15,7 +15,7 @@
 
     $: modOptions = [
         {
-            text: 'Download',
+            title: 'Download',
             icon: faDownload,
             route: `${PUBLIC_API_BASE}/articles/search/export?${data.searchUrl}`,
         },

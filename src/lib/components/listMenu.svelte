@@ -4,7 +4,7 @@
 
     export let listOptions: Array<
         Array<{
-            text: string;
+            title: string;
             icon: IconDefinition;
             action?: Function;
             route?: string;
@@ -53,7 +53,7 @@
                             {#if option.route}
                                 <a href={option.route} class={buttonCss}>
                                     <Fa icon={option.icon} />
-                                    {option.text}
+                                    {option.title}
                                 </a>
                             {:else if option.action}
                                 <button
@@ -61,7 +61,7 @@
                                     class={buttonCss}
                                 >
                                     <Fa icon={option.icon} />
-                                    {option.text}
+                                    {option.title}
                                 </button>
                             {/if}
                         </li>
