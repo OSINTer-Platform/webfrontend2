@@ -1,7 +1,19 @@
 /** @type {import('tailwindcss').Config} */
-// Need to safelist left margins to enable dynamically setting depth on table of contents on article page
+//	Safelist:
+//		Left margins to enable dynamically setting depth on table of contents on article page
+//		Background primary colors for icon-circles on front-page links
 module.exports = {
-    safelist: ['ml-0', 'ml-3', 'ml-6', 'ml-9', 'ml-12', 'ml-15'],
+    safelist: [
+        'ml-0',
+        'ml-3',
+        'ml-6',
+        'ml-9',
+        'ml-12',
+        'ml-15',
+        'bg-primary-600',
+        'bg-primary-700',
+        'bg-primary-800',
+    ],
     content: ['./src/**/*.{html,js,svelte,ts}'],
     theme: {
         colors: {
