@@ -5,6 +5,7 @@
 
     import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
     import { config } from '$shared/config';
+    import Faq from '$com/frontpage/faq.svelte';
 </script>
 
 <svelte:head>
@@ -29,7 +30,7 @@
 	"
     />
     <section class="bg-surface-100">
-        <div class="container">
+        <div class=" xl:max-w-7xl mx-auto p-4 sm:p-8 lg:p-12 xl:py-20">
             <div
                 class="
 				p-4
@@ -58,11 +59,19 @@
             <hr />
 
             <InternalLinks />
+
+            <hr />
+
+            <Blogposts posts={data.posts} />
         </div>
     </section>
 
     <section class="bg-surface-200">
-        <div class="container" />
+        <div
+            class="max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto px-10 py-20"
+        >
+            <Faq />
+        </div>
     </section>
 </div>
 
@@ -73,10 +82,5 @@
 
     section {
         @apply w-full;
-
-        div.container {
-            @apply xl:max-w-7xl mx-auto
-			p-4 sm:p-8 lg:p-12 xl:py-20;
-        }
     }
 </style>
