@@ -35,7 +35,7 @@
 
     <section class="flex flex-col gap-6">
         {#each data.postList as post}
-            {@const readableDate = post.data.date.toLocaleDateString('en-DK', {
+            {@const readableDate = post.date.toLocaleDateString('en-DK', {
                 weekday: 'long',
                 year: 'numeric',
                 month: 'long',
@@ -43,7 +43,7 @@
             })}
 
             <a
-                href="/blog/{post.data.id}"
+                href={post.route}
                 class="
 			block
 
@@ -65,7 +65,7 @@
 			"
                 >
                     <img
-                        src={post.data.image ?? config.images.fullLogo}
+                        src={post.image}
                         alt="Article description"
                         class="
 					aspect-video
@@ -84,15 +84,15 @@
                                 >{readableDate}</time
                             >
                             <h2 class="md:text-3xl text-2xl font-semibold mt-2">
-                                {post.data.title}
+                                {post.title}
                             </h2>
                             <p class="md:text-lg font-light">
-                                {post.data.description}
+                                {post.description}
                             </p>
                         </div>
                         <span
                             class="text-sm font-bold opacity-40 capitalize dark:text-white"
-                            >{post.data.author}</span
+                            >{post.author}</span
                         >
                     </div>
                 </article>

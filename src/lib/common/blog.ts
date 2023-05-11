@@ -1,9 +1,10 @@
+import { config } from '$shared/config';
 import type { Post } from '$shared/types/blog';
 import matter from 'gray-matter';
 
 export const sortPosts = (posts: Post[]): Post[] =>
     posts.sort((a, b) => {
-        return b.data.date.valueOf() - a.data.date.valueOf();
+        return b.date.valueOf() - a.date.valueOf();
     });
 
 export const getPosts = (): { [key: string]: Post } =>
@@ -17,14 +18,17 @@ export const getPosts = (): { [key: string]: Post } =>
             const matterPost = matter(rawPost);
 
             const post: Post = {
-                data: {
-                    id: fileid,
-                    title: matterPost.data.title,
-                    date: new Date(matterPost.data.date),
-                    author: matterPost.data.author,
-                    description: matterPost.data.description,
-                    image: matterPost.data.image,
-                },
+                id: fileid,
+                route: `/blog/${fileid}`,
+
+                title: matterPost.data.title,
+                description: matterPost.data.description,
+
+                date: new Date(matterPost.data.date),
+                author: matterPost.data.author,
+
+                image: matterPost.data.image ?? config.images.fullLogo,
+
                 content: matterPost.content,
             };
 

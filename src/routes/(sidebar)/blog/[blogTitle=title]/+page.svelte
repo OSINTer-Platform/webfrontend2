@@ -4,26 +4,31 @@
     import type { PageData } from './$types';
     export let data: PageData;
 
-    $: postData = data.currentPost.data;
-    $: readableDate = postData.date.toLocaleString();
+    $: readableDate = data.currentPost.date.toLocaleString();
 </script>
 
 <svelte:head>
-    <title>OSINTer Blog - {postData.title}</title>
-    <meta property="og:title" content="OSINTer Blog - {postData.title}" />
-    <meta property="og:description" content={postData.description} />
+    <title>OSINTer Blog - {data.currentPost.title}</title>
+    <meta
+        property="og:title"
+        content="OSINTer Blog - {data.currentPost.title}"
+    />
+    <meta property="og:description" content={data.currentPost.description} />
     <meta
         property="og:image"
-        content={postData.image ?? config.images.fullLogo}
+        content={data.currentPost.image ?? config.images.fullLogo}
     />
-    <meta property="og:url" content="https://osinter.dk/blog/{postData.id}" />
+    <meta
+        property="og:url"
+        content="https://osinter.dk/blog/{data.currentPost.id}"
+    />
 
     <meta property="og:type" content="article" />
     <meta
         property="article:published_time"
-        content={postData.date.toISOString()}
+        content={data.currentPost.date.toISOString()}
     />
-    <meta property="article:author" content={postData.author} />
+    <meta property="article:author" content={data.currentPost.author} />
 </svelte:head>
 
 <article
@@ -62,19 +67,21 @@
 			text-sm
 		"
         >
-            <p>{postData.author}</p>
+            <p>{data.currentPost.author}</p>
             <time>{readableDate}</time>
         </div>
 
         <h1
             class="md:font-bold md:text-5xl md:text-justify text-4xl font-semibold"
         >
-            {postData.title}
+            {data.currentPost.title}
         </h1>
-        <p class="text-lg font-light italic mb-8">{postData.description}</p>
+        <p class="text-lg font-light italic mb-8">
+            {data.currentPost.description}
+        </p>
 
-        {#if postData.image}
-            <img src={postData.image} alt="Article description" />
+        {#if data.currentPost.image != config.images.fullLogo}
+            <img src={data.currentPost.image} alt="Article description" />
         {:else}
             <img
                 src={config.images.fullLogo}
