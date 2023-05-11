@@ -1,8 +1,9 @@
 <script lang="ts">
-    import Fa from 'svelte-fa/src/fa.svelte';
-    import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 
     import InternalLinks from '$com/frontpage/internalLinks.svelte';
+    import Fa from 'svelte-fa/src/fa.svelte';
+
+    import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
     import { config } from '$shared/config';
 </script>
 
@@ -27,14 +28,8 @@
 		bg-surface-300
 	"
     />
-
-    <main
-        class="
-		bg-surface-100
-		w-full
-	"
-    >
-        <section>
+    <section class="bg-surface-100">
+        <div class="container">
             <div
                 class="
 				p-4
@@ -60,23 +55,28 @@
                 and stability may vary.
             </div>
 
-            <hr class="" />
+            <hr />
 
             <InternalLinks />
+        </div>
+    </section>
 
-            <hr class="" />
-        </section>
-    </main>
+    <section class="bg-surface-200">
+        <div class="container" />
+    </section>
 </div>
 
 <style lang="scss">
     hr {
-        @apply text-surface-400/10 border-2;
+        @apply text-surface-400/10 border-2 my-16;
     }
 
     section {
-        @apply xl:max-w-6xl mx-auto
-		p-4 sm:p-8 lg:p-12 xl:py-20
-		space-y-12;
+        @apply w-full;
+
+        div.container {
+            @apply xl:max-w-7xl mx-auto
+			p-4 sm:p-8 lg:p-12 xl:py-20;
+        }
     }
 </style>
