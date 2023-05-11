@@ -5,7 +5,6 @@
 
     import TopBar from './topbar.svelte';
     import Modals from '$com/modals/all.svelte';
-    import AppSwitcher from '$com/sidebar/appSwitcher.svelte';
     import { modalState } from '$state/state';
 
     export let data: LayoutData;
@@ -25,9 +24,4 @@
 <div class="z-40 relative">
     <TopBar burgerMenu={data.customSidebar} />
 </div>
-<div class="flex flex-row flex-grow items-stretch min-h-0 relative">
-    {#if !data.customSidebar}
-        <AppSwitcher />
-    {/if}
-    <slot />
-</div>
+<slot />
