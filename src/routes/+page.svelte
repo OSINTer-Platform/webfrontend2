@@ -4,11 +4,13 @@
 
     import InternalLinks from '$com/frontpage/internalLinks.svelte';
     import Blogposts from '$com/frontpage/blogposts.svelte';
+    import Faq from '$com/frontpage/faq.svelte';
+    import Header from '$com/frontpage/header.svelte';
+
     import Fa from 'svelte-fa/src/fa.svelte';
 
     import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
     import { config } from '$shared/config';
-    import Faq from '$com/frontpage/faq.svelte';
 </script>
 
 <svelte:head>
@@ -26,14 +28,15 @@
 <div class="overflow-y-auto">
     <header
         class="
-		h-[36rem]
 		w-full
 
 		bg-surface-300
 	"
-    />
+    >
+        <Header />
+    </header>
     <section class="bg-surface-100">
-        <div class=" xl:max-w-7xl mx-auto p-4 sm:p-8 lg:p-12 xl:py-20">
+        <div class="container p-4 sm:p-8 lg:p-12 xl:py-20">
             <div
                 class="
 				p-4
@@ -85,5 +88,11 @@
 
     section {
         @apply w-full;
+    }
+
+    div {
+        :global(div.container) {
+            @apply xl:max-w-7xl mx-auto;
+        }
     }
 </style>
