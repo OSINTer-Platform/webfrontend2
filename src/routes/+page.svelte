@@ -1,6 +1,9 @@
 <script lang="ts">
+    import type { PageServerData } from './$types';
+    export let data: PageServerData;
 
     import InternalLinks from '$com/frontpage/internalLinks.svelte';
+    import Blogposts from '$com/frontpage/blogposts.svelte';
     import Fa from 'svelte-fa/src/fa.svelte';
 
     import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
