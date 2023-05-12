@@ -80,7 +80,7 @@
 
 <style lang="scss">
     hr {
-        @apply text-surface-400/10 border-2 my-16;
+        @apply text-surface-400/10 border-2 my-6 sm:my-10 md:my-14 lg:my-16;
     }
 
     section {
