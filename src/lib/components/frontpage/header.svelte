@@ -17,7 +17,7 @@
                 class="
 				text-3xl md:text-4xl lg:text-2xl xl:text-4xl
 				max-lg:ml-6
-				font-bold
+				font-bold dark:text-white/50
 			"
             >
                 Automating the CTI heavylifting
@@ -36,7 +36,7 @@
 				md:text-lg lg:text-base xl:text-xl
 
 				lg:tracking-tighter xl:tracking-tight
-				font-light
+				font-light dark:text-white
 			"
             >
                 Experience a new approach to CTI, helping you do more with less.
@@ -53,6 +53,7 @@
                 class="
 				ml-12 -mt-4
 				font-light
+				dark:text-white
 			"
             >
                 Automating the CTI heavylifting
@@ -92,6 +93,9 @@
 				bg-surface-200/75
 				hover:bg-surface-200
 
+				dark:bg-surface-900/75
+				dark:hover:bg-surface-700
+
 				transition-colors
 				duration-300
 
@@ -103,6 +107,7 @@
 				rounded-lg
 
 				font-light
+				dark:text-white
 			">Read about OSINTer</a
             >
         </div>
@@ -124,7 +129,6 @@
 			rounded-full
 			blur-2xl
 			transition-all
-
 			img-bg
 		"
         />
@@ -133,9 +137,34 @@
 
 <style lang="scss">
     .img-bg {
-        animation: pulse 5s linear infinite, glow 5s linear infinite;
+        animation: pulse 5s linear infinite, light-glow 5s linear infinite;
     }
-    @keyframes glow {
+
+    @media screen and (prefers-color-scheme: dark) {
+        .img-bg {
+            animation: pulse 5s linear infinite, dark-glow 5s linear infinite;
+        }
+    }
+
+    @keyframes dark-glow {
+        0% {
+            @apply bg-secondary-600/30;
+        }
+        25% {
+            @apply bg-primary-500/10;
+        }
+        50% {
+            @apply bg-primary-500/20;
+        }
+        75% {
+            @apply bg-primary-500/10;
+        }
+        100% {
+            @apply bg-secondary-600/30;
+        }
+    }
+
+    @keyframes light-glow {
         0% {
             @apply bg-primary-400/20;
         }

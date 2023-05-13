@@ -31,11 +31,12 @@
 		w-full
 
 		bg-surface-300
+		dark:bg-surface-700
 	"
     >
         <Header />
     </header>
-    <section class="bg-surface-100">
+    <section class="bg-surface-100 dark:bg-surface-900">
         <div class="container p-4 sm:p-8 lg:p-12 xl:py-20">
             <div
                 class="
@@ -52,6 +53,7 @@
 				border-primary-800/20
 
 				rounded-md
+				dark:text-white/75
 			"
             >
                 <Fa
@@ -72,7 +74,7 @@
         </div>
     </section>
 
-    <section class="bg-surface-200">
+    <section class="bg-surface-200 dark:bg-surface-800">
         <div
             class="max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto px-10 py-20"
         >

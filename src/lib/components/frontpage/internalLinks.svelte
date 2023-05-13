@@ -28,13 +28,18 @@
 
 			border
 			border-surface-300
+			dark:border-surface-900
+
 			bg-surface-200
+			dark:bg-surface-700
 
 			shadow-sm
 			md:shadow-md
 
 			hover:shadow-lg
+			dark:hover:scale-105
 			hover:bg-surface-100
+			dark:hover:bg-surface-600
 
 			transition-all
 			duration-300
@@ -64,7 +69,7 @@
                     class="text-3xl opacity-80 transition-opacity duration-300"
                 />
             </div>
-            <h3 class="font-semibold text-4xl">{title}</h3>
+            <h3 class="font-semibold text-4xl dark:text-white">{title}</h3>
             <p
                 class="
 				sm:text-lg
@@ -73,6 +78,7 @@
 				font-light
 
 				leading-4
+				dark:text-white
 			"
             >
                 {description}

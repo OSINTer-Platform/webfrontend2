@@ -14,6 +14,7 @@
 
 			border
 			border-surface-300
+			dark:border-surface-700
 
 			shadow-md
 

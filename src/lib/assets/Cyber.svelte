@@ -9,7 +9,7 @@
     height="1779.7"
     version="1.1"
     viewBox="0 0 1777.6 1779.7"
-    class="{classes} dark:text-white"
+    class="{classes} dark:invert"
 >
     <defs>
         <clipPath id="clipPath300">
