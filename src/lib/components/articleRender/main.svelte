@@ -97,7 +97,7 @@
 
 <hr class="text-tertiary-700/25 my-8" />
 
-<style lang="scss">
+<style lang="postcss">
     div.article-content {
         :global(*) {
             @apply max-w-full mb-6 dark:text-white;
