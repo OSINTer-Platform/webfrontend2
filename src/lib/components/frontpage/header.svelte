@@ -8,7 +8,8 @@
 	container
 	lg:grid lg:grid-cols-2
 	items-center justify-items-center
-	py-32 px-6 sm:px-0
+	py-12 sm:py-32
+	px-6 sm:px-0
 "
 >
     <div>
