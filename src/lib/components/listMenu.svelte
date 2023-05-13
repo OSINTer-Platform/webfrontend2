@@ -57,7 +57,7 @@
                                 </a>
                             {:else if option.action}
                                 <button
-                                    on:click={option.action}
+                                    on:click={() => option.action?.()}
                                     class={buttonCss}
                                 >
                                     <Fa icon={option.icon} />
