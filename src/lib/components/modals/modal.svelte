@@ -30,7 +30,6 @@
 "
 >
     <div
-        role="button"
         on:click|stopPropagation
         on:keydown|stopPropagation
         in:fly={{ y: 50 }}
