@@ -9,7 +9,7 @@
 <div
     class="
 	bg-surface-100
-	dark:bg-surface-800
+	dark:bg-surface-900
 
 	grow
 

@@ -18,7 +18,7 @@
 "
 >
     {#each articles as article}
-        <hr class="text-tertiary-500" />
+        <hr class="text-tertiary-500 dark:text-surface-500" />
 
         <Link
             articleId={article.id}

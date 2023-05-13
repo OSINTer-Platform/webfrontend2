@@ -19,7 +19,7 @@
 <aside
     class="
 	bg-surface-400/30
-	dark:bg-surface-900
+	dark:bg-surface-800
 
 	dark:border-b
 	dark:border-surface-400
