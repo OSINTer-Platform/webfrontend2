@@ -50,7 +50,9 @@
         {/each}
     </div>
     {#if text}
-        <p class="mt-4 font-light capitalize">{text}{'.'.repeat(dotCounter)}</p>
+        <p class="mt-4 font-light capitalize dark:text-white">
+            {text}{'.'.repeat(dotCounter)}
+        </p>
     {/if}
 </div>
 
