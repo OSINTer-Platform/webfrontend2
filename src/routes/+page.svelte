@@ -83,7 +83,7 @@
     </section>
 </div>
 
-<style lang="scss">
+<style lang="postcss">
     hr {
         @apply text-surface-400/10 border-2 my-6 sm:my-10 md:my-14 lg:my-16;
     }

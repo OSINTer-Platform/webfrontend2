@@ -22,6 +22,10 @@
     let limitEnabled = true;
 
     export let searchQuery: SearchQuery;
+
+    function limitEnabledChange(e: Event) {
+        searchQuery.limit = (e.target as HTMLInputElement).checked ? 100 : 0;
+    }
 </script>
 
 <div class="p-4">
@@ -116,8 +120,7 @@
             >
                 <Switch
                     bind:checked={limitEnabled}
-                    on:change={(e) =>
-                        (searchQuery.limit = e?.target?.checked ? 100 : 0)}
+                    on:change={limitEnabledChange}
                 />
             </div>
         </div>

@@ -136,7 +136,7 @@
     </div>
 </div>
 
-<style lang="scss">
+<style lang="postcss">
     .img-bg {
         animation: pulse 5s linear infinite, light-glow 5s linear infinite;
     }

@@ -152,7 +152,7 @@
     </div>
 </form>
 
-<style lang="scss">
+<style lang="postcss">
     button {
         @apply border border-tertiary-700;
     }

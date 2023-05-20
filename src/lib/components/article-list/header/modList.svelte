@@ -22,7 +22,7 @@
         {#if route}
             <a href={route} {title} class={btnClass}><Fa {icon} /></a>
         {:else if action}
-            <button on:click={action} {title} class={btnClass}
+            <button on:click={() => action?.()} {title} class={btnClass}
                 ><Fa {icon} /></button
             >
         {/if}

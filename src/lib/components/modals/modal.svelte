@@ -4,10 +4,14 @@
 
     let classes: string = '';
     export { classes as class };
+
+    const resetModal = () =>
+        ($modalState = { modalType: null, modalContent: null });
 </script>
 
 <div
-    on:click={() => ($modalState = { modalType: null, modalContent: null })}
+    on:click={resetModal}
+    on:keydown={resetModal}
     transition:fade={{ duration: 200 }}
     class="
 	z-50
@@ -26,8 +30,8 @@
 "
 >
     <div
-        role="button"
         on:click|stopPropagation
+        on:keydown|stopPropagation
         in:fly={{ y: 50 }}
         out:fly={{ y: 50 }}
         class="
