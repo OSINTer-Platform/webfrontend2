@@ -1,7 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
-import * as set_cookie_parser from 'set-cookie-parser';
 import { PUBLIC_API_BASE } from '$env/static/public';
 
 export const actions = {
@@ -47,25 +46,25 @@ export const actions = {
         );
 
         if (r.ok) {
-            const cookie = set_cookie_parser.parseString(
-                r.headers.get('set-cookie') ?? '',
-                { decodeValues: false }
-            );
+            //const cookie = set_cookie_parser.parseString(
+            //    r.headers.get('set-cookie') ?? '',
+            //    { decodeValues: false }
+            //);
 
-            if (!cookie) {
-                return fail(500, {
-                    detail: 'Communication with authentication backend failed',
-                });
-            }
+            //if (!cookie) {
+            //    return fail(500, {
+            //        detail: 'Communication with authentication backend failed',
+            //    });
+            //}
 
-            cookies.set(cookie.name, cookie.value, {
-                path: cookie.path,
-                maxAge: cookie.maxAge,
-                secure: cookie.secure,
-                httpOnly: cookie.httpOnly,
-                sameSite: 'strict',
-                encode: (s: string) => s,
-            });
+            //cookies.set(cookie.name, cookie.value, {
+            //    path: cookie.path,
+            //    maxAge: cookie.maxAge,
+            //    secure: cookie.secure,
+            //    httpOnly: cookie.httpOnly,
+            //    sameSite: 'strict',
+            //    encode: (s: string) => s,
+            //});
 
             throw redirect(303, '/');
         } else {
