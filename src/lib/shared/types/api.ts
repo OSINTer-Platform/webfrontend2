@@ -58,14 +58,14 @@ export type SortOrder = 'desc' | 'asc';
 export interface SearchQuery {
     limit: number;
 
-    sort_by: SortBy | null;
-    sort_order: SortOrder | null;
+    sort_by: SortBy | undefined;
+    sort_order: SortOrder | undefined;
 
-    search_term: string | null;
-    highlight: boolean | null;
+    search_term: string | undefined;
+    highlight: boolean | undefined;
 
-    first_date: string | null;
-    last_date: string | null;
+    first_date: string | undefined;
+    last_date: string | undefined;
 
     source_category: string[];
 }
