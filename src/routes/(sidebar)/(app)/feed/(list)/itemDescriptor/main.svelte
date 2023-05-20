@@ -9,6 +9,10 @@
     export let currentItem: Feed | Collection;
     export let categories: ArticleCategories;
 
+    function isFeed(item: Feed | Collection): item is Feed {
+        return item.type == 'feed';
+    }
+
     $: descriptors = {
         ID: currentItem._id,
         Owner: currentItem.owner,
@@ -19,9 +23,9 @@
     <hr class="my-4 border-tertiary-700/50" />
     <ListRender options={descriptors} />
     <hr class="my-4 border-tertiary-700/50" />
-    {#if currentItem.type == 'feed'}
+    {#if isFeed(currentItem)}
         <FeedRender {currentItem} {categories} />
-    {:else if currentItem.type == 'collection'}
+    {:else}
         <CollectionRender {currentItem} />
     {/if}
     <hr class="mt-4 border-tertiary-700/50" />
