@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { config } from '$shared/config';
-    import type { MLArticle } from '$shared/types/api';
+    import { PUBLIC_API_BASE } from '$env/static/public';
+    import type { Article } from '$shared/types/api';
 
-    let data: Promise<Array<MLArticle>> = fetch(
-        `${config.apiRoot}/ml/articles/map`
+    let data: Promise<Array<Article>> = fetch(
+        `${PUBLIC_API_BASE}/ml/articles/map`
     ).then((r) => {
         return r.json();
     });
