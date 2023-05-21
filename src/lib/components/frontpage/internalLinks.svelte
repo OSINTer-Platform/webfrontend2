@@ -16,6 +16,7 @@
 
 			p-4
 			xl:p-8
+
 			md:mt-12
 			md:mb-4
 			xl:mt-16
@@ -51,7 +52,7 @@
                 class="
 				flex justify-center items-center
 				w-16 rounded-full aspect-square
-				-mt-10 mb-2
+				-mt-10 mb-4
 				
 				md:w-20 md:-mt-14
 
@@ -72,6 +73,7 @@
             <h3 class="font-semibold text-4xl dark:text-white">{title}</h3>
             <p
                 class="
+				text-sm
 				sm:text-lg
 				xl:text-xl
 
@@ -79,6 +81,8 @@
 
 				leading-4
 				dark:text-white
+				m-2
+				sm:m-0
 			"
             >
                 {description}

@@ -4,7 +4,7 @@
     export let posts: Post[];
 </script>
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-8 p-4">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-8 sm:p-4">
     {#each posts as { title, description, image, route }}
         <a
             href={route}
