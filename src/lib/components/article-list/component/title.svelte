@@ -102,7 +102,7 @@
             </div>
             <time
                 title={article.publish_date}
-                class="text-xs font-extralight shrink-0 dark:text-white dark:font-medium"
+                class="text-xs font-extralight shrink-0 dark:text-white sm:dark:font-medium"
                 >{getTimespan(article.publish_date)}</time
             >
         </Link>
