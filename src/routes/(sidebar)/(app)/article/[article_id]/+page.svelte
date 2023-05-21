@@ -24,7 +24,8 @@
 	flex
 	flex-row
 
-	p-12
+	p-6
+	sm:p-12
 	gap-12
 "
 >
