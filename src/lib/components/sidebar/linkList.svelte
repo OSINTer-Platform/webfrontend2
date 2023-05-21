@@ -1,12 +1,12 @@
 <script lang="ts">
     import type { SidebarOption } from '$shared/nav';
 
-    import AppSwitcher from './appSwitcher.svelte';
+    import AppSwitcher from './compontents/appSwitcher.svelte';
 
-    import LinkNavShell from './linkNav/shell.svelte';
-    import LinkNavOptions from './linkNav/optionList.svelte';
+    import LinkNavShell from './compontents/linkNav/shell.svelte';
+    import LinkNavOptions from './compontents/linkNav/optionList.svelte';
 
-    import SidebarShell from './shell.svelte';
+    import SidebarShell from './compontents//shell.svelte';
 
     export let options: Array<SidebarOption> = [];
 </script>

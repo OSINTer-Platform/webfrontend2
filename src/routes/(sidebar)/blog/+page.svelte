@@ -20,8 +20,11 @@
     class="
 	mx-auto
 	max-w-7xl
-	py-16
+
 	px-6
+	py-12
+	sm:py-16
+	sm:px-12
 "
 >
     <h1 class="md:text-4xl text-3xl font-medium mb-2 dark:text-white">

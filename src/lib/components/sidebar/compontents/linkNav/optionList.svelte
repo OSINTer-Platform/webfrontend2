@@ -22,8 +22,11 @@
         class="
 
 		mx-2
-		py-2
-		px-4
+
+		sm:py-2
+		sm:px-4
+		py-1
+		px-2
 
 		flex
 		flex-row
@@ -64,21 +67,27 @@
                     <a
                         {href}
                         class="
-						py-2
-						px-4
+						px-2
+						py-1
+
+						sm:py-2
+						sm:px-4
 
 						overflow-hidden
 						truncate
 
 						font-light
+						sm:text-base
+						text-sm
 
 						inline-block
 						w-full
 
-						rounded-xl
+						rounded-md
+						sm:rounded-xl
 
 						dark:text-white
-						dark:font-medium
+						sm:dark:font-medium
 
 						{selected ? 'bg-primary-500/25' : 'hover:bg-primary-500/5'}
 					"

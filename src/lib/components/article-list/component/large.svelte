@@ -12,7 +12,8 @@
 	flex
 	flex-col
 
-	space-y-4
+	space-y-8
+	sm:space-y-4
 
 	overflow-auto
 "
@@ -24,17 +25,15 @@
             articleId={article.id}
             class="
 		grid
-		xl:grid-cols-[auto_1fr]
-		md:grid-cols-[auto_1fr]
-
 		grid-cols-1
-		lg:grid-cols-1
+		md:grid-cols-[auto_1fr]
 
 		gap-8
 
 		items-center
 
-		p-6
+		p-3
+		sm:p-6
 
 		hover:bg-surface-50
 		dark:hover:bg-surface-500
@@ -45,19 +44,16 @@
 			object-cover
 			rounded-md
 
-			xl:w-32
+			w-full
 			md:w-32
 
-			lg:w-full
-			w-full
 
 			lg:max-h-80
 			max-h-80
 
-			xl:aspect-square
+			aspect-video
 			md:aspect-square
 
-			aspect-video
 
 
 			drop-shadow-lg

@@ -46,7 +46,9 @@
 	overflow-auto
 
 
-	p-8
+	px-2
+	py-4
+	sm:p-8
 
 	h-full
 	w-full
@@ -78,7 +80,7 @@
         </MajorSection>
 
         <hr
-            class="mb-8 mt-3 text-tertiary-500 dark:text-surface-400 @5xl/full:hidden"
+            class="sm:mb-8 mb-3 mt-3 text-tertiary-500 dark:text-surface-400 @5xl/full:hidden"
         />
     </div>
 
@@ -99,7 +101,7 @@
         </MajorSection>
 
         <hr
-            class="mb-8 mt-3 text-tertiary-500 dark:text-surface-400 @5xl/full:hidden"
+            class="sm:mb-8 mb-3 mt-3 text-tertiary-500 dark:text-surface-400 @5xl/full:hidden"
         />
 
         <section class="flex gap-4 mx-4">

@@ -18,7 +18,7 @@
     <slot name="content" />
 </div>
 
-<span class="hidden lg:block xl:hidden">
+<span class="hidden md:block xl:hidden">
     <slot name="nav" />
 </span>
 <div

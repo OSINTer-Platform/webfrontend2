@@ -76,7 +76,7 @@
 
     <section class="bg-surface-200 dark:bg-surface-800">
         <div
-            class="max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto px-10 py-20"
+            class="max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto p-10 sm:py-20"
         >
             <Faq />
         </div>

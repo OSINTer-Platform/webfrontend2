@@ -115,7 +115,7 @@
         :global(p),
         :global(a),
         :global(li) {
-            @apply font-light dark:font-medium;
+            @apply text-sm sm:text-base font-light sm:dark:font-medium;
         }
 
         :global(h1) {

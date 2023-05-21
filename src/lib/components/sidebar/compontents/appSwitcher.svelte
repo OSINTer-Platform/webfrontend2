@@ -8,7 +8,8 @@
 
 <div
     class="
-	w-20
+	w-16
+	sm:w-20
 	h-full
 
 	bg-surface-50
@@ -52,8 +53,8 @@
 						{selected ? 'bg-primary-500 dark:text-white' : ''}
 					"
                     >
-                        <Fa icon={item.icon} size="lg" />
-                        <span class="font-bold text-xs">{item.title}</span>
+                        <Fa icon={item.icon} class="sm:text-2xl" />
+                        <span class="sm:font-bold text-xs">{item.title}</span>
                     </a>
                 </li>
             {/each}

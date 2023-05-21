@@ -16,6 +16,7 @@
     import ListMenu from '$com/listMenu.svelte';
     import { sideOpen } from '$state/state';
 
+    export let customSidebar = false;
     export let burgerMenu = false;
 
     const socials: Array<NavItem> = [
@@ -59,7 +60,9 @@
                 on:click={() => {
                     $sideOpen = !$sideOpen;
                 }}
-                class="btn xl:!hidden p-2 rounded-xl"
+                class="btn xl:!hidden p-2 rounded-xl {customSidebar
+                    ? ''
+                    : 'sm:hidden'}"
             >
                 <Fa icon={faBars} class="text-xl" />
             </button>
@@ -80,7 +83,7 @@
 		flex
 		flex-row
 
-		gap-10
+		md:gap-10
 	"
     >
         <!-- Navigate -->

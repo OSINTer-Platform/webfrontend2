@@ -38,8 +38,6 @@
     description={'A list of the articles you have recently viewed in OSINTer'}
     {modOptions}
     bind:searchValue={$localSearch}
->
-    <hr class="text-tertiary-600/50 sm:my-4" />
-</HeaderShell>
+/>
 
 <List articles={$filteredArticles} />
