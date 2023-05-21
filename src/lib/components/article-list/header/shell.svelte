@@ -72,7 +72,9 @@
         </p>
     {/if}
 
-    <slot />
+    <slot>
+        <hr class="text-tertiary-600/50 my-4" />
+    </slot>
 
     <Search
         bind:value={searchValue}

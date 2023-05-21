@@ -26,8 +26,6 @@
     description={data.currentItem.desc}
     {modOptions}
     bind:searchValue={$feedLocalSearch}
->
-    <hr class="text-tertiary-600/50 my-4" />
-</HeaderShell>
+/>
 
 <slot />
