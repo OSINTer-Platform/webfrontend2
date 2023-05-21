@@ -39,7 +39,7 @@
     {modOptions}
     bind:searchValue={$localSearch}
 >
-    <hr class="text-tertiary-600/50 sm:my-4" />
+    <hr class="text-tertiary-600/50 my-4" />
 </HeaderShell>
 
 <List articles={$filteredArticles} />

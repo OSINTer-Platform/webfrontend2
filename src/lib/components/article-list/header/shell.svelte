@@ -31,14 +31,18 @@
 "
 >
     <header
-        class="flex justify-between {description ? 'mb-3' : 'sm:mb-10 mb-4'}"
+        class="flex justify-between {description ? 'sm:mb-2' : 'sm:mb-10 mb-4'}"
     >
-        <section class="flex items-end gap-6">
+        <section class="flex items-center gap-3 sm:gap-6">
             <h1 class="sm:text-5xl text-3xl dark:text-white">{title}</h1>
             {#if badge}
                 <span
                     class="
-					p-2
+					px-2
+					py-1
+					
+					sm:mt-3
+					
 					rounded-full
 
 					bg-surface-900
@@ -47,7 +51,8 @@
 					dark:bg-surface-50
 					dark:text-surface-900
 
-					text-xs
+					text-[0.6rem]
+					sm:text-xs
 					font-bold
 					capitalize
 				">{badge}</span
@@ -60,7 +65,9 @@
         </section>
     </header>
     {#if description}
-        <p class="italic font-light dark:font-medium dark:text-white">
+        <p
+            class="text-sm sm:text-base italic font-light sm:dark:font-medium dark:text-white"
+        >
             {description}
         </p>
     {/if}
