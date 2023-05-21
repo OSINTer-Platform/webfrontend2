@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { LayoutData } from './$types';
-    import AppSwitcher from '$com/sidebar/appSwitcher.svelte';
+    import AppSwitcher from '$com/sidebar/nav.svelte';
 
     export let data: LayoutData;
 </script>

@@ -22,6 +22,6 @@
 
 <Modals />
 <div class="z-40 relative">
-    <TopBar burgerMenu={data.customSidebar} />
+    <TopBar customSidebar={data.customSidebar} burgerMenu={data.burgerMenu} />
 </div>
 <slot />
