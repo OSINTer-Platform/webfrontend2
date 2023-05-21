@@ -40,7 +40,9 @@
 
 	!max-w-4xl
 	m-auto
-	p-12
+
+	p-4
+	sm:p-12
 
 	prose
 	prose-sm
