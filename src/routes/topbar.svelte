@@ -80,7 +80,7 @@
 		flex
 		flex-row
 
-		gap-10
+		md:gap-10
 	"
     >
         <!-- Navigate -->
