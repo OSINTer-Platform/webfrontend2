@@ -7,7 +7,7 @@
     let repeatPassword: string = '';
     let email: string = '';
 
-    let formError: string | null;
+    let formError: string | null = null;
     $: {
         if (username.length == 0) {
             formError = 'Please specify username';
