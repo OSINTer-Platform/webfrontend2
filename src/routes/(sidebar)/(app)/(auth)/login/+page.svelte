@@ -1,8 +1,9 @@
 <script lang="ts">
     import Switch from '$utils/switch.svelte';
-    import type { ActionData } from './$types';
+    import type { ActionData, PageData } from './$types';
 
     export let form: ActionData;
+    export let data: PageData;
 
     let username: string = form?.username ?? '';
     let password: string = '';
@@ -23,6 +24,7 @@
     let title = success ? 'Welcome back!' : 'Failure!';
     let detail =
         form?.detail ??
+        data.msg ??
         'Log in down below to continue with your journey into the wonderful world of CTI';
 </script>
 
