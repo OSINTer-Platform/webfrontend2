@@ -34,6 +34,7 @@
 	p-8
 
 	mx-auto
+	grow
 
 	flex
 	flex-col
@@ -43,7 +44,7 @@
 	items-center
 "
 >
-    <header class="dark:text-white">
+    <header class="dark:text-white self-stretch">
         <h1 class="text-5xl font-semibold">{title}</h1>
         <p class="font-light">{detail}</p>
     </header>
