@@ -1,4 +1,3 @@
-export const prerender = true;
 import { getPosts } from '$lib/common/blog';
 
 import type { LayoutServerLoad } from './$types';

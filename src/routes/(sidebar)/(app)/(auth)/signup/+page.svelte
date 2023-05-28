@@ -2,12 +2,16 @@
     import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
     import Fa from 'svelte-fa/src/fa.svelte';
 
+    import type { ActionData } from './$types';
+
+    export let form: ActionData;
+
     let username: string = '';
     let password: string = '';
     let repeatPassword: string = '';
     let email: string = '';
 
-    let formError: string | null;
+    let formError: string | null = null;
     $: {
         if (username.length == 0) {
             formError = 'Please specify username';
@@ -19,6 +23,12 @@
             formError = null;
         }
     }
+
+    let success = form?.success ?? true;
+    let title = success ? 'Hi there!' : 'Failure!';
+    let detail =
+        form?.detail ??
+        'Sign up down below to start with your journey into the wonderful world of CTI';
 </script>
 
 <main
@@ -28,6 +38,7 @@
 
 	p-8
 	mx-auto
+	grow
 
 	flex
 	flex-col
@@ -37,12 +48,9 @@
 	items-center
 "
 >
-    <header class="dark:text-white">
-        <h1 class="text-5xl font-semibold">Hi there!</h1>
-        <p class="font-light">
-            Sign up below to start your own journey into the wonderful world of
-            CTI
-        </p>
+    <header class="dark:text-white self-stretch">
+        <h1 class="text-5xl font-semibold">{title}</h1>
+        <p class="font-light">{detail}</p>
     </header>
 
     <form method="post" class="w-full">

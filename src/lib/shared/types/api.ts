@@ -69,3 +69,9 @@ export interface SearchQuery {
 
     source_category: string[];
 }
+
+export interface AccessTokenWithDetails {
+    token: string;
+    expire: number;
+    secure: boolean;
+}

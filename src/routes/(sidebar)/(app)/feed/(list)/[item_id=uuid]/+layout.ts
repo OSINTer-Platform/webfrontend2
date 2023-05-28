@@ -1,6 +1,6 @@
 import { PUBLIC_API_BASE } from '$env/static/public';
-import { handleResponse } from '$lib/common/query';
 import type { Collection, Feed } from '$shared/types/userItems';
+import { error } from '@sveltejs/kit';
 import type { LayoutLoad } from './$types';
 
 export const load = (async ({ params, fetch }) => {
@@ -8,7 +8,15 @@ export const load = (async ({ params, fetch }) => {
         const r = await fetch(
             `${PUBLIC_API_BASE}/user-items/${params.item_id}/content`
         );
-        return await handleResponse(r);
+
+        if (r.ok) {
+            return await r.json();
+        } else {
+            throw error(
+                r.status,
+                'Error when fetching description of user-item. Please contact system administrator'
+            );
+        }
     };
 
     return {

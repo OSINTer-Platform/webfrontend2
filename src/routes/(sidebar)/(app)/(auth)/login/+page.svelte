@@ -1,14 +1,15 @@
 <script lang="ts">
     import Switch from '$utils/switch.svelte';
-    import type { ActionData } from './$types';
+    import type { ActionData, PageData } from './$types';
 
     export let form: ActionData;
+    export let data: PageData;
 
     let username: string = form?.username ?? '';
     let password: string = '';
     let remember: boolean = form?.remember ?? false;
 
-    let formError: string | null;
+    let formError: string | null = null;
     $: {
         if (username.length == 0) {
             formError = 'Please specify username';
@@ -23,6 +24,7 @@
     let title = success ? 'Welcome back!' : 'Failure!';
     let detail =
         form?.detail ??
+        data.msg ??
         'Log in down below to continue with your journey into the wonderful world of CTI';
 </script>
 
@@ -34,6 +36,7 @@
 	p-8
 
 	mx-auto
+	grow
 
 	flex
 	flex-col
@@ -43,7 +46,7 @@
 	items-center
 "
 >
-    <header class="dark:text-white">
+    <header class="dark:text-white self-stretch">
         <h1 class="text-5xl font-semibold">{title}</h1>
         <p class="font-light">{detail}</p>
     </header>

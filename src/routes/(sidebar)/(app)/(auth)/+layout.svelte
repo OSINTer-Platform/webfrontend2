@@ -9,7 +9,7 @@
 	w-full
 
 	flex
-	flex-col
+	flex-row
 	justify-center
 "
 >
