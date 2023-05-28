@@ -1,29 +1,56 @@
 import type { LayoutLoad } from './$types';
 import type { Collection, Feed } from '$shared/types/userItems';
-
-import { handleResponse, queryProtected } from '$lib/common/query';
 import type { ArticleCategories } from '$shared/types/api';
+
 import { PUBLIC_API_BASE } from '$env/static/public';
+import { error } from '@sveltejs/kit';
 
 export const load = (async ({ parent, fetch }) => {
     const fetchCategories = async (): Promise<ArticleCategories> => {
         const r = await fetch(`${PUBLIC_API_BASE}/articles/categories`);
-        return await handleResponse(r);
+
+        if (r.ok) {
+            return await r.json();
+        } else {
+            throw error(
+                r.status,
+                'Error when fetching categories for articles. Please contact system administrator'
+            );
+        }
     };
 
     const getStandardFeeds = async (): Promise<{ [key: string]: Feed }> => {
         const r = await fetch(`${PUBLIC_API_BASE}/user-items/standard/feeds`);
-        return await handleResponse(r);
-    };
-
-    const getProtectedData = async (url: string) => {
-        const r = await queryProtected(url);
 
         if (r.ok) {
-            return r.content;
+            return await r.json();
+        } else {
+            throw error(
+                r.status,
+                'Error when fetching the standard feeds. Please contact system administrator'
+            );
         }
+    };
 
-        return {};
+    const getProtectedData = async (
+        url: string,
+        type: 'feed' | 'collection'
+    ) => {
+        const r = await fetch(`${PUBLIC_API_BASE}/${url}`);
+
+        if (r.ok) {
+            return await r.json();
+        } else if (r.status === 401) {
+            throw error(
+                401,
+                `Authentication error when fetching ${type}s. Try refreshing the page, and contact system administrator if error persist`
+            );
+        } else {
+            throw (
+                (r.status,
+                `Error when fetching ${type}s. Please contact system administrator`)
+            );
+        }
     };
 
     const categories = fetchCategories();
@@ -37,8 +64,8 @@ export const load = (async ({ parent, fetch }) => {
             collections: Promise<{ [key: string]: Collection }>;
             sourceCategories: Promise<ArticleCategories>;
         } = {
-            feeds: getProtectedData('/my/feeds/list'),
-            collections: getProtectedData('/my/collections/list'),
+            feeds: getProtectedData('/my/feeds/list', 'feed'),
+            collections: getProtectedData('/my/collections/list', 'collection'),
             sourceCategories: categories,
         };
 
