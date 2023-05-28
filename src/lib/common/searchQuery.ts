@@ -5,16 +5,16 @@ export function fromUrl(params: URLSearchParams): SearchQuery {
     return {
         limit: limit ? parseInt(limit) : 0,
 
-        sort_by: (params.get('sort_by') as SortBy) ?? undefined,
-        sort_order: (params.get('sort_order') as SortOrder) ?? undefined,
+        sort_by: (params.get('sort_by') as SortBy) || undefined,
+        sort_order: (params.get('sort_order') as SortOrder) || undefined,
 
-        search_term: params.get('search_term') ?? undefined,
+        search_term: params.get('search_term') || undefined,
         highlight: Boolean(
             params.get('search_term') && params.get('highlight')
         ),
 
-        first_date: params.get('first_date') ?? undefined,
-        last_date: params.get('last_date') ?? undefined,
+        first_date: params.get('first_date') || undefined,
+        last_date: params.get('last_date') || undefined,
 
         source_category: params.getAll('source_category'),
     };
