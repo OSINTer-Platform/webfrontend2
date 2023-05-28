@@ -4,6 +4,7 @@
     import { page } from '$app/stores';
 
     import Fa from 'svelte-fa/src/fa.svelte';
+    import { faArrowRightToBracket } from '@fortawesome/free-solid-svg-icons';
 </script>
 
 <div
@@ -12,12 +13,11 @@
 	sm:w-20
 	h-full
 
+	flex
+	flex-col
+
 	bg-surface-50
 	dark:bg-surface-800
-
-	divide-surface-200
-	dark:divide-surface-500
-	divide-y
 
 	border-r
 	border-tertiary-600
@@ -28,7 +28,7 @@
 "
 >
     {#each Object.values(navItems) as items}
-        <ul>
+        <ul class="border-b border-surface-200 dark:border-surface-500">
             {#each items as item}
                 {@const selected =
                     ($page.url.pathname.startsWith(item.route) &&
@@ -60,4 +60,23 @@
             {/each}
         </ul>
     {/each}
+
+    <a
+        href="/{$page.data.user ? 'logout' : 'login'}"
+        class="
+		w-full aspect-square
+		mt-auto
+
+		flex flex-col justify-center
+		btn
+	"
+    >
+        <Fa
+            icon={faArrowRightToBracket}
+            class="sm:text-2xl -mb-2 {$page.data.user ? '' : 'rotate-180'}"
+        />
+        <span class="sm:font-bold text-xs"
+            >{$page.data.user ? 'Logout' : 'Login'}</span
+        >
+    </a>
 </div>
