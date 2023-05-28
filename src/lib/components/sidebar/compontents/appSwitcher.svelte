@@ -62,6 +62,7 @@
     {/each}
 
     <a
+        data-sveltekit-preload-data="tap"
         href="/{$page.data.user ? 'logout' : 'login'}"
         class="
 		w-full aspect-square
