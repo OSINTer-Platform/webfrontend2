@@ -5,6 +5,9 @@ export const load = (({ cookies }) => {
     cookies.set('access_token', '', {
         maxAge: 0,
         expires: new Date(),
+
+        path: '/',
     });
-    throw redirect(303, '/feed');
+
+    throw redirect(301, '/');
 }) satisfies PageServerLoad;
