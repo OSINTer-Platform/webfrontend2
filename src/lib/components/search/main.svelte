@@ -17,7 +17,7 @@
 	flex-col
 	@5xl:flex-row
 
-	overflow-auto
+	overflow-y-auto
 
 
 	px-2

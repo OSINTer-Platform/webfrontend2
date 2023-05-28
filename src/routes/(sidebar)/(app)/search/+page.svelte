@@ -33,7 +33,7 @@
     <meta property="og:type" content="website" />
 </svelte:head>
 
-<form action="/feed/search" method="get">
+<form action="/feed/search" method="get" class="h-full">
     <SearchFields sourceCategories={data.sourceCategories} bind:searchQuery>
         <svelte:fragment slot="main-button">
             <button

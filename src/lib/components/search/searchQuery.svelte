@@ -28,7 +28,7 @@
     }
 </script>
 
-<div class="p-4">
+<div class="p-4 h-full overflow-y-auto">
     <OptionSection
         title="Timespan"
         desc="Enter wanted date interval. Only articles published within this interval will be shown."
