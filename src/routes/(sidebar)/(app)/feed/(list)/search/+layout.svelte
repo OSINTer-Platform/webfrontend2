@@ -5,8 +5,12 @@
     import FeedRender from '../itemDescriptor/feed.svelte';
     import HeaderShell from '$com/article-list/header/shell.svelte';
 
+    import { createFeed } from '$lib/common/userItems';
     import { feedLocalSearch } from '$state/state';
-    import { faDownload } from '@fortawesome/free-solid-svg-icons/index';
+    import {
+        faDownload,
+        faPlus,
+    } from '@fortawesome/free-solid-svg-icons/index';
     import { PUBLIC_API_BASE } from '$env/static/public';
 
     export let data: LayoutData;
@@ -18,6 +22,13 @@
             title: 'Download',
             icon: faDownload,
             route: `${PUBLIC_API_BASE}/articles/search/export?${data.searchUrl}`,
+        },
+        {
+            title: 'Create feed',
+            icon: faPlus,
+            action: () => {
+                createFeed('New feed', data.currentSearch, true);
+            },
         },
     ];
 </script>
