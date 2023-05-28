@@ -58,7 +58,7 @@ export const actions = {
                 path: '/',
             });
 
-            throw redirect(303, '/');
+            throw redirect(303, '/feed');
         } else {
             return fail(r.status, {
                 username,
