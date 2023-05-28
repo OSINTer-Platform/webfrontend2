@@ -70,6 +70,8 @@
 
 		flex flex-col justify-center
 		btn
+
+		border-t border-surface-200 dark:border-surface-500
 	"
     >
         <Fa
