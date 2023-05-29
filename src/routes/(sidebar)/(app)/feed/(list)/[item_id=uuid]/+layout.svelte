@@ -9,6 +9,7 @@
     import {
         faDownload,
         faPenToSquare,
+        faPlus,
         faXmark,
     } from '@fortawesome/free-solid-svg-icons/index';
     import { PUBLIC_API_BASE } from '$env/static/public';
@@ -41,7 +42,22 @@
                       },
                   },
               ]
-            : []),
+            : [
+                  {
+                      title: `Sub to ${data.currentItem.type}`,
+                      icon: faPlus,
+                      action: async () => {
+                          const r = await fetch(
+                              `${PUBLIC_API_BASE}/my/${data.currentItem.type}s/subscription/${data.currentItem._id}`,
+                              { method: 'PUT' }
+                          );
+
+                          if (r.ok) {
+                              location.reload();
+                          }
+                      },
+                  },
+              ]),
     ];
 </script>
 
