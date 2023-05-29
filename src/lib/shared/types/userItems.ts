@@ -3,15 +3,18 @@ import type { SearchQuery } from './api';
 export interface ItemBase {
     _id: string;
     name: string;
-    type: string;
+    type: 'feed' | 'collection';
     owner?: string;
 }
 
 export interface Collection extends ItemBase {
+    type: 'collection';
     ids: string[];
 }
 
-export type Feed = ItemBase & SearchQuery;
+export interface Feed extends ItemBase, SearchQuery {
+    type: 'feed';
+}
 
 export interface UserItems {
     feeds?: ItemBase;
