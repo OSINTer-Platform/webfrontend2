@@ -5,7 +5,7 @@
     import ItemDescriptor from '../itemDescriptor/main.svelte';
     import HeaderShell from '$com/article-list/header/shell.svelte';
 
-    import { feedLocalSearch } from '$state/state';
+    import { feedLocalSearch, modalState } from '$state/state';
     import {
         faDownload,
         faPenToSquare,
@@ -14,6 +14,9 @@
     } from '@fortawesome/free-solid-svg-icons/index';
     import { PUBLIC_API_BASE } from '$env/static/public';
     import { goto } from '$app/navigation';
+    import type { SearchQuery } from '$shared/types/api';
+    import { updateFeed, sanitizeQuery } from '$lib/common/userItems';
+    import type { Feed } from '$shared/types/userItems';
 
     export let data: LayoutData;
 
@@ -25,12 +28,32 @@
             icon: faDownload,
             route: `${PUBLIC_API_BASE}/user-items/${data.currentItem._id}/export`,
         },
-        ...(data.currentItem.owner === data.user?._id
+        ...(data.currentItem.owner === data.user?._id &&
+        data.currentItem.type == 'feed'
             ? [
                   {
                       title: `Modify ${data.currentItem.type}`,
                       icon: faPenToSquare,
-                      action: () => {},
+                      action: () => {
+                          $modalState = {
+                              modalType: 'search',
+                              modalContent: {
+                                  searchText: 'Update feed',
+                                  searchAction: async (query: SearchQuery) => {
+                                      await updateFeed(
+                                          data.currentItem._id,
+                                          sanitizeQuery(query)
+                                      );
+                                      modalState.set({
+                                          modalType: null,
+                                          modalContent: null,
+                                      });
+                                      location.reload();
+                                  },
+                                  query: data.currentItem as Feed,
+                              },
+                          };
+                      },
                   },
               ]
             : []),
