@@ -9,8 +9,10 @@
     import {
         faDownload,
         faPenToSquare,
+        faXmark,
     } from '@fortawesome/free-solid-svg-icons/index';
     import { PUBLIC_API_BASE } from '$env/static/public';
+    import { goto } from '$app/navigation';
 
     export let data: LayoutData;
 
@@ -22,11 +24,24 @@
             icon: faDownload,
             route: `${PUBLIC_API_BASE}/user-items/${data.currentItem._id}/export`,
         },
-        {
-            title: `Modify ${data.currentItem.type}`,
-            icon: faPenToSquare,
-            action: () => {},
-        },
+        ...(data.user.feed_ids.includes(data.currentItem._id)
+            ? [
+                  {
+                      title: `Remove ${data.currentItem.type}`,
+                      icon: faXmark,
+                      action: async () => {
+                          const r = await fetch(
+                              `${PUBLIC_API_BASE}/my/${data.currentItem.type}s/subscription/${data.currentItem._id}`,
+                              { method: 'DELETE' }
+                          );
+
+                          if (r.ok) {
+                              goto('/feed');
+                          }
+                      },
+                  },
+              ]
+            : []),
     ];
 </script>
 
