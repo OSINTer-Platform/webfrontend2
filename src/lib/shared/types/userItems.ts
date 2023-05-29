@@ -18,3 +18,15 @@ export interface UserItems {
     collections?: ItemBase;
     clusters?: ItemBase;
 }
+
+export interface User {
+    _id: string;
+    username: string;
+    active: boolean;
+
+    feed_ids: string[];
+    collection_ids: string[];
+
+    feeds: Feed[];
+    collections: Collection[];
+}
