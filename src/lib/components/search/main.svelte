@@ -17,7 +17,7 @@
     import { createFeed, sanitizeQuery } from '$lib/common/userItems';
 
     export let searchQuery: SearchQuery = getStandardSearch();
-    export let sourceCategories: ArticleCategories;
+    export let sourceCategories: ArticleCategories | undefined = undefined;
 </script>
 
 <div
@@ -60,7 +60,7 @@
     >
         <MajorSection title="Select Sources">
             <SourceSelect
-                sourceOptions={sourceCategories}
+                {sourceCategories}
                 bind:selectedSources={searchQuery.source_category}
             />
         </MajorSection>
