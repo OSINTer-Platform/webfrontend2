@@ -10,8 +10,6 @@
     export let collections: Array<ItemBase> = [];
     export let clusters: Array<ItemBase> = [];
 
-    $: showSidebar = feeds.length + collections.length + clusters.length > 0;
-
     function convertToOption(
         items: Array<ItemBase>
     ): Array<{ href: string; label: string }> {
@@ -48,8 +46,4 @@
     ];
 </script>
 
-{#if showSidebar}
-    <LinkList {options} />
-{:else}
-    <LinkList />
-{/if}
+<LinkList {options} />
