@@ -3,6 +3,23 @@ import { PUBLIC_API_BASE } from '$env/static/public';
 import type { SearchQuery } from '$shared/types/api';
 import type { Feed } from '$shared/types/userItems';
 
+export const sanitizeQuery = (query: SearchQuery) => {
+    const keys = [
+        'sort_by',
+        'sort_order',
+        'search_term',
+        'first_date',
+        'last_date',
+    ] as const;
+    for (const key of keys) {
+        if (!Boolean(query[key])) {
+            query[key] = undefined;
+        }
+    }
+
+    return query;
+};
+
 export const createFeed = async (
     feedName: string,
     contents: SearchQuery,
