@@ -34,7 +34,9 @@
         class="flex justify-between {description ? 'sm:mb-2' : 'sm:mb-10 mb-4'}"
     >
         <section class="flex items-center gap-3 sm:gap-6">
-            <h1 class="sm:text-5xl text-3xl dark:text-white">{title}</h1>
+            <slot name="title">
+                <h1 class="sm:text-5xl text-3xl dark:text-white">{title}</h1>
+            </slot>
             {#if badge}
                 <span
                     class="

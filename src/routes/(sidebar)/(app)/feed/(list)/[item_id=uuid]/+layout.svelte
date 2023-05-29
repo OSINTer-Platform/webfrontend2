@@ -15,7 +15,11 @@
     import { PUBLIC_API_BASE } from '$env/static/public';
     import { goto } from '$app/navigation';
     import type { SearchQuery } from '$shared/types/api';
-    import { updateFeed, sanitizeQuery } from '$lib/common/userItems';
+    import {
+        changeName,
+        updateFeed,
+        sanitizeQuery,
+    } from '$lib/common/userItems';
     import type { Feed } from '$shared/types/userItems';
 
     export let data: LayoutData;
@@ -98,6 +102,19 @@
                   },
               ]),
     ];
+
+    let title: string;
+
+    const setTitle = (newVal: string) => (title = newVal);
+
+    $: setTitle(data.currentItem.name);
+
+    const changeTitle = async () => {
+        if (title !== data.currentItem.name) {
+            await changeName(data.currentItem, title, false);
+            location.reload();
+        }
+    };
 </script>
 
 <HeaderShell
@@ -106,6 +123,40 @@
     {modOptions}
     bind:searchValue={$feedLocalSearch}
 >
+    <div class="relative" slot="title">
+        {#if data.currentItem.owner === data.user?._id}
+            <input
+                type="text"
+                on:blur={changeTitle}
+                on:keydown={(e) => {
+                    if (e.key === 'Enter') {
+                        changeTitle();
+                    }
+                }}
+                bind:value={title}
+                class="
+				absolute
+				h-full w-full
+				bg-transparent
+				sm:text-5xl text-3xl
+				dark:text-white
+				outline-none
+
+				peer
+			"
+            />
+        {/if}
+        <h1
+            class="
+				sm:text-5xl text-3xl
+				dark:text-white
+				peer-hover:after:scale-x-100 peer-hover:after:origin-bottom-left
+				peer-focus:after:scale-x-100 peer-focus:after:origin-bottom-left
+			"
+        >
+            {title}
+        </h1>
+    </div>
     <ItemDescriptor
         currentItem={data.currentItem}
         categories={data.sourceCategories}
@@ -113,3 +164,17 @@
 </HeaderShell>
 
 <slot />
+
+<style lang="postcss">
+    h1 {
+        &:after {
+            content: '';
+            @apply block
+			w-full h-px
+
+			scale-x-0 origin-bottom-right
+			transition-transform duration-300
+			bg-current;
+        }
+    }
+</style>
