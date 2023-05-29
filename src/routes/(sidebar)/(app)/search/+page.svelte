@@ -12,6 +12,7 @@
     import { config, getStandardSearch } from '$shared/config';
     import { PUBLIC_API_BASE } from '$env/static/public';
     import type { SearchQuery } from '$shared/types/api';
+    import { createFeed, sanitizeQuery } from '$lib/common/userItems';
 
     export let data: PageData;
 
@@ -43,10 +44,12 @@
         </svelte:fragment>
 
         <svelte:fragment slot="side-buttons">
-            <!--
-			<button class="btn" on:click={() => {}}><Fa icon={faPlus}/></button
-			>
-			-->
+            <button
+                class="btn"
+                on:click={() => {
+                    createFeed('New feed', sanitizeQuery(searchQuery), true);
+                }}><Fa icon={faPlus} /></button
+            >
 
             <button
                 class="btn"
