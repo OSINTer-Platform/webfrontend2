@@ -50,7 +50,10 @@
 	"
     >
         <MajorSection title="Select Sources">
-            <SourceSelect sourceOptions={sourceCategories} />
+            <SourceSelect
+                sourceOptions={sourceCategories}
+                bind:selectedSources={searchQuery.source_category}
+            />
         </MajorSection>
 
         <hr
