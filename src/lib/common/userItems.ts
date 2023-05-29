@@ -46,3 +46,26 @@ export const createFeed = async (
         );
     }
 };
+
+export const updateFeed = async (
+    feedId: string,
+    contents: SearchQuery,
+    navigate: boolean = false
+): Promise<null | undefined> => {
+    const r = await fetch(`${PUBLIC_API_BASE}/user-items/feed/${feedId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contents),
+    });
+
+    if (r.ok) {
+        if (navigate) goto(`/feed/${feedId}`);
+        return null;
+    } else {
+        console.error(
+            `Failed when attempting to modify existing feed using ID ${feedId}. Status-code and message: ${r.status} ${r.statusText}`
+        );
+    }
+};
