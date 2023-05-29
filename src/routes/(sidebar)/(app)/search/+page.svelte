@@ -1,19 +1,9 @@
 <script lang="ts">
     import SearchFields from '$com/search/main.svelte';
-    import Fa from 'svelte-fa/src/fa.svelte';
-
-    import {
-        faArrowsRotate,
-        faDownload,
-        faPlus,
-    } from '@fortawesome/free-solid-svg-icons';
     import type { PageData } from './$types';
 
-    import { config, getStandardSearch } from '$shared/config';
-    import { PUBLIC_API_BASE } from '$env/static/public';
+    import { config } from '$shared/config';
     import type { SearchQuery } from '$shared/types/api';
-    import { createFeed, sanitizeQuery } from '$lib/common/userItems';
-
     export let data: PageData;
 
     export let searchQuery: SearchQuery;
@@ -41,30 +31,6 @@
                 class="grow btn
 			">Search Content</button
             >
-        </svelte:fragment>
-
-        <svelte:fragment slot="side-buttons">
-            <button
-                class="btn"
-                on:click={() => {
-                    createFeed('New feed', sanitizeQuery(searchQuery), true);
-                }}><Fa icon={faPlus} /></button
-            >
-
-            <button
-                class="btn"
-                formaction="{PUBLIC_API_BASE}/articles/search/export"
-            >
-                <Fa icon={faDownload} />
-            </button>
-
-            <button
-                type="button"
-                class="btn"
-                on:click={() => (searchQuery = getStandardSearch())}
-            >
-                <Fa icon={faArrowsRotate} />
-            </button>
         </svelte:fragment>
     </SearchFields>
 </form>

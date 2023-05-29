@@ -2,10 +2,19 @@
     import MajorSection from './majorSection.svelte';
     import SearchPanel from './searchQuery.svelte';
     import SourceSelect from './sourceSelect.svelte';
+    import Fa from 'svelte-fa/src/fa.svelte';
+
+    import {
+        faArrowsRotate,
+        faDownload,
+        faPlus,
+    } from '@fortawesome/free-solid-svg-icons';
 
     import type { ArticleCategories, SearchQuery } from '$shared/types/api';
 
+    import { PUBLIC_API_BASE } from '$env/static/public';
     import { getStandardSearch } from '$shared/config';
+    import { createFeed, sanitizeQuery } from '$lib/common/userItems';
 
     export let searchQuery: SearchQuery = getStandardSearch();
     export let sourceCategories: ArticleCategories;
@@ -84,7 +93,33 @@
                 <slot name="main-button" />
 
                 <div class="flex shrink-0 w-fit side-buttons">
-                    <slot name="side-buttons" />
+                    <slot name="side-buttons">
+                        <button
+                            class="btn"
+                            on:click={() => {
+                                createFeed(
+                                    'New feed',
+                                    sanitizeQuery(searchQuery),
+                                    true
+                                );
+                            }}><Fa icon={faPlus} /></button
+                        >
+
+                        <button
+                            class="btn"
+                            formaction="{PUBLIC_API_BASE}/articles/search/export"
+                        >
+                            <Fa icon={faDownload} />
+                        </button>
+
+                        <button
+                            type="button"
+                            class="btn"
+                            on:click={() => (searchQuery = getStandardSearch())}
+                        >
+                            <Fa icon={faArrowsRotate} />
+                        </button>
+                    </slot>
                 </div>
             </section>
         </MajorSection>
