@@ -25,7 +25,16 @@
             icon: faDownload,
             route: `${PUBLIC_API_BASE}/user-items/${data.currentItem._id}/export`,
         },
-        ...(data.user.feed_ids.includes(data.currentItem._id)
+        ...(data.currentItem.owner === data.user?._id
+            ? [
+                  {
+                      title: `Modify ${data.currentItem.type}`,
+                      icon: faPenToSquare,
+                      action: () => {},
+                  },
+              ]
+            : []),
+        ...(data.user?.feed_ids.includes(data.currentItem._id)
             ? [
                   {
                       title: `Remove ${data.currentItem.type}`,
@@ -47,6 +56,13 @@
                       title: `Sub to ${data.currentItem.type}`,
                       icon: faPlus,
                       action: async () => {
+                          if (!data.user) {
+                              goto(
+                                  `/login?msg=${encodeURIComponent(
+                                      'Login down below for the ability to subscribe to and personalize feeds'
+                                  )}`
+                              );
+                          }
                           const r = await fetch(
                               `${PUBLIC_API_BASE}/my/${data.currentItem.type}s/subscription/${data.currentItem._id}`,
                               { method: 'PUT' }
