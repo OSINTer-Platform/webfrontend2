@@ -19,7 +19,7 @@
         changeName,
         updateFeed,
         sanitizeQuery,
-        createFeed,
+        createItem,
     } from '$lib/common/userItems';
     import type { Collection, Feed } from '$shared/types/userItems';
     import { faFileClipboard } from '@fortawesome/free-regular-svg-icons';
@@ -28,6 +28,10 @@
 
     function isFeed(item: Feed | Collection): item is Feed {
         return item.type == 'feed';
+    }
+
+    function isCollection(item: Feed | Collection): item is Collection {
+        return item.type == 'collection';
     }
 
     let modOptions: Array<HeaderModOptions>;
@@ -43,9 +47,21 @@
             icon: faFileClipboard,
             action: async () => {
                 if (isFeed(data.currentItem)) {
-                    await createFeed('Copied Feed', data.currentItem, true);
-                    location.reload();
+                    await createItem(
+                        'Copied Feed',
+                        data.currentItem,
+                        'feed',
+                        true
+                    );
+                } else if (isCollection(data.currentItem)) {
+                    await createItem(
+                        'Copied Collection',
+                        data.currentItem.ids,
+                        'collection',
+                        true
+                    );
                 }
+                location.reload();
             },
         },
         ...(data.currentItem.owner === data.user?._id &&

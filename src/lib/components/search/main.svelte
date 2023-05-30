@@ -14,7 +14,7 @@
 
     import { PUBLIC_API_BASE } from '$env/static/public';
     import { getStandardSearch } from '$shared/config';
-    import { createFeed, sanitizeQuery } from '$lib/common/userItems';
+    import { createItem, sanitizeQuery } from '$lib/common/userItems';
 
     export let searchQuery: SearchQuery = getStandardSearch();
     export let sourceCategories: ArticleCategories | undefined = undefined;
@@ -97,9 +97,10 @@
                         <button
                             class="btn"
                             on:click={() => {
-                                createFeed(
+                                createItem(
                                     'New feed',
                                     sanitizeQuery(searchQuery),
+                                    'feed',
                                     true
                                 );
                             }}><Fa icon={faPlus} /></button

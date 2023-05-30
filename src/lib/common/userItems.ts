@@ -1,7 +1,7 @@
 import { goto } from '$app/navigation';
 import { PUBLIC_API_BASE } from '$env/static/public';
 import type { SearchQuery } from '$shared/types/api';
-import type { Feed, ItemBase } from '$shared/types/userItems';
+import type { Collection, Feed, ItemBase } from '$shared/types/userItems';
 
 export const sanitizeQuery = (query: SearchQuery) => {
     const keys = [
@@ -20,13 +20,27 @@ export const sanitizeQuery = (query: SearchQuery) => {
     return query;
 };
 
-export const createFeed = async (
+export function createItem(
     feedName: string,
     contents: SearchQuery,
+    type: 'feed',
+    navigate: boolean
+): Promise<Feed | undefined>;
+export function createItem(
+    feedName: string,
+    contents: string[],
+    type: 'collection',
+    navigate: boolean
+): Promise<Collection | undefined>;
+
+export async function createItem(
+    feedName: string,
+    contents: SearchQuery | string[],
+    type: 'feed' | 'collection',
     navigate: boolean = false
-): Promise<Feed | undefined> => {
+): Promise<Feed | Collection | undefined> {
     const r = await fetch(
-        `${PUBLIC_API_BASE}/my/feeds/${encodeURIComponent(feedName)}`,
+        `${PUBLIC_API_BASE}/my/${type}s/${encodeURIComponent(feedName)}`,
         {
             method: 'POST',
             headers: {
@@ -37,15 +51,15 @@ export const createFeed = async (
     );
 
     if (r.ok) {
-        const feed: Feed = await r.json();
-        if (navigate) await goto(`/feed/${feed._id}`);
-        return feed;
+        const item: Feed | Collection = await r.json();
+        if (navigate) await goto(`/feed/${item._id}`);
+        return item;
     } else {
         console.error(
             `Failed when attempting to create feed. Status-code and message: ${r.status} ${r.statusText}`
         );
     }
-};
+}
 
 export const updateFeed = async (
     feedId: string,
