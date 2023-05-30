@@ -4,13 +4,8 @@
     import { slide } from 'svelte/transition';
 
     export let title: string;
-    export let seperate: boolean = false;
 
     let open = true;
-
-    $: seperateClass = seperate
-        ? `xl:justify-between overflow-auto xl:p-2`
-        : '';
 </script>
 
 <button
@@ -45,21 +40,19 @@
 
 <section
     transition:slide|local
-    class:seperate
     class="
-flex
-flex-col
+		flex
+		flex-col
 
-min-h-0
+		min-h-0
 
-@5xl/full:h-full
-overflow-y-hidden
-{open ? 'h-full' : 'h-0'}
+		@5xl/full:h-full
+		overflow-y-hidden
+		{open ? 'h-full' : 'h-0'}
 
-transition-[height]
-duration-700
+		transition-[height]
+		duration-700
 
-{seperateClass}
 "
 >
     <slot />

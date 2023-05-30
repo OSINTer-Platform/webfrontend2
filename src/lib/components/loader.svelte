@@ -1,5 +1,6 @@
 <script lang="ts">
-    export let size: string = '10rem';
+    let classes: string = 'w-40 h-40';
+    export { classes as class };
     export let text: string | null = null;
 
     import { onMount } from 'svelte';
@@ -26,7 +27,6 @@
 "
 >
     <div
-        style="width: {size}; height: {size};"
         class="
 		lds-grid
 
@@ -35,6 +35,7 @@
 		grid-cols-3
 		grid-rows-3
 		gap-2
+		{classes}
 	"
     >
         {#each Array(9) as _}

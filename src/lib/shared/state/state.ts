@@ -1,10 +1,18 @@
 import { persisted } from 'svelte-local-storage-store';
 import { writable, type Writable } from 'svelte/store';
 
-import type { Article, ArticleCategories } from '../types/api';
+import type { Article, ArticleCategories, SearchQuery } from '../types/api';
 import type { ArticleListRender } from '../types/internal';
 
 export const modalState: Writable<
+    | {
+          modalType: 'search';
+          modalContent: {
+              query: SearchQuery | undefined;
+              searchAction: (q: SearchQuery) => void;
+              searchText: string;
+          };
+      }
     | {
           modalType: 'article';
           modalContent: { article: Article; categories: ArticleCategories };

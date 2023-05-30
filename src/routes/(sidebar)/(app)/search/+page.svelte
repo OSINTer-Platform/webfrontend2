@@ -1,23 +1,12 @@
 <script lang="ts">
-    import MajorSection from './majorSection.svelte';
-    import SearchPanel from './searchQuery.svelte';
-    import SourceSelect from './sourceSelect.svelte';
-    import Fa from 'svelte-fa/src/fa.svelte';
-
-    import {
-        faArrowsRotate,
-        faDownload,
-        faPlus,
-    } from '@fortawesome/free-solid-svg-icons';
-    import type { SearchQuery } from '$shared/types/api';
+    import SearchFields from '$com/search/main.svelte';
     import type { PageData } from './$types';
 
-    import { config, getStandardSearch } from '$shared/config';
-    import { PUBLIC_API_BASE } from '$env/static/public';
-
+    import { config } from '$shared/config';
+    import type { SearchQuery } from '$shared/types/api';
     export let data: PageData;
 
-    export let searchQuery: SearchQuery = getStandardSearch();
+    export let searchQuery: SearchQuery;
 </script>
 
 <svelte:head>
@@ -35,127 +24,13 @@
     <meta property="og:type" content="website" />
 </svelte:head>
 
-<form
-    action="/feed/search"
-    method="get"
-    class="
-	flex
-	flex-col
-	@5xl:flex-row
-
-	overflow-auto
-
-
-	px-2
-	py-4
-	sm:p-8
-
-	h-full
-	w-full
-"
->
-    <div
-        class="
-		flex
-		flex-col
-		shrink-0
-
-		w-full
-		h-fit
-
-		@5xl:h-full
-		@5xl:w-1/2
-		@5xl:overflow-auto
-
-		border-tertiary-500
-		dark:border-surface-400
-		@5xl:border-r
-		@5xl:pr-8
-
-		@container/half
-	"
-    >
-        <MajorSection title="Select Sources">
-            <SourceSelect sourceOptions={data.sourceCategories} />
-        </MajorSection>
-
-        <hr
-            class="sm:mb-8 mb-3 mt-3 text-tertiary-500 dark:text-surface-400 @5xl/full:hidden"
-        />
-    </div>
-
-    <div
-        class="
-		flex
-		flex-col
-
-		w-full
-		@5xl:w-1/2
-		@5xl:pl-8
-
-		@container/half
-	"
-    >
-        <MajorSection title="Search Query">
-            <SearchPanel {searchQuery} />
-        </MajorSection>
-
-        <hr
-            class="sm:mb-8 mb-3 mt-3 text-tertiary-500 dark:text-surface-400 @5xl/full:hidden"
-        />
-
-        <section class="flex gap-4 mx-4">
-            <slot name="main-button">
-                <button
-                    class="
-					btn
-					h-16
-					grow
-
-					font-light
-					dark:font-bold
-				">Search Content</button
-                >
-            </slot>
-
-            <div class="flex shrink-0 w-fit">
-                <slot name="side-buttons">
-                    <!--
-                    <button
-                        on:click={() => {}}
-                        class="
-							btn
-							h-16
-							w-16
-						"><Fa icon={faPlus} class="opacity-70 text-sm" /></button
-                    >
-					-->
-
-                    <button
-                        formaction="{PUBLIC_API_BASE}/articles/search/export"
-                        class="
-							btn
-							h-16
-							w-16
-						"><Fa icon={faDownload} class="opacity-70 text-sm" /></button
-                    >
-                    <button
-                        type="button"
-                        on:click={() => (searchQuery = getStandardSearch())}
-                        class="
-							btn
-							h-16
-							w-16
-						"><Fa icon={faArrowsRotate} class="opacity-70 text-sm" /></button
-                    >
-                </slot>
-            </div>
-        </section>
-    </div>
+<form action="/feed/search" method="get" class="h-full">
+    <SearchFields sourceCategories={data.sourceCategories} bind:searchQuery>
+        <svelte:fragment slot="main-button">
+            <button
+                class="grow btn
+			">Search Content</button
+            >
+        </svelte:fragment>
+    </SearchFields>
 </form>
-
-<style lang="postcss">
-    button {
-        @apply border border-tertiary-700;
-    }
-</style>
