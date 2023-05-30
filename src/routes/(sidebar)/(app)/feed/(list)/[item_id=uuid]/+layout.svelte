@@ -103,7 +103,7 @@
               ]),
     ];
 
-    let title: string;
+    let title: string = data.currentItem.name;
 
     const setTitle = (newVal: string) => (title = newVal);
 
@@ -111,6 +111,7 @@
 
     const changeTitle = async () => {
         if (title !== data.currentItem.name) {
+            title = title.trim().replaceAll('  ', ' ');
             await changeName(data.currentItem, title, false);
             location.reload();
         }
@@ -128,17 +129,20 @@
             <input
                 type="text"
                 on:blur={changeTitle}
-                on:keydown={(e) => {
+                on:keydown={async (e) => {
                     if (e.key === 'Enter') {
                         changeTitle();
+                    } else if (title.length > 25) {
+                        title = title.slice(0, 24);
                     }
                 }}
+                maxlength="25"
                 bind:value={title}
                 class="
 				absolute
 				h-full w-full
 				bg-transparent
-				sm:text-5xl text-3xl
+				lg:text-5xl sm:text-4xl text-3xl
 				dark:text-white
 				outline-none
 
@@ -148,8 +152,9 @@
         {/if}
         <h1
             class="
-				sm:text-5xl text-3xl
-				dark:text-white
+				lg:text-5xl sm:text-4xl text-3xl
+				whitespace-pre
+				text-transparent
 				peer-hover:after:scale-x-100 peer-hover:after:origin-bottom-left
 				peer-focus:after:scale-x-100 peer-focus:after:origin-bottom-left
 			"
@@ -171,6 +176,7 @@
             content: '';
             @apply block
 			w-full h-px
+			text-black dark:text-white
 
 			scale-x-0 origin-bottom-right
 			transition-transform duration-300
