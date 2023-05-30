@@ -103,7 +103,10 @@
               ]),
     ];
 
+    let ownsFeed: boolean;
     let title: string = data.currentItem.name;
+
+    $: ownsFeed = data.currentItem.owner === data.user?._id;
 
     const setTitle = (newVal: string) => (title = newVal);
 
@@ -125,7 +128,7 @@
     bind:searchValue={$feedLocalSearch}
 >
     <div class="relative" slot="title">
-        {#if data.currentItem.owner === data.user?._id}
+        {#if ownsFeed}
             <input
                 type="text"
                 on:blur={changeTitle}
@@ -154,7 +157,7 @@
             class="
 				lg:text-5xl sm:text-4xl text-3xl
 				whitespace-pre
-				text-transparent
+				{ownsFeed ? 'text-transparent' : 'dark:text-white'}
 				peer-hover:after:scale-x-100 peer-hover:after:origin-bottom-left
 				peer-focus:after:scale-x-100 peer-focus:after:origin-bottom-left
 			"
