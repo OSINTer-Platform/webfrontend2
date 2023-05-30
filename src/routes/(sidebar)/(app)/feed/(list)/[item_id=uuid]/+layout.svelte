@@ -19,10 +19,16 @@
         changeName,
         updateFeed,
         sanitizeQuery,
+        createFeed,
     } from '$lib/common/userItems';
-    import type { Feed } from '$shared/types/userItems';
+    import type { Collection, Feed } from '$shared/types/userItems';
+    import { faFileClipboard } from '@fortawesome/free-regular-svg-icons';
 
     export let data: LayoutData;
+
+    function isFeed(item: Feed | Collection): item is Feed {
+        return item.type == 'feed';
+    }
 
     let modOptions: Array<HeaderModOptions>;
 
@@ -31,6 +37,16 @@
             title: 'Download',
             icon: faDownload,
             route: `${PUBLIC_API_BASE}/user-items/${data.currentItem._id}/export`,
+        },
+        {
+            title: `Copy ${data.currentItem.type}`,
+            icon: faFileClipboard,
+            action: async () => {
+                if (isFeed(data.currentItem)) {
+                    await createFeed('Copied Feed', data.currentItem, true);
+                    location.reload();
+                }
+            },
         },
         ...(data.currentItem.owner === data.user?._id &&
         data.currentItem.type == 'feed'
