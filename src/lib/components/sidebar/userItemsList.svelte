@@ -75,13 +75,13 @@
                         <LinkNavOptions options={option}>
                             <svelte:fragment slot="bottom">
                                 {#if hasButton(option.id) && user}
-                                    <div class="px-2">
+                                    <div class="px-4">
                                         <button
                                             on:click={creationFunctions[
                                                 option.id
                                             ]}
                                             class="
-											mt-2 w-full
+											mt-2 sm:mb-6 w-full
 											sm:px-4 sm:py-2 px-2 py-1
 
 											grid grid-cols-[auto_1fr] items-center
