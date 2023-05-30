@@ -93,7 +93,8 @@
                   },
               ]
             : []),
-        ...(data.user?.feed_ids.includes(data.currentItem._id)
+        ...(data.user?.feed_ids.includes(data.currentItem._id) ||
+        data.user?.collection_ids.includes(data.currentItem._id)
             ? [
                   {
                       title: `Remove ${data.currentItem.type}`,
