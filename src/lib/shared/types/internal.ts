@@ -15,3 +15,20 @@ export interface HeaderModOptions {
     action?: Function;
     route?: string;
 }
+
+export type NavItem = {
+    title: string;
+    description?: string;
+    route: string;
+    icon: IconDefinition;
+};
+
+export type SidebarOption = {
+    id: string;
+    title?: string;
+    list: Array<{
+        href: string;
+        label: string;
+        badge?: string;
+    }>;
+};

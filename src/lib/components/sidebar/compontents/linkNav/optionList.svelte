@@ -6,7 +6,7 @@
 
     import { page } from '$app/stores';
 
-    import type { SidebarOption } from '$shared/nav';
+    import type { SidebarOption } from '$shared/types/internal';
     import { sideMenuOpen } from '$state/state';
 
     export let options: SidebarOption;

@@ -9,7 +9,7 @@
         faGithub,
     } from '@fortawesome/free-brands-svg-icons/index';
 
-    import type { NavItem } from '$shared/nav';
+    import type { NavItem } from '$shared/types/internal';
     import { navItems } from '$shared/nav';
 
     import LogoFull from '$assets/LogoFull.svelte';

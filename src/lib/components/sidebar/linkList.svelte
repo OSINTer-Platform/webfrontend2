@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { SidebarOption } from '$shared/nav';
+    import type { SidebarOption } from '$shared/types/internal';
 
     import AppSwitcher from './compontents/appSwitcher.svelte';
 

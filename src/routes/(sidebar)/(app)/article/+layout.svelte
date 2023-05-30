@@ -2,7 +2,7 @@
     import Sidebar from '$com/sidebar/linkList.svelte';
     import Search from '$com/utils/search.svelte';
 
-    import type { SidebarOption } from '$shared/nav';
+    import type { SidebarOption } from '$shared/types/internal';
 
     import { filteredArticles } from '$state/storedArticles';
     import { localSearch } from '$state/storedArticles';

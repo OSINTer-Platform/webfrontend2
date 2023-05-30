@@ -2,7 +2,7 @@
     import LinkList from '$com/sidebar/linkList.svelte';
 
     import type { ItemBase } from '$shared/types/userItems';
-    import type { SidebarOption } from '$shared/nav';
+    import type { SidebarOption } from '$shared/types/internal';
 
     import { inbuiltFeeds } from '$shared/config';
 

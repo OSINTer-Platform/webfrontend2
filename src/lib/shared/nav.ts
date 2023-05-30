@@ -1,4 +1,5 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-common-types';
+import type { NavItem } from '$shared/types/internal';
 
 import {
     faHome,
@@ -8,23 +9,6 @@ import {
     faNewspaper,
     faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons/index';
-
-export type SidebarOption = {
-    id: string;
-    title?: string;
-    list: Array<{
-        href: string;
-        label: string;
-        badge?: string;
-    }>;
-};
-
-export type NavItem = {
-    title: string;
-    description?: string;
-    route: string;
-    icon: IconDefinition;
-};
 
 export const navItems: { [key in 'external' | 'internal']: Array<NavItem> } = {
     external: [
