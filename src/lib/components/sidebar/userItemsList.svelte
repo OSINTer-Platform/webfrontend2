@@ -25,7 +25,10 @@
         [key in categoriesWithCreation]: () => void;
     } = {
         feeds: initiateFeedCreation,
-        collections: () => {},
+        collections: async () => {
+            await createItem('New Collection', [], 'collection', true);
+            location.reload();
+        },
     };
 
     function initiateFeedCreation() {
