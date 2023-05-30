@@ -26,5 +26,5 @@
     <meta property="og:type" content="website" />
 </svelte:head>
 
-<Sidebar {feeds} {collections} />
+<Sidebar {feeds} {collections} user={data.user} />
 <slot />

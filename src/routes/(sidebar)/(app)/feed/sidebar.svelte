@@ -1,14 +1,15 @@
 <script lang="ts">
-    import LinkList from '$com/sidebar/linkList.svelte';
+    import LinkList from '$com/sidebar/userItemsList.svelte';
 
-    import type { ItemBase } from '$shared/types/userItems';
-    import type { SidebarOption } from '$shared/types/internal';
+    import type { ItemBase, User } from '$shared/types/userItems';
+    import type { UserItemSidebarOption } from '$shared/types/internal';
 
     import { inbuiltFeeds } from '$shared/config';
 
     export let feeds: Array<ItemBase> = [];
     export let collections: Array<ItemBase> = [];
     export let clusters: Array<ItemBase> = [];
+    export let user: User | null;
 
     function convertToOption(
         items: Array<ItemBase>
@@ -19,7 +20,7 @@
         }));
     }
 
-    let options: Array<SidebarOption>;
+    let options: Array<UserItemSidebarOption>;
     $: options = [
         {
             id: 'inbuilts',
@@ -46,4 +47,4 @@
     ];
 </script>
 
-<LinkList {options} />
+<LinkList {options} {user} />

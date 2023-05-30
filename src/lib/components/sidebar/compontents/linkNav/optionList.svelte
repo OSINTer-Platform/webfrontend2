@@ -97,5 +97,6 @@
                 </li>
             {/each}
         </ul>
+        <slot name="bottom" />
     </nav>
 {/if}

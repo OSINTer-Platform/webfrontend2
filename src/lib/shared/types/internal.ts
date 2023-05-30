@@ -32,3 +32,7 @@ export type SidebarOption = {
         badge?: string;
     }>;
 };
+
+export interface UserItemSidebarOption extends SidebarOption {
+    id: 'inbuilts' | 'feeds' | 'collections' | 'clusters';
+}
