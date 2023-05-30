@@ -38,7 +38,7 @@ export const createFeed = async (
 
     if (r.ok) {
         const feed: Feed = await r.json();
-        if (navigate) goto(`/feed/${feed._id}`);
+        if (navigate) await goto(`/feed/${feed._id}`);
         return feed;
     } else {
         console.error(
@@ -61,7 +61,7 @@ export const updateFeed = async (
     });
 
     if (r.ok) {
-        if (navigate) goto(`/feed/${feedId}`);
+        if (navigate) await goto(`/feed/${feedId}`);
         return true;
     } else {
         console.error(
@@ -86,7 +86,7 @@ export const changeName = async (
     );
 
     if (r.ok) {
-        if (navigate) goto(`/feed/${item._id}`);
+        if (navigate) await goto(`/feed/${item._id}`);
         return true;
     } else {
         console.error(
