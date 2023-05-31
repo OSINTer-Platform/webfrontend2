@@ -1,6 +1,8 @@
 <script lang="ts">
     import { getTimespan } from '$lib/common/math';
     import type { ArticleBase } from '$shared/types/api';
+    import { faStar } from '@fortawesome/free-regular-svg-icons';
+    import Fa from 'svelte-fa/src/fa.svelte';
     import SvelteMarkdown from 'svelte-markdown';
     import Link from './link.svelte';
 
@@ -32,6 +34,9 @@
 
 			hover:bg-surface-50
 			dark:hover:bg-surface-500
+
+			[&:hover>div]:opacity-100
+			relative
 		"
         >
             <p
@@ -99,6 +104,28 @@
                 >
                     <SvelteMarkdown source={article.title} isInline />
                 </p>
+            </div>
+            <div
+                on:click|preventDefault|stopPropagation
+                on:keydown|preventDefault|stopPropagation
+                class="
+				absolute right-16 md:right-20 z-10
+				h-full px-2
+				flex justify-center
+				bg-surface-50 dark:bg-surface-500
+				opacity-0
+			"
+            >
+                <Fa
+                    icon={faStar}
+                    class="
+					ml-auto my-auto
+					text-lg md:text-xl
+					text-black/75 dark:text-white/90
+					hover:text-primary-500
+					transition-colors
+				"
+                />
             </div>
             <time
                 title={article.publish_date}

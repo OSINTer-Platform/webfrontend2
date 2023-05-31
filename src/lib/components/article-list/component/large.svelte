@@ -3,6 +3,8 @@
     import { getTimespan } from '$lib/common/math';
     import type { ArticleBase } from '$shared/types/api';
     import Link from './link.svelte';
+    import Fa from 'svelte-fa/src/fa.svelte';
+    import { faStar } from '@fortawesome/free-regular-svg-icons';
 
     export let articles: Array<ArticleBase>;
 </script>
@@ -39,29 +41,50 @@
 		dark:hover:bg-surface-500
 	"
         >
-            <img
+            <div
+                on:click|preventDefault|stopPropagation
+                on:keydown|preventDefault|stopPropagation
                 class="
-			object-cover
-			rounded-md
+				relative
+				w-full md:w-32
+				max-h-80
+				aspect-video md:aspect-square
+				drop-shadow-lg
 
-			w-full
-			md:w-32
+				[&:hover>div]:opacity-100
+			"
+            >
+                <div
+                    class="
+					flex justify-center items-center
+					h-full w-full
+					bg-black/75 opacity-0
+					text-white/90 text-4xl
 
+					transition-opacity
 
-			lg:max-h-80
-			max-h-80
-
-			aspect-video
-			md:aspect-square
-
-
-
-			drop-shadow-lg
-		"
-                loading="lazy"
-                alt="Article Overview"
-                src={article.image_url}
-            />
+					absolute z-10
+				"
+                >
+                    <Fa
+                        icon={faStar}
+                        class="
+						hover:text-primary-500
+						transition-colors
+					"
+                    />
+                </div>
+                <img
+                    class="
+						w-full h-full
+						object-cover
+						rounded-md
+					"
+                    loading="lazy"
+                    alt="Article Overview"
+                    src={article.image_url}
+                />
+            </div>
 
             <div
                 class="
