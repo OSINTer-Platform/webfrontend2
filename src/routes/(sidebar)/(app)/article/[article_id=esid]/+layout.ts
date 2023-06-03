@@ -5,6 +5,7 @@ import type { Article } from '$shared/types/api';
 import { get } from 'svelte/store';
 import { fullArticles } from '$state/storedArticles';
 import { PUBLIC_API_BASE } from '$env/static/public';
+import { error } from '@sveltejs/kit';
 
 export const load = (({ params, fetch }) => {
     const fullArticleList = get(fullArticles);
@@ -17,6 +18,14 @@ export const load = (({ params, fetch }) => {
         const r = await fetch(
             `${PUBLIC_API_BASE}/articles/${params.article_id}/content`
         );
+
+        if (!r.ok) {
+            throw error(
+                r.status,
+                'Error when fetching article content. Please contact system administrator'
+            );
+        }
+
         const article = await r.json();
 
         fullArticles.update((list) => {
