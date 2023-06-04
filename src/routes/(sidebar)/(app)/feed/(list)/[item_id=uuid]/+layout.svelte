@@ -17,7 +17,7 @@
     import type { SearchQuery } from '$shared/types/api';
     import {
         changeName,
-        updateFeed,
+        updateItem,
         sanitizeQuery,
         createItem,
     } from '$lib/common/userItems';
@@ -76,9 +76,11 @@
                               modalContent: {
                                   searchText: 'Update feed',
                                   searchAction: async (query: SearchQuery) => {
-                                      await updateFeed(
+                                      await updateItem(
                                           data.currentItem._id,
-                                          sanitizeQuery(query)
+                                          sanitizeQuery(query),
+                                          'feed',
+                                          false
                                       );
                                       modalState.set({
                                           modalType: null,
