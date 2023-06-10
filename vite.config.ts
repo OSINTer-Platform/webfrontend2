@@ -1,14 +1,21 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 
-export default defineConfig({
-    plugins: [sveltekit()],
-    server: {
-        proxy: {
-            '/api/': {
-                target: 'http://localhost:8000',
-                rewrite: (path) => path.replace(/^\/api/, ''),
+export default ({ mode }: any) => {
+    process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+
+    return defineConfig({
+        plugins: [sveltekit()],
+
+        server: {
+            proxy: {
+                '/api/': {
+                    target: process.env.VITE_API_TARGET,
+                    secure: false,
+                    changeOrigin: true,
+                    rewrite: (path) => path.replace(/^\/api/, ''),
+                },
             },
         },
-    },
-});
+    });
+};
