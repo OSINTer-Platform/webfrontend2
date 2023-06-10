@@ -1,10 +1,18 @@
 <script lang="ts">
-    import SvelteMarkdown from 'svelte-markdown';
-    import { getTimespan } from '$lib/common/math';
-    import type { ArticleBase } from '$shared/types/api';
-    import Link from './link.svelte';
     import Fa from 'svelte-fa/src/fa.svelte';
+    import SvelteMarkdown from 'svelte-markdown';
+
+    import Link from './link.svelte';
+    import CollectionList from './collectionList.svelte';
+
+    import { getTimespan } from '$lib/common/math';
     import { faStar } from '@fortawesome/free-regular-svg-icons';
+
+    import type { ArticleBase } from '$shared/types/api';
+    import type { Collection } from '$shared/types/userItems';
+    import type { Writable } from 'svelte/store';
+
+    export let userCollections: Writable<{ [key: string]: Collection }>;
 
     export let articles: Array<ArticleBase>;
 </script>
@@ -54,26 +62,36 @@
 				[&:hover>div]:opacity-100
 			"
             >
-                <div
-                    class="
-					flex justify-center items-center
-					h-full w-full
-					bg-black/75 opacity-0
-					text-white/90 text-4xl
-
-					transition-opacity
-
-					absolute z-10
-				"
-                >
-                    <Fa
-                        icon={faStar}
+                {#if Object.values($userCollections).length > 0}
+                    <div
                         class="
-						hover:text-primary-500
-						transition-colors
+						flex justify-center items-center
+						h-full w-full
+						bg-black/75 opacity-0
+
+						transition-opacity
+
+						absolute z-10
+						[&:focus-within>button>svg]:text-primary-500
 					"
-                    />
-                </div>
+                    >
+                        <CollectionList
+                            {userCollections}
+                            articleId={article.id}
+                            class="top-10"
+                            btnClass="pb-2"
+                        >
+                            <Fa
+                                icon={faStar}
+                                class="
+								hover:text-primary-500
+								transition-colors
+								text-white/90 text-4xl
+							"
+                            />
+                        </CollectionList>
+                    </div>
+                {/if}
                 <img
                     class="
 						w-full h-full

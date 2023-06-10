@@ -47,4 +47,4 @@
     });
 </script>
 
-<svelte:component this={layouts[layout]} {articles} />
+<svelte:component this={layouts[layout]} {articles} {userCollections} />
