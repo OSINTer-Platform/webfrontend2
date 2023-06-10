@@ -1,8 +1,18 @@
 <script lang="ts">
+    import Fa from 'svelte-fa/src/fa.svelte';
     import SvelteMarkdown from 'svelte-markdown';
-    import { getTimespan } from '$lib/common/math';
-    import type { ArticleBase } from '$shared/types/api';
+
     import Link from './link.svelte';
+    import CollectionList from './collectionList.svelte';
+
+    import { getTimespan } from '$lib/common/math';
+    import { faStar } from '@fortawesome/free-regular-svg-icons';
+
+    import type { ArticleBase } from '$shared/types/api';
+    import type { Collection } from '$shared/types/userItems';
+    import type { Writable } from 'svelte/store';
+
+    export let userCollections: Writable<{ [key: string]: Collection }>;
 
     export let articles: Array<ArticleBase>;
 </script>
@@ -39,29 +49,60 @@
 		dark:hover:bg-surface-500
 	"
         >
-            <img
+            <div
+                on:click|preventDefault|stopPropagation
+                on:keydown|preventDefault|stopPropagation
                 class="
-			object-cover
-			rounded-md
+				relative
+				w-full md:w-32
+				max-h-80
+				aspect-video md:aspect-square
+				drop-shadow-lg
 
-			w-full
-			md:w-32
+				[&:hover>div]:opacity-100
+			"
+            >
+                {#if Object.values($userCollections).length > 0}
+                    <div
+                        class="
+						flex justify-center items-center
+						h-full w-full
+						bg-black/75 opacity-0
 
+						transition-opacity
 
-			lg:max-h-80
-			max-h-80
-
-			aspect-video
-			md:aspect-square
-
-
-
-			drop-shadow-lg
-		"
-                loading="lazy"
-                alt="Article Overview"
-                src={article.image_url}
-            />
+						absolute z-10
+						[&:focus-within>button>svg]:text-primary-500
+					"
+                    >
+                        <CollectionList
+                            {userCollections}
+                            articleId={article.id}
+                            class="top-10"
+                            btnClass="pb-2"
+                        >
+                            <Fa
+                                icon={faStar}
+                                class="
+								hover:text-primary-500
+								transition-colors
+								text-white/90 text-4xl
+							"
+                            />
+                        </CollectionList>
+                    </div>
+                {/if}
+                <img
+                    class="
+						w-full h-full
+						object-cover
+						rounded-md
+					"
+                    loading="lazy"
+                    alt="Article Overview"
+                    src={article.image_url}
+                />
+            </div>
 
             <div
                 class="

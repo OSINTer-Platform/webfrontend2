@@ -1,9 +1,19 @@
 <script lang="ts">
-    import { getTimespan } from '$lib/common/math';
-    import type { ArticleBase } from '$shared/types/api';
+    import Fa from 'svelte-fa/src/fa.svelte';
     import SvelteMarkdown from 'svelte-markdown';
-    import Link from './link.svelte';
 
+    import Link from './link.svelte';
+    import CollectionList from './collectionList.svelte';
+
+    import { getTimespan } from '$lib/common/math';
+    import { faStar } from '@fortawesome/free-regular-svg-icons';
+
+    import type { ArticleBase } from '$shared/types/api';
+    import type { Collection } from '$shared/types/userItems';
+    import type { Writable } from 'svelte/store';
+    import { faApple } from '@fortawesome/free-brands-svg-icons';
+
+    export let userCollections: Writable<{ [key: string]: Collection }>;
     export let articles: Array<ArticleBase>;
 </script>
 
@@ -32,6 +42,11 @@
 
 			hover:bg-surface-50
 			dark:hover:bg-surface-500
+
+			[&:hover>aside]:flex
+			[&:hover>aside]:bg-surface-50
+			[&:hover>aside]:dark:bg-surface-500
+			relative
 		"
         >
             <p
@@ -100,6 +115,35 @@
                     <SvelteMarkdown source={article.title} isInline />
                 </p>
             </div>
+            <aside
+                on:click|preventDefault|stopPropagation
+                on:keydown|preventDefault|stopPropagation
+                class="
+						absolute right-16 md:right-20 z-10
+						hidden justify-center
+						h-full px-2
+						bg-surface-100 dark:bg-surface-900
+					"
+            >
+                {#if Object.values($userCollections).length > 0}
+                    <CollectionList
+                        {userCollections}
+                        articleId={article.id}
+                        class="top-8 right-0"
+                    >
+                        <Fa
+                            icon={faStar}
+                            class="
+									ml-auto my-auto
+									text-lg md:text-xl
+									text-black/75 dark:text-white/90
+									hover:text-primary-500
+									transition-colors
+								"
+                        />
+                    </CollectionList>
+                {/if}
+            </aside>
             <time
                 title={article.publish_date}
                 class="text-xs font-extralight shrink-0 dark:text-white sm:dark:font-medium"

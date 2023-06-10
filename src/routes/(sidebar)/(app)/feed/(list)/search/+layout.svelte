@@ -5,7 +5,7 @@
     import FeedRender from '../itemDescriptor/feed.svelte';
     import HeaderShell from '$com/article-list/header/shell.svelte';
 
-    import { createFeed } from '$lib/common/userItems';
+    import { createItem } from '$lib/common/userItems';
     import { feedLocalSearch } from '$state/state';
     import {
         faDownload,
@@ -27,7 +27,7 @@
             title: 'Create feed',
             icon: faPlus,
             action: () => {
-                createFeed('New feed', data.currentSearch, true);
+                createItem('New feed', data.currentSearch, 'feed', true);
             },
         },
     ];

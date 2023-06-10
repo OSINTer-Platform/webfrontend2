@@ -11,7 +11,7 @@
     import type { User } from '$shared/types/userItems';
 
     import { modalState } from '$shared/state/state';
-    import { createFeed, sanitizeQuery } from '$lib/common/userItems';
+    import { createItem, sanitizeQuery } from '$lib/common/userItems';
     import { goto } from '$app/navigation';
     import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -25,7 +25,10 @@
         [key in categoriesWithCreation]: () => void;
     } = {
         feeds: initiateFeedCreation,
-        collections: () => {},
+        collections: async () => {
+            await createItem('New Collection', [], 'collection', true);
+            location.reload();
+        },
     };
 
     function initiateFeedCreation() {
@@ -44,7 +47,12 @@
                 query: undefined,
                 searchText: 'Create feed',
                 searchAction: async (query: SearchQuery) => {
-                    await createFeed('New Feed', sanitizeQuery(query), true);
+                    await createItem(
+                        'New Feed',
+                        sanitizeQuery(query),
+                        'feed',
+                        true
+                    );
                     modalState.set({
                         modalType: null,
                         modalContent: null,
