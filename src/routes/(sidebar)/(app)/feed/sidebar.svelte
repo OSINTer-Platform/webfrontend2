@@ -24,10 +24,13 @@
     $: options = [
         {
             id: 'inbuilts',
-            list: Object.values(inbuiltFeeds).map(({ title, id }) => ({
-                href: `/feed/${id}`,
-                label: title,
-            })),
+            list: [
+                ...Object.values(inbuiltFeeds).map(({ title, id }) => ({
+                    href: `/feed/${id}`,
+                    label: title,
+                })),
+                { href: `/feed/previous-month`, label: 'Previous months' },
+            ],
         },
         {
             id: 'feeds',
