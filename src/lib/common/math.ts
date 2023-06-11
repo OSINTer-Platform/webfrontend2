@@ -16,3 +16,30 @@ export function getTimespan(origDate: string) {
         }
     }
 }
+
+type ReadableMonths = { name: string; firstDate: Date; lastDate: Date }[];
+
+export function getMonths(firstDate: Date): ReadableMonths {
+    const today = new Date();
+    let date = new Date(today.getUTCFullYear(), today.getMonth());
+
+    const months: ReadableMonths = [];
+
+    while (true) {
+        months.push({
+            name: `${date.toLocaleString('default', {
+                month: 'long',
+            })} ${date.getUTCFullYear()}`,
+            firstDate: date,
+            lastDate: new Date(date.getUTCFullYear(), date.getMonth() + 1, 0),
+        });
+
+        if (date.getMonth() === 0) {
+            date = new Date(date.getUTCFullYear(), 11);
+        } else {
+            date = new Date(date.getUTCFullYear(), date.getMonth() - 1);
+        }
+
+        if (firstDate > date) return months;
+    }
+}
