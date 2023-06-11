@@ -43,13 +43,13 @@ export const inbuiltFeeds: { [key: string]: Inbuilt } = {
     },
     week: {
         id: 'week',
-        title: 'Last week',
+        title: 'Last 7 days',
         desc: 'All the news available from the last 7 days',
         url: timeUrl('week'),
     },
     month: {
         id: 'month',
-        title: 'Last month',
+        title: 'Last 30 days',
         desc: 'All the news available from the last 30 days',
         url: timeUrl('month'),
     },
