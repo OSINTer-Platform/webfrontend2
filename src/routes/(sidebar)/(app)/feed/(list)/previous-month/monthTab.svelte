@@ -27,6 +27,8 @@
 	border-y
 	border-primary-800
 
+	dark:text-white
+
 	{selected ? '!bg-primary-800 text-white' : ''}
 "
 >
@@ -38,6 +40,14 @@
         class="hidden"
     />
 
-    <span class="text-sm md:text-base font-bold">{monthName}</span>
-    <span class="text-xs md:text-sm font-light">{year}</span>
+    <span
+        class="text-sm md:text-base font-bold dark:font-light {selected
+            ? '!font-bold'
+            : ''}">{monthName}</span
+    >
+    <span
+        class="text-xs md:text-sm font-light dark:font-thin {selected
+            ? '!font-light'
+            : ''}">{year}</span
+    >
 </label>

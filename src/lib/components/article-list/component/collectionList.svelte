@@ -114,9 +114,9 @@
                         for="collection-{collection._id}"
                         class="
 						cursor-pointer
-						font-light
-						md:text-sm
-						text-xs
+						font-light dark:font-normal
+						text-xs md:text-sm
+						dark:text-white
 					">{collection.name}</label
                     >
                 </li>
