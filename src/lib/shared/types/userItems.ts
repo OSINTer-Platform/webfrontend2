@@ -5,6 +5,7 @@ export interface ItemBase {
   name: string;
   type: "feed" | "collection";
   owner?: string;
+  deleteable: boolean;
 }
 
 export interface Collection extends ItemBase {
@@ -26,6 +27,8 @@ export interface User {
   _id: string;
   username: string;
   active: boolean;
+
+  already_read: string;
 
   feed_ids: string[];
   collection_ids: string[];
