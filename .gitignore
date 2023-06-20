@@ -22,3 +22,4 @@ symlink-from
 # Own
 build
 src/lib/blog/
+static/blog-images
