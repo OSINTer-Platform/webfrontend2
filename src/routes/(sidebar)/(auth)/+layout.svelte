@@ -2,7 +2,7 @@
 </script>
 
 <div
-    class="
+  class="
 	bg-surface-100
 	dark:bg-surface-800
 
@@ -13,5 +13,5 @@
 	justify-center
 "
 >
-    <slot />
+  <slot />
 </div>

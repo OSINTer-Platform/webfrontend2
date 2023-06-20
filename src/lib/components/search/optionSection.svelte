@@ -1,14 +1,14 @@
 <script lang="ts">
-    import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons';
-    import Fa from 'svelte-fa/src/fa.svelte';
+  import { faCircleQuestion } from "@fortawesome/free-regular-svg-icons";
+  import Fa from "svelte-fa/src/fa.svelte";
 
-    export let title: string;
-    export let desc: string;
+  export let title: string;
+  export let desc: string;
 </script>
 
 <h2
-    title={desc}
-    class="
+  title={desc}
+  class="
 	flex
 	justify-between
 	items-center
@@ -25,10 +25,10 @@
 	dark:font-medium
 "
 >
-    {title}
-    <Fa icon={faCircleQuestion} class="text-tertiary-700" />
+  {title}
+  <Fa icon={faCircleQuestion} class="text-tertiary-700" />
 </h2>
 
 <section class="mb-4">
-    <slot />
+  <slot />
 </section>

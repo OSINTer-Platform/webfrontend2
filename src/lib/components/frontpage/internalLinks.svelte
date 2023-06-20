@@ -1,14 +1,14 @@
 <script lang="ts">
-    import Fa from 'svelte-fa/src/fa.svelte';
+  import Fa from "svelte-fa/src/fa.svelte";
 
-    import { navItems } from '$shared/nav';
+  import { navItems } from "$shared/nav";
 </script>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    {#each navItems.internal as { title, description, route, icon }, i}
-        <a
-            href={route}
-            class="
+  {#each navItems.internal as { title, description, route, icon }, i}
+    <a
+      href={route}
+      class="
 			relative
 
 			mt-4
@@ -47,9 +47,9 @@
 
 			[&:hover>div>svg]:opacity-100
 		"
-        >
-            <div
-                class="
+    >
+      <div
+        class="
 				flex justify-center items-center
 				w-16 rounded-full aspect-square
 				-mt-10 mb-4
@@ -64,15 +64,15 @@
 
 				text-white
 			"
-            >
-                <Fa
-                    {icon}
-                    class="text-3xl opacity-80 transition-opacity duration-300"
-                />
-            </div>
-            <h3 class="font-semibold text-4xl dark:text-white">{title}</h3>
-            <p
-                class="
+      >
+        <Fa
+          {icon}
+          class="text-3xl opacity-80 transition-opacity duration-300"
+        />
+      </div>
+      <h3 class="font-semibold text-4xl dark:text-white">{title}</h3>
+      <p
+        class="
 				text-sm
 				sm:text-lg
 				xl:text-xl
@@ -84,9 +84,9 @@
 				m-2
 				sm:m-0
 			"
-            >
-                {description}
-            </p>
-        </a>
-    {/each}
+      >
+        {description}
+      </p>
+    </a>
+  {/each}
 </div>

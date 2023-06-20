@@ -1,19 +1,19 @@
 <script lang="ts">
-    import { beforeNavigate } from '$app/navigation';
-    import { navigating } from '$app/stores';
-    import Loader from '$com/loader.svelte';
+  import { beforeNavigate } from "$app/navigation";
+  import { navigating } from "$app/stores";
+  import Loader from "$com/loader.svelte";
 
-    let showLoader = false;
+  let showLoader = false;
 
-    beforeNavigate(() => {
-        showLoader = false;
+  beforeNavigate(() => {
+    showLoader = false;
 
-        setTimeout(() => (showLoader = true), 250);
-    });
+    setTimeout(() => (showLoader = true), 250);
+  });
 </script>
 
 <main
-    class="
+  class="
 	flex
 	flex-col
 	grow
@@ -26,9 +26,9 @@
 	dark:bg-surface-800
 "
 >
-    {#if $navigating && showLoader}
-        <Loader text="Loading feed" />
-    {:else}
-        <slot />
-    {/if}
+  {#if $navigating && showLoader}
+    <Loader text="Loading feed" />
+  {:else}
+    <slot />
+  {/if}
 </main>

@@ -1,6 +1,6 @@
-import { getPosts, sortPosts } from '$lib/common/blog';
+import { getPosts, sortPosts } from "$lib/common/blog";
 
-import type { PageServerLoad } from './$types';
+import type { PageServerLoad } from "./$types";
 export const load = (async () => {
-    return { posts: sortPosts(Object.values(getPosts())).slice(0, 4) };
+  return { posts: sortPosts(Object.values(getPosts())).slice(0, 4) };
 }) satisfies PageServerLoad;

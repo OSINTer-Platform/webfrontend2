@@ -1,26 +1,26 @@
 <script lang="ts">
-    import type { HeadingList } from '$lib/common/ToC';
-    import type { PageData } from './$types';
+  import type { HeadingList } from "$lib/common/ToC";
+  import type { PageData } from "./$types";
 
-    import ArticleRender from '$com/articleRender/main.svelte';
+  import ArticleRender from "$com/articleRender/main.svelte";
 
-    export let data: PageData;
-    $: article = data.article;
+  export let data: PageData;
+  $: article = data.article;
 
-    let headings: HeadingList = [];
+  let headings: HeadingList = [];
 </script>
 
 <svelte:head>
-    <title>OSINTer - {article.title}</title>
-    <meta property="og:title" content="OSINTer - {article.title}" />
-    <meta property="og:description" content={article.description} />
-    <meta property="og:image" content={article.image_url} />
-    <meta property="og:url" content="https://osinter.dk/article/{article.id}" />
-    <meta property="og:type" content="article" />
+  <title>OSINTer - {article.title}</title>
+  <meta property="og:title" content="OSINTer - {article.title}" />
+  <meta property="og:description" content={article.description} />
+  <meta property="og:image" content={article.image_url} />
+  <meta property="og:url" content="https://osinter.dk/article/{article.id}" />
+  <meta property="og:type" content="article" />
 </svelte:head>
 
 <section
-    class="
+  class="
 	flex
 	flex-row
 
@@ -29,8 +29,8 @@
 	gap-12
 "
 >
-    <article
-        class="
+  <article
+    class="
 		flex
 		flex-col
 
@@ -41,13 +41,13 @@
 
 		overflow-x-hidden
 	"
-    >
-        <ArticleRender bind:headings {article} header={false} />
-    </article>
+  >
+    <ArticleRender bind:headings {article} header={false} />
+  </article>
 
-    {#if headings.length > 0}
-        <div
-            class="
+  {#if headings.length > 0}
+    <div
+      class="
 			w-96
 			max-h-screen
 			overflow-x-auto
@@ -63,20 +63,20 @@
 
 			dark:text-white
 		"
-        >
-            <p
-                class="
+    >
+      <p
+        class="
 				pl-2
 				font-bold
 				text-lg
 			"
-            >
-                In this article
-            </p>
-            {#each headings as heading}
-                <a
-                    href="#{heading.id}"
-                    class="
+      >
+        In this article
+      </p>
+      {#each headings as heading}
+        <a
+          href="#{heading.id}"
+          class="
 					inline-flex items-center
 					h-8 shrink-0
 					px-2
@@ -88,10 +88,10 @@
 					ml-{3 * heading.depth}
 					dark:font-medium
 				"
-                >
-                    {heading.text}
-                </a>
-            {/each}
-        </div>
-    {/if}
+        >
+          {heading.text}
+        </a>
+      {/each}
+    </div>
+  {/if}
 </section>

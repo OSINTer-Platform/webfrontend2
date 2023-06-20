@@ -1,25 +1,25 @@
 <script lang="ts">
-    import Fa from 'svelte-fa/src/fa.svelte';
-    import { faCaretDown } from '@fortawesome/free-solid-svg-icons/index';
+  import Fa from "svelte-fa/src/fa.svelte";
+  import { faCaretDown } from "@fortawesome/free-solid-svg-icons/index";
 
-    import { slide } from 'svelte/transition';
+  import { slide } from "svelte/transition";
 
-    import { page } from '$app/stores';
+  import { page } from "$app/stores";
 
-    import type { SidebarOption } from '$shared/types/internal';
-    import { sideMenuOpen } from '$state/state';
+  import type { SidebarOption } from "$shared/types/internal";
+  import { sideMenuOpen } from "$state/state";
 
-    export let options: SidebarOption;
+  export let options: SidebarOption;
 
-    $: open = $sideMenuOpen[options.id] ?? true;
+  $: open = $sideMenuOpen[options.id] ?? true;
 </script>
 
 <!-- Title -->
 {#if options.title}
-    <button
-        id={options.id}
-        on:click={() => ($sideMenuOpen[options.id] = !open)}
-        class="
+  <button
+    id={options.id}
+    on:click={() => ($sideMenuOpen[options.id] = !open)}
+    class="
 
 		mx-2
 
@@ -37,36 +37,36 @@
 		hover:bg-surface-300/25
 		dark:hover:bg-surface-400/25
 	"
-    >
-        <span
-            class="
+  >
+    <span
+      class="
 			text-primary-700
 			dark:text-primary-500
 
 			font-bold
 			uppercase
 		">{options.title}</span
-        >
-        <Fa
-            icon={faCaretDown}
-            class="
+    >
+    <Fa
+      icon={faCaretDown}
+      class="
 			{open ? '' : '-rotate-90'}
 			transition-transform
 		"
-        />
-    </button>
+    />
+  </button>
 {/if}
 
 <!-- Navigation List -->
 {#if !options.title || open}
-    <nav class="mb-6" transition:slide|local>
-        <ul class="">
-            {#each options.list as { href, label, badge }}
-                {@const selected = $page.url.pathname == href}
-                <li class="px-2">
-                    <a
-                        {href}
-                        class="
+  <nav class="mb-6" transition:slide|local>
+    <ul class="">
+      {#each options.list as { href, label, badge }}
+        {@const selected = $page.url.pathname == href}
+        <li class="px-2">
+          <a
+            {href}
+            class="
 						px-2
 						py-1
 
@@ -91,12 +91,12 @@
 
 						{selected ? 'bg-primary-500/25' : 'hover:bg-primary-500/5'}
 					"
-                    >
-                        {label}
-                    </a>
-                </li>
-            {/each}
-        </ul>
-        <slot name="bottom" />
-    </nav>
+          >
+            {label}
+          </a>
+        </li>
+      {/each}
+    </ul>
+    <slot name="bottom" />
+  </nav>
 {/if}

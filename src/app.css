@@ -1,8 +1,8 @@
 /* Has to be importet first, so that properties of util class can be overwritten by specific tailwind classes*/
-@import './utils.pcss';
+@import "./utils.pcss";
 
-@import 'tailwindcss/base';
+@import "tailwindcss/base";
 
-@import 'tailwindcss/components';
+@import "tailwindcss/components";
 
-@import 'tailwindcss/utilities';
+@import "tailwindcss/utilities";

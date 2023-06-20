@@ -2,7 +2,7 @@
 </script>
 
 <section
-    class="
+  class="
 	flex
 	flex-col
 
@@ -21,5 +21,5 @@
 	overflow-auto
 "
 >
-    <slot />
+  <slot />
 </section>

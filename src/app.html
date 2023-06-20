@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!-- prettier-ignore -->
-    <head>
+  <!-- prettier-ignore -->
+  <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
         <meta property="og:locale" content="en_DK" />
@@ -19,33 +19,30 @@
 
         %sveltekit.head%
     </head>
-    <body data-sveltekit-preload-data="hover">
-        <div class="h-screen overflow-hidden flex flex-col">
-            %sveltekit.body%
-        </div>
+  <body data-sveltekit-preload-data="hover">
+    <div class="h-screen overflow-hidden flex flex-col">%sveltekit.body%</div>
 
-        <script>
-            const usesDarkMode =
-                window.matchMedia('(prefers-color-scheme: dark)').matches ||
-                false;
-            const favicons = Array.from(
-                document.getElementsByClassName('dual-favicon')
-            );
+    <script>
+      const usesDarkMode =
+        window.matchMedia("(prefers-color-scheme: dark)").matches || false;
+      const favicons = Array.from(
+        document.getElementsByClassName("dual-favicon")
+      );
 
-            function switchIcons(darkMode) {
-                favicons.forEach((icon) => {
-                    if (darkMode) {
-                        icon.href = icon.href.replace('light', 'dark');
-                    } else {
-                        icon.href = icon.href.replace('dark', 'light');
-                    }
-                });
-            }
+      function switchIcons(darkMode) {
+        favicons.forEach((icon) => {
+          if (darkMode) {
+            icon.href = icon.href.replace("light", "dark");
+          } else {
+            icon.href = icon.href.replace("dark", "light");
+          }
+        });
+      }
 
-            window
-                .matchMedia('(prefers-color-scheme: dark)')
-                .addEventListener('change', (e) => switchIcons(e.matches));
-            switchIcons(usesDarkMode);
-        </script>
-    </body>
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => switchIcons(e.matches));
+      switchIcons(usesDarkMode);
+    </script>
+  </body>
 </html>

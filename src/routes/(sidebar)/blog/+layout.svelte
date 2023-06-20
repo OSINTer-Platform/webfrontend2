@@ -2,7 +2,7 @@
 </script>
 
 <main
-    class="
+  class="
 	bg-surface-100
 	dark:bg-surface-800
 
@@ -10,5 +10,5 @@
 	overflow-auto
 "
 >
-    <slot />
+  <slot />
 </main>

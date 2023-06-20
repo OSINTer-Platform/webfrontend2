@@ -1,34 +1,34 @@
 <script lang="ts">
-    import Fa from 'svelte-fa/src/fa.svelte';
-    import SvelteMarkdown from 'svelte-markdown';
+  import Fa from "svelte-fa/src/fa.svelte";
+  import SvelteMarkdown from "svelte-markdown";
 
-    import Link from './link.svelte';
-    import CollectionList from './collectionList.svelte';
+  import Link from "./link.svelte";
+  import CollectionList from "./collectionList.svelte";
 
-    import { getTimespan } from '$lib/common/math';
-    import { faStar } from '@fortawesome/free-regular-svg-icons';
+  import { getTimespan } from "$lib/common/math";
+  import { faStar } from "@fortawesome/free-regular-svg-icons";
 
-    import type { ArticleBase } from '$shared/types/api';
-    import type { Collection } from '$shared/types/userItems';
-    import type { Writable } from 'svelte/store';
-    import { faApple } from '@fortawesome/free-brands-svg-icons';
+  import type { ArticleBase } from "$shared/types/api";
+  import type { Collection } from "$shared/types/userItems";
+  import type { Writable } from "svelte/store";
+  import { faApple } from "@fortawesome/free-brands-svg-icons";
 
-    export let userCollections: Writable<{ [key: string]: Collection }>;
-    export let articles: Array<ArticleBase>;
+  export let userCollections: Writable<{ [key: string]: Collection }>;
+  export let articles: Array<ArticleBase>;
 </script>
 
 <div
-    class="
+  class="
 	flex
 	flex-col
 
 	w-full
 "
 >
-    {#each articles as article}
-        <Link
-            articleId={article.id}
-            class="
+  {#each articles as article}
+    <Link
+      articleId={article.id}
+      class="
 			flex
 			items-center
 			gap-4
@@ -48,9 +48,9 @@
 			[&:hover>aside]:dark:bg-surface-500
 			relative
 		"
-        >
-            <p
-                class="
+    >
+      <p
+        class="
 			hidden
 			lg:hidden
 
@@ -66,11 +66,11 @@
 			dark:text-white
 			dark:font-medium
 		"
-            >
-                {article.source}
-            </p>
-            <div
-                class="
+      >
+        {article.source}
+      </p>
+      <div
+        class="
 			flex
 			flex-row
 			gap-2
@@ -79,9 +79,9 @@
 			grow
 			overflow-hidden
 		"
-            >
-                <h1
-                    class="
+      >
+        <h1
+          class="
 				text-sm
 				md:text-base
 
@@ -94,12 +94,12 @@
 				[&>strong]:font-semibold
 				[&>strong]:text-primary-600
 			"
-                >
-                    <SvelteMarkdown source={article.title} isInline />
-                </h1>
+        >
+          <SvelteMarkdown source={article.title} isInline />
+        </h1>
 
-                <p
-                    class="
+        <p
+          class="
 				text-xs
 				md:text-sm
 				truncate
@@ -111,44 +111,44 @@
 				[&>strong]:font-semibold
 				[&>strong]:text-primary-400
 			"
-                >
-                    <SvelteMarkdown source={article.title} isInline />
-                </p>
-            </div>
-            <aside
-                on:click|preventDefault|stopPropagation
-                on:keydown|preventDefault|stopPropagation
-                class="
+        >
+          <SvelteMarkdown source={article.title} isInline />
+        </p>
+      </div>
+      <aside
+        on:click|preventDefault|stopPropagation
+        on:keydown|preventDefault|stopPropagation
+        class="
 						absolute right-16 md:right-20 z-10
 						hidden justify-center
 						h-full px-2
 						bg-surface-100 dark:bg-surface-900
 					"
-            >
-                {#if Object.values($userCollections).length > 0}
-                    <CollectionList
-                        {userCollections}
-                        articleId={article.id}
-                        class="top-8 right-0"
-                    >
-                        <Fa
-                            icon={faStar}
-                            class="
+      >
+        {#if Object.values($userCollections).length > 0}
+          <CollectionList
+            {userCollections}
+            articleId={article.id}
+            class="top-8 right-0"
+          >
+            <Fa
+              icon={faStar}
+              class="
 									ml-auto my-auto
 									text-lg md:text-xl
 									text-black/75 dark:text-white/90
 									hover:text-primary-500
 									transition-colors
 								"
-                        />
-                    </CollectionList>
-                {/if}
-            </aside>
-            <time
-                title={article.publish_date}
-                class="text-xs font-extralight shrink-0 dark:text-white sm:dark:font-medium"
-                >{getTimespan(article.publish_date)}</time
-            >
-        </Link>
-    {/each}
+            />
+          </CollectionList>
+        {/if}
+      </aside>
+      <time
+        title={article.publish_date}
+        class="text-xs font-extralight shrink-0 dark:text-white sm:dark:font-medium"
+        >{getTimespan(article.publish_date)}</time
+      >
+    </Link>
+  {/each}
 </div>

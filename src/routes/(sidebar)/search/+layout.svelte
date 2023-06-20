@@ -2,7 +2,7 @@
 </script>
 
 <main
-    class="
+  class="
 	w-full
 	h-full
 
@@ -12,5 +12,5 @@
 	@container/full
 "
 >
-    <slot />
+  <slot />
 </main>

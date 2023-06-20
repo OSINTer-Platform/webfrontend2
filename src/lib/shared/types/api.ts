@@ -1,77 +1,77 @@
 export interface ArticleBase {
-    title: string;
-    description: string;
-    url: string;
-    image_url: string;
+  title: string;
+  description: string;
+  url: string;
+  image_url: string;
 
-    profile: string;
-    source: string;
+  profile: string;
+  source: string;
 
-    publish_date: string;
-    inserted_at: string;
+  publish_date: string;
+  inserted_at: string;
 
-    read_times: number;
-    id: string;
+  read_times: number;
+  id: string;
 }
 
 export interface ArticleTags {
-    automatic: string[];
-    interresting: {
-        [key: string]: {
-            results: string[];
-            tag: true;
-        };
+  automatic: string[];
+  interresting: {
+    [key: string]: {
+      results: string[];
+      tag: true;
     };
+  };
 }
 
 export interface Article extends ArticleBase {
-    author: string;
-    formatted_content: string;
-    content: string;
+  author: string;
+  formatted_content: string;
+  content: string;
 
-    tags: ArticleTags;
+  tags: ArticleTags;
 
-    summary?: string;
-    ml?: {
-        similar: Array<string>;
-        cluster: number;
-    };
+  summary?: string;
+  ml?: {
+    similar: Array<string>;
+    cluster: number;
+  };
 }
 
 export interface ArticleCategories {
-    [key: string]: {
-        name: string;
-        image: string;
-        url: string;
-    };
+  [key: string]: {
+    name: string;
+    image: string;
+    url: string;
+  };
 }
 
 export type SortBy =
-    | ''
-    | 'publish_date'
-    | 'read_times'
-    | 'source'
-    | 'author'
-    | 'inserted_at';
-export type SortOrder = 'desc' | 'asc';
+  | ""
+  | "publish_date"
+  | "read_times"
+  | "source"
+  | "author"
+  | "inserted_at";
+export type SortOrder = "desc" | "asc";
 
 export interface SearchQuery {
-    limit: number;
+  limit: number;
 
-    sort_by: SortBy | undefined;
-    sort_order: SortOrder | undefined;
+  sort_by: SortBy | undefined;
+  sort_order: SortOrder | undefined;
 
-    search_term: string | undefined;
-    highlight: boolean | undefined;
+  search_term: string | undefined;
+  highlight: boolean | undefined;
 
-    first_date: string | undefined;
-    last_date: string | undefined;
+  first_date: string | undefined;
+  last_date: string | undefined;
 
-    source_category: string[];
+  source_category: string[];
 }
 
 export interface AccessTokenWithDetails {
-    token: string;
-    expire: number;
-    secure: boolean;
+  token: string;
+  expire: number;
+  secure: boolean;
 }

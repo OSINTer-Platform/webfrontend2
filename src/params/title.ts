@@ -1,5 +1,5 @@
-import type { ParamMatcher } from '@sveltejs/kit';
+import type { ParamMatcher } from "@sveltejs/kit";
 
 export const match = ((param) => {
-    return /^[0-9a-zA-Z-]*$/.test(param);
+  return /^[0-9a-zA-Z-]*$/.test(param);
 }) satisfies ParamMatcher;

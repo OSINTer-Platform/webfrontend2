@@ -1,27 +1,27 @@
 <script lang="ts">
-    import MajorSection from './majorSection.svelte';
-    import SearchPanel from './searchQuery.svelte';
-    import SourceSelect from './sourceSelect.svelte';
-    import Fa from 'svelte-fa/src/fa.svelte';
+  import MajorSection from "./majorSection.svelte";
+  import SearchPanel from "./searchQuery.svelte";
+  import SourceSelect from "./sourceSelect.svelte";
+  import Fa from "svelte-fa/src/fa.svelte";
 
-    import {
-        faArrowsRotate,
-        faDownload,
-        faPlus,
-    } from '@fortawesome/free-solid-svg-icons';
+  import {
+    faArrowsRotate,
+    faDownload,
+    faPlus,
+  } from "@fortawesome/free-solid-svg-icons";
 
-    import type { ArticleCategories, SearchQuery } from '$shared/types/api';
+  import type { ArticleCategories, SearchQuery } from "$shared/types/api";
 
-    import { PUBLIC_API_BASE } from '$env/static/public';
-    import { getStandardSearch } from '$shared/config';
-    import { createItem, sanitizeQuery } from '$lib/common/userItems';
+  import { PUBLIC_API_BASE } from "$env/static/public";
+  import { getStandardSearch } from "$shared/config";
+  import { createItem, sanitizeQuery } from "$lib/common/userItems";
 
-    export let searchQuery: SearchQuery = getStandardSearch();
-    export let sourceCategories: ArticleCategories | undefined = undefined;
+  export let searchQuery: SearchQuery = getStandardSearch();
+  export let sourceCategories: ArticleCategories | undefined = undefined;
 </script>
 
 <div
-    class="
+  class="
 	flex
 	flex-col
 	@5xl:flex-row
@@ -37,8 +37,8 @@
 	w-full
 "
 >
-    <div
-        class="
+  <div
+    class="
 		flex
 		flex-col
 		shrink-0
@@ -57,21 +57,21 @@
 
 		@container/half
 	"
-    >
-        <MajorSection title="Select Sources">
-            <SourceSelect
-                {sourceCategories}
-                bind:selectedSources={searchQuery.source_category}
-            />
-        </MajorSection>
+  >
+    <MajorSection title="Select Sources">
+      <SourceSelect
+        {sourceCategories}
+        bind:selectedSources={searchQuery.source_category}
+      />
+    </MajorSection>
 
-        <hr
-            class="sm:mb-8 mb-3 mt-3 text-tertiary-500 dark:text-surface-400 @5xl/full:hidden"
-        />
-    </div>
+    <hr
+      class="sm:mb-8 mb-3 mt-3 text-tertiary-500 dark:text-surface-400 @5xl/full:hidden"
+    />
+  </div>
 
-    <div
-        class="
+  <div
+    class="
 		flex
 		flex-col
 
@@ -81,68 +81,68 @@
 
 		@container/half
 	"
-    >
-        <MajorSection title="Search Query">
-            <SearchPanel {searchQuery} />
+  >
+    <MajorSection title="Search Query">
+      <SearchPanel {searchQuery} />
 
-            <hr
-                class="sm:mb-8 mb-3 mt-3 text-tertiary-500 dark:text-surface-400 @5xl/full:hidden"
-            />
+      <hr
+        class="sm:mb-8 mb-3 mt-3 text-tertiary-500 dark:text-surface-400 @5xl/full:hidden"
+      />
 
-            <section class="flex gap-4 mx-4">
-                <slot name="main-button" />
+      <section class="flex gap-4 mx-4">
+        <slot name="main-button" />
 
-                <div class="flex shrink-0 w-fit side-buttons">
-                    <slot name="side-buttons">
-                        <button
-                            class="btn"
-                            on:click={() => {
-                                createItem(
-                                    'New feed',
-                                    sanitizeQuery(searchQuery),
-                                    'feed',
-                                    true
-                                );
-                            }}><Fa icon={faPlus} /></button
-                        >
+        <div class="flex shrink-0 w-fit side-buttons">
+          <slot name="side-buttons">
+            <button
+              class="btn"
+              on:click={() => {
+                createItem(
+                  "New feed",
+                  sanitizeQuery(searchQuery),
+                  "feed",
+                  true
+                );
+              }}><Fa icon={faPlus} /></button
+            >
 
-                        <button
-                            class="btn"
-                            formaction="{PUBLIC_API_BASE}/articles/search/export"
-                        >
-                            <Fa icon={faDownload} />
-                        </button>
+            <button
+              class="btn"
+              formaction="{PUBLIC_API_BASE}/articles/search/export"
+            >
+              <Fa icon={faDownload} />
+            </button>
 
-                        <button
-                            type="button"
-                            class="btn"
-                            on:click={() => (searchQuery = getStandardSearch())}
-                        >
-                            <Fa icon={faArrowsRotate} />
-                        </button>
-                    </slot>
-                </div>
-            </section>
-        </MajorSection>
-    </div>
+            <button
+              type="button"
+              class="btn"
+              on:click={() => (searchQuery = getStandardSearch())}
+            >
+              <Fa icon={faArrowsRotate} />
+            </button>
+          </slot>
+        </div>
+      </section>
+    </MajorSection>
+  </div>
 </div>
 
 <style lang="postcss">
-    section {
-        :global(button) {
-            @apply border border-tertiary-700
+  section {
+    :global(button) {
+      @apply border border-tertiary-700
 			h-16 w-16
 			font-light dark:font-bold;
 
-            :global(svg) {
-                @apply opacity-70 text-sm;
-            }
-        }
-
-        div.side-buttons {
-            :global(button) {
-                @apply w-16;
-            }
-        }
+      :global(svg) {
+        @apply opacity-70 text-sm;
+      }
     }
+
+    div.side-buttons {
+      :global(button) {
+        @apply w-16;
+      }
+    }
+  }
 </style>

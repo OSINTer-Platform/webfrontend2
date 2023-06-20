@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { sideOpen } from '$state/state';
+  import { sideOpen } from "$state/state";
 </script>
 
 <div
-    class="
+  class="
 	hidden
 
 	xl:grid
@@ -14,17 +14,17 @@
 	overflow-auto
 "
 >
-    <slot name="nav" />
-    <slot name="content" />
+  <slot name="nav" />
+  <slot name="content" />
 </div>
 
 <span class="hidden md:block xl:hidden">
-    <slot name="nav" />
+  <slot name="nav" />
 </span>
 <div
-    on:click={() => ($sideOpen = !$sideOpen)}
-    on:keyup={() => ($sideOpen = !$sideOpen)}
-    class="
+  on:click={() => ($sideOpen = !$sideOpen)}
+  on:keyup={() => ($sideOpen = !$sideOpen)}
+  class="
 	{$sideOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}
 	xl:hidden
 
@@ -44,10 +44,10 @@
 	duration-200
 "
 >
-    <div
-        on:click|stopPropagation
-        on:keyup|stopPropagation
-        class="
+  <div
+    on:click|stopPropagation
+    on:keyup|stopPropagation
+    class="
 		{$sideOpen ? 'max-w-full' : 'max-w-0'}
 
 		grid
@@ -60,8 +60,8 @@
 		transition-[max-width]
 		duration-200
 	"
-    >
-        <slot name="nav" />
-        <slot name="content" />
-    </div>
+  >
+    <slot name="nav" />
+    <slot name="content" />
+  </div>
 </div>

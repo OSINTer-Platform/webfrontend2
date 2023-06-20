@@ -1,17 +1,17 @@
 <script lang="ts">
-    import Fa from 'svelte-fa/src/fa.svelte';
-    import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-    import { slide } from 'svelte/transition';
+  import Fa from "svelte-fa/src/fa.svelte";
+  import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+  import { slide } from "svelte/transition";
 
-    export let title: string;
+  export let title: string;
 
-    let open = true;
+  let open = true;
 </script>
 
 <button
-    type="button"
-    on:click={() => (open = !open)}
-    class="
+  type="button"
+  on:click={() => (open = !open)}
+  class="
 	flex
 	justify-between
 
@@ -23,24 +23,24 @@
 
 "
 >
-    <h1
-        class="
+  <h1
+    class="
 		font-light
 		text-xl
 		dark:font-bold
 	"
-    >
-        {title}
-    </h1>
-    <Fa
-        icon={faCaretDown}
-        class="@5xl/full:hidden transition-transform {open ? '' : '-rotate-90'}"
-    />
+  >
+    {title}
+  </h1>
+  <Fa
+    icon={faCaretDown}
+    class="@5xl/full:hidden transition-transform {open ? '' : '-rotate-90'}"
+  />
 </button>
 
 <section
-    transition:slide|local
-    class="
+  transition:slide|local
+  class="
 		flex
 		flex-col
 
@@ -55,5 +55,5 @@
 
 "
 >
-    <slot />
+  <slot />
 </section>

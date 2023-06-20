@@ -1,27 +1,27 @@
 <script lang="ts">
-    import type { LayoutData } from './$types';
+  import type { LayoutData } from "./$types";
 
-    import '../app.css';
+  import "../app.css";
 
-    import TopBar from './topbar.svelte';
-    import Modals from '$com/modals/all.svelte';
-    import { modalState } from '$state/state';
+  import TopBar from "./topbar.svelte";
+  import Modals from "$com/modals/all.svelte";
+  import { modalState } from "$state/state";
 
-    export let data: LayoutData;
+  export let data: LayoutData;
 
-    function handleKeypress(keyName: string) {
-        switch (keyName) {
-            case 'Escape':
-                $modalState = { modalType: null, modalContent: null };
-                break;
-        }
+  function handleKeypress(keyName: string) {
+    switch (keyName) {
+      case "Escape":
+        $modalState = { modalType: null, modalContent: null };
+        break;
     }
+  }
 </script>
 
 <svelte:window on:keydown={(e) => handleKeypress(e.key)} />
 
 <Modals />
 <div class="z-40 relative">
-    <TopBar customSidebar={data.customSidebar} burgerMenu={data.burgerMenu} />
+  <TopBar customSidebar={data.customSidebar} burgerMenu={data.burgerMenu} />
 </div>
 <slot />
