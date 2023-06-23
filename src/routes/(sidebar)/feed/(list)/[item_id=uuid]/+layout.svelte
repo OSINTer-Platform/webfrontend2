@@ -18,6 +18,7 @@
   import {
     changeName,
     updateItem,
+    removeable,
     sanitizeQuery,
     createItem,
   } from "$lib/common/userItems";
@@ -35,6 +36,15 @@
   }
 
   let modOptions: Array<HeaderModOptions>;
+
+  $: itemRemoveable =
+    data.user &&
+    (data.user.feed_ids.includes(data.currentItem._id) ||
+      data.user.collection_ids.includes(data.currentItem._id)) &&
+    removeable(data.user, data.currentItem);
+
+  $: itemSubscribeable =
+    !itemRemoveable && removeable(data.user, data.currentItem);
 
   $: modOptions = [
     {
@@ -90,8 +100,7 @@
           },
         ]
       : []),
-    ...(data.user?.feed_ids.includes(data.currentItem._id) ||
-    data.user?.collection_ids.includes(data.currentItem._id)
+    ...(itemRemoveable
       ? [
           {
             title: `Remove ${data.currentItem.type}`,
@@ -108,7 +117,9 @@
             },
           },
         ]
-      : [
+      : []),
+    ...(itemSubscribeable
+      ? [
           {
             title: `Sub to ${data.currentItem.type}`,
             icon: faPlus,
@@ -130,7 +141,8 @@
               }
             },
           },
-        ]),
+        ]
+      : []),
   ];
 
   let ownsFeed: boolean;
