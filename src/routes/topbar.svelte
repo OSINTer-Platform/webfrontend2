@@ -1,8 +1,14 @@
 <script lang="ts">
   import Fa from "svelte-fa/src/fa.svelte";
-  import { faBars, faCaretDown } from "@fortawesome/free-solid-svg-icons/index";
-  import { faGitlab, faGithub } from "@fortawesome/free-brands-svg-icons/index";
+  import {
+    faArrowRightToBracket,
+    faArrowRightFromBracket,
+    faBars,
+    faCaretDown,
+  } from "@fortawesome/free-solid-svg-icons/index";
+  import { faGitlab } from "@fortawesome/free-brands-svg-icons/index";
 
+  import type { User } from "$shared/types/userItems";
   import type { NavItem } from "$shared/types/internal";
   import { navItems } from "$shared/nav";
 
@@ -12,18 +18,20 @@
 
   export let customSidebar = false;
   export let burgerMenu = false;
+  export let user: User | null;
 
-  const socials: Array<NavItem> = [
+  let socials: Array<NavItem>;
+
+  $: socials = [
     {
-      title: "Gitlab",
+      title: "Source-code",
       route: "https://gitlab.com/OSINTer",
+      blank: true,
       icon: faGitlab,
     },
-    {
-      title: "Github",
-      route: "https://github.com/bertmad3400/OSINTer",
-      icon: faGithub,
-    },
+    ...(user
+      ? [{ title: "Logout", route: "/logout", icon: faArrowRightFromBracket }]
+      : [{ title: "Login", route: "/login", icon: faArrowRightToBracket }]),
   ];
 </script>
 
@@ -71,7 +79,8 @@
 		flex
 		flex-row
 
-		md:gap-10
+		md:gap-8
+    gap-2
 	"
   >
     <!-- Navigate -->
@@ -92,16 +101,17 @@
     </ListMenu>
 
     <!-- Social -->
-    <section class="flex items-center gap-2">
+    <section class="flex items-center md:gap-3 gap-2">
       {#each socials as social}
         <a
           class="btn p-2 rounded-full"
           title={social.title}
           href={social.route}
-          target="_blank"
+          target={social.blank ? "_blank" : ""}
           rel="noreferrer noopener"
+          data-sveltekit-preload-data="tap"
         >
-          <Fa icon={social.icon} class="text-2xl" />
+          <Fa icon={social.icon} class="text-xl" />
         </a>
       {/each}
     </section>
