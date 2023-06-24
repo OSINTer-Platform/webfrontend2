@@ -4,7 +4,10 @@
   import { page } from "$app/stores";
 
   import Fa from "svelte-fa/src/fa.svelte";
-  import { faArrowRightToBracket } from "@fortawesome/free-solid-svg-icons";
+  import {
+    faArrowRightFromBracket,
+    faArrowRightToBracket,
+  } from "@fortawesome/free-solid-svg-icons";
 </script>
 
 <div
@@ -75,8 +78,8 @@
 	"
   >
     <Fa
-      icon={faArrowRightToBracket}
-      class="sm:text-2xl -mb-2 {$page.data.user ? '' : 'rotate-180'}"
+      icon={$page.data.user ? faArrowRightFromBracket : faArrowRightToBracket}
+      class="sm:text-2xl -mb-2"
     />
     <span class="sm:font-bold text-xs"
       >{$page.data.user ? "Logout" : "Login"}</span
