@@ -19,6 +19,7 @@ export interface HeaderModOptions {
 export type NavItem = {
   title: string;
   description?: string;
+  blank?: boolean;
   route: string;
   icon: IconDefinition;
 };
