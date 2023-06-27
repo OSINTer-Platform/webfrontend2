@@ -10,10 +10,7 @@ export const load = (({ params, fetch }) => {
     if (r.ok) {
       return await r.json();
     } else {
-      throw error(
-        r.status,
-        "Error when fetching articles from builtin feed. Please contact system administrator"
-      );
+      throw error(r.status, "Error when fetching articles from builtin feed.");
     }
   };
 

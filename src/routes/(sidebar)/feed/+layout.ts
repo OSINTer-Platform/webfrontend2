@@ -12,10 +12,7 @@ export const load = (async ({ parent, fetch }) => {
     if (r.ok) {
       return await r.json();
     } else {
-      throw error(
-        r.status,
-        "Error when fetching categories for articles. Please contact system administrator"
-      );
+      throw error(r.status, "Error when fetching categories for articles.");
     }
   };
 
@@ -25,10 +22,7 @@ export const load = (async ({ parent, fetch }) => {
     if (r.ok) {
       return await r.json();
     } else {
-      throw error(
-        r.status,
-        "Error when fetching the standard feeds. Please contact system administrator"
-      );
+      throw error(r.status, "Error when fetching the standard feeds.");
     }
   };
 
@@ -43,10 +37,7 @@ export const load = (async ({ parent, fetch }) => {
         `Authentication error when fetching ${type}s. Try refreshing the page, and contact system administrator if error persist`
       );
     } else {
-      throw (
-        (r.status,
-        `Error when fetching ${type}s. Please contact system administrator`)
-      );
+      throw (r.status, `Error when fetching ${type}s.`);
     }
   };
 

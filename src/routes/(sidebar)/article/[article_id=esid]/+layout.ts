@@ -20,10 +20,7 @@ export const load = (({ params, fetch }) => {
     );
 
     if (!r.ok) {
-      throw error(
-        r.status,
-        "Error when fetching article content. Please contact system administrator"
-      );
+      throw error(r.status, "Error when fetching article content.");
     }
 
     const article = await r.json();

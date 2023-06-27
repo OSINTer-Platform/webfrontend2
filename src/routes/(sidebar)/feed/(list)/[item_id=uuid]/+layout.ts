@@ -12,10 +12,7 @@ export const load = (async ({ params, fetch }) => {
     if (r.ok) {
       return await r.json();
     } else {
-      throw error(
-        r.status,
-        "Error when fetching description of user-item. Please contact system administrator"
-      );
+      throw error(r.status, "Error when fetching description of user-item.");
     }
   };
 
