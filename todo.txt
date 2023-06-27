@@ -1,1 +1,3 @@
 Style tables in article render
+Recover password page missing
+Copy collection doesn't copy content
