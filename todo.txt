@@ -1,2 +1,1 @@
 Style tables in article render
-Copy collection doesn't copy content
