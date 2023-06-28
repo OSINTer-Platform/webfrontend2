@@ -33,5 +33,10 @@ export async function spawnArticleModal(e: MouseEvent, id: string) {
     modalContent: { article: article, categories: articleCategories },
   });
 
-  await get(page).data.userCollections.autoUpdate();
+  const pageData = get(page).data;
+
+  await Promise.all([
+    pageData.userCollections.autoUpdate(),
+    pageData.alreadyRead.autoUpdate(),
+  ]);
 }

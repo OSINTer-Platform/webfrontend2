@@ -30,9 +30,21 @@ export const load = (async ({ fetch, route }) => {
     );
   };
 
+  const updateAlreadyRead = async (): Promise<Collection | null> => {
+    if (!user) return null;
+
+    const rCollection = await fetch(
+      `${PUBLIC_API_BASE}/user-items/${user.already_read}/content`
+    );
+    if (!rCollection.ok) return null;
+
+    return await rCollection.json();
+  };
+
   return {
     user,
 
+    alreadyRead: updatable(updateAlreadyRead),
     userCollections: updatable(updateCollectionList),
 
     burgerMenu: route.id !== "/",
