@@ -7,14 +7,16 @@
 
   import { getTimespan } from "$lib/common/math";
   import { faStar } from "@fortawesome/free-regular-svg-icons";
+  import { page } from "$app/stores";
 
   import type { ArticleBase } from "$shared/types/api";
   import type { Collection } from "$shared/types/userItems";
   import type { Writable } from "svelte/store";
 
   export let userCollections: Writable<{ [key: string]: Collection }>;
-
   export let articles: Array<ArticleBase>;
+
+  $: alreadyRead = $page.data.alreadyRead;
 </script>
 
 <div
@@ -29,6 +31,7 @@
 "
 >
   {#each articles as article}
+    {@const read = $alreadyRead?.ids.includes(article.id)}
     <hr class="text-tertiary-500 dark:text-surface-500" />
 
     <Link
@@ -93,6 +96,7 @@
           </div>
         {/if}
         <img
+          class:opacity-40={read}
           class="
 						w-full h-full
 						object-cover
@@ -138,7 +142,7 @@
 					text-xl
 					dark:text-white
 
-					font-semibold
+          {read ? 'opacity-75' : 'font-bold'}
 					[&>strong]:font-semibold
 					[&>strong]:text-primary-600
 				"
@@ -148,7 +152,7 @@
 
           <p
             class="
-					font-normal
+          {read ? 'font-lighta opacity-75' : 'font-normal'}
 					text-tertiary-900
 					dark:text-white/80
 					[&>strong]:font-semibold

@@ -7,6 +7,7 @@
 
   import { getTimespan } from "$lib/common/math";
   import { faStar } from "@fortawesome/free-regular-svg-icons";
+  import { page } from "$app/stores";
 
   import type { ArticleBase } from "$shared/types/api";
   import type { Collection } from "$shared/types/userItems";
@@ -15,6 +16,8 @@
 
   export let userCollections: Writable<{ [key: string]: Collection }>;
   export let articles: Array<ArticleBase>;
+
+  $: alreadyRead = $page.data.alreadyRead;
 </script>
 
 <div
@@ -26,6 +29,7 @@
 "
 >
   {#each articles as article}
+    {@const read = $alreadyRead?.ids.includes(article.id)}
     <Link
       articleId={article.id}
       class="
@@ -82,11 +86,10 @@
       >
         <h1
           class="
-				text-sm
-				md:text-base
+				text-sm md:text-base
+        {read ? 'opacity-60' : 'font-semibold'}
 
 				truncate
-				font-semibold
 				shrink-0
 
 				dark:text-white
@@ -100,6 +103,8 @@
 
         <p
           class="
+
+        {read ? 'opacity-60 font-light' : ''}
 				text-xs
 				md:text-sm
 				truncate
@@ -146,6 +151,7 @@
       </aside>
       <time
         title={article.publish_date}
+        class:opacity-60={read}
         class="text-xs font-extralight shrink-0 dark:text-white sm:dark:font-medium"
         >{getTimespan(article.publish_date)}</time
       >
