@@ -1,0 +1,19 @@
+<script lang="ts">
+  import List from "$com/article-list/wrapper.svelte";
+
+  import { feedLocalSearch, showRead } from "$state/state";
+  import { filterArticles } from "$lib/common/filter";
+  import { page } from "$app/stores";
+
+  import type { ArticleBase } from "$shared/types/api";
+
+  export let articles: ArticleBase[];
+  $: alreadyReadCollection = $page.data.alreadyRead;
+  $: alreadyRead = filterArticles(articles, "", $alreadyReadCollection.ids);
+
+  $: filteredArticles = $showRead
+    ? filterArticles(articles, $feedLocalSearch)
+    : filterArticles(alreadyRead, $feedLocalSearch);
+</script>
+
+<List articles={filteredArticles} />
