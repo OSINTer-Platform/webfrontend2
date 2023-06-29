@@ -25,7 +25,9 @@
 
 <svelte:component this={layouts[layout].shell}>
   {#each articles as article}
-    {@const read = $alreadyRead?.ids.includes(article.id)}
+    {@const read =
+      $page.url.pathname.startsWith("/feed") &&
+      $alreadyRead?.ids.includes(article.id)}
     <svelte:component
       this={layouts[layout].article}
       {article}

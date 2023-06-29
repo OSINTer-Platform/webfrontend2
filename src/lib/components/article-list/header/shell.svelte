@@ -91,7 +91,7 @@
     options={{ Large: "large", "Title-View": "title" }}
   >
     <svelte:fragment slot="end">
-      {#if $page.data.user}
+      {#if $page.data.user && $page.url.pathname.startsWith("/feed")}
         <div
           class="
           ml-auto
