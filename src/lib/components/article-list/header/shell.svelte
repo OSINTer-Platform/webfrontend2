@@ -1,12 +1,13 @@
 <script lang="ts">
   import Search from "$com/utils/search.svelte";
   import Tabs from "$com/tabs.svelte";
+  import ModList from "./modList.svelte";
+  import Switch from "$com/utils/switch.svelte";
 
   import type { HeaderModOptions } from "$shared/types/internal";
 
   import { articleListRender, showRead } from "$state/state";
-  import ModList from "./modList.svelte";
-  import Switch from "$com/utils/switch.svelte";
+  import { page } from "$app/stores";
 
   export let title: string;
   export let badge: string = "";
@@ -89,17 +90,20 @@
     bind:selected={$articleListRender}
     options={{ Large: "large", "Title-View": "title" }}
   >
-    <div
-      slot="end"
-      class="
-      ml-auto
-      self-center
-    "
-      title="{$showRead
-        ? 'Hide'
-        : 'Show'} articles which have been read already"
-    >
-      <Switch name="show-read" bind:checked={$showRead} />
-    </div>
+    <svelte:fragment slot="end">
+      {#if $page.data.user}
+        <div
+          class="
+          ml-auto
+          self-center
+        "
+          title="{$showRead
+            ? 'Hide'
+            : 'Show'} articles which have been read already"
+        >
+          <Switch name="show-read" bind:checked={$showRead} />
+        </div>
+      {/if}
+    </svelte:fragment>
   </Tabs>
 </aside>

@@ -9,11 +9,12 @@
 
   export let articles: ArticleBase[];
   $: alreadyReadCollection = $page.data.alreadyRead;
-  $: alreadyRead = filterArticles(articles, "", $alreadyReadCollection.ids);
+  $: alreadyRead = filterArticles(articles, "", $alreadyReadCollection?.ids);
 
-  $: filteredArticles = $showRead
-    ? filterArticles(articles, $feedLocalSearch)
-    : filterArticles(alreadyRead, $feedLocalSearch);
+  $: filteredArticles =
+    $showRead && alreadyReadCollection
+      ? filterArticles(articles, $feedLocalSearch)
+      : filterArticles(alreadyRead, $feedLocalSearch);
 </script>
 
 <List articles={filteredArticles} />
