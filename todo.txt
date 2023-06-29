@@ -1,1 +1,3 @@
 Style tables in article render
+Fix styling of login/signup when text gets short
+Fix re-navigation when downloading
