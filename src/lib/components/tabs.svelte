@@ -38,4 +38,6 @@
       {name}
     </label>
   {/each}
+
+  <slot name="end" />
 </div>

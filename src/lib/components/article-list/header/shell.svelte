@@ -4,8 +4,9 @@
 
   import type { HeaderModOptions } from "$shared/types/internal";
 
-  import { articleListRender } from "$state/state";
+  import { articleListRender, showRead } from "$state/state";
   import ModList from "./modList.svelte";
+  import Switch from "$com/utils/switch.svelte";
 
   export let title: string;
   export let badge: string = "";
@@ -87,5 +88,18 @@
   <Tabs
     bind:selected={$articleListRender}
     options={{ Large: "large", "Title-View": "title" }}
-  />
+  >
+    <div
+      slot="end"
+      class="
+      ml-auto
+      self-center
+    "
+      title="{$showRead
+        ? 'Hide'
+        : 'Show'} articles which have been read already"
+    >
+      <Switch name="show-read" bind:checked={$showRead} />
+    </div>
+  </Tabs>
 </aside>

@@ -40,3 +40,4 @@ export const articleListRender: Writable<ArticleListRender> = persisted(
 );
 
 export const feedLocalSearch = writable("");
+export const showRead = writable(true);
