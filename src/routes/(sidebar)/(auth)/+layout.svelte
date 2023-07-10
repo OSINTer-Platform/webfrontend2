@@ -16,6 +16,7 @@
     class="
       max-w-md
       lg:max-w-lg
+      grow
 
       h-fit
 
