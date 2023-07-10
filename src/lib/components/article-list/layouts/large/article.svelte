@@ -137,7 +137,7 @@ dark:hover:bg-surface-500
 
       <p
         class="
-      {read ? 'font-lighta opacity-75' : 'font-normal'}
+      {read ? 'font-light' : 'font-normal'}
       text-tertiary-900
       dark:text-white/80
       [&>strong]:font-semibold
