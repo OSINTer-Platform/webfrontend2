@@ -23,7 +23,10 @@
     createItem,
   } from "$lib/common/userItems";
   import type { Collection, Feed } from "$shared/types/userItems";
-  import { faFileClipboard } from "@fortawesome/free-regular-svg-icons";
+  import {
+    faFileClipboard,
+    faTrashCan,
+  } from "@fortawesome/free-regular-svg-icons";
 
   export let data: LayoutData;
 
@@ -69,6 +72,24 @@
         location.reload();
       },
     },
+    ...(data.currentItem.owner === data.user?._id &&
+    data.currentItem.type === "collection"
+      ? [
+          {
+            title: "Empty collection",
+            icon: faTrashCan,
+            action: async () => {
+              const r = await updateItem(
+                data.currentItem._id,
+                [],
+                "collection",
+                false
+              );
+              if (r) location.reload();
+            },
+          },
+        ]
+      : []),
     ...(data.currentItem.owner === data.user?._id &&
     data.currentItem.type == "feed"
       ? [
