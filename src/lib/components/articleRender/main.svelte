@@ -166,5 +166,23 @@
     :global(img) {
       @apply rounded-lg w-full;
     }
+
+    :global(table) {
+      @apply w-full my-10;
+
+      :global(tr) {
+        @apply border-b dark:border-surface-400
+        transition-colors duration-150 hover:bg-surface-300/20;
+      }
+
+      :global(th) {
+        @apply md:text-lg font-bold;
+      }
+
+      :global(th),
+      :global(td) {
+        @apply p-4 text-sm md:text-base;
+      }
+    }
   }
 </style>
