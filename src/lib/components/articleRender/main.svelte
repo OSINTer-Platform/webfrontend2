@@ -99,7 +99,8 @@
       @apply max-w-full mb-6 dark:text-white;
     }
 
-    :global(ul) {
+    :global(ul),
+    :global(ol) {
       @apply list-disc list-inside;
     }
 
