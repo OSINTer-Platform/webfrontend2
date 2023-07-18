@@ -4,6 +4,7 @@
 
   import Sidebar from "./sidebar.svelte";
   import { config } from "$shared/config";
+  import { page } from "$app/stores";
 
   export let data: LayoutData;
 
@@ -12,6 +13,9 @@
 
   let collections: Array<Collection>;
   $: collections = data.collections ? Object.values(data.collections) : [];
+
+  let search: boolean;
+  $: search = $page.url.pathname.startsWith("/feed/search");
 </script>
 
 <svelte:head>
@@ -26,5 +30,5 @@
   <meta property="og:type" content="website" />
 </svelte:head>
 
-<Sidebar {feeds} {collections} user={data.user} />
+<Sidebar {feeds} {collections} user={data.user} {search} />
 <slot />

@@ -13,10 +13,11 @@
   import { modalState } from "$shared/state/state";
   import { createItem, sanitizeQuery } from "$lib/common/userItems";
   import { goto } from "$app/navigation";
-  import { faPlus } from "@fortawesome/free-solid-svg-icons";
+  import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
 
   export let options: Array<UserItemSidebarOption> = [];
   export let user: User | null;
+  export let search: boolean = false;
 
   const categoriesWithCreation = ["feeds", "collections"];
   type categoriesWithCreation = "feeds" | "collections";
@@ -73,6 +74,29 @@
   <svelte:fragment slot="content">
     {#if options.length > 0}
       <LinkNavShell>
+        <a
+          href="/search"
+          class="
+          flex flex-row items-center
+          mt-3 mb-6 mx-4 px-4 py-2
+          border
+          rounded-md text-lg
+
+          transition-all
+          duration-300
+
+          hover:shadow-md
+          hover:dark:shadow-primary-800
+          hover:dark:border-primary-500/50
+
+          {search
+            ? 'text-primary-600 dark:text-primary-500/75 dark:border-primary-500/50 hover:dark:text-primary-500'
+            : 'text-black/30 dark:text-white/25'}
+         "
+        >
+          <Fa class="border-r pr-4" icon={faMagnifyingGlass} />
+          <span class="ml-4 uppercase font-bold">Custom search</span>
+        </a>
         {#each options as option}
           {#if option.list.length > 0 || (user && hasButton(option.id))}
             <LinkNavOptions options={option}>

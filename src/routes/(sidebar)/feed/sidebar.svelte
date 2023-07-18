@@ -10,6 +10,7 @@
   export let collections: Array<ItemBase> = [];
   export let clusters: Array<ItemBase> = [];
   export let user: User | null;
+  export let search: boolean;
 
   function convertToOption(
     items: Array<ItemBase>
@@ -50,4 +51,4 @@
   ];
 </script>
 
-<LinkList {options} {user} />
+<LinkList {options} {user} {search} />
