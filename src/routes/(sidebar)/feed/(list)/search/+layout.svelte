@@ -20,13 +20,17 @@
       icon: faDownload,
       route: `${PUBLIC_API_BASE}/articles/search/export?${data.searchUrl}`,
     },
-    {
-      title: "Create feed",
-      icon: faPlus,
-      action: () => {
-        createItem("New feed", data.currentSearch, "feed", true);
-      },
-    },
+    ...(data.user
+      ? [
+          {
+            title: "Create feed",
+            icon: faPlus,
+            action: () => {
+              createItem("New feed", data.currentSearch, "feed", true);
+            },
+          },
+        ]
+      : []),
   ];
 </script>
 
