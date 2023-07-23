@@ -6,10 +6,23 @@
 
   let classes: string = "";
   export { classes as class };
+
+  const showArticleModal = (e: MouseEvent) => {
+    const small = window.matchMedia(
+      "only screen and (max-width: 60rem)"
+    ).matches;
+    if (small || e.ctrlKey) {
+      return;
+    }
+
+    e.preventDefault();
+
+    spawnArticleModal(articleId);
+  };
 </script>
 
 <a
-  on:click={(e) => spawnArticleModal(e, articleId)}
+  on:click={(e) => showArticleModal(e)}
   on:contextmenu|preventDefault={() => goto(`/article/${articleId}`)}
   data-sveltekit-preload-data="off"
   href={`/article/${articleId}`}

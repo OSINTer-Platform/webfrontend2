@@ -7,15 +7,8 @@ import { get } from "svelte/store";
 import type { Article, ArticleCategories } from "$shared/types/api";
 import { PUBLIC_API_BASE } from "$env/static/public";
 
-export async function spawnArticleModal(e: MouseEvent, id: string) {
+export async function spawnArticleModal(id: string) {
   const fetchAndConvert = (url: string) => fetch(url).then((r) => r.json());
-
-  const small = window.matchMedia("only screen and (max-width: 60rem)").matches;
-  if (small || e.ctrlKey) {
-    return;
-  }
-
-  e.preventDefault();
 
   const [article, articleCategories]: [Article, ArticleCategories] =
     await Promise.all([
