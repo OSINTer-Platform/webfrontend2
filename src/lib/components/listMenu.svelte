@@ -12,7 +12,7 @@
   > = [];
 
   const buttonCss =
-    "flex flex-row gap-6 hover:bg-primary-300/25 items-center justify-start rounded-xl w-full p-3 pl-5 dark:text-white dark:hover:bg-primary-500/40";
+    "flex flex-row gap-6 hover:bg-primary-300/25 items-center justify-start rounded-xl w-full pl-4 p-2 sm:p-3 sm:pl-5 text-sm sm:text-base dark:text-white dark:hover:bg-primary-500/40";
 </script>
 
 <div
@@ -40,12 +40,13 @@
 		border-tertiary-500
 		border
 
-		w-64
+    w-52
+		sm:w-64
 
 		shadow-xl
 	"
   >
-    <nav class="divide-y divide-tertiary-500 py-2 px-4">
+    <nav class="divide-y divide-tertiary-500 px-3 sm:py-2 sm:px-4">
       {#each listOptions as list}
         <ul class="py-3">
           {#each list as option}

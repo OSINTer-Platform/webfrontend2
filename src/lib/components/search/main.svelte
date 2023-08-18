@@ -131,7 +131,7 @@
   section {
     :global(button) {
       @apply border border-tertiary-700
-			h-16 w-16
+			h-16 p-2
 			font-light dark:font-bold;
 
       :global(svg) {
@@ -141,7 +141,7 @@
 
     div.side-buttons {
       :global(button) {
-        @apply w-16;
+        @apply w-14 sm:w-16 h-16;
       }
     }
   }

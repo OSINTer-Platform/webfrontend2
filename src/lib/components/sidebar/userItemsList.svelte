@@ -80,7 +80,8 @@
           flex flex-row items-center
           mt-3 mb-6 mx-4 px-4 py-2
           border
-          rounded-md text-lg
+          rounded-md
+          text-sm sm:text-base md:text-lg
 
           transition-all
           duration-300
