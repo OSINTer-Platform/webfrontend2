@@ -72,6 +72,6 @@ export interface SearchQuery {
 
 export interface AccessTokenWithDetails {
   token: string;
-  expire: number;
+  maxAge: number;
   secure: boolean;
 }

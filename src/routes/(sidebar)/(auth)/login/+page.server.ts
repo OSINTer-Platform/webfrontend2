@@ -15,7 +15,7 @@ export const actions = {
 
     try {
       remember = JSON.parse(data.get("remember")?.toString() as string);
-    } catch (SyntaxError) {}
+    } catch (SyntaxError) { }
 
     if (!username) {
       return fail(422, {
@@ -52,7 +52,7 @@ export const actions = {
       cookies.set("access_token", `Bearer ${token.token}`, {
         httpOnly: true,
         secure: token.secure,
-        maxAge: token.expire,
+        maxAge: token.maxAge,
 
         priority: "high",
         path: "/",
