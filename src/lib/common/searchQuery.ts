@@ -14,7 +14,7 @@ export function fromUrl(params: URLSearchParams): SearchQuery {
     first_date: params.get("first_date") || undefined,
     last_date: params.get("last_date") || undefined,
 
-    source_category: params.getAll("source_category"),
+    sources: params.getAll("sources"),
   };
 }
 

@@ -66,5 +66,5 @@ export const getStandardSearch = (): SearchQuery => ({
   first_date: "",
   last_date: "",
 
-  source_category: [],
+  sources: [],
 });

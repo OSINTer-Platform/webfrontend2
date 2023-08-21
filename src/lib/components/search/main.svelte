@@ -61,7 +61,7 @@
     <MajorSection title="Select Sources">
       <SourceSelect
         {sourceCategories}
-        bind:selectedSources={searchQuery.source_category}
+        bind:selectedSources={searchQuery.sources}
       />
     </MajorSection>
 

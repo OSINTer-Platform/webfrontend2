@@ -33,8 +33,8 @@
     ? `"${currentItem.search_term}"`
     : null;
   $: sources =
-    currentItem.source_category.length > 0
-      ? currentItem.source_category.map((v) => categories[v]?.name ?? v)
+    currentItem.sources.length > 0
+      ? currentItem.sources.map((v) => categories[v]?.name ?? v)
       : null;
 </script>
 

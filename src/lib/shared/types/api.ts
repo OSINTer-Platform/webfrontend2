@@ -67,7 +67,7 @@ export interface SearchQuery {
   first_date: string | undefined;
   last_date: string | undefined;
 
-  source_category: string[];
+  sources: string[];
 }
 
 export interface AccessTokenWithDetails {

@@ -15,7 +15,7 @@ export const actions = {
 
     try {
       remember = JSON.parse(data.get("remember")?.toString() as string);
-    } catch (SyntaxError) { }
+    } catch (SyntaxError) {}
 
     if (!username) {
       return fail(422, {
