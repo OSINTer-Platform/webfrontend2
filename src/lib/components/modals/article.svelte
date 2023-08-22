@@ -17,6 +17,7 @@
   export let articleCategories: ArticleCategories;
 
   let switchDirection: "left" | "right" = "left";
+  let blockSwitching: boolean = false;
 
   async function handleKeypress(keyName: string) {
     if (keyName !== "ArrowRight" && keyName !== "ArrowLeft") return;
@@ -36,11 +37,20 @@
       switchDirection = "right";
     }
 
-    spawnArticleModal(newArticleId);
+    await spawnArticleModal(newArticleId);
+    await new Promise((r) => setTimeout(r, 400)); // Wait for transitions
   }
 </script>
 
-<svelte:window on:keydown={(e) => handleKeypress(e.key)} />
+<svelte:window
+  on:keydown={async (e) => {
+    if (!blockSwitching) {
+      blockSwitching = true;
+      await handleKeypress(e.key);
+      blockSwitching = false;
+    }
+  }}
+/>
 
 <Modal class="w-[80vw] h-[90vh] bg-surface-200 dark:bg-surface-700">
   {#key $modalState}
