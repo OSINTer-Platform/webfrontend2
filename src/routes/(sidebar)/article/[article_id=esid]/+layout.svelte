@@ -2,7 +2,7 @@
   import ModList from "$com/article-list/header/modList.svelte";
   import DetailList from "$com/article-list/header/detailList.svelte";
 
-  import type { Article, ArticleTags } from "$shared/types/api";
+  import type { ArticleTags } from "$shared/types/api";
   import type { HeaderModOptions } from "$shared/types/internal";
   import type { LayoutData } from "./$types";
 
@@ -22,13 +22,13 @@
   function getTags(tags: ArticleTags) {
     const extractedTags: { [key: string]: string[] } = {};
 
-    if (tags?.automatic && tags.automatic.length > 1) {
+    if (tags.automatic.length > 1) {
       extractedTags["Automatic Tags"] = tags.automatic;
     }
 
-    if (tags?.interresting && Object.keys(tags.interresting).length > 0) {
-      for (const [key, { results }] of Object.entries(tags.interresting)) {
-        extractedTags[key.toUpperCase()] = results;
+    if (Object.keys(tags.interresting).length > 0) {
+      for (const [key, value] of Object.entries(tags.interresting)) {
+        extractedTags[key.toUpperCase()] = value;
       }
     }
 

@@ -16,12 +16,7 @@ export interface ArticleBase {
 
 export interface ArticleTags {
   automatic: string[];
-  interresting: {
-    [key: string]: {
-      results: string[];
-      tag: true;
-    };
-  };
+  interresting: { [key: string]: string[] };
 }
 
 export interface Article extends ArticleBase {
@@ -31,8 +26,8 @@ export interface Article extends ArticleBase {
 
   tags: ArticleTags;
 
-  summary?: string;
-  ml?: {
+  summary: string;
+  ml: {
     similar: Array<string>;
     cluster: number;
   };
