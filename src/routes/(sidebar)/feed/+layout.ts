@@ -52,8 +52,8 @@ export const load = (async ({ parent, fetch }) => {
       collections: Promise<{ [key: string]: Collection }>;
       sourceCategories: Promise<ArticleCategories>;
     } = {
-      feeds: getProtectedData("/my/feeds/list", "feed"),
-      collections: getProtectedData("/my/collections/list", "collection"),
+      feeds: getProtectedData("my/feeds/list", "feed"),
+      collections: getProtectedData("my/collections/list", "collection"),
       sourceCategories: categories,
     };
 
