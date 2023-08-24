@@ -141,7 +141,7 @@
     }
 
     :global(code) {
-      @apply break-all whitespace-normal font-mono font-normal text-sm text-black;
+      @apply break-all whitespace-normal font-mono font-normal;
     }
 
     :global(p) {
