@@ -19,7 +19,15 @@ export interface ArticleTags {
   interresting: { [key: string]: string[] };
 }
 
-export interface Article extends ArticleBase {
+export interface MLArticle extends ArticleBase {
+  ml: {
+    similar: Array<string>;
+    cluster: number;
+    coordinates: [number, number];
+  };
+}
+
+export interface Article extends MLArticle {
   author: string;
   formatted_content: string;
   content: string;
@@ -27,10 +35,6 @@ export interface Article extends ArticleBase {
   tags: ArticleTags;
 
   summary: string;
-  ml: {
-    similar: Array<string>;
-    cluster: number;
-  };
 }
 
 export interface ArticleCategories {
