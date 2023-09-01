@@ -1,12 +1,19 @@
 <script lang="ts">
+  import Search from "$com/utils/search.svelte";
+  import Switch from "$com/utils/switch.svelte";
+
   export let size: number;
+  export let deepSearch: boolean;
+  export let search: string;
+
+  let enableSearch: boolean = false;
 </script>
 
 <aside
   class="
     absolute
     flex flex-col
-    h-96 w-80 m-10 p-4
+    w-80 m-10 p-4
     border-surface-400 border
     bg-surface-500/30
   "
@@ -31,6 +38,7 @@
       {size} px
     </p>
   </div>
+
   <input
     type="range"
     bind:value={size}
@@ -40,10 +48,48 @@
     class="
 
       appearance-none
-      h-2
+      h-2 mb-8
       rounded-full
       bg-primary-500/25
       accent-primary-800
     "
   />
+
+  <div class="flex justify-between">
+    <h3
+      class="
+        block
+        text-xl font-bold
+        dark:text-white
+      "
+    >
+      Enable Search:
+    </h3>
+    <Switch
+      bind:checked={enableSearch}
+      name="Enable Search"
+      on:change={() => (search = "")}
+    />
+  </div>
+
+  {#if enableSearch}
+    <Search
+      placeholder={"Search in articles"}
+      bind:value={search}
+      containerClass={"mt-4 mb-2"}
+    />
+
+    <div class="flex justify-between">
+      <p
+        class="
+        block
+        text-xs font-light italic
+        dark:text-white
+      "
+      >
+        Enable deep search (slow):
+      </p>
+      <Switch bind:checked={deepSearch} name="Enable Deep Search" size={"xs"} />
+    </div>
+  {/if}
 </aside>

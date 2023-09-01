@@ -7,8 +7,14 @@
   import { onMount } from "svelte";
   import Map from "./map.svelte";
   import ControlPanel from "./controlPanel.svelte";
+  import {
+    derived,
+    writable,
+    type Readable,
+    type Writable,
+  } from "svelte/store";
 
-  let mapData: Promise<MLArticle[]>;
+  let mapData: Readable<Promise<MLArticle[]>>;
   let mounted = false;
 
   function sanitizeArticleList<PartialArticle extends MLArticle>(
@@ -29,8 +35,10 @@
     return completeArticles;
   }
 
-  async function queryArticles(): Promise<MLArticle[]> {
-    const r = await fetch(`${PUBLIC_API_BASE}/ml/articles/map/partial`);
+  async function queryArticles(complete: boolean): Promise<MLArticle[]> {
+    const r = await fetch(
+      `${PUBLIC_API_BASE}/ml/articles/map/${complete ? "full" : "partial"}`
+    );
     if (!r.ok) return Promise.reject("Could not load data");
 
     const articles: MLArticle[] = await r.json();
@@ -39,7 +47,9 @@
 
   onMount(() => {
     if (browser) {
-      mapData = queryArticles();
+      mapData = derived(deepSearch, ($deepSearch) =>
+        queryArticles($deepSearch)
+      );
       mounted = true;
     }
   });
@@ -48,6 +58,9 @@
   let mapWidth;
   // Controlpanel variables
   let size = 1;
+
+  let search = "";
+  let deepSearch: Writable<boolean> = writable(false);
 </script>
 
 {#if mounted}
@@ -57,13 +70,20 @@
     bind:clientWidth={mapWidth}
     bind:clientHeight={mapHeight}
   >
-    <ControlPanel bind:size />
-    {#await mapData}
+    <ControlPanel bind:size bind:deepSearch={$deepSearch} bind:search />
+    {#await $mapData}
       <Loader
         text={`Loading articles for generating the map.\nThis might take a while`}
       />
     {:then mapArticles}
-      <Map mapData={mapArticles} {size} width={mapWidth} height={mapHeight} />
+      <Map
+        mapData={mapArticles}
+        {size}
+        {search}
+        deepSearch={$deepSearch}
+        width={mapWidth}
+        height={mapHeight}
+      />
     {:catch}
       <div
         class="h-full mx-auto px-8 xl:max-w-5xl max-w-2xl flex flex-col justify-center text-center dark:text-white"

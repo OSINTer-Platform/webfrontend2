@@ -6,6 +6,8 @@
 
   export let mapData: Array<MLArticle>;
   export let size: number;
+  export let search: string;
+  export let deepSearch: boolean;
 
   export let width: number;
   export let height: number;
@@ -14,7 +16,7 @@
     let canvas = document.getElementById("map") as HTMLCanvasElement;
     let ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
-    drawArticlePoints(ctx, mapData, width, height, size);
+    drawArticlePoints(ctx, mapData, width, height, size, search, deepSearch);
   }
 
   onMount(() => setTimeout(drawCanvas, 200));

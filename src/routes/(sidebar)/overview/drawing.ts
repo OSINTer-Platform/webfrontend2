@@ -1,3 +1,4 @@
+import { searchInArticle } from "$lib/common/filter";
 import type { MLArticle } from "$shared/types/api";
 
 import * as d3 from "d3";
@@ -8,6 +9,8 @@ export function drawArticlePoints(
   canvasWidth: number,
   canvasHeight: number,
   pointSize: number,
+  search: string,
+  deepSearch: boolean,
   margin: number = 0.025
 ) {
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -43,8 +46,12 @@ export function drawArticlePoints(
   articles.forEach((article) => {
     ctx.beginPath();
 
-    ctx.fillStyle =
-      article.ml.cluster >= 0 ? colorScale(article.ml.cluster) : "#ffffff";
+    if (search.length === 0 || searchInArticle(article, search, deepSearch)) {
+      ctx.fillStyle =
+        article.ml.cluster >= 0 ? colorScale(article.ml.cluster) : "#ffffff";
+    } else {
+      ctx.fillStyle = "rgba(120, 120, 120, 0.25)";
+    }
 
     ctx.arc(
       xScale(article.ml.coordinates[0]),
