@@ -6,6 +6,7 @@
   import type { MLArticle } from "$shared/types/api";
   import { onMount } from "svelte";
   import Map from "./map.svelte";
+  import ControlPanel from "./controlPanel.svelte";
 
   let mapData: Promise<MLArticle[]>;
   let mounted = false;
@@ -45,6 +46,8 @@
 
   let mapHeight;
   let mapWidth;
+  // Controlpanel variables
+  let size = 1;
 </script>
 
 {#if mounted}
@@ -54,12 +57,13 @@
     bind:clientWidth={mapWidth}
     bind:clientHeight={mapHeight}
   >
+    <ControlPanel bind:size />
     {#await mapData}
       <Loader
         text={`Loading articles for generating the map.\nThis might take a while`}
       />
     {:then mapArticles}
-      <Map mapData={mapArticles} width={mapWidth} height={mapHeight} />
+      <Map mapData={mapArticles} {size} width={mapWidth} height={mapHeight} />
     {:catch}
       <div
         class="h-full mx-auto px-8 xl:max-w-5xl max-w-2xl flex flex-col justify-center text-center dark:text-white"

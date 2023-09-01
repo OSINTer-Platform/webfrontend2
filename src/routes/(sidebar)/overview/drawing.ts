@@ -7,7 +7,7 @@ export function drawArticlePoints(
   articles: MLArticle[],
   canvasWidth: number,
   canvasHeight: number,
-  pointSize: number = 2,
+  pointSize: number,
   margin: number = 0.025
 ) {
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
