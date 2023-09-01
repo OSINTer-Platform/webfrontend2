@@ -5,7 +5,14 @@
 </script>
 
 <label class="group relative flex items-center cursor-pointer text-{size}">
-  <input type="checkbox" class="peer hidden" bind:checked on:change {name} />
+  <input
+    type="checkbox"
+    class="peer hidden"
+    bind:checked
+    on:change
+    {name}
+    id={name}
+  />
   <span
     class="
 		flex items-center
