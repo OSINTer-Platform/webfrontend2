@@ -45,12 +45,10 @@ export const navItems: { [key in "external" | "internal"]: Array<NavItem> } = {
       route: "/search",
       icon: faMagnifyingGlass,
     },
-    /*
-        {
-            title: 'Overview',
-            route: '/ml',
-            icon: faDiagramProject,
-        },
-		*/
+    {
+      title: "Overview",
+      route: "/overview",
+      icon: faDiagramProject,
+    },
   ],
 };
