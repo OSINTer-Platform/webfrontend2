@@ -12,9 +12,14 @@
     writable,
     type Readable,
     type Writable,
+    readable,
   } from "svelte/store";
 
-  let mapData: Readable<Promise<MLArticle[]>>;
+  let mapData: Readable<Promise<Readable<MLArticle[]>>>;
+
+  const mapHeight: Writable<number> = writable(0);
+  const mapWidth: Writable<number> = writable(0);
+
   let mounted = false;
 
   function sanitizeArticleList<PartialArticle extends MLArticle>(
@@ -35,14 +40,16 @@
     return completeArticles;
   }
 
-  async function queryArticles(complete: boolean): Promise<MLArticle[]> {
+  async function queryArticles(
+    complete: boolean
+  ): Promise<Readable<MLArticle[]>> {
     const r = await fetch(
       `${PUBLIC_API_BASE}/ml/articles/map/${complete ? "full" : "partial"}`
     );
     if (!r.ok) return Promise.reject("Could not load data");
 
     const articles: MLArticle[] = await r.json();
-    return sanitizeArticleList(articles);
+    return readable(sanitizeArticleList(articles));
   }
 
   onMount(() => {
@@ -50,34 +57,33 @@
       mapData = derived(deepSearch, ($deepSearch) =>
         queryArticles($deepSearch)
       );
+
       mounted = true;
     }
   });
 
-  let mapHeight;
-  let mapWidth;
   // Controlpanel variables
   let size = 1;
 
   let search = "";
-  let deepSearch: Writable<boolean> = writable(false);
+  const deepSearch: Writable<boolean> = writable(false);
 </script>
 
 {#if mounted}
   <div
     id="map-container"
     class="w-full h-full"
-    bind:clientWidth={mapWidth}
-    bind:clientHeight={mapHeight}
+    bind:clientWidth={$mapWidth}
+    bind:clientHeight={$mapHeight}
   >
     <ControlPanel bind:size bind:deepSearch={$deepSearch} bind:search />
     {#await $mapData}
       <Loader
         text={`Loading articles for generating the map.\nThis might take a while`}
       />
-    {:then mapArticles}
+    {:then articles}
       <Map
-        mapData={mapArticles}
+        {articles}
         {size}
         {search}
         deepSearch={$deepSearch}

@@ -3,18 +3,12 @@ import type { MLArticle } from "$shared/types/api";
 
 import * as d3 from "d3";
 
-export function drawArticlePoints(
-  ctx: CanvasRenderingContext2D,
+export function scaleCoords(
   articles: MLArticle[],
   canvasWidth: number,
   canvasHeight: number,
-  pointSize: number,
-  search: string,
-  deepSearch: boolean,
   margin: number = 0.025
 ) {
-  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-
   const aspectRatio = canvasWidth / canvasHeight;
   const xMargin = margin;
   const yMargin = margin * aspectRatio;
@@ -37,6 +31,29 @@ export function drawArticlePoints(
     .domain(yDomain)
     .range([canvasHeight * (1 - yMargin), canvasHeight * yMargin]);
 
+  const scaledArticles: MLArticle[] = [];
+
+  articles.forEach((a) => {
+    const scaledArticle: MLArticle = structuredClone(a);
+    scaledArticle.ml.coordinates = [
+      xScale(scaledArticle.ml.coordinates[0]),
+      yScale(scaledArticle.ml.coordinates[1]),
+    ];
+    scaledArticles.push(scaledArticle);
+  });
+
+  return scaledArticles;
+}
+
+export function drawArticlePoints(
+  ctx: CanvasRenderingContext2D,
+  articles: MLArticle[],
+  pointSize: number,
+  search: string,
+  deepSearch: boolean
+) {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
   const clusterMax = d3.max(articles, (a) => a.ml.cluster) as number;
   const colorScale = d3
     .scaleSequential()
@@ -54,8 +71,8 @@ export function drawArticlePoints(
     }
 
     ctx.arc(
-      xScale(article.ml.coordinates[0]),
-      yScale(article.ml.coordinates[1]),
+      article.ml.coordinates[0],
+      article.ml.coordinates[1],
       pointSize,
       0,
       2 * Math.PI,
