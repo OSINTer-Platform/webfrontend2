@@ -47,6 +47,7 @@
     step="0.5"
     class="
 
+      cursor-pointer
       appearance-none
       h-2 mb-8
       rounded-full
@@ -56,15 +57,17 @@
   />
 
   <div class="flex justify-between">
-    <h3
+    <label
+      for="Enable Search"
       class="
         block
         text-xl font-bold
         dark:text-white
+        cursor-pointer
       "
     >
       Enable Search:
-    </h3>
+    </label>
     <Switch
       bind:checked={enableSearch}
       name="Enable Search"
@@ -80,15 +83,17 @@
     />
 
     <div class="flex justify-between">
-      <p
+      <label
+        for="Enable Deep Search"
         class="
         block
         text-xs font-light italic
         dark:text-white
+        cursor-pointer
       "
       >
         Enable deep search (slow):
-      </p>
+      </label>
       <Switch bind:checked={deepSearch} name="Enable Deep Search" size={"xs"} />
     </div>
   {/if}
