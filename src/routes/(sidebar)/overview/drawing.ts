@@ -82,3 +82,70 @@ export function drawArticlePoints(
     ctx.fill();
   });
 }
+
+export function drawText(
+  ctx: CanvasRenderingContext2D,
+  texts: string[],
+  px: number,
+  py: number,
+  distance: number = 20,
+  size: number = 14,
+  innerPadding: number = 5,
+  outerPadding: number = 10
+) {
+  ctx.font = `${size}px sans-serif`;
+  ctx.textAlign = "left";
+  ctx.textBaseline = "middle";
+  ctx.fillStyle = "rgba(0, 0, 0, 0.9)";
+
+  const boxHeight =
+    size * texts.length + outerPadding * 2 + innerPadding * (texts.length - 1);
+  let boxWidth: number = 0;
+
+  texts.forEach((text) => {
+    const currentWidth = ctx.measureText(text).width;
+
+    if (currentWidth > boxWidth) boxWidth = currentWidth;
+  });
+
+  boxWidth = boxWidth + 2 * outerPadding;
+
+  let direction: "up" | "down" | "left" | "right" = "up";
+
+  if (py < boxHeight) direction = "down";
+  else if (px < boxWidth) direction = "right";
+  else if (ctx.canvas.width - px < boxWidth) direction = "left";
+
+  let boxX: number = px;
+  let boxY: number = py;
+
+  switch (direction) {
+    case "up":
+      boxX = px - boxWidth / 2;
+      boxY = py - boxHeight - distance;
+      break;
+    case "down":
+      boxX = px - boxWidth / 2;
+      boxY = py + distance;
+      break;
+    case "left":
+      boxX = px - boxWidth - distance;
+      boxY = py - boxHeight / 2;
+      break;
+    case "right":
+      boxX = px + distance;
+      boxY = py - boxHeight / 2;
+      break;
+  }
+
+  ctx.fillRect(boxX, boxY, boxWidth, boxHeight);
+
+  ctx.fillStyle = "#ffffff";
+  texts.forEach((text, i) =>
+    ctx.fillText(
+      text,
+      boxX + outerPadding,
+      boxY + size / 2 + outerPadding + i * (size + innerPadding)
+    )
+  );
+}
