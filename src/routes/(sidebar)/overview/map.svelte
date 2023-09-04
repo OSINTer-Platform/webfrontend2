@@ -1,16 +1,13 @@
 <script lang="ts">
   import * as d3 from "d3";
-  import { afterUpdate, onMount } from "svelte";
 
   import type { MLArticle } from "$shared/types/api";
-  import { drawArticlePoints, drawText, scaleCoords } from "./drawing";
 
-  import {
-    derived,
-    writable,
-    type Readable,
-    type Writable,
-  } from "svelte/store";
+  import { derived, type Readable } from "svelte/store";
+
+  import { afterUpdate, onMount } from "svelte";
+  import { drawArticlePoints, drawText, scaleCoords } from "./drawing";
+  import { toolTips, mouseX, mouseY, mapTransform } from "./state";
 
   export let size: number;
   export let search: string;
@@ -19,17 +16,6 @@
   export let articles: Readable<MLArticle[]>;
   export let width: Readable<number>;
   export let height: Readable<number>;
-
-  const toolTips: Writable<string[]> = writable([]);
-  const mouseX: Writable<{ actual: number; translated: number }> = writable({
-    actual: 0,
-    translated: 0,
-  });
-  const mouseY: Writable<{ actual: number; translated: number }> = writable({
-    actual: 0,
-    translated: 0,
-  });
-  const mapTransform: Writable<d3.ZoomTransform> = writable(d3.zoomIdentity);
 
   const scaledArticles: Readable<MLArticle[]> = derived(
     [articles, width, height],
