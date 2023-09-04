@@ -110,33 +110,19 @@ export function drawText(
 
   boxWidth = boxWidth + 2 * outerPadding;
 
-  let direction: "up" | "down" | "left" | "right" = "up";
+  let boxX: number = px - boxWidth / 2;
+  let boxY: number = py - boxHeight - distance;
 
-  if (py < boxHeight) direction = "down";
-  else if (px < boxWidth) direction = "right";
-  else if (ctx.canvas.width - px < boxWidth) direction = "left";
-
-  let boxX: number = px;
-  let boxY: number = py;
-
-  switch (direction) {
-    case "up":
-      boxX = px - boxWidth / 2;
-      boxY = py - boxHeight - distance;
-      break;
-    case "down":
-      boxX = px - boxWidth / 2;
-      boxY = py + distance;
-      break;
-    case "left":
-      boxX = px - boxWidth - distance;
-      boxY = py - boxHeight / 2;
-      break;
-    case "right":
-      boxX = px + distance;
-      boxY = py - boxHeight / 2;
-      break;
+  if (px < boxWidth / 2) {
+    boxX = px + distance;
+    boxY = py - boxHeight / 2;
+  } else if (ctx.canvas.width - px < boxWidth / 2) {
+    boxX = px - boxWidth - distance;
+    boxY = py - boxHeight / 2;
   }
+
+  if (py < boxHeight * 1) boxY = py + distance;
+  else if (ctx.canvas.height - py < boxHeight) boxY = py - boxHeight - distance;
 
   ctx.fillRect(boxX, boxY, boxWidth, boxHeight);
 
