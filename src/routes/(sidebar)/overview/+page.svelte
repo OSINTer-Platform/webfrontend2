@@ -1,12 +1,6 @@
 <script lang="ts">
-  import { browser } from "$app/environment";
-  import Loader from "$com/loader.svelte";
-
-  import { PUBLIC_API_BASE } from "$env/static/public";
   import type { MLArticle } from "$shared/types/api";
-  import { onMount } from "svelte";
-  import Map from "./map.svelte";
-  import ControlPanel from "./controlPanel.svelte";
+
   import {
     derived,
     writable,
@@ -15,12 +9,21 @@
     readable,
   } from "svelte/store";
 
+  import { browser } from "$app/environment";
+  import { onMount } from "svelte";
+  import { PUBLIC_API_BASE } from "$env/static/public";
+
+  import Loader from "$com/loader.svelte";
+  import Map from "./map.svelte";
+  import ControlPanel from "./controlPanel.svelte";
+  import SelectionPanel from "./selectionPanel.svelte";
+
   let mapData: Readable<Promise<Readable<MLArticle[]>>>;
+
+  let mounted = false;
 
   const mapHeight: Writable<number> = writable(0);
   const mapWidth: Writable<number> = writable(0);
-
-  let mounted = false;
 
   function sanitizeArticleList<PartialArticle extends MLArticle>(
     articles: PartialArticle[]
@@ -77,6 +80,7 @@
     bind:clientHeight={$mapHeight}
   >
     <ControlPanel bind:size bind:deepSearch={$deepSearch} bind:search />
+    <SelectionPanel />
     {#await $mapData}
       <Loader
         text={`Loading articles for generating the map.\nThis might take a while`}
