@@ -50,9 +50,13 @@ export function drawArticlePoints(
   articles: MLArticle[],
   pointSize: number,
   search: string,
-  deepSearch: boolean
+  deepSearch: boolean,
+  transform: d3.ZoomTransform
 ) {
+  ctx.save();
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  ctx.translate(transform.x, transform.y);
+  ctx.scale(transform.k, transform.k);
 
   const clusterMax = d3.max(articles, (a) => a.ml.cluster) as number;
   const colorScale = d3
@@ -81,6 +85,8 @@ export function drawArticlePoints(
 
     ctx.fill();
   });
+
+  ctx.restore();
 }
 
 export function drawText(
