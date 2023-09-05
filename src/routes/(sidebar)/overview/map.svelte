@@ -13,6 +13,8 @@
     mouseX,
     mouseY,
     mapTransform,
+    d3Selection,
+    d3Zoom,
   } from "./state";
 
   const { size, search, deepSearch } = controlParams;
@@ -48,7 +50,9 @@
   onMount(() => {
     setTimeout(drawCanvas, 200);
 
-    d3.select("#map").on("mousemove", (event: any) => {
+    d3Selection.set(d3.select("#map"));
+
+    $d3Selection?.on("mousemove", (event: any) => {
       const px = (event.layerX - $mapTransform.x) / $mapTransform.k;
       const py = (event.layerY - $mapTransform.y) / $mapTransform.k;
 
@@ -81,12 +85,14 @@
       mouseY.set({ actual: event.layerY, translated: py });
     });
 
-    d3.select<HTMLCanvasElement, unknown>("#map").call(
+    d3Zoom.set(
       d3
         .zoom<HTMLCanvasElement, unknown>()
         .scaleExtent([0.8, 16])
         .on("zoom", ({ transform }) => mapTransform.set(transform))
     );
+
+    if ($d3Zoom) $d3Selection?.call($d3Zoom);
   });
 
   afterUpdate(drawCanvas);

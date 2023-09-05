@@ -26,3 +26,15 @@ export const mouseY: Writable<{ actual: number; translated: number }> =
 export const mapTransform: Writable<d3.ZoomTransform> = writable(
   d3.zoomIdentity
 );
+
+export const d3Selection: Writable<d3.Selection<
+  HTMLCanvasElement,
+  unknown,
+  HTMLElement,
+  any
+> | null> = writable(null);
+
+export const d3Zoom: Writable<d3.ZoomBehavior<
+  HTMLCanvasElement,
+  unknown
+> | null> = writable(null);
