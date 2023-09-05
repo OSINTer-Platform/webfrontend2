@@ -10,7 +10,7 @@
   class="
     absolute
     flex flex-col
-    w-80 m-10 p-4
+    w-80 top-10 left-10 p-4
     border-surface-400 border
     bg-surface-500/30
   "
