@@ -1,15 +1,20 @@
+import {
+  writableWithDefault,
+  type WritableWithDefault,
+} from "$lib/common/customStores";
 import * as d3 from "d3";
 import { writable, type Writable } from "svelte/store";
+
 export const controlParams: {
-  size: Writable<number>;
-  enableSearch: Writable<boolean>;
-  deepSearch: Writable<boolean>;
-  search: Writable<string>;
+  size: WritableWithDefault<number>;
+  enableSearch: WritableWithDefault<boolean>;
+  deepSearch: WritableWithDefault<boolean>;
+  search: WritableWithDefault<string>;
 } = {
-  size: writable(1),
-  enableSearch: writable(true),
-  deepSearch: writable(false),
-  search: writable(""),
+  size: writableWithDefault(1),
+  enableSearch: writableWithDefault(true),
+  deepSearch: writableWithDefault(false),
+  search: writableWithDefault(""),
 };
 
 export const toolTips: Writable<string[]> = writable([]);
