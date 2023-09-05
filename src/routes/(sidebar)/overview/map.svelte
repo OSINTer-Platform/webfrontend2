@@ -16,6 +16,7 @@
     d3Selection,
     d3Zoom,
   } from "./state";
+  import { detectCloseArticles } from "./events";
 
   const { dotSize, toolTipSize, search, deepSearch } = controlParams;
 
@@ -59,38 +60,9 @@
 
     d3Selection.set(d3.select("#map"));
 
-    $d3Selection?.on("mousemove", (event: any) => {
-      const px = (event.layerX - $mapTransform.x) / $mapTransform.k;
-      const py = (event.layerY - $mapTransform.y) / $mapTransform.k;
-
-      const closeArticles: Array<{
-        article: MLArticle;
-        distance: number;
-      }> = [];
-
-      $scaledArticles.forEach((article) => {
-        const dx = px - article.ml.coordinates[0];
-        const dy = py - article.ml.coordinates[1];
-        const d = dx * dx + dy * dy;
-
-        if (d < 30 / $mapTransform.k)
-          closeArticles.push({ article: article, distance: d });
-      });
-
-      closeArticles.sort((a, b) => {
-        return b.distance - a.distance;
-      });
-
-      const titles: string[] = [];
-
-      closeArticles.slice(0, 10).forEach((a) => {
-        titles.push(a.article.title);
-      });
-
-      toolTips.set(titles);
-      mouseX.set({ actual: event.layerX, translated: px });
-      mouseY.set({ actual: event.layerY, translated: py });
-    });
+    $d3Selection?.on("mousemove", (event) =>
+      detectCloseArticles(event, $mapTransform, $scaledArticles)
+    );
 
     d3Zoom.set(
       d3
