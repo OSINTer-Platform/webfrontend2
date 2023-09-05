@@ -1,12 +1,9 @@
 <script lang="ts">
   import Search from "$com/utils/search.svelte";
   import Switch from "$com/utils/switch.svelte";
+  import { controlParams } from "./state";
 
-  export let size: number;
-  export let deepSearch: boolean;
-  export let search: string;
-
-  let enableSearch: boolean = false;
+  const { size, deepSearch, search, enableSearch } = controlParams;
 </script>
 
 <aside
@@ -35,13 +32,13 @@
         dark:text-white
       "
     >
-      {size} px
+      {$size} px
     </p>
   </div>
 
   <input
     type="range"
-    bind:value={size}
+    bind:value={$size}
     min="0.5"
     max="10"
     step="0.5"
@@ -69,16 +66,16 @@
       Enable Search:
     </label>
     <Switch
-      bind:checked={enableSearch}
+      bind:checked={$enableSearch}
       name="Enable Search"
-      on:change={() => (search = "")}
+      on:change={() => ($search = "")}
     />
   </div>
 
-  {#if enableSearch}
+  {#if $enableSearch}
     <Search
       placeholder={"Search in articles"}
-      bind:value={search}
+      bind:value={$search}
       containerClass={"mt-4 mb-2"}
     />
 
@@ -94,7 +91,11 @@
       >
         Enable deep search (slow):
       </label>
-      <Switch bind:checked={deepSearch} name="Enable Deep Search" size={"xs"} />
+      <Switch
+        bind:checked={$deepSearch}
+        name="Enable Deep Search"
+        size={"xs"}
+      />
     </div>
   {/if}
 </aside>

@@ -9,6 +9,7 @@
     readable,
   } from "svelte/store";
 
+  import { controlParams } from "./state";
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import { PUBLIC_API_BASE } from "$env/static/public";
@@ -24,6 +25,8 @@
 
   const mapHeight: Writable<number> = writable(0);
   const mapWidth: Writable<number> = writable(0);
+
+  const { deepSearch } = controlParams;
 
   function sanitizeArticleList<PartialArticle extends MLArticle>(
     articles: PartialArticle[]
@@ -64,12 +67,6 @@
       mounted = true;
     }
   });
-
-  // Controlpanel variables
-  let size = 1;
-
-  let search = "";
-  const deepSearch: Writable<boolean> = writable(false);
 </script>
 
 {#if mounted}
@@ -79,21 +76,14 @@
     bind:clientWidth={$mapWidth}
     bind:clientHeight={$mapHeight}
   >
-    <ControlPanel bind:size bind:deepSearch={$deepSearch} bind:search />
+    <ControlPanel />
     <SelectionPanel />
     {#await $mapData}
       <Loader
         text={`Loading articles for generating the map.\nThis might take a while`}
       />
     {:then articles}
-      <Map
-        {articles}
-        {size}
-        {search}
-        deepSearch={$deepSearch}
-        width={mapWidth}
-        height={mapHeight}
-      />
+      <Map {articles} width={mapWidth} height={mapHeight} />
     {:catch}
       <div
         class="h-full mx-auto px-8 xl:max-w-5xl max-w-2xl flex flex-col justify-center text-center dark:text-white"

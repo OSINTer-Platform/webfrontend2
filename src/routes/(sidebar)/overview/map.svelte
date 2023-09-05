@@ -7,11 +7,15 @@
 
   import { afterUpdate, onMount } from "svelte";
   import { drawArticlePoints, drawText, scaleCoords } from "./drawing";
-  import { toolTips, mouseX, mouseY, mapTransform } from "./state";
+  import {
+    controlParams,
+    toolTips,
+    mouseX,
+    mouseY,
+    mapTransform,
+  } from "./state";
 
-  export let size: number;
-  export let search: string;
-  export let deepSearch: boolean;
+  const { size, search, deepSearch } = controlParams;
 
   export let articles: Readable<MLArticle[]>;
   export let width: Readable<number>;
@@ -31,9 +35,9 @@
     drawArticlePoints(
       ctx,
       $scaledArticles,
-      size,
-      search,
-      deepSearch,
+      $size,
+      $search,
+      $deepSearch,
       $mapTransform
     );
 
