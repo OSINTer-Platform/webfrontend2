@@ -2,10 +2,12 @@
   import * as d3 from "d3";
   import { controlParams, d3Selection, d3Zoom } from "./state";
 
-  const { size, deepSearch, search, enableSearch } = controlParams;
+  const { dotSize, toolTipSize, deepSearch, search, enableSearch } =
+    controlParams;
 
   function resetMap() {
-    size.reset(300);
+    dotSize.reset(300);
+    toolTipSize.reset(300);
     deepSearch.reset();
     search.reset();
     enableSearch.reset();

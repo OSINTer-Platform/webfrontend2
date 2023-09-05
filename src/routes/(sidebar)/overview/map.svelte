@@ -17,7 +17,7 @@
     d3Zoom,
   } from "./state";
 
-  const { size, search, deepSearch } = controlParams;
+  const { dotSize, toolTipSize, search, deepSearch } = controlParams;
 
   export let articles: Readable<MLArticle[]>;
   export let width: Readable<number>;
@@ -37,14 +37,21 @@
     drawArticlePoints(
       ctx,
       $scaledArticles,
-      $size,
+      $dotSize,
       $search,
       $deepSearch,
       $mapTransform
     );
 
     if ($toolTips.length > 0)
-      drawText(ctx, $toolTips, $mouseX.actual, $mouseY.actual);
+      drawText(
+        ctx,
+        $toolTips,
+        $mouseX.actual,
+        $mouseY.actual,
+        20,
+        $toolTipSize
+      );
   }
 
   onMount(() => {

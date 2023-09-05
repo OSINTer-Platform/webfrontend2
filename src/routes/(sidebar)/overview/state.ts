@@ -6,12 +6,14 @@ import * as d3 from "d3";
 import { writable, type Writable } from "svelte/store";
 
 export const controlParams: {
-  size: WritableWithDefault<number>;
+  dotSize: WritableWithDefault<number>;
+  toolTipSize: WritableWithDefault<number>;
   enableSearch: WritableWithDefault<boolean>;
   deepSearch: WritableWithDefault<boolean>;
   search: WritableWithDefault<string>;
 } = {
-  size: writableWithDefault(1),
+  dotSize: writableWithDefault(1),
+  toolTipSize: writableWithDefault(14),
   enableSearch: writableWithDefault(true),
   deepSearch: writableWithDefault(false),
   search: writableWithDefault(""),
