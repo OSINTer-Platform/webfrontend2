@@ -23,7 +23,7 @@
 
 <aside
   class="
-  absolute
+  absolute z-20
   flex flex-col
   w-80 top-10 right-10 p-4
   border-surface-400 border

@@ -46,16 +46,22 @@
       $deepSearch,
       $mapTransform
     );
+    let overlayCanvas = document.getElementById(
+      "map-overlay"
+    ) as HTMLCanvasElement;
+    let overlayCtx = overlayCanvas.getContext("2d") as CanvasRenderingContext2D;
 
-    if ($toolTips.length > 0)
+    if ($toolTips.length > 0) {
       drawText(
-        ctx,
+        overlayCtx,
         $toolTips,
         $mouseX.actual,
         $mouseY.actual,
         20,
         $toolTipSize
       );
+    }
+  }
 
   function recordPointerPosition(x: number, y: number) {
     const [tx, ty] = scalePointerPosition(x, y, $mapTransform);
@@ -66,7 +72,7 @@
   onMount(() => {
     setTimeout(drawCanvas, 200);
 
-    d3Selection.set(d3.select("#map"));
+    d3Selection.set(d3.select("#map-overlay"));
 
     $d3Selection?.on("mousemove", (event) => {
       recordPointerPosition(event.layerX, event.layerY);
@@ -94,4 +100,15 @@
   afterUpdate(drawCanvas);
 </script>
 
-<canvas id="map" height={$height} width={$width} />
+<canvas
+  id="map-overlay"
+  class="absolute z-10 top-0 bottom-0 right-0 left-0"
+  height={$height}
+  width={$width}
+/>
+<canvas
+  id="map"
+  class="absolute top-0 bottom-0 right-0 left-0"
+  height={$height}
+  width={$width}
+/>
