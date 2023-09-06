@@ -6,7 +6,12 @@
   import { derived, type Readable } from "svelte/store";
 
   import { afterUpdate, onMount } from "svelte";
-  import { drawArticlePoints, drawText, scaleCoords } from "./drawing";
+  import {
+    clearAndScale,
+    drawArticlePoints,
+    drawText,
+    scaleCoords,
+  } from "./drawing";
   import {
     controlParams,
     toolTips,
@@ -38,18 +43,17 @@
     let canvas = document.getElementById("map") as HTMLCanvasElement;
     let ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
-    drawArticlePoints(
-      ctx,
-      $scaledArticles,
-      $dotSize,
-      $search,
-      $deepSearch,
-      $mapTransform
-    );
     let overlayCanvas = document.getElementById(
       "map-overlay"
     ) as HTMLCanvasElement;
     let overlayCtx = overlayCanvas.getContext("2d") as CanvasRenderingContext2D;
+
+    clearAndScale([overlayCtx, ctx], $mapTransform);
+
+    drawArticlePoints(ctx, $scaledArticles, $dotSize, $search, $deepSearch);
+
+    ctx.restore();
+    overlayCtx.restore();
 
     if ($toolTips.length > 0) {
       drawText(

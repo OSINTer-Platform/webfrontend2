@@ -45,19 +45,25 @@ export function scaleCoords(
   return scaledArticles;
 }
 
+export function clearAndScale(
+  ctxList: CanvasRenderingContext2D[],
+  transform: d3.ZoomTransform
+) {
+  ctxList.forEach((ctx) => {
+    ctx.save();
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.translate(transform.x, transform.y);
+    ctx.scale(transform.k, transform.k);
+  });
+}
+
 export function drawArticlePoints(
   ctx: CanvasRenderingContext2D,
   articles: MLArticle[],
   pointSize: number,
   search: string,
-  deepSearch: boolean,
-  transform: d3.ZoomTransform
+  deepSearch: boolean
 ) {
-  ctx.save();
-  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  ctx.translate(transform.x, transform.y);
-  ctx.scale(transform.k, transform.k);
-
   const clusterMax = d3.max(articles, (a) => a.ml.cluster) as number;
   const colorScale = d3
     .scaleSequential()
@@ -85,8 +91,6 @@ export function drawArticlePoints(
 
     ctx.fill();
   });
-
-  ctx.restore();
 }
 
 export function drawText(
