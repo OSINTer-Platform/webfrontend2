@@ -1,27 +1,34 @@
 import type * as d3 from "d3";
 
-import { mouseX, mouseY, toolTips } from "./state";
 import type { MLArticle } from "$shared/types/api";
 
+export function scalePointerPosition(
+  x: number,
+  y: number,
+  mapTransform: d3.ZoomTransform
+): [number, number] {
+  const px = (x - mapTransform.x) / mapTransform.k;
+  const py = (y - mapTransform.y) / mapTransform.k;
+  return [px, py];
+}
+
 export function detectCloseArticles(
-  event: any,
-  mapTransform: d3.ZoomTransform,
+  x: number,
+  y: number,
+  mapScale: number,
   scaledArticles: MLArticle[]
 ) {
-  const px = (event.layerX - mapTransform.x) / mapTransform.k;
-  const py = (event.layerY - mapTransform.y) / mapTransform.k;
-
   const closeArticles: Array<{
     article: MLArticle;
     distance: number;
   }> = [];
 
   scaledArticles.forEach((article) => {
-    const dx = px - article.ml.coordinates[0];
-    const dy = py - article.ml.coordinates[1];
+    const dx = x - article.ml.coordinates[0];
+    const dy = y - article.ml.coordinates[1];
     const d = dx * dx + dy * dy;
 
-    if (d < 30 / mapTransform.k)
+    if (d < 30 / mapScale)
       closeArticles.push({ article: article, distance: d });
   });
 
@@ -35,7 +42,5 @@ export function detectCloseArticles(
     titles.push(a.article.title);
   });
 
-  toolTips.set(titles);
-  mouseX.set({ actual: event.layerX, translated: px });
-  mouseY.set({ actual: event.layerY, translated: py });
+  return titles;
 }

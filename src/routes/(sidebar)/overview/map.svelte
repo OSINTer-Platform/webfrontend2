@@ -16,7 +16,10 @@
     d3Selection,
     d3Zoom,
   } from "./state";
-  import { detectCloseArticles } from "./events";
+  import {
+    detectCloseArticles,
+    scalePointerPosition,
+  } from "./events";
 
   const { dotSize, toolTipSize, search, deepSearch } = controlParams;
 
@@ -53,6 +56,11 @@
         20,
         $toolTipSize
       );
+
+  function recordPointerPosition(x: number, y: number) {
+    const [tx, ty] = scalePointerPosition(x, y, $mapTransform);
+    mouseX.set({ actual: x, translated: tx });
+    mouseY.set({ actual: y, translated: ty });
   }
 
   onMount(() => {
@@ -60,9 +68,18 @@
 
     d3Selection.set(d3.select("#map"));
 
-    $d3Selection?.on("mousemove", (event) =>
-      detectCloseArticles(event, $mapTransform, $scaledArticles)
-    );
+    $d3Selection?.on("mousemove", (event) => {
+      recordPointerPosition(event.layerX, event.layerY);
+
+      toolTips.set(
+        detectCloseArticles(
+          $mouseX.translated,
+          $mouseY.translated,
+          $mapTransform.k,
+          $scaledArticles
+        )
+      );
+    });
 
     d3Zoom.set(
       d3
