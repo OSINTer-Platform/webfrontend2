@@ -52,7 +52,8 @@
     flex flex-col p-4 mb-8
 
     border-surface-400 border
-    bg-surface-500/30
+    bg-surface-800/90
+    backdrop-blur
 
   "
   >
@@ -104,7 +105,8 @@
     flex flex-col p-4 mb-8
 
     border-surface-400 border
-    bg-surface-500/30
+    bg-surface-800/90
+    backdrop-blur
 
   "
   >

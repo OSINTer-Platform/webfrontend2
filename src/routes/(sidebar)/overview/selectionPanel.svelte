@@ -50,7 +50,8 @@
     w-96 p-4
 
     border-surface-400 border
-    bg-surface-500/30
+    bg-surface-800/90
+    backdrop-blur
   "
   >
     <div class="flex justify-between items-end mb-4">
@@ -74,26 +75,30 @@
     <Search
       placeholder={"Search in articles"}
       bind:value={$selectedSearch}
-      containerClass={"mb-2"}
+      containerClass={"mb-4"}
     >
       <Switch
         bind:checked={$showAllSelected}
         size={"sm"}
         containerClass={"mr-2"}
-        title={"Show all selected articles"}
+        title={"Show all selected articles (slow)"}
       />
     </Search>
 
     <ul class="overflow-auto">
       {#each $showAllSelected ? $searchedSelectedArticles : $searchedSelectedArticles.slice(0, 500) as article (article.id)}
         <li
-          class="dark:text-white truncate"
+          class="border-surface-400 border-y hover:border-primary-900 transition-colors duration-75"
           class:opacity-70={$alreadyRead
             ? $alreadyRead.ids.includes(article.id)
             : false}
           title={article.description}
         >
-          <ModalLink articleId={article.id}>{article.title}</ModalLink>
+          <ModalLink
+            articleId={article.id}
+            class="dark:text-white truncate py-2 block hover:dark:text-primary-500 transition-colors duration-75"
+            >{article.title}</ModalLink
+          >
         </li>
       {/each}
     </ul>
