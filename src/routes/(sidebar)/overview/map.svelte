@@ -3,7 +3,7 @@
 
   import type { MLArticle } from "$shared/types/api";
 
-  import { derived, type Readable } from "svelte/store";
+  import type { Readable } from "svelte/store";
 
   import { afterUpdate, onDestroy, onMount } from "svelte";
   import {
@@ -11,24 +11,24 @@
     drawArticlePoints,
     drawSelectionBox,
     drawText,
-    scaleCoords,
   } from "./drawing";
   import {
     controlParams,
+    mapDimensions,
     mouseX,
     mouseY,
     mapTransform,
     selectionBoundaries,
+    articles as articleStore,
+    scaledArticles,
+    toolTips,
     d3Selection,
     d3Zoom,
     d3Drag,
   } from "./state";
-  import {
-    detectCloseArticles,
-    detectSelectedArticles,
-    handlePointerModeChange,
-    scalePointerPosition,
-  } from "./events";
+  import { handlePointerModeChange, scalePointerPosition } from "./events";
+
+  const storeListeners: Array<() => void> = [];
 
   const { dotSize, toolTipSize, search, deepSearch, pointerMode } =
     controlParams;
@@ -37,55 +37,8 @@
   const selectionEnd = selectionBoundaries.end;
 
   export let articles: Readable<MLArticle[]>;
-  export let width: Readable<number>;
-  export let height: Readable<number>;
-
-  const scaledArticles: Readable<MLArticle[]> = derived(
-    [articles, width, height],
-    ([$articles, $width, $height]) => {
-      return scaleCoords($articles, $width, $height);
-    }
-  );
-
-  const selectedArticles: Readable<MLArticle[]> = derived(
-    [selectionStart, selectionEnd, scaledArticles],
-    ([$selectionStart, $selectionEnd, $scaledArticles]) => {
-      if ($selectionStart && $selectionEnd) {
-        return detectSelectedArticles(
-          $selectionStart,
-          $selectionEnd,
-          $scaledArticles
-        );
-      }
-      return [];
-    }
-  );
-
-  const closeArticles: Readable<
-    Array<{ distance: number; article: MLArticle }>
-  > = derived(
-    [mouseX, mouseY, mapTransform, scaledArticles],
-    ([$mouseX, $mouseY, $mapTransform, $scaledArticles]) => {
-      return detectCloseArticles(
-        $mouseX.translated,
-        $mouseY.translated,
-        $mapTransform.k,
-        $scaledArticles
-      );
-    }
-  );
-
-  const toolTips: Readable<string[]> = derived(
-    closeArticles,
-    ($closeArticles) => {
-      const titles: string[] = [];
-
-      $closeArticles.slice(0, 10).forEach((a) => {
-        titles.push(a.article.title);
-      });
-
-      return titles;
-    }
+  storeListeners.push(
+    articles.subscribe((articleList) => articleStore.set(articleList))
   );
 
   function drawCanvas() {
@@ -119,8 +72,6 @@
       );
     }
   }
-
-  const storeListeners: Array<() => void> = [];
 
   function recordPointerPosition(x: number, y: number) {
     const [tx, ty] = scalePointerPosition(x, y, $mapTransform);
@@ -179,12 +130,12 @@
 <canvas
   id="map-overlay"
   class="absolute z-10 top-0 bottom-0 right-0 left-0"
-  height={$height}
-  width={$width}
+  height={$mapDimensions.height}
+  width={$mapDimensions.width}
 />
 <canvas
   id="map"
   class="absolute top-0 bottom-0 right-0 left-0"
-  height={$height}
-  width={$width}
+  height={$mapDimensions.height}
+  width={$mapDimensions.width}
 />

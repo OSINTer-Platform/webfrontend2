@@ -9,7 +9,7 @@
     readable,
   } from "svelte/store";
 
-  import { controlParams } from "./state";
+  import { controlParams, mapDimensions } from "./state";
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import { PUBLIC_API_BASE } from "$env/static/public";
@@ -22,9 +22,6 @@
   let mapData: Readable<Promise<Readable<MLArticle[]>>>;
 
   let mounted = false;
-
-  const mapHeight: Writable<number> = writable(0);
-  const mapWidth: Writable<number> = writable(0);
 
   const { deepSearch } = controlParams;
 
@@ -74,8 +71,8 @@
   <div
     id="map-container"
     class="w-full h-full bg-black/50"
-    bind:clientWidth={$mapWidth}
-    bind:clientHeight={$mapHeight}
+    bind:clientWidth={$mapDimensions.width}
+    bind:clientHeight={$mapDimensions.height}
   >
     <ControlPanel />
     <SelectionPanel />
@@ -84,7 +81,7 @@
         text={`Loading articles for generating the map.\nThis might take a while`}
       />
     {:then articles}
-      <Map {articles} width={mapWidth} height={mapHeight} />
+      <Map {articles} />
     {:catch}
       <div
         class="h-full mx-auto px-8 xl:max-w-5xl max-w-2xl flex flex-col justify-center text-center dark:text-white"

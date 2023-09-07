@@ -2,8 +2,17 @@ import {
   writableWithDefault,
   type WritableWithDefault,
 } from "$lib/common/customStores";
+import type { MLArticle } from "$shared/types/api";
 import * as d3 from "d3";
-import { get, writable, type Writable } from "svelte/store";
+import {
+  derived,
+  get,
+  writable,
+  type Readable,
+  type Writable,
+} from "svelte/store";
+import { scaleCoords } from "./drawing";
+import { detectCloseArticles, detectSelectedArticles } from "./events";
 
 export type PointerModes = "pan" | "select";
 
@@ -22,6 +31,13 @@ export const controlParams: {
   search: writableWithDefault(""),
   pointerMode: writableWithDefault("pan"),
 };
+
+// Variables written to from event handlers
+export const mapDimensions: Writable<{ height: number; width: number }> =
+  writable({
+    height: 0,
+    width: 0,
+  });
 
 export const mouseX: Writable<{ actual: number; translated: number }> =
   writable({
@@ -47,6 +63,49 @@ export const selectionBoundaries: {
   end: writableWithDefault(null),
 };
 
+// Stores derived from scaled articles and state Stores
+export const articles: Writable<MLArticle[]> = writable([]);
+
+export const scaledArticles = derived(
+  [articles, mapDimensions],
+  ([$articles, $mapDimensions]) => {
+    return scaleCoords($articles, $mapDimensions.width, $mapDimensions.height);
+  }
+);
+
+export const selectedArticles = derived(
+  [selectionBoundaries.start, selectionBoundaries.end, scaledArticles],
+  ([$start, $end, $scaledArticles]) => {
+    if ($start && $end) {
+      return detectSelectedArticles($start, $end, $scaledArticles);
+    }
+    return [];
+  }
+);
+
+export const closeArticles = derived(
+  [mouseX, mouseY, mapTransform, scaledArticles],
+  ([$mouseX, $mouseY, $mapTransform, $scaledArticles]) => {
+    return detectCloseArticles(
+      $mouseX.translated,
+      $mouseY.translated,
+      $mapTransform.k,
+      $scaledArticles
+    );
+  }
+);
+
+export const toolTips = derived(closeArticles, ($closeArticles) => {
+  const titles: string[] = [];
+
+  $closeArticles.slice(0, 10).forEach((a) => {
+    titles.push(a.article.title);
+  });
+
+  return titles;
+});
+
+// D3 related
 export const d3Selection: Writable<d3.Selection<
   HTMLCanvasElement,
   unknown,
