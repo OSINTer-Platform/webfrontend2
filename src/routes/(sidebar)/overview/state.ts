@@ -42,10 +42,13 @@ export const mapTransform: Writable<d3.ZoomTransform> = writable(
 );
 
 export const selectionBoundaries: {
-  [key in "start" | "end"]: Writable<null | { x: number; y: number }>;
+  [key in "start" | "end"]: WritableWithDefault<null | {
+    x: number;
+    y: number;
+  }>;
 } = {
-  start: writable(null),
-  end: writable(null),
+  start: writableWithDefault(null),
+  end: writableWithDefault(null),
 };
 
 export const d3Selection: Writable<d3.Selection<

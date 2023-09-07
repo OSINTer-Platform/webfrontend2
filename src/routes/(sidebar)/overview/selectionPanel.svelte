@@ -1,6 +1,11 @@
 <script lang="ts">
   import * as d3 from "d3";
-  import { controlParams, d3Selection, d3Zoom } from "./state";
+  import {
+    controlParams,
+    d3Selection,
+    d3Zoom,
+    selectionBoundaries,
+  } from "./state";
   import type { PointerModes } from "./state";
 
   import Fa from "svelte-fa/src/fa.svelte";
@@ -26,6 +31,9 @@
     deepSearch.reset();
     search.reset();
     enableSearch.reset();
+
+    selectionBoundaries.start.reset();
+    selectionBoundaries.end.reset();
 
     if ($d3Zoom) {
       $d3Selection
