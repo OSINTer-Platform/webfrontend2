@@ -21,20 +21,20 @@
   action="/feed/search"
   method="get"
 >
-  <label for="search_term" class="text-tertiary-800 m-2">
+  <label class="flex gap-2 text-tertiary-800 m-2 w-full">
     <Fa icon={faMagnifyingGlass} />
-  </label>
 
-  <input
-    id="search_term"
-    name="search_term"
-    bind:value
-    {placeholder}
-    class="
-    grow h-full
-    bg-transparent placeholder-tertiary-800 text-xs dark:text-white
-    border-0 focus:outline-none focus:border-0
-    {inputClass}
-  "
-  />
+    <input
+      name="search_term"
+      bind:value
+      {placeholder}
+      class="
+      grow h-full
+      bg-transparent placeholder-tertiary-800 text-xs dark:text-white
+      border-0 focus:outline-none focus:border-0
+      {inputClass}
+    "
+    />
+  </label>
+  <slot />
 </form>
