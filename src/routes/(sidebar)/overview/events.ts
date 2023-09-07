@@ -44,3 +44,30 @@ export function detectCloseArticles(
 
   return titles;
 }
+
+export function detectSelectedArticles(
+  start: { x: number; y: number },
+  stop: { x: number; y: number },
+  scaledArticles: MLArticle[]
+): MLArticle[] {
+  const selectedArticles: MLArticle[] = [];
+
+  const maxX = Math.max(start.x, stop.x);
+  const minX = Math.min(start.x, stop.x);
+
+  const maxY = Math.max(start.y, stop.y);
+  const minY = Math.min(start.y, stop.y);
+
+  scaledArticles.forEach((article) => {
+    if (
+      maxX > article.ml.coordinates[0] &&
+      article.ml.coordinates[0] > minX &&
+      maxY > article.ml.coordinates[1] &&
+      article.ml.coordinates[1] > minY
+    ) {
+      selectedArticles.push(article);
+    }
+  });
+
+  return selectedArticles;
+}

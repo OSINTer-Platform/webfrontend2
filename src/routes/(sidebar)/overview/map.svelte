@@ -18,15 +18,22 @@
     mouseX,
     mouseY,
     mapTransform,
+    selectionBoundaries,
     d3Selection,
     d3Zoom,
+    d3Drag,
+    selectedArticles,
   } from "./state";
   import {
     detectCloseArticles,
+    detectSelectedArticles,
     scalePointerPosition,
   } from "./events";
 
   const { dotSize, toolTipSize, search, deepSearch } = controlParams;
+
+  const selectionStart = selectionBoundaries.start;
+  const selectionEnd = selectionBoundaries.end;
 
   export let articles: Readable<MLArticle[]>;
   export let width: Readable<number>;
@@ -99,6 +106,32 @@
     );
 
     if ($d3Zoom) $d3Selection?.call($d3Zoom);
+    d3Drag.set(
+      d3
+        .drag<HTMLCanvasElement, unknown>()
+        .on("start", () => {
+          selectionEnd.set(null);
+          $selectedArticles = [];
+          selectionStart.set({ x: $mouseX.translated, y: $mouseY.translated });
+        })
+        .on(
+          "drag",
+          (event: d3.D3DragEvent<HTMLCanvasElement, unknown, unknown>) => {
+            recordPointerPosition(event.x, event.y);
+            selectionEnd.set({ x: $mouseX.translated, y: $mouseY.translated });
+
+            if ($selectionStart && $selectionEnd) {
+              selectedArticles.set(
+                detectSelectedArticles(
+                  $selectionStart,
+                  $selectionEnd,
+                  $scaledArticles
+                )
+              );
+            }
+          }
+        )
+    );
   });
 
   afterUpdate(drawCanvas);
