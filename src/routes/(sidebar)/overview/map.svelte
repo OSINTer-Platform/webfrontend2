@@ -5,7 +5,7 @@
 
   import { derived, type Readable } from "svelte/store";
 
-  import { afterUpdate, onMount } from "svelte";
+  import { afterUpdate, onDestroy, onMount } from "svelte";
   import {
     clearAndScale,
     drawArticlePoints,
@@ -28,10 +28,12 @@
   import {
     detectCloseArticles,
     detectSelectedArticles,
+    handlePointerModeChange,
     scalePointerPosition,
   } from "./events";
 
-  const { dotSize, toolTipSize, search, deepSearch } = controlParams;
+  const { dotSize, toolTipSize, search, deepSearch, pointerMode } =
+    controlParams;
 
   const selectionStart = selectionBoundaries.start;
   const selectionEnd = selectionBoundaries.end;
@@ -79,6 +81,8 @@
     }
   }
 
+  const storeListeners: Array<() => void> = [];
+
   function recordPointerPosition(x: number, y: number) {
     const [tx, ty] = scalePointerPosition(x, y, $mapTransform);
     mouseX.set({ actual: x, translated: tx });
@@ -110,7 +114,6 @@
         .on("zoom", ({ transform }) => mapTransform.set(transform))
     );
 
-    if ($d3Zoom) $d3Selection?.call($d3Zoom);
     d3Drag.set(
       d3
         .drag<HTMLCanvasElement, unknown>()
@@ -137,9 +140,21 @@
           }
         )
     );
+
+    storeListeners.push(
+      pointerMode.subscribe((currentMode) => {
+        if ($d3Selection && $d3Zoom && $d3Drag) {
+          handlePointerModeChange(currentMode, $d3Selection, $d3Zoom, $d3Drag);
+        }
+      })
+    );
   });
 
   afterUpdate(drawCanvas);
+  onDestroy(() => {
+    storeListeners.forEach((unsubscriber) => unsubscriber());
+  });
+
 </script>
 
 <canvas

@@ -1,5 +1,6 @@
-import type * as d3 from "d3";
+import * as d3 from "d3";
 
+import type { PointerModes } from "./state";
 import type { MLArticle } from "$shared/types/api";
 
 export function scalePointerPosition(
@@ -70,4 +71,28 @@ export function detectSelectedArticles(
   });
 
   return selectedArticles;
+}
+
+export function handlePointerModeChange(
+  mode: PointerModes,
+  canvasSelection: d3.Selection<
+    HTMLCanvasElement,
+    unknown,
+    HTMLElement,
+    unknown
+  >,
+  zoomBehavior: d3.ZoomBehavior<HTMLCanvasElement, unknown>,
+  dragBehavior: d3.DragBehavior<HTMLCanvasElement, unknown, unknown>
+) {
+  if (mode === "select") {
+    canvasSelection.on(".zoom", null);
+    zoomBehavior.filter((event) => event.type === "wheel");
+
+    canvasSelection.call(dragBehavior);
+  } else if (mode === "pan") {
+    canvasSelection.on(".drag", null);
+    zoomBehavior.filter(d3.zoom().filter());
+  }
+
+  canvasSelection.call(zoomBehavior);
 }
