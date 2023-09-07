@@ -1,47 +1,15 @@
 <script lang="ts">
-  import * as d3 from "d3";
-  import {
-    controlParams,
-    d3Selection,
-    d3Zoom,
-    selectionBoundaries,
-  } from "./state";
+  import { controlParams, resetState } from "./state";
   import type { PointerModes } from "./state";
 
   import Fa from "svelte-fa/src/fa.svelte";
   import { faObjectGroup } from "@fortawesome/free-regular-svg-icons";
   import {
-    faMagnifyingGlass,
     faUpDownLeftRight,
     type IconDefinition,
   } from "@fortawesome/free-solid-svg-icons";
 
-  const {
-    dotSize,
-    toolTipSize,
-    deepSearch,
-    search,
-    enableSearch,
-    pointerMode,
-  } = controlParams;
-
-  function resetMap() {
-    dotSize.reset(300);
-    toolTipSize.reset(300);
-    deepSearch.reset();
-    search.reset();
-    enableSearch.reset();
-
-    selectionBoundaries.start.reset();
-    selectionBoundaries.end.reset();
-
-    if ($d3Zoom) {
-      $d3Selection
-        ?.transition()
-        .duration(750)
-        .call($d3Zoom.transform, d3.zoomIdentity);
-    }
-  }
+  const { pointerMode } = controlParams;
 
   const pointerModes: Array<{
     icon: IconDefinition;
@@ -71,7 +39,7 @@
 "
 >
   <button
-    on:click={resetMap}
+    on:click={resetState}
     class="
     btn mb-4 h-14
     font-bold text-xl

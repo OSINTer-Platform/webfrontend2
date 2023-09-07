@@ -3,7 +3,7 @@ import {
   type WritableWithDefault,
 } from "$lib/common/customStores";
 import * as d3 from "d3";
-import { writable, type Writable } from "svelte/store";
+import { get, writable, type Writable } from "svelte/store";
 
 export type PointerModes = "pan" | "select";
 
@@ -64,3 +64,23 @@ export const d3Drag: Writable<d3.DragBehavior<
   unknown,
   unknown
 > | null> = writable(null);
+
+export function resetState() {
+  controlParams.dotSize.reset(300);
+  controlParams.toolTipSize.reset(300);
+  controlParams.deepSearch.reset();
+  controlParams.search.reset();
+  controlParams.enableSearch.reset();
+
+  selectionBoundaries.start.reset();
+  selectionBoundaries.end.reset();
+
+  const currentZoom = get(d3Zoom);
+
+  if (currentZoom) {
+    get(d3Selection)
+      ?.transition()
+      .duration(750)
+      .call(currentZoom.transform, d3.zoomIdentity);
+  }
+}
