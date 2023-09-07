@@ -15,7 +15,6 @@
   } from "./drawing";
   import {
     controlParams,
-    toolTips,
     mouseX,
     mouseY,
     mapTransform,
@@ -23,7 +22,6 @@
     d3Selection,
     d3Zoom,
     d3Drag,
-    selectedArticles,
   } from "./state";
   import {
     detectCloseArticles,
@@ -46,6 +44,47 @@
     [articles, width, height],
     ([$articles, $width, $height]) => {
       return scaleCoords($articles, $width, $height);
+    }
+  );
+
+  const selectedArticles: Readable<MLArticle[]> = derived(
+    [selectionStart, selectionEnd, scaledArticles],
+    ([$selectionStart, $selectionEnd, $scaledArticles]) => {
+      if ($selectionStart && $selectionEnd) {
+        return detectSelectedArticles(
+          $selectionStart,
+          $selectionEnd,
+          $scaledArticles
+        );
+      }
+      return [];
+    }
+  );
+
+  const closeArticles: Readable<
+    Array<{ distance: number; article: MLArticle }>
+  > = derived(
+    [mouseX, mouseY, mapTransform, scaledArticles],
+    ([$mouseX, $mouseY, $mapTransform, $scaledArticles]) => {
+      return detectCloseArticles(
+        $mouseX.translated,
+        $mouseY.translated,
+        $mapTransform.k,
+        $scaledArticles
+      );
+    }
+  );
+
+  const toolTips: Readable<string[]> = derived(
+    closeArticles,
+    ($closeArticles) => {
+      const titles: string[] = [];
+
+      $closeArticles.slice(0, 10).forEach((a) => {
+        titles.push(a.article.title);
+      });
+
+      return titles;
     }
   );
 
@@ -94,18 +133,9 @@
 
     d3Selection.set(d3.select("#map-overlay"));
 
-    $d3Selection?.on("mousemove", (event) => {
-      recordPointerPosition(event.layerX, event.layerY);
-
-      toolTips.set(
-        detectCloseArticles(
-          $mouseX.translated,
-          $mouseY.translated,
-          $mapTransform.k,
-          $scaledArticles
-        )
-      );
-    });
+    $d3Selection?.on("mousemove", (event) =>
+      recordPointerPosition(event.layerX, event.layerY)
+    );
 
     d3Zoom.set(
       d3
@@ -119,7 +149,6 @@
         .drag<HTMLCanvasElement, unknown>()
         .on("start", () => {
           selectionEnd.set(null);
-          $selectedArticles = [];
           selectionStart.set({ x: $mouseX.translated, y: $mouseY.translated });
         })
         .on(
@@ -127,16 +156,6 @@
           (event: d3.D3DragEvent<HTMLCanvasElement, unknown, unknown>) => {
             recordPointerPosition(event.x, event.y);
             selectionEnd.set({ x: $mouseX.translated, y: $mouseY.translated });
-
-            if ($selectionStart && $selectionEnd) {
-              selectedArticles.set(
-                detectSelectedArticles(
-                  $selectionStart,
-                  $selectionEnd,
-                  $scaledArticles
-                )
-              );
-            }
           }
         )
     );

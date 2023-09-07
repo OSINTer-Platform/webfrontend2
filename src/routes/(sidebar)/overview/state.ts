@@ -2,7 +2,6 @@ import {
   writableWithDefault,
   type WritableWithDefault,
 } from "$lib/common/customStores";
-import type { MLArticle } from "$shared/types/api";
 import * as d3 from "d3";
 import { writable, type Writable } from "svelte/store";
 
@@ -23,9 +22,6 @@ export const controlParams: {
   search: writableWithDefault(""),
   pointerMode: writableWithDefault("pan"),
 };
-
-export const toolTips: Writable<string[]> = writable([]);
-export const selectedArticles: Writable<MLArticle[]> = writable([]);
 
 export const mouseX: Writable<{ actual: number; translated: number }> =
   writable({

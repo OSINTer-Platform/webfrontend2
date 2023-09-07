@@ -37,13 +37,7 @@ export function detectCloseArticles(
     return b.distance - a.distance;
   });
 
-  const titles: string[] = [];
-
-  closeArticles.slice(0, 10).forEach((a) => {
-    titles.push(a.article.title);
-  });
-
-  return titles;
+  return closeArticles;
 }
 
 export function detectSelectedArticles(
