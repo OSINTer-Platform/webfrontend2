@@ -5,7 +5,7 @@
 
   import TopBar from "./topbar.svelte";
   import Modals from "$com/modals/all.svelte";
-  import { modalState } from "$state/state";
+  import { modalState, darkMode } from "$state/state";
 
   export let data: LayoutData;
 
@@ -20,12 +20,14 @@
 
 <svelte:window on:keydown={(e) => handleKeypress(e.key)} />
 
-<Modals />
-<div class="z-40 relative">
-  <TopBar
-    customSidebar={data.customSidebar}
-    burgerMenu={data.burgerMenu}
-    user={data.user}
-  />
+<div class="h-screen overflow-hidden flex flex-col" class:dark={$darkMode}>
+  <Modals />
+  <div class="z-40 relative">
+    <TopBar
+      customSidebar={data.customSidebar}
+      burgerMenu={data.burgerMenu}
+      user={data.user}
+    />
+  </div>
+  <slot />
 </div>
-<slot />

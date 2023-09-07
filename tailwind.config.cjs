@@ -3,6 +3,7 @@
 //		Left margins to enable dynamically setting depth on table of contents on article page
 //		Background primary colors for icon-circles on front-page links
 module.exports = {
+  darkMode: "class",
   safelist: [
     "ml-0",
     "ml-3",

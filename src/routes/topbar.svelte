@@ -8,13 +8,14 @@
   } from "@fortawesome/free-solid-svg-icons/index";
   import { faGitlab } from "@fortawesome/free-brands-svg-icons/index";
 
+  import { navItems } from "$shared/nav";
+  import { sideOpen } from "$state/state";
+
   import type { User } from "$shared/types/userItems";
   import type { NavItem } from "$shared/types/internal";
-  import { navItems } from "$shared/nav";
-
   import LogoFull from "$assets/LogoFull.svelte";
   import ListMenu from "$com/listMenu.svelte";
-  import { sideOpen } from "$state/state";
+  import LightSwitch from "$com/lightSwitch.svelte";
 
   export let customSidebar = false;
   export let burgerMenu = false;
@@ -99,6 +100,8 @@
         <Fa icon={faCaretDown} />
       </button>
     </ListMenu>
+
+    <LightSwitch />
 
     <!-- Social -->
     <section class="flex items-center md:gap-3 gap-2">

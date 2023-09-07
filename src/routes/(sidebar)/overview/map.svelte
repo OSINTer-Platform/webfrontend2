@@ -141,7 +141,7 @@
 />
 <canvas
   id="map"
-  class="absolute top-0 bottom-0 right-0 left-0"
+  class="absolute top-0 bottom-0 right-0 left-0 bg-white/50 dark:bg-black/50"
   height={$mapDimensions.height}
   width={$mapDimensions.width}
 />

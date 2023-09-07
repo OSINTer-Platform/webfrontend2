@@ -70,7 +70,7 @@
 {#if mounted}
   <div
     id="map-container"
-    class="w-full h-full bg-black/50"
+    class="w-full h-full bg-surface-100 dark:bg-surface-800"
     bind:clientWidth={$mapDimensions.width}
     bind:clientHeight={$mapDimensions.height}
   >
