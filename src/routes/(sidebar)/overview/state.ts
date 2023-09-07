@@ -21,15 +21,19 @@ export const controlParams: {
   toolTipSize: WritableWithDefault<number>;
   enableSearch: WritableWithDefault<boolean>;
   deepSearch: WritableWithDefault<boolean>;
-  search: WritableWithDefault<string>;
+  articleSearch: WritableWithDefault<string>;
   pointerMode: WritableWithDefault<PointerModes>;
+  selectedSearch: WritableWithDefault<string>;
+  showAllSelected: WritableWithDefault<boolean>;
 } = {
   dotSize: writableWithDefault(1),
   toolTipSize: writableWithDefault(14),
   enableSearch: writableWithDefault(true),
   deepSearch: writableWithDefault(false),
-  search: writableWithDefault(""),
+  articleSearch: writableWithDefault(""),
   pointerMode: writableWithDefault("pan"),
+  selectedSearch: writableWithDefault(""),
+  showAllSelected: writableWithDefault(false),
 };
 
 // Variables written to from event handlers
@@ -128,7 +132,7 @@ export function resetState() {
   controlParams.dotSize.reset(300);
   controlParams.toolTipSize.reset(300);
   controlParams.deepSearch.reset();
-  controlParams.search.reset();
+  controlParams.articleSearch.reset();
   controlParams.enableSearch.reset();
 
   selectionBoundaries.start.reset();

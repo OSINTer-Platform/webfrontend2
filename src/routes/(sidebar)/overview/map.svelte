@@ -30,7 +30,7 @@
 
   const storeListeners: Array<() => void> = [];
 
-  const { dotSize, toolTipSize, search, deepSearch, pointerMode } =
+  const { dotSize, toolTipSize, articleSearch, deepSearch, pointerMode } =
     controlParams;
 
   const selectionStart = selectionBoundaries.start;
@@ -52,7 +52,13 @@
 
     clearAndScale([overlayCtx, ctx], $mapTransform);
 
-    drawArticlePoints(ctx, $scaledArticles, $dotSize, $search, $deepSearch);
+    drawArticlePoints(
+      ctx,
+      $scaledArticles,
+      $dotSize,
+      $articleSearch,
+      $deepSearch
+    );
 
     if ($selectionStart && $selectionEnd) {
       drawSelectionBox(overlayCtx, $selectionStart, $selectionEnd);

@@ -17,7 +17,7 @@
     dotSize,
     toolTipSize,
     deepSearch,
-    search,
+    articleSearch,
     enableSearch,
     pointerMode,
   } = controlParams;
@@ -199,14 +199,14 @@
       <Switch
         bind:checked={$enableSearch}
         name="Enable Search"
-        on:change={() => ($search = "")}
+        on:change={() => ($articleSearch = "")}
       />
     </div>
 
     {#if $enableSearch}
       <Search
         placeholder={"Search in articles"}
-        bind:value={$search}
+        bind:value={$articleSearch}
         containerClass={"mt-4 mb-2"}
       />
 
