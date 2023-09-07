@@ -2,7 +2,7 @@
   import Fa from "svelte-fa/src/fa.svelte";
   import SvelteMarkdown from "svelte-markdown";
 
-  import Link from "../../components/link.svelte";
+  import Link from "../../../modalLink.svelte";
   import CollectionList from "../../components/collectionList.svelte";
 
   import { getTimespan } from "$lib/common/math";
