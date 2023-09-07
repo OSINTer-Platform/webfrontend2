@@ -169,11 +169,11 @@
     );
   });
 
-  afterUpdate(drawCanvas);
   onDestroy(() => {
     storeListeners.forEach((unsubscriber) => unsubscriber());
   });
 
+  afterUpdate(() => requestAnimationFrame(drawCanvas));
 </script>
 
 <canvas

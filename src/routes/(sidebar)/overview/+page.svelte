@@ -60,6 +60,7 @@
 
   onMount(() => {
     if (browser) {
+      mounted = false;
       mapData = derived(deepSearch, ($deepSearch) =>
         queryArticles($deepSearch)
       );
@@ -72,7 +73,7 @@
 {#if mounted}
   <div
     id="map-container"
-    class="w-full h-full"
+    class="w-full h-full bg-black/50"
     bind:clientWidth={$mapWidth}
     bind:clientHeight={$mapHeight}
   >
