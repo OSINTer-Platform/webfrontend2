@@ -30,15 +30,30 @@
     {
       icon: faUpDownLeftRight,
       name: "pan",
-      description: "Pan and zoom across the map",
+      description: "Pan and zoom across the map (ctrl + alt + a)",
     },
     {
       icon: faObjectGroup,
       name: "select",
-      description: "Select objects from the map",
+      description: "Select objects from the map (ctrl + alt + s)",
     },
   ];
 </script>
+
+<svelte:window
+  on:keydown={(e) => {
+    if (e.ctrlKey && e.altKey) {
+      switch (e.key) {
+        case "a":
+          pointerMode.set("pan");
+          break;
+        case "s":
+          pointerMode.set("select");
+          break;
+      }
+    }
+  }}
+/>
 
 <aside
   class="
