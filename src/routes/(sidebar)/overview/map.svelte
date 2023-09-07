@@ -9,6 +9,7 @@
   import {
     clearAndScale,
     drawArticlePoints,
+    drawSelectionBox,
     drawText,
     scaleCoords,
   } from "./drawing";
@@ -58,6 +59,10 @@
     clearAndScale([overlayCtx, ctx], $mapTransform);
 
     drawArticlePoints(ctx, $scaledArticles, $dotSize, $search, $deepSearch);
+
+    if ($selectionStart && $selectionEnd) {
+      drawSelectionBox(overlayCtx, $selectionStart, $selectionEnd);
+    }
 
     ctx.restore();
     overlayCtx.restore();

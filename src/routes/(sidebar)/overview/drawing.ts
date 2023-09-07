@@ -145,3 +145,18 @@ export function drawText(
     )
   );
 }
+
+export function drawSelectionBox(
+  ctx: CanvasRenderingContext2D,
+  start: { x: number; y: number },
+  stop: { x: number; y: number }
+) {
+  const w = stop.x - start.x;
+  const h = stop.y - start.y;
+
+  ctx.fillStyle = "rgba(60, 60, 60, 0.5)";
+  ctx.fillRect(start.x, start.y, w, h);
+
+  ctx.strokeStyle = "rgba(120, 120, 120)";
+  ctx.strokeRect(start.x, start.y, w, h);
+}
