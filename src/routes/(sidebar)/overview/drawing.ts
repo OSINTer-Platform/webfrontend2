@@ -62,7 +62,8 @@ export function drawArticlePoints(
   articles: MLArticle[],
   pointSize: number,
   search: string,
-  deepSearch: boolean
+  deepSearch: boolean,
+  darkMode: boolean
 ) {
   const clusterMax = d3.max(articles, (a) => a.ml.cluster) as number;
   const colorScale = d3
@@ -75,7 +76,11 @@ export function drawArticlePoints(
 
     if (search.length === 0 || searchInArticle(article, search, deepSearch)) {
       ctx.fillStyle =
-        article.ml.cluster >= 0 ? colorScale(article.ml.cluster) : "#ffffff";
+        article.ml.cluster >= 0
+          ? colorScale(article.ml.cluster)
+          : darkMode
+          ? "#ffffff"
+          : "#000000";
     } else {
       ctx.fillStyle = "rgba(120, 120, 120, 0.25)";
     }
@@ -98,15 +103,16 @@ export function drawText(
   texts: string[],
   px: number,
   py: number,
-  distance: number = 20,
+  darkMode: boolean,
   size: number = 14,
+  distance: number = 20,
   innerPadding: number = 5,
   outerPadding: number = 10
 ) {
   ctx.font = `${size}px sans-serif`;
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
-  ctx.fillStyle = "rgba(0, 0, 0, 0.9)";
+  ctx.fillStyle = darkMode ? "rgba(0, 0, 0, 0.9)" : "rgba(255, 255, 255, 0.9)";
 
   const boxHeight =
     size * texts.length + outerPadding * 2 + innerPadding * (texts.length - 1);
@@ -136,7 +142,7 @@ export function drawText(
 
   ctx.fillRect(boxX, boxY, boxWidth, boxHeight);
 
-  ctx.fillStyle = "#ffffff";
+  ctx.fillStyle = darkMode ? "#ffffff" : "#000000";
   texts.forEach((text, i) =>
     ctx.fillText(
       text,
@@ -149,12 +155,13 @@ export function drawText(
 export function drawSelectionBox(
   ctx: CanvasRenderingContext2D,
   start: { x: number; y: number },
-  stop: { x: number; y: number }
+  stop: { x: number; y: number },
+  darkMode: boolean
 ) {
   const w = stop.x - start.x;
   const h = stop.y - start.y;
 
-  ctx.fillStyle = "rgba(60, 60, 60, 0.5)";
+  ctx.fillStyle = `rgba(60, 60, 60, ${darkMode ? "0.5" : "0.3"})`;
   ctx.fillRect(start.x, start.y, w, h);
 
   ctx.strokeStyle = "rgba(120, 120, 120)";

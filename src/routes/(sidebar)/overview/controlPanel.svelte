@@ -67,7 +67,7 @@
     flex flex-col p-4 mb-8
 
     border-surface-400 border
-    bg-surface-800/90
+    bg-surface-100/90 dark:bg-surface-800/90
     backdrop-blur
 
   "
@@ -98,7 +98,7 @@
         text-xl
 
         {$pointerMode === name
-            ? 'bg-primary-600/60 hover:bg-primary-500/60'
+            ? 'bg-primary-500/60 dark:bg-primary-600/60 hover:bg-primary-500/60'
             : ''}
       "
         >
@@ -120,7 +120,7 @@
     flex flex-col p-4 mb-8
 
     border-surface-400 border
-    bg-surface-800/90
+    bg-surface-100/90 dark:bg-surface-800/90
     backdrop-blur
 
   "

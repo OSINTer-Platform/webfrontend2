@@ -6,12 +6,14 @@
   import type { Readable } from "svelte/store";
 
   import { afterUpdate, onDestroy, onMount } from "svelte";
+  import { darkMode } from "$state/state";
   import {
     clearAndScale,
     drawArticlePoints,
     drawSelectionBox,
     drawText,
   } from "./drawing";
+
   import {
     controlParams,
     mapDimensions,
@@ -26,6 +28,7 @@
     d3Zoom,
     d3Drag,
   } from "./state";
+
   import { handlePointerModeChange, scalePointerPosition } from "./events";
 
   const storeListeners: Array<() => void> = [];
@@ -57,11 +60,12 @@
       $scaledArticles,
       $dotSize,
       $articleSearch,
-      $deepSearch
+      $deepSearch,
+      $darkMode
     );
 
     if ($selectionStart && $selectionEnd) {
-      drawSelectionBox(overlayCtx, $selectionStart, $selectionEnd);
+      drawSelectionBox(overlayCtx, $selectionStart, $selectionEnd, $darkMode);
     }
 
     ctx.restore();
@@ -73,7 +77,7 @@
         $toolTips,
         $mouseX.actual,
         $mouseY.actual,
-        20,
+        $darkMode,
         $toolTipSize
       );
     }
