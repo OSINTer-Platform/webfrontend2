@@ -14,6 +14,7 @@ module.exports = {
     "bg-primary-600",
     "bg-primary-700",
     "bg-primary-800",
+    "bg-primary-900",
   ],
   content: ["./src/**/*.{html,js,svelte,ts}"],
   theme: {
