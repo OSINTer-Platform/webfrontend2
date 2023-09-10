@@ -1,7 +1,7 @@
-import { searchInArticle } from "$lib/common/filter";
-import type { MLArticle } from "$shared/types/api";
-
 import * as d3 from "d3";
+import { searchInArticle } from "$lib/common/filter";
+
+import type { MLArticle } from "$shared/types/api";
 
 export function scaleCoords(
   articles: MLArticle[],

@@ -1,23 +1,18 @@
 <script lang="ts">
   import type { MLArticle } from "$shared/types/api";
+  import type { Readable } from "svelte/store";
 
-  import {
-    derived,
-    writable,
-    type Readable,
-    type Writable,
-    readable,
-  } from "svelte/store";
-
-  import { controlParams, mapDimensions } from "./state";
-  import { browser } from "$app/environment";
+  import { derived, readable } from "svelte/store";
   import { onMount } from "svelte";
+  import { browser } from "$app/environment";
+  import { controlParams, mapDimensions } from "./state";
+
   import { PUBLIC_API_BASE } from "$env/static/public";
 
   import Loader from "$com/loader.svelte";
-  import Map from "./map.svelte";
-  import ControlPanel from "./controlPanel.svelte";
   import SelectionPanel from "./selectionPanel.svelte";
+  import ControlPanel from "./controlPanel.svelte";
+  import Map from "./map.svelte";
 
   let mapData: Readable<Promise<Readable<MLArticle[]>>>;
 

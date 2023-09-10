@@ -1,10 +1,8 @@
 <script lang="ts">
-  import * as d3 from "d3";
-
   import type { MLArticle } from "$shared/types/api";
-
   import type { Readable } from "svelte/store";
 
+  import * as d3 from "d3";
   import { afterUpdate, onDestroy, onMount } from "svelte";
   import { darkMode } from "$state/state";
   import {

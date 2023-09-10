@@ -3,14 +3,16 @@
   import Search from "$com/utils/search.svelte";
   import Switch from "$com/utils/switch.svelte";
 
-  import { searchInArticle } from "$lib/common/filter";
-  import { onDestroy } from "svelte";
-  import { selectedArticles, controlParams } from "./state";
-  import { derived, type Readable } from "svelte/store";
+  import type { Readable } from "svelte/store";
   import type { MLArticle } from "$shared/types/api";
-  import { page } from "$app/stores";
-  import type { Updatable } from "$lib/common/customStores";
   import type { Collection } from "$shared/types/userItems";
+  import type { Updatable } from "$lib/common/customStores";
+
+  import { onDestroy } from "svelte";
+  import { derived } from "svelte/store";
+  import { page } from "$app/stores";
+  import { searchInArticle } from "$lib/common/filter";
+  import { selectedArticles, controlParams } from "./state";
 
   const { deepSearch, selectedSearch, showAllSelected } = controlParams;
 

@@ -1,16 +1,12 @@
-import {
-  writableWithDefault,
-  type WritableWithDefault,
-} from "$lib/common/customStores";
+import type { WritableWithDefault } from "$lib/common/customStores";
 import type { MLArticle } from "$shared/types/api";
+import type { Writable } from "svelte/store";
+
 import * as d3 from "d3";
-import {
-  derived,
-  get,
-  writable,
-  type Readable,
-  type Writable,
-} from "svelte/store";
+import { derived, get, writable } from "svelte/store";
+
+import { writableWithDefault } from "$lib/common/customStores";
+
 import { scaleCoords } from "./drawing";
 import { detectCloseArticles, detectSelectedArticles } from "./events";
 

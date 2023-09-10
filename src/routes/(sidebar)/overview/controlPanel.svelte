@@ -1,16 +1,13 @@
 <script lang="ts">
+  import Fa from "svelte-fa/src/fa.svelte";
   import Search from "$com/utils/search.svelte";
   import Switch from "$com/utils/switch.svelte";
-  import Fa from "svelte-fa/src/fa.svelte";
 
-  import { controlParams, resetState } from "./state";
   import { faObjectGroup } from "@fortawesome/free-regular-svg-icons";
+  import { faUpDownLeftRight } from "@fortawesome/free-solid-svg-icons";
+  import { controlParams, resetState } from "./state";
 
-  import {
-    faUpDownLeftRight,
-    type IconDefinition,
-  } from "@fortawesome/free-solid-svg-icons";
-
+  import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
   import type { PointerModes } from "./state";
 
   const {
