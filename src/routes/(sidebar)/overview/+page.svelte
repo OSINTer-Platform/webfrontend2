@@ -21,7 +21,8 @@
 
   let mapData: Readable<Promise<Readable<MLArticle[]>>>;
 
-  let mounted = false;
+  let readyToMount = false;
+  let incompatibleDevice = false;
 
   const { deepSearch } = controlParams;
 
@@ -57,23 +58,54 @@
 
   onMount(() => {
     if (browser) {
-      mounted = false;
+      const touchScreen =
+        "ontouchstart" in window ||
+        navigator.maxTouchPoints > 0 ||
+        ("msMaxTouchPoints" in navigator &&
+          typeof navigator.msMaxTouchPoints === "number" &&
+          navigator.msMaxTouchPoints > 0);
+
+      if (touchScreen || window.innerWidth < 1200 || window.innerHeight < 700)
+        incompatibleDevice = true;
+
       mapData = derived(deepSearch, ($deepSearch) =>
         queryArticles($deepSearch)
       );
 
-      mounted = true;
+      readyToMount = true;
     }
   });
 </script>
 
-{#if mounted}
-  <div
-    id="map-container"
-    class="w-full h-full bg-surface-100 dark:bg-surface-800"
-    bind:clientWidth={$mapDimensions.width}
-    bind:clientHeight={$mapDimensions.height}
-  >
+<div
+  id="map-container"
+  class="w-full h-full bg-surface-100 dark:bg-surface-800"
+  bind:clientWidth={$mapDimensions.width}
+  bind:clientHeight={$mapDimensions.height}
+>
+  {#if incompatibleDevice}
+    <div
+      class="h-full mx-auto px-8 xl:max-w-5xl max-w-2xl flex flex-col justify-center items-center text-center dark:text-white"
+    >
+      <h2
+        class="xl:text-5xl md:text-4xl sm:text-3xl text-2xl font-bold md:mb-2"
+      >
+        It doesn't seem your devices is compatible.
+      </h2>
+      <p
+        class="xl:text-2xl md:text-xl sm:text-lg font-light md:tracking-tighter mb-8"
+      >
+        Unfortunately, this page doesn't support small screens or touch-devices.
+      </p>
+      <button
+        class="btn p-2 w-48 lg:p-4 lg:w-64 lg:text-xl font-bold
+        text-primary-600 dark:text-primary-600 dark:hover:text-primary-500
+        border-2 border-primary-600 dark:border-primary-500
+        "
+        on:click={() => (incompatibleDevice = false)}>Continue anyway</button
+      >
+    </div>
+  {:else if readyToMount}
     <ControlPanel />
     <SelectionPanel />
     {#await $mapData}
@@ -99,5 +131,21 @@
         </p>
       </div>
     {/await}
-  </div>
-{/if}
+  {:else}
+    <div
+      class="h-full mx-auto px-8 xl:max-w-5xl max-w-2xl flex flex-col justify-center text-center dark:text-white"
+    >
+      <h2
+        class="xl:text-5xl md:text-4xl sm:text-3xl text-2xl font-bold md:mb-2"
+      >
+        Javascript has to be enabled
+      </h2>
+      <p
+        class="xl:text-2xl md:text-xl sm:text-lg font-light md:tracking-tighter"
+      >
+        It doesn't seem like Javascript is enabled - or something is interfering
+        with it. Please turn Javascript back on to use this page.
+      </p>
+    </div>
+  {/if}
+</div>
