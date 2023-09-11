@@ -13,6 +13,7 @@
   import SelectionPanel from "./selectionPanel.svelte";
   import ControlPanel from "./controlPanel.svelte";
   import Map from "./map.svelte";
+  import { config } from "$shared/config";
 
   let mapData: Readable<Promise<Readable<MLArticle[]>>>;
 
@@ -71,6 +72,18 @@
     }
   });
 </script>
+
+<svelte:head>
+  <title>OSINTer - Overview</title>
+  <meta property="og:title" content="OSINTer - Use ML to map articles" />
+  <meta
+    property="og:description"
+    content="The overview in OSINTer uses advanced unsupervised machine-learning to cluster articles for easy viewing"
+  />
+  <meta property="og:image" content={config.images.fullLogo} />
+  <meta property="og:url" content="https://osinter.dk/overview" />
+  <meta property="og:type" content="website" />
+</svelte:head>
 
 <div
   id="map-container"
