@@ -2,7 +2,7 @@
   import type { MLArticle } from "$shared/types/api";
   import type { Readable } from "svelte/store";
 
-  import { derived, readable } from "svelte/store";
+  import { derived, readable, writable } from "svelte/store";
   import { onMount } from "svelte";
   import { browser } from "$app/environment";
   import { controlParams, mapDimensions } from "./state";
@@ -19,6 +19,7 @@
 
   let readyToMount = false;
   let incompatibleDevice = false;
+  let retries = writable(0);
 
   const { deepSearch } = controlParams;
 
@@ -64,7 +65,7 @@
       if (touchScreen || window.innerWidth < 1200 || window.innerHeight < 700)
         incompatibleDevice = true;
 
-      mapData = derived(deepSearch, ($deepSearch) =>
+      mapData = derived([deepSearch, retries], ([$deepSearch, _]) =>
         queryArticles($deepSearch)
       );
 
@@ -124,7 +125,7 @@
       <Map {articles} />
     {:catch}
       <div
-        class="h-full mx-auto px-8 xl:max-w-5xl max-w-2xl flex flex-col justify-center text-center dark:text-white"
+        class="h-full mx-auto px-8 xl:max-w-5xl max-w-2xl flex flex-col justify-center items-center text-center dark:text-white"
       >
         <h2
           class="xl:text-5xl md:text-4xl sm:text-3xl text-2xl font-bold md:mb-2"
@@ -132,11 +133,19 @@
           Error when fetching data for map
         </h2>
         <p
-          class="xl:text-2xl md:text-xl sm:text-lg font-light md:tracking-tighter"
+          class="xl:text-2xl md:text-xl sm:text-lg font-light md:tracking-tighter mb-8"
         >
           Please try again later, or contact the system administrator if error
           persists
         </p>
+        <button
+          class="btn p-2 w-48 lg:p-4 lg:w-64 lg:text-xl font-bold
+        text-primary-600 dark:text-primary-600 dark:hover:text-primary-500
+        border-2 border-primary-600 dark:border-primary-500
+        "
+          on:click={() => retries.update((r) => r + 1)}
+          >Try again ({$retries})</button
+        >
       </div>
     {/await}
   {:else}
