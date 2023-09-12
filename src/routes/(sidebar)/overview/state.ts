@@ -9,6 +9,7 @@ import { writableWithDefault } from "$lib/common/customStores";
 
 import { scaleCoords } from "./drawing";
 import { detectCloseArticles, detectSelectedArticles } from "./events";
+import { searchInArticle } from "$lib/common/filter";
 
 export type PointerModes = "pan" | "select";
 
@@ -80,6 +81,22 @@ export const selectedArticles = derived(
       return detectSelectedArticles($start, $end, $scaledArticles);
     }
     return [];
+  }
+);
+
+export const searchedSelectedArticles = derived(
+  [controlParams.selectedSearch, controlParams.deepSearch, selectedArticles],
+  ([$selectedSearch, $deepSearch, $selectedArticles]) => {
+    if ($selectedSearch.length === 0) return $selectedArticles;
+    const filteredArticles: MLArticle[] = [];
+
+    $selectedArticles.forEach((article) => {
+      if (searchInArticle(article, $selectedSearch, $deepSearch)) {
+        filteredArticles.push(article);
+      }
+    });
+
+    return filteredArticles;
   }
 );
 

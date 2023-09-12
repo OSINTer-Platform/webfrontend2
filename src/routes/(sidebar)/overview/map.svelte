@@ -21,6 +21,7 @@
     selectionBoundaries,
     articles as articleStore,
     scaledArticles,
+    searchedSelectedArticles,
     toolTips,
     d3Selection,
     d3Zoom,
@@ -63,7 +64,17 @@
     );
 
     if ($selectionStart && $selectionEnd) {
-      drawSelectionBox(overlayCtx, $selectionStart, $selectionEnd, $darkMode);
+      drawSelectionBox(overlayCtx, $selectionStart, $selectionEnd);
+
+      drawArticlePoints(
+        overlayCtx,
+        $searchedSelectedArticles,
+        $dotSize,
+        $articleSearch,
+        $deepSearch,
+        $darkMode,
+        "#ffffff"
+      );
     }
 
     ctx.restore();

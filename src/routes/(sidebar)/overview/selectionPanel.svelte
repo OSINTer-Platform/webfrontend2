@@ -3,39 +3,23 @@
   import Search from "$com/utils/search.svelte";
   import Switch from "$com/utils/switch.svelte";
 
-  import type { Readable } from "svelte/store";
-  import type { MLArticle } from "$shared/types/api";
   import type { Collection } from "$shared/types/userItems";
   import type { Updatable } from "$lib/common/customStores";
 
   import { onDestroy } from "svelte";
-  import { derived } from "svelte/store";
   import { page } from "$app/stores";
-  import { searchInArticle } from "$lib/common/filter";
-  import { selectedArticles, controlParams } from "./state";
+  import {
+    selectedArticles,
+    searchedSelectedArticles,
+    controlParams,
+  } from "./state";
 
-  const { deepSearch, selectedSearch, showAllSelected } = controlParams;
+  const { selectedSearch, showAllSelected } = controlParams;
 
   onDestroy(
     selectedArticles.subscribe((articleList) => {
       if (articleList.length == 0) selectedSearch.set("");
     })
-  );
-
-  const searchedSelectedArticles: Readable<MLArticle[]> = derived(
-    [selectedSearch, deepSearch, selectedArticles],
-    ([$selectedSearch, $deepSearch, $selectedArticles]) => {
-      if ($selectedSearch.length === 0) return $selectedArticles;
-      const filteredArticles: MLArticle[] = [];
-
-      $selectedArticles.forEach((article) => {
-        if (searchInArticle(article, $selectedSearch, $deepSearch)) {
-          filteredArticles.push(article);
-        }
-      });
-
-      return filteredArticles;
-    }
   );
 
   let alreadyRead: Updatable<null | Collection>;
