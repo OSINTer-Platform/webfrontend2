@@ -61,6 +61,7 @@ export interface SearchQuery {
   sort_order: SortOrder | undefined;
 
   search_term: string | undefined;
+  semantic_search: string | undefined;
   highlight: boolean | undefined;
 
   first_date: string | undefined;

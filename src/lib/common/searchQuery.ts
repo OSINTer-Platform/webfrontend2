@@ -9,6 +9,7 @@ export function fromUrl(params: URLSearchParams): SearchQuery {
     sort_order: (params.get("sort_order") as SortOrder) || undefined,
 
     search_term: params.get("search_term") || undefined,
+    semantic_search: params.get("semantic_search") || undefined,
     highlight: Boolean(params.get("search_term") && params.get("highlight")),
 
     first_date: params.get("first_date") || undefined,
