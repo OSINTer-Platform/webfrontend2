@@ -25,7 +25,13 @@ export function filterArticles<T extends ArticleBase>(
 }
 
 export const searchInArticle = (
-  article: ArticleBase | Article,
+  article: {
+    title: string;
+    description: string;
+    source: string;
+    author?: string | null;
+    content?: string;
+  },
   keyword: string,
   deep: boolean = true
 ) => {
@@ -37,7 +43,7 @@ export const searchInArticle = (
   if (
     search(article.title) ||
     search(article.description) ||
-    search(article.profile)
+    search(article.source)
   )
     return true;
   else if (!deep) return false;

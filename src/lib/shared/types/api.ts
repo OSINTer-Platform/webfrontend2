@@ -1,40 +1,55 @@
+export interface ArticleTags {
+  automatic: string[];
+  interresting: { [key: string]: string[] };
+}
+
 export interface ArticleBase {
+  id: string;
+
   title: string;
   description: string;
+
   url: string;
   image_url: string;
 
   profile: string;
   source: string;
 
+  author: string | null;
+
   publish_date: string;
   inserted_at: string;
 
   read_times: number;
-  id: string;
-}
 
-export interface ArticleTags {
-  automatic: string[];
-  interresting: { [key: string]: string[] };
-}
+  similar: string[];
 
-export interface MLArticle extends ArticleBase {
   ml: {
-    similar: Array<string>;
     cluster: number;
     coordinates: [number, number];
   };
+
+  tags: ArticleTags;
 }
 
-export interface Article extends MLArticle {
-  author: string;
+export interface Article extends ArticleBase {
   formatted_content: string;
   content: string;
 
-  tags: ArticleTags;
-
   summary: string;
+}
+
+export interface MLArticle {
+  id: string;
+
+  title: string;
+  description: string;
+  source: string;
+  publish_date: string;
+  ml: {
+    cluster: number;
+    coordinates: [number, number];
+  };
 }
 
 export interface ArticleCategories {
