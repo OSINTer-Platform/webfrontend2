@@ -1,6 +1,7 @@
 <script lang="ts">
   import Fa from "svelte-fa/src/fa.svelte";
   import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/index";
+  import { page } from "$app/stores";
 
   export let value: string = "";
   export let placeholder: string = "";
@@ -25,7 +26,9 @@
     <Fa icon={faMagnifyingGlass} />
 
     <input
-      name="search_term"
+      name={$page.data.mlAvailability?.elser
+        ? "semantic_search"
+        : "search_term"}
       bind:value
       {placeholder}
       class="
