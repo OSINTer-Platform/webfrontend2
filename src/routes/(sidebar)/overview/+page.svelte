@@ -10,8 +10,7 @@
   import { PUBLIC_API_BASE } from "$env/static/public";
 
   import Loader from "$com/loader.svelte";
-  import SelectionPanel from "./selectionPanel.svelte";
-  import ControlPanel from "./controlPanel.svelte";
+  import Panels from "./panels/index.svelte";
   import Map from "./map.svelte";
   import { config } from "$shared/config";
 
@@ -115,8 +114,7 @@
       >
     </div>
   {:else if readyToMount}
-    <ControlPanel />
-    <SelectionPanel />
+    <Panels />
     {#await $mapData}
       <Loader
         text={`Loading articles for generating the map.\nThis might take a while`}
