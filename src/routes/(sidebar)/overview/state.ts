@@ -189,7 +189,6 @@ export const d3Drag: Writable<d3.DragBehavior<
 export function resetState() {
   controlParams.dotSize.reset(300);
   controlParams.toolTipSize.reset(300);
-  controlParams.deepSearch.reset();
   controlParams.articleSearch.reset();
   controlParams.enableSearch.reset();
   controlParams.selectedSources.reset();
