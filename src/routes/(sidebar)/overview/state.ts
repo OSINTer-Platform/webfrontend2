@@ -22,6 +22,7 @@ export const controlParams: {
   pointerMode: WritableWithDefault<PointerModes>;
   selectedSearch: WritableWithDefault<string>;
   showAllSelected: WritableWithDefault<boolean>;
+  selectedSources: WritableWithDefault<string[]>;
 } = {
   dotSize: writableWithDefault(1),
   toolTipSize: writableWithDefault(14),
@@ -31,6 +32,7 @@ export const controlParams: {
   pointerMode: writableWithDefault("pan"),
   selectedSearch: writableWithDefault(""),
   showAllSelected: writableWithDefault(false),
+  selectedSources: writableWithDefault([]),
 };
 
 // Variables written to from event handlers
@@ -66,6 +68,10 @@ export const selectionBoundaries: {
 
 // Stores derived from scaled articles and state Stores
 export const articles: Writable<MLArticle[]> = writable([]);
+
+export const articleProfiles = derived(articles, ($articles) => [
+  ...new Set($articles.map((a) => a.profile).sort()),
+]);
 
 export const scaledArticles = derived(
   [articles, mapDimensions],
@@ -147,6 +153,7 @@ export function resetState() {
   controlParams.deepSearch.reset();
   controlParams.articleSearch.reset();
   controlParams.enableSearch.reset();
+  controlParams.selectedSources.reset();
 
   selectionBoundaries.start.reset();
   selectionBoundaries.end.reset();

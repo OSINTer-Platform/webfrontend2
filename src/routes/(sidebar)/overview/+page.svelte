@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { PageData } from "./$types";
   import type { MLArticle } from "$shared/types/api";
   import type { Readable } from "svelte/store";
 
@@ -13,6 +14,8 @@
   import Panels from "./panels/index.svelte";
   import Map from "./map.svelte";
   import { config } from "$shared/config";
+
+  export let data: PageData;
 
   let mapData: Readable<Promise<Readable<MLArticle[]>>>;
 
@@ -114,7 +117,7 @@
       >
     </div>
   {:else if readyToMount}
-    <Panels />
+    <Panels articleCategories={data.sourceCategories} />
     {#await $mapData}
       <Loader
         text={`Loading articles for generating the map.\nThis might take a while`}

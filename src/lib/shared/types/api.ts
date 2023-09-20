@@ -45,6 +45,7 @@ export interface MLArticle {
   title: string;
   description: string;
   source: string;
+  profile: string;
   publish_date: string;
   ml: {
     cluster: number;

@@ -1,10 +1,16 @@
 <script lang="ts">
-  import { controlParams } from "../../state";
+  import type { ArticleCategories } from "$shared/types/api";
+
   import PanelShell from "../panelShell.svelte";
   import Controls from "./controls.svelte";
   import Pointermodes from "./pointermodes.svelte";
 
+  import { controlParams } from "../../state";
+  import Sources from "./sources/index.svelte";
+
   const { pointerMode } = controlParams;
+
+  export let articleCategories: ArticleCategories;
 </script>
 
 <svelte:window
@@ -22,10 +28,14 @@
   }}
 />
 
-<PanelShell>
+<PanelShell class="mb-8">
   <Pointermodes />
 </PanelShell>
 
-<PanelShell>
+<PanelShell class="mb-8">
   <Controls />
+</PanelShell>
+
+<PanelShell class="min-h-0 shrink">
+  <Sources {articleCategories} />
 </PanelShell>

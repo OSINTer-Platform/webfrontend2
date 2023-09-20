@@ -5,7 +5,7 @@
 
 <div
   class="
-    flex flex-col p-4 mb-8
+    flex flex-col p-4
 
     border-surface-400 border
     bg-surface-100/90 dark:bg-surface-800/90
