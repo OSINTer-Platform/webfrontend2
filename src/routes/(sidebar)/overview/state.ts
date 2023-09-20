@@ -80,6 +80,33 @@ export const scaledArticles = derived(
   }
 );
 
+export const filteredArticles = derived(
+  [
+    controlParams.articleSearch,
+    controlParams.deepSearch,
+    controlParams.selectedSources,
+    scaledArticles,
+  ],
+  ([$articleSearch, $deepSearch, $selectedSources, $scaledArticles]) =>
+    $scaledArticles.map((a) => {
+      let show = true;
+
+      if (
+        $articleSearch.length > 0 &&
+        !searchInArticle(a, $articleSearch, $deepSearch)
+      ) {
+        show = false;
+      } else if (
+        $selectedSources.length > 0 &&
+        !$selectedSources.includes(a.profile)
+      ) {
+        show = false;
+      }
+
+      return { article: a, show };
+    })
+);
+
 export const selectedArticles = derived(
   [selectionBoundaries.start, selectionBoundaries.end, scaledArticles],
   ([$start, $end, $scaledArticles]) => {

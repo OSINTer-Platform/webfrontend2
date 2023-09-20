@@ -1,5 +1,4 @@
 import * as d3 from "d3";
-import { searchInArticle } from "$lib/common/filter";
 
 import type { MLArticle } from "$shared/types/api";
 
@@ -59,26 +58,27 @@ export function clearAndScale(
 
 export function drawArticlePoints(
   ctx: CanvasRenderingContext2D,
-  articles: MLArticle[],
+  filteredArticles: { article: MLArticle; show: boolean }[],
   pointSize: number,
-  search: string,
-  deepSearch: boolean,
   darkMode: boolean,
   dotColor: null | string = null
 ) {
-  const clusterMax = d3.max(articles, (a) => a.ml.cluster) as number;
+  const clusterMax = d3.max(
+    filteredArticles,
+    ({ article }) => article.ml.cluster
+  ) as number;
   const colorScale = d3
     .scaleSequential()
     .domain([0, clusterMax])
     .interpolator(d3.interpolateRainbow);
 
-  articles.forEach((article) => {
+  filteredArticles.forEach(({ article, show }) => {
     ctx.beginPath();
 
     if (dotColor) {
       ctx.fillStyle = dotColor;
     } else {
-      if (search.length === 0 || searchInArticle(article, search, deepSearch)) {
+      if (show) {
         ctx.fillStyle =
           article.ml.cluster >= 0
             ? colorScale(article.ml.cluster)

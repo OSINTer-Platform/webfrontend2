@@ -20,7 +20,7 @@
     mapTransform,
     selectionBoundaries,
     articles as articleStore,
-    scaledArticles,
+    filteredArticles,
     searchedSelectedArticles,
     toolTips,
     d3Selection,
@@ -32,8 +32,7 @@
 
   const storeListeners: Array<() => void> = [];
 
-  const { dotSize, toolTipSize, articleSearch, deepSearch, pointerMode } =
-    controlParams;
+  const { dotSize, toolTipSize, pointerMode } = controlParams;
 
   const selectionStart = selectionBoundaries.start;
   const selectionEnd = selectionBoundaries.end;
@@ -54,24 +53,15 @@
 
     clearAndScale([overlayCtx, ctx], $mapTransform);
 
-    drawArticlePoints(
-      ctx,
-      $scaledArticles,
-      $dotSize,
-      $articleSearch,
-      $deepSearch,
-      $darkMode
-    );
+    drawArticlePoints(ctx, $filteredArticles, $dotSize, $darkMode);
 
     if ($selectionStart && $selectionEnd) {
       drawSelectionBox(overlayCtx, $selectionStart, $selectionEnd);
 
       drawArticlePoints(
         overlayCtx,
-        $searchedSelectedArticles,
+        $searchedSelectedArticles.map((article) => ({ article, show: true })),
         $dotSize,
-        $articleSearch,
-        $deepSearch,
         $darkMode,
         "#ffffff"
       );
