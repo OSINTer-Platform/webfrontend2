@@ -66,6 +66,20 @@ export const selectionBoundaries: {
   end: writableWithDefault(null),
 };
 
+function filterArticles(
+  article: MLArticle,
+  search: string,
+  deepSearch: boolean,
+  sources: string[]
+) {
+  if (search.length > 0 && !searchInArticle(article, search, deepSearch))
+    return false;
+  else if (sources.length > 0 && !sources.includes(article.profile))
+    return false;
+
+  return true;
+}
+
 // Stores derived from scaled articles and state Stores
 export const articles: Writable<MLArticle[]> = writable([]);
 
@@ -80,7 +94,7 @@ export const scaledArticles = derived(
   }
 );
 
-export const filteredArticles = derived(
+export const articleFilter = derived(
   [
     controlParams.articleSearch,
     controlParams.deepSearch,
@@ -88,30 +102,28 @@ export const filteredArticles = derived(
     scaledArticles,
   ],
   ([$articleSearch, $deepSearch, $selectedSources, $scaledArticles]) =>
-    $scaledArticles.map((a) => {
-      let show = true;
-
-      if (
-        $articleSearch.length > 0 &&
-        !searchInArticle(a, $articleSearch, $deepSearch)
-      ) {
-        show = false;
-      } else if (
-        $selectedSources.length > 0 &&
-        !$selectedSources.includes(a.profile)
-      ) {
-        show = false;
-      }
-
-      return { article: a, show };
+    $scaledArticles.map((article) => {
+      return {
+        article,
+        show: filterArticles(
+          article,
+          $articleSearch,
+          $deepSearch,
+          $selectedSources
+        ),
+      };
     })
 );
 
+const filteredArticles = derived(articleFilter, (articleFilter) =>
+  articleFilter.filter(({ show }) => show).map(({ article }) => article)
+);
+
 export const selectedArticles = derived(
-  [selectionBoundaries.start, selectionBoundaries.end, scaledArticles],
-  ([$start, $end, $scaledArticles]) => {
+  [selectionBoundaries.start, selectionBoundaries.end, filteredArticles],
+  ([$start, $end, $filteredArticles]) => {
     if ($start && $end) {
-      return detectSelectedArticles($start, $end, $scaledArticles);
+      return detectSelectedArticles($start, $end, $filteredArticles);
     }
     return [];
   }
@@ -134,13 +146,13 @@ export const searchedSelectedArticles = derived(
 );
 
 export const closeArticles = derived(
-  [mouseX, mouseY, mapTransform, scaledArticles],
-  ([$mouseX, $mouseY, $mapTransform, $scaledArticles]) => {
+  [mouseX, mouseY, mapTransform, filteredArticles],
+  ([$mouseX, $mouseY, $mapTransform, $filter]) => {
     return detectCloseArticles(
       $mouseX.translated,
       $mouseY.translated,
       $mapTransform.k,
-      $scaledArticles
+      $filter
     );
   }
 );

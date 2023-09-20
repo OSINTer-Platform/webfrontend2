@@ -20,7 +20,7 @@
     mapTransform,
     selectionBoundaries,
     articles as articleStore,
-    filteredArticles,
+    articleFilter,
     searchedSelectedArticles,
     toolTips,
     d3Selection,
@@ -53,7 +53,7 @@
 
     clearAndScale([overlayCtx, ctx], $mapTransform);
 
-    drawArticlePoints(ctx, $filteredArticles, $dotSize, $darkMode);
+    drawArticlePoints(ctx, $articleFilter, $dotSize, $darkMode);
 
     if ($selectionStart && $selectionEnd) {
       drawSelectionBox(overlayCtx, $selectionStart, $selectionEnd);
