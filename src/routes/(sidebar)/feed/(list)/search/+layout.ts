@@ -6,6 +6,7 @@ export const load = (async ({ url, parent }) => {
   const parentData = await parent();
   const searchQuery = fromUrl(url.searchParams);
 
-  if (parentData.mlAvailability?.elser) searchQuery.semantic_search = undefined;
+  if (!parentData.mlAvailability?.elser)
+    searchQuery.semantic_search = undefined;
   return { currentSearch: searchQuery, searchUrl: toUrl(searchQuery) };
 }) satisfies LayoutLoad;
