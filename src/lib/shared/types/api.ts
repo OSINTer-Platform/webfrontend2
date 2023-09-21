@@ -76,14 +76,15 @@ export interface SearchQuery {
   sort_by: SortBy | undefined;
   sort_order: SortOrder | undefined;
 
-  search_term: string | undefined;
-  semantic_search: string | undefined;
-  highlight: boolean | undefined;
+  search_term?: string | undefined;
+  semantic_search?: string | undefined;
+  highlight?: boolean | undefined;
 
-  first_date: string | undefined;
-  last_date: string | undefined;
+  first_date?: string | undefined;
+  last_date?: string | undefined;
 
-  sources: string[];
+  sources?: string[];
+  ids?: string[];
 }
 
 export interface AccessTokenWithDetails {

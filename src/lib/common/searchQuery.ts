@@ -16,6 +16,7 @@ export function fromUrl(params: URLSearchParams): SearchQuery {
     last_date: params.get("last_date") || undefined,
 
     sources: params.getAll("sources"),
+    ids: params.getAll("ids"),
   };
 }
 
