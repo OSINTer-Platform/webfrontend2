@@ -147,5 +147,24 @@ dark:hover:bg-surface-500
         <SvelteMarkdown source={article.description} isInline />
       </p>
     </div>
+
+    {#if article.tags.automatic.length > 0}
+      <footer class="flex flex-wrap gap-2 mt-4">
+        {#each article.tags.automatic as tag}
+          <p
+            class="
+            py-1 px-3 rounded-full
+            shrink-0
+            bg-primary-600/20 dark:bg-primary-700/30
+            border border-primary-500/50
+            uppercase text-xs dark:font-bold
+            dark:text-white/80
+          "
+          >
+            {tag}
+          </p>
+        {/each}
+      </footer>
+    {/if}
   </div>
 </Link>

@@ -6,6 +6,7 @@
 
   let classes: string = "";
   export { classes as class };
+  export let title: string = "";
 
   const showArticleModal = (e: MouseEvent) => {
     const small = window.matchMedia(
@@ -27,6 +28,7 @@
   data-sveltekit-preload-data="off"
   href={`/article/${articleId}`}
   class={classes}
+  {title}
 >
   <slot />
 </a>

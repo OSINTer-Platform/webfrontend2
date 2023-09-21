@@ -39,6 +39,7 @@
   [&:hover>aside]:dark:bg-surface-500
   relative
 "
+  title={article.tags.automatic.map((tag) => tag.toUpperCase()).join(" | ")}
 >
   <p
     class="
@@ -93,9 +94,12 @@
 
     {read ? 'opacity-60 font-light' : ''}
     text-xs
+    leading-5
+
     md:text-sm
+    md:leading-6
+
     truncate
-    leading-6
     text-tertiary-800
 
     dark:text-white
