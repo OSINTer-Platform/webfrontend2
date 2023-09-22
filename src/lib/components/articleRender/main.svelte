@@ -11,6 +11,15 @@
   export let header: Boolean = true;
 
   export let headings: HeadingList = [];
+  export let buttonActions: Array<{
+    title: string;
+    action: () => void;
+  }> = [
+    {
+      title: "Read Article on Website",
+      action: () => window.open(article.url, "_blank"),
+    },
+  ];
 
   function handleParsed(e: ParsedEvent) {
     headings = MDtoToC(e);
@@ -68,28 +77,34 @@
 
 <hr class="text-tertiary-700/25 mb-8" />
 
-<button
-  on:click={() => window.open(article.url, "_blank")}
-  class="
-	p-6
+<section class="flex">
+  {#each buttonActions as { title, action }}
+    <button
+      on:click={action}
+      class="
+      p-6
 
-	w-full
-	uppercase
-	font-bold
-	text-tertiary-800
-	dark:text-white/90
+      w-full
+      uppercase
+      font-bold
+      text-tertiary-800
+      dark:text-white/90
 
-	border
-	border-tertiary-700/50
-	rounded-sm
+      border
+      border-tertiary-700/50
+      border-r-0
+      last:border-r
+      rounded-sm
 
-	btn
-	hover:bg-primary-800/10
-	hover:border-primary-600/30
-"
->
-  Read article on website
-</button>
+      btn
+      hover:bg-primary-800/10
+      hover:border-primary-600/30
+    "
+    >
+      {title}
+    </button>
+  {/each}
+</section>
 
 <hr class="text-tertiary-700/25 my-8" />
 

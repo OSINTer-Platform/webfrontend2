@@ -7,6 +7,7 @@
   import { fly } from "svelte/transition";
   import { quintInOut } from "svelte/easing";
   import { modalState } from "$shared/state/state";
+  import { goto } from "$app/navigation";
 
   export let article: Article;
   export let articleCategories: ArticleCategories;
@@ -35,6 +36,20 @@
     await spawnArticleModal(newArticleId, articleList);
     await new Promise((r) => setTimeout(r, 400)); // Wait for transitions
   }
+
+  const buttonActions = [
+    {
+      title: "Read Article on Website",
+      action: () => window.open(article.url, "_blank"),
+    },
+    {
+      title: "Read Article on OSINTer",
+      action: () => {
+        $modalState = { modalType: null, modalContent: null };
+        goto(`/article/${article.id}`);
+      },
+    },
+  ];
 </script>
 
 <svelte:window
@@ -71,7 +86,12 @@
         x: switchDirection === "left" ? 200 : -200,
       }}
     >
-      <ArticleRender {article} {articleCategories} header={true} />
+      <ArticleRender
+        {article}
+        {articleCategories}
+        header={true}
+        {buttonActions}
+      />
     </article>
   {/key}
 </Modal>
