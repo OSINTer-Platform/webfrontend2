@@ -34,7 +34,7 @@
     : null;
 
   $: sources =
-    currentItem.sources.length > 0
+    currentItem.sources && currentItem.sources.length > 0
       ? currentItem.sources.map((v) => categories[v]?.name ?? v)
       : null;
 </script>
