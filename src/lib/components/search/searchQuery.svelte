@@ -107,7 +107,7 @@
         type="number"
         inputmode="numeric"
         min="0"
-        disabled={!limitEnabled}
+        readonly={!limitEnabled}
         bind:value={searchQuery.limit}
         title={limitEnabled ? "" : "Flip switch to enable limit"}
       />

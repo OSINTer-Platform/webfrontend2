@@ -3,7 +3,7 @@ import type { SearchQuery, SortBy, SortOrder } from "$shared/types/api";
 export function fromUrl(params: URLSearchParams): SearchQuery {
   const limit = params.get("limit");
   return {
-    limit: limit ? parseInt(limit) : 0,
+    limit: limit ? parseInt(limit) : 200,
 
     sort_by: (params.get("sort_by") as SortBy) || undefined,
     sort_order: (params.get("sort_order") as SortOrder) || undefined,
