@@ -43,9 +43,18 @@
   }
 
   function autoScroll() {
+    if (!outerBox) return;
+
     if (!manual) {
-      outerBox?.scrollBy({ left: 1 });
+      outerBox.scrollBy({ left: 1 });
     }
+
+    const singleCarouselWidth = outerBox.scrollWidth / 3;
+
+    if (outerBox.scrollLeft < singleCarouselWidth)
+      outerBox.scroll({ left: outerBox.scrollLeft + singleCarouselWidth });
+    else if (outerBox.scrollLeft > singleCarouselWidth * 2)
+      outerBox.scroll({ left: outerBox.scrollLeft - singleCarouselWidth });
 
     setTimeout(autoScroll, 25);
   }
@@ -70,35 +79,37 @@
   flex gap-4 overflow-x-hidden
   "
 >
-  {#each similarArticles as article}
-    <ModalLink
-      articleId={article.id}
-      class="shrink-0 h-40 w-52 sm:w-72 sm:aspect-video absolute-grid"
-      title={article.description}
-      articleList={similarArticles}
-    >
-      <img
-        alt="Article header"
-        src={article.image_url}
-        class="
+  {#each [1, 2, 3] as _}
+    {#each similarArticles as article}
+      <ModalLink
+        articleId={article.id}
+        class="shrink-0 h-40 w-52 sm:w-72 sm:aspect-video absolute-grid"
+        title={article.description}
+        articleList={similarArticles}
+      >
+        <img
+          alt="Article header"
+          src={article.image_url}
+          class="
         w-full h-full aspect-video object-cover"
-      />
+        />
 
-      <div class="bg-black/60 dark:bg-black/80" />
+        <div class="bg-black/60 dark:bg-black/80" />
 
-      <div class="flex flex-col justify-around px-4">
-        <div>
-          <p class="font-light text-xs sm:text-sm text-white">
-            {article.source}
+        <div class="flex flex-col justify-around px-4">
+          <div>
+            <p class="font-light text-xs sm:text-sm text-white">
+              {article.source}
+            </p>
+            <h4 class="w-full text-sm sm:text-base font-bold text-white">
+              {article.title}
+            </h4>
+          </div>
+          <p class="font-light text-sm text-white">
+            {new Date(article.publish_date).toLocaleDateString()}
           </p>
-          <h4 class="w-full text-sm sm:text-base font-bold text-white">
-            {article.title}
-          </h4>
         </div>
-        <p class="font-light text-sm text-white">
-          {new Date(article.publish_date).toLocaleDateString()}
-        </p>
-      </div>
-    </ModalLink>
+      </ModalLink>
+    {/each}
   {/each}
 </section>
