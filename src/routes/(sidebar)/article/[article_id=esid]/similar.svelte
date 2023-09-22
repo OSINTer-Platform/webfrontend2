@@ -59,6 +59,9 @@
         p-6
       "
       >
+        <h3 class="mb-4 text-xl sm:text-2xl dark:text-white">
+          Related articles:
+        </h3>
         <ArticleCarousel {similarArticles} />
       </main>
     {/if}
