@@ -3,6 +3,7 @@
   import { spawnArticleModal } from "$lib/common/state";
 
   export let articleId: string;
+  export let articleList: Array<{ id: string }>;
 
   let classes: string = "";
   export { classes as class };
@@ -18,7 +19,7 @@
 
     e.preventDefault();
 
-    spawnArticleModal(articleId);
+    spawnArticleModal(articleId, articleList);
   };
 </script>
 

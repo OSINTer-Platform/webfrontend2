@@ -15,7 +15,11 @@ export const modalState: Writable<
     }
   | {
       modalType: "article";
-      modalContent: { article: Article; categories: ArticleCategories };
+      modalContent: {
+        article: Article;
+        articleList: Array<{ id: string }>;
+        categories: ArticleCategories;
+      };
     }
   | {
       modalType: null;

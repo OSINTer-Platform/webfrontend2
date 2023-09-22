@@ -8,7 +8,10 @@ import type { Article, ArticleCategories } from "$shared/types/api";
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { goto } from "$app/navigation";
 
-export async function spawnArticleModal(id: string) {
+export async function spawnArticleModal(
+  id: string,
+  articleList: Array<{ id: string }>
+) {
   const fetchAndConvert = (url: string) =>
     fetch(url).then((r) => {
       if (!r.ok) return null;
@@ -35,7 +38,7 @@ export async function spawnArticleModal(id: string) {
 
   modalState.set({
     modalType: "article",
-    modalContent: { article: article, categories: articleCategories },
+    modalContent: { article, articleList, categories: articleCategories },
   });
 
   const pageData = get(page).data;

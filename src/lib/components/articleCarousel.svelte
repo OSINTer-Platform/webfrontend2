@@ -75,6 +75,7 @@
       articleId={article.id}
       class="shrink-0 h-40 w-52 sm:w-72 sm:aspect-video absolute-grid"
       title={article.description}
+      articleList={similarArticles}
     >
       <img
         alt="Article header"

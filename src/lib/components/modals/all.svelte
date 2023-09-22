@@ -8,6 +8,7 @@
   <Article
     article={$modalState.modalContent.article}
     articleCategories={$modalState.modalContent.categories}
+    articleList={$modalState.modalContent.articleList}
   />
 {:else if $modalState.modalType == "search"}
   <Search

@@ -14,6 +14,7 @@
 
   export let userCollections: Writable<{ [key: string]: Collection }>;
   export let article: ArticleBase;
+  export let articleList: ArticleBase[];
   export let read: boolean;
 </script>
 
@@ -21,6 +22,7 @@
 
 <Link
   articleId={article.id}
+  {articleList}
   class="
 grid
 grid-cols-1

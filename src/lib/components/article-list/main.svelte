@@ -32,6 +32,7 @@
       this={layouts[layout].article}
       {article}
       {read}
+      articleList={articles}
       userCollections={$page.data.userCollections}
     />
   {/each}

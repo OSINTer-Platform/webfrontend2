@@ -73,6 +73,7 @@
       >
         <ModalLink
           articleId={article.id}
+          articleList={$searchedSelectedArticles}
           class="
               block py-2 truncate
               dark:text-white
