@@ -17,7 +17,6 @@
   import { goto } from "$app/navigation";
 
   import { PUBLIC_API_BASE } from "$env/static/public";
-  import Similar from "./similar.svelte";
 
   export let data: LayoutData;
 
@@ -125,9 +124,5 @@
     <hr class="my-4 border-tertiary-700/50" />
   {/if}
 </aside>
-
-{#key data.article}
-  <Similar article={data.article} />
-{/key}
 
 <slot />

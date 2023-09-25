@@ -50,8 +50,15 @@
         p-6
       "
       >
-        <h3 class="mb-4 text-xl sm:text-2xl dark:text-white">
+        <h3
+          class="flex justify-between mb-4 text-xl sm:text-2xl dark:text-white"
+        >
           Related articles:
+          <a
+            href="/article/{article.id}/similar"
+            class="italic text-sm sm:text-base link-underline"
+            >See all {similarArticles.length}</a
+          >
         </h3>
         <ArticleCarousel {similarArticles} />
       </main>
