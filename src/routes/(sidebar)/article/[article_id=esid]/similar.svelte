@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ArticleBase, SearchQuery } from "$shared/types/api";
+  import type { ArticleBase } from "$shared/types/api";
 
   import ArticleCarousel from "$com/articleCarousel.svelte";
   import Fa from "svelte-fa/src/fa.svelte";
@@ -9,7 +9,6 @@
   import { onMount } from "svelte";
   import { browser } from "$app/environment";
   import { showSimilar } from "$state/storedArticles";
-  import { toUrl } from "$lib/common/searchQuery";
   import { PUBLIC_API_BASE } from "$env/static/public";
 
   let open: boolean = false;
@@ -21,22 +20,14 @@
   onMount(async () => {
     if (!browser) return;
 
-    if (article.similar.length > 0) {
-      const query: SearchQuery = {
-        limit: 0,
-        sort_by: "publish_date",
-        sort_order: "desc",
-        ids: article.similar,
-      };
-      const r = await fetch(
-        `${PUBLIC_API_BASE}/articles/search?${toUrl(query)}`
-      );
+    const r = await fetch(
+      `${PUBLIC_API_BASE}/articles/${encodeURIComponent(article.id)}/similar`
+    );
 
-      if (r.ok) {
-        similarArticles = await r.json();
-      } else {
-        console.error(`${r.status} error when loading similar articles.`);
-      }
+    if (r.ok) {
+      similarArticles = await r.json();
+    } else {
+      console.error(`${r.status} error when loading similar articles.`);
     }
 
     if ($showSimilar) setTimeout(() => (open = true), 500);
