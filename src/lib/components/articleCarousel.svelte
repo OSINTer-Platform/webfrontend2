@@ -19,8 +19,8 @@
     else if (e.type.startsWith("mousemove")) return e.clientX;
   }
 
-  function mousedown(e: any) {
-    e.preventDefault();
+  function mousedown(e: any, prevent: boolean = true) {
+    if (prevent) e.preventDefault();
     pressed = true;
     manual = true;
     x = getX(e) - outerLeft;
@@ -69,7 +69,7 @@
   on:mousemove={mousemove}
   on:mouseleave={mousestop}
   on:mouseup={mousestop}
-  on:touchstart={mousedown}
+  on:touchstart={(e) => mousedown(e, false)}
   on:touchmove={mousemove}
   on:touchcancel={mousestop}
   on:touchend={mousestop}
