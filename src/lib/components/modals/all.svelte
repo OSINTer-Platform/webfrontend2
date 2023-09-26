@@ -1,6 +1,6 @@
 <script lang="ts">
   import { modalState } from "$state/state";
-  import Article from "./article.svelte";
+  import Article from "./article/index.svelte";
   import Search from "./search.svelte";
 </script>
 
