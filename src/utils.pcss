@@ -1,3 +1,11 @@
+.absolute-grid {
+  @apply grid grid-cols-1;
+
+  * {
+    @apply row-start-1 col-start-1;
+  }
+}
+
 .btn {
   @apply inline-flex items-center justify-center gap-3
 	cursor-pointer
@@ -79,4 +87,97 @@ label.input {
 	dark:text-white;
 
   transform-origin: 0 50%;
+}
+
+div.article-content-render {
+  * {
+    @apply max-w-full mb-6 dark:text-white;
+  }
+
+  ul,
+  ol {
+    @apply list-disc list-inside;
+  }
+
+  li {
+    @apply mb-2 italic;
+  }
+
+  span,
+  p,
+  a,
+  li {
+    @apply text-sm sm:text-base font-light sm:dark:font-medium;
+  }
+
+  h1 {
+    @apply text-4xl;
+  }
+
+  h2 {
+    @apply text-3xl font-normal;
+  }
+
+  h3 {
+    @apply text-2xl font-light;
+  }
+
+  h4,
+  h5,
+  h6 {
+    @apply text-xl font-thin;
+  }
+
+  a {
+    @apply underline;
+  }
+
+  h2 {
+  }
+
+  code {
+    @apply break-all whitespace-normal font-mono font-normal;
+  }
+
+  p {
+    img {
+      @apply mb-1;
+
+      & ~ p,
+      & ~ strong,
+      & ~ em {
+        @apply block mx-auto mb-1 w-max italic;
+      }
+
+      & ~ br {
+        @apply hidden;
+      }
+
+      & ~ *:last-child {
+        @apply mb-8;
+      }
+    }
+  }
+
+  img {
+    @apply rounded-lg w-full;
+  }
+
+  table {
+    @apply w-full my-10;
+
+    tr {
+      @apply border-b dark:border-surface-400
+      transition-colors duration-150 hover:bg-surface-300/20;
+    }
+
+    th {
+      @apply md:text-lg font-bold;
+    }
+
+    th,
+    td {
+      @apply p-4 text-sm md:text-base;
+    }
+  }
 }

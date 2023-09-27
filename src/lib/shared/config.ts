@@ -61,6 +61,7 @@ export const getStandardSearch = (): SearchQuery => ({
   sort_order: "desc",
 
   search_term: "",
+  semantic_search: "",
   highlight: false,
 
   first_date: "",

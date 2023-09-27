@@ -15,7 +15,11 @@ export const modalState: Writable<
     }
   | {
       modalType: "article";
-      modalContent: { article: Article; categories: ArticleCategories };
+      modalContent: {
+        article: Article;
+        articleList: Array<{ id: string }>;
+        categories: ArticleCategories;
+      };
     }
   | {
       modalType: null;
@@ -41,3 +45,5 @@ export const articleListRender: Writable<ArticleListRender> = persisted(
 
 export const feedLocalSearch = writable("");
 export const showRead = writable(true);
+
+export const darkMode = writable(true);

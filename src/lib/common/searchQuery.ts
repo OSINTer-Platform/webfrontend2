@@ -3,18 +3,20 @@ import type { SearchQuery, SortBy, SortOrder } from "$shared/types/api";
 export function fromUrl(params: URLSearchParams): SearchQuery {
   const limit = params.get("limit");
   return {
-    limit: limit ? parseInt(limit) : 0,
+    limit: limit ? parseInt(limit) : 200,
 
     sort_by: (params.get("sort_by") as SortBy) || undefined,
     sort_order: (params.get("sort_order") as SortOrder) || undefined,
 
     search_term: params.get("search_term") || undefined,
+    semantic_search: params.get("semantic_search") || undefined,
     highlight: Boolean(params.get("search_term") && params.get("highlight")),
 
     first_date: params.get("first_date") || undefined,
     last_date: params.get("last_date") || undefined,
 
     sources: params.getAll("sources"),
+    ids: params.getAll("ids"),
   };
 }
 

@@ -3,6 +3,7 @@
 //		Left margins to enable dynamically setting depth on table of contents on article page
 //		Background primary colors for icon-circles on front-page links
 module.exports = {
+  darkMode: "class",
   safelist: [
     "ml-0",
     "ml-3",
@@ -13,6 +14,7 @@ module.exports = {
     "bg-primary-600",
     "bg-primary-700",
     "bg-primary-800",
+    "bg-primary-900",
   ],
   content: ["./src/**/*.{html,js,svelte,ts}"],
   theme: {

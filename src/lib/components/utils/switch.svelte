@@ -2,10 +2,22 @@
   export let checked: boolean = false;
   export let size: "xs" | "sm" | "base" | "md" | "lg" | "xl" | "2xl" = "base";
   export let name: string = "";
+  export let containerClass: string = "";
+  export let title: string = "";
 </script>
 
-<label class="group relative flex items-center cursor-pointer text-{size}">
-  <input type="checkbox" class="peer hidden" bind:checked on:change {name} />
+<label
+  {title}
+  class="group relative flex items-center cursor-pointer text-{size} {containerClass}"
+>
+  <input
+    type="checkbox"
+    class="peer hidden"
+    bind:checked
+    on:change
+    {name}
+    id={name}
+  />
   <span
     class="
 		flex items-center

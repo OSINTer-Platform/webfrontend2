@@ -4,6 +4,8 @@
   import List from "./main.svelte";
 
   export let articles: ArticleBase[];
+  let classes: string = "";
+  export { classes as class };
 </script>
 
 <div
@@ -15,10 +17,13 @@
 
 	p-4
 	sm:p-12
+  {classes}
 "
 >
   {#if articles.length > 0}
+    <slot name="top" />
     <List {articles} layout={$articleListRender} />
+    <slot name="bottom" />
   {:else}
     <div
       class="h-full mx-auto px-8 max-w-2xl flex flex-col justify-center text-center dark:text-white"

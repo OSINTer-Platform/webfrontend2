@@ -10,7 +10,7 @@ const epochs: Array<[string, number]> = [
 export function getTimespan(origDate: string) {
   if (!(origDate.includes("+") || origDate.includes("-"))) origDate += "+00:00";
   let timeSpan = (Date.now() - Date.parse(origDate)) / 1000;
-  if (timeSpan < 60 * 10) return "Right now"
+  if (timeSpan < 60 * 10) return "Right now";
   for (let [name, seconds] of epochs) {
     if (timeSpan > seconds) {
       let timeAmount = Math.floor(timeSpan / seconds);

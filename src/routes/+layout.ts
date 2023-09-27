@@ -11,6 +11,14 @@ export const load = (async ({ fetch, route }) => {
     return r.ok ? r.json() : null;
   };
 
+  const getMlAvailability = async (): Promise<{
+    clustering: boolean;
+    elser: boolean;
+  } | null> => {
+    const r = await fetch(`${PUBLIC_API_BASE}/ml/`);
+    return r.ok ? r.json() : null;
+  };
+
   const user = await getUserObject();
 
   const updateCollectionList = async (): Promise<{
@@ -43,6 +51,7 @@ export const load = (async ({ fetch, route }) => {
 
   return {
     user,
+    mlAvailability: getMlAvailability(),
 
     alreadyRead: updatable(updateAlreadyRead),
     userCollections: updatable(updateCollectionList),

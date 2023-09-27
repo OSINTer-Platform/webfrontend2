@@ -3,6 +3,7 @@
   import type { PageData } from "./$types";
 
   import ArticleRender from "$com/articleRender/main.svelte";
+  import Similar from "./similar.svelte";
 
   export let data: PageData;
   $: article = data.article;
@@ -18,6 +19,10 @@
   <meta property="og:url" content="https://osinter.dk/article/{article.id}" />
   <meta property="og:type" content="article" />
 </svelte:head>
+
+{#key data.article}
+  <Similar article={data.article} />
+{/key}
 
 <section
   class="

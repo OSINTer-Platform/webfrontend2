@@ -1,35 +1,55 @@
+export interface ArticleTags {
+  automatic: string[];
+  interresting: { [key: string]: string[] };
+}
+
 export interface ArticleBase {
+  id: string;
+
   title: string;
   description: string;
+
   url: string;
   image_url: string;
 
   profile: string;
   source: string;
 
+  author: string | null;
+
   publish_date: string;
   inserted_at: string;
 
   read_times: number;
-  id: string;
-}
 
-export interface ArticleTags {
-  automatic: string[];
-  interresting: { [key: string]: string[] };
+  similar: string[];
+
+  ml: {
+    cluster: number;
+    coordinates: [number, number];
+  };
+
+  tags: ArticleTags;
 }
 
 export interface Article extends ArticleBase {
-  author: string;
   formatted_content: string;
   content: string;
 
-  tags: ArticleTags;
-
   summary: string;
+}
+
+export interface MLArticle {
+  id: string;
+
+  title: string;
+  description: string;
+  source: string;
+  profile: string;
+  publish_date: string;
   ml: {
-    similar: Array<string>;
     cluster: number;
+    coordinates: [number, number];
   };
 }
 
@@ -56,13 +76,15 @@ export interface SearchQuery {
   sort_by: SortBy | undefined;
   sort_order: SortOrder | undefined;
 
-  search_term: string | undefined;
-  highlight: boolean | undefined;
+  search_term?: string | undefined;
+  semantic_search?: string | undefined;
+  highlight?: boolean | undefined;
 
-  first_date: string | undefined;
-  last_date: string | undefined;
+  first_date?: string | undefined;
+  last_date?: string | undefined;
 
-  sources: string[];
+  sources?: string[];
+  ids?: string[];
 }
 
 export interface AccessTokenWithDetails {

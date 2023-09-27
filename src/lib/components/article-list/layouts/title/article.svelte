@@ -2,7 +2,7 @@
   import Fa from "svelte-fa/src/fa.svelte";
   import SvelteMarkdown from "svelte-markdown";
 
-  import Link from "../../components/link.svelte";
+  import Link from "../../../modalLink.svelte";
   import CollectionList from "../../components/collectionList.svelte";
 
   import { getTimespan } from "$lib/common/math";
@@ -14,11 +14,13 @@
 
   export let userCollections: Writable<{ [key: string]: Collection }>;
   export let article: ArticleBase;
+  export let articleList: ArticleBase[];
   export let read: boolean;
 </script>
 
 <Link
   articleId={article.id}
+  {articleList}
   class="
   flex
   items-center
@@ -39,6 +41,7 @@
   [&:hover>aside]:dark:bg-surface-500
   relative
 "
+  title={article.tags.automatic.map((tag) => tag.toUpperCase()).join(" | ")}
 >
   <p
     class="
@@ -93,9 +96,12 @@
 
     {read ? 'opacity-60 font-light' : ''}
     text-xs
+    leading-5
+
     md:text-sm
+    md:leading-6
+
     truncate
-    leading-6
     text-tertiary-800
 
     dark:text-white

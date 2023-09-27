@@ -5,13 +5,17 @@ import {
   faHome,
   faBullhorn,
   faRss,
-  faDiagramProject,
   faNewspaper,
   faMagnifyingGlass,
+  faSitemap,
 } from "@fortawesome/free-solid-svg-icons/index";
 
-export const navItems: { [key in "external" | "internal"]: Array<NavItem> } = {
-  external: [
+export const navItems: {
+  [key in "information" | "lists" | "ml"]: Array<
+    NavItem & { description: string }
+  >;
+} = {
+  information: [
     {
       title: "Home",
       description: "The homepage for OSINTer",
@@ -26,7 +30,7 @@ export const navItems: { [key in "external" | "internal"]: Array<NavItem> } = {
       icon: faBullhorn,
     },
   ],
-  internal: [
+  lists: [
     {
       title: "Feeds",
       description: "Access one of the feeds integrated in OSINTer",
@@ -45,12 +49,13 @@ export const navItems: { [key in "external" | "internal"]: Array<NavItem> } = {
       route: "/search",
       icon: faMagnifyingGlass,
     },
-    /*
-        {
-            title: 'Overview',
-            route: '/ml',
-            icon: faDiagramProject,
-        },
-		*/
+  ],
+  ml: [
+    {
+      title: "Overview",
+      description: "Get an overview of the articles in OSINTer using ML",
+      route: "/overview",
+      icon: faSitemap,
+    },
   ],
 };
