@@ -14,6 +14,8 @@
   import { createItem, sanitizeQuery } from "$lib/common/userItems";
   import { goto } from "$app/navigation";
   import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
+  import { page } from "$app/stores";
+  import { toUrl } from "$lib/common/searchQuery";
 
   export let options: Array<UserItemSidebarOption> = [];
   export let user: User | null;
@@ -58,6 +60,22 @@
     };
   }
 
+  function spawnSearchModal(e: Event) {
+    e.preventDefault();
+
+    $modalState = {
+      modalType: "search",
+      modalContent: {
+        query: $page.data?.currentSearch,
+        searchText: "Search articles",
+        searchAction: (q) => {
+          modalState.set({ modalType: null, modalContent: null });
+          goto(`/feed/search?${toUrl(q)}`);
+        },
+      },
+    };
+  }
+
   function hasButton(
     id: "feeds" | "collections" | "clusters" | "inbuilts"
   ): id is categoriesWithCreation {
@@ -74,6 +92,7 @@
     {#if options.length > 0}
       <LinkNavShell>
         <a
+          on:click={spawnSearchModal}
           href="/search"
           class="
           flex flex-row items-center
