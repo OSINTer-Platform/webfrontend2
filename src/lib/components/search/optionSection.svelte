@@ -1,6 +1,6 @@
 <script lang="ts">
   import { faCircleQuestion } from "@fortawesome/free-regular-svg-icons";
-  import Fa from "svelte-fa/src/fa.svelte";
+  import Fa from "svelte-fa";
 
   export let title: string;
   export let desc: string;

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { darkMode } from "$state/state";
   import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
-  import Fa from "svelte-fa/src/fa.svelte";
+  import Fa from "svelte-fa";
 </script>
 
 <label

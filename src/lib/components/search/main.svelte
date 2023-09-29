@@ -2,7 +2,7 @@
   import MajorSection from "./majorSection.svelte";
   import SearchPanel from "./searchQuery.svelte";
   import SourceSelect from "./sourceSelect.svelte";
-  import Fa from "svelte-fa/src/fa.svelte";
+  import Fa from "svelte-fa";
 
   import {
     faArrowsRotate,

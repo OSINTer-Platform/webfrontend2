@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Fa from "svelte-fa/src/fa.svelte";
+  import Fa from "svelte-fa";
   import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/index";
   import { page } from "$app/stores";
 

@@ -3,7 +3,7 @@
 
   import type { HeaderModOptions } from "$shared/types/internal";
 
-  import Fa from "svelte-fa/src/fa.svelte";
+  import Fa from "svelte-fa";
   import { faBars } from "@fortawesome/free-solid-svg-icons";
 
   export let modOptions: Array<HeaderModOptions>;

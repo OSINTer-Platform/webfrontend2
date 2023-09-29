@@ -3,7 +3,7 @@
   import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
   import ModalLink from "$com/modalLink.svelte";
-  import Fa from "svelte-fa/src/fa.svelte";
+  import Fa from "svelte-fa";
 
   import {
     faCaretDown,

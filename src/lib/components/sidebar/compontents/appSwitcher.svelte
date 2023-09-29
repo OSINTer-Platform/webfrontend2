@@ -3,7 +3,7 @@
 
   import { page } from "$app/stores";
 
-  import Fa from "svelte-fa/src/fa.svelte";
+  import Fa from "svelte-fa";
   import {
     faArrowRightFromBracket,
     faArrowRightToBracket,

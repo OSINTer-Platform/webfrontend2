@@ -2,7 +2,7 @@
   import type { PageData } from "./$types";
 
   import List from "$com/article-list/wrapper.svelte";
-  import Fa from "svelte-fa/src/fa.svelte";
+  import Fa from "svelte-fa";
 
   import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 

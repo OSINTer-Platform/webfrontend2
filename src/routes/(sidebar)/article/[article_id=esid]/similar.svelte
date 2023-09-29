@@ -2,7 +2,7 @@
   import type { ArticleBase } from "$shared/types/api";
 
   import ArticleCarousel from "$com/articleCarousel.svelte";
-  import Fa from "svelte-fa/src/fa.svelte";
+  import Fa from "svelte-fa";
 
   import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
   import { slide } from "svelte/transition";
