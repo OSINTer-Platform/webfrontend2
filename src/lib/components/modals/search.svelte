@@ -7,8 +7,8 @@
   import { getStandardSearch } from "$shared/config";
 
   export let searchQuery: SearchQuery = getStandardSearch();
-  export let callback: (q: SearchQuery) => void;
-  export let searchText: string;
+  export let callback: null | ((q: SearchQuery) => void) = null;
+  export let searchText: string = "Search Content";
 </script>
 
 <Modal
@@ -22,9 +22,11 @@
     <SearchFields bind:searchQuery>
       <svelte:fragment slot="main-button">
         <button
-          type="button"
+          type={callback ? "button" : null}
           class="grow btn"
-          on:click={() => callback(searchQuery)}>{searchText}</button
+          on:click={() => {
+            if (callback) callback(searchQuery);
+          }}>{searchText}</button
         >
       </svelte:fragment>
     </SearchFields>

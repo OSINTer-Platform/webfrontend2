@@ -45,7 +45,6 @@
     $modalState = {
       modalType: "search",
       modalContent: {
-        query: undefined,
         searchText: "Create feed",
         searchAction: async (query: SearchQuery) => {
           await createItem("New Feed", sanitizeQuery(query), "feed", true);

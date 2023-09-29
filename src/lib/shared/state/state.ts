@@ -8,9 +8,9 @@ export const modalState: Writable<
   | {
       modalType: "search";
       modalContent: {
-        query: SearchQuery | undefined;
-        searchAction: (q: SearchQuery) => void;
-        searchText: string;
+        query?: SearchQuery;
+        searchAction?: (q: SearchQuery) => void;
+        searchText?: string;
       };
     }
   | {
