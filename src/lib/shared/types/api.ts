@@ -92,3 +92,16 @@ export interface AccessTokenWithDetails {
   maxAge: number;
   secure: boolean;
 }
+
+export interface OpenAIChat {
+  role: "user" | "assistant" | "system";
+  content: string;
+  visible: boolean;
+  id: string;
+}
+
+export interface MLAssistantChat {
+  chats: OpenAIChat[];
+  article_base: ArticleBase[];
+  reached_max: boolean;
+}
