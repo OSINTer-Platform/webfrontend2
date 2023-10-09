@@ -1,13 +1,48 @@
 <script lang="ts">
-  import ModalLink from "$com/modalLink.svelte";
-  import type { ArticleBase } from "$shared/types/api";
-  import Searchbar from "./searchbar.svelte";
+  import type { ArticleBase, SearchQuery } from "$shared/types/api";
 
+  import Searchbar from "./searchbar.svelte";
+  import ArticleList from "./articleList.svelte";
+  import Fa from "svelte-fa";
+
+  import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
+  import { toUrl } from "$lib/common/searchQuery";
+  import { PUBLIC_API_BASE } from "$env/static/public";
+  import Loader from "$com/loader.svelte";
+
+  export let previousSearch: string;
   export let newSearch: string = "";
   export let articles: ArticleBase[];
+
+  let extraArticles: Promise<null | ArticleBase[]> = new Promise((resolve) =>
+    resolve(null)
+  );
+
+  async function queryExtraArticles() {
+    const q: SearchQuery = {
+      limit: 20,
+      sort_order: "desc",
+      semantic_search: previousSearch,
+    };
+
+    const r = await fetch(`${PUBLIC_API_BASE}/articles/search?${toUrl(q)}`);
+
+    if (r.ok) {
+      return await r.json();
+    } else {
+      return null;
+    }
+  }
 </script>
 
-<section class="w-full max-w-prose mx-auto">
+<section
+  class="
+  @5xl/full:h-full
+  w-full max-w-prose mx-auto
+  flex flex-col
+"
+>
   <Searchbar
     bind:value={newSearch}
     on:submit
@@ -15,7 +50,7 @@
     placeholder={"Ask a new question"}
   />
 
-  <hr class="text-surface-400/25 border @5xl:my-6 my-12" />
+  <hr class="text-surface-400/25 border my-12" />
 
   <h2
     class="
@@ -28,28 +63,38 @@
     >
   </h2>
 
-  <ul
-    class="
-    flex flex-col gap-4
-  "
-  >
-    {#each articles as { id, title, description }}
-      <ModalLink articleId={id} articleList={articles} title={description}>
-        <li
-          class="
-          w-full p-4
+  <ArticleList {articles} />
+
+  <hr class="text-surface-400/25 border my-12" />
+
+  {#await extraArticles}
+    <Loader text="Loading extra articles" />
+  {:then extraArticlesContent}
+    {#if !extraArticlesContent}
+      <button
+        on:click={() => (extraArticles = queryExtraArticles())}
+        title="Load more articles"
+        class="
+          btn m-auto
+          aspect-square w-40
           border border-primary-500
-          dark:text-white leading-6
-          truncate
 
-          hover:bg-primary-400/20
+          !text-primary-500 text-3xl
+
+      "><Fa icon={faPlus} /></button
+      >
+    {:else}
+      <h2
+        class="
+          flex justify-between mb-8
+          font-bold text-3xl dark:text-white
         "
+      >
+        Similar articles: <span class="font-light text-2xl"
+          >{extraArticlesContent.length}</span
         >
-          {title}
-        </li>
-      </ModalLink>
-    {/each}
-  </ul>
-
-  <hr class="text-surface-400/25 border @5xl:my-6 my-12" />
+      </h2>
+      <ArticleList articles={extraArticlesContent} class="overflow-y-auto" />
+    {/if}
+  {/await}
 </section>

@@ -13,11 +13,15 @@
   let initialValue = "";
   let initialRequest: null | Promise<MLAssistantChat> = null;
 
+  let previousSearch = "";
   async function askInitial(): Promise<MLAssistantChat> {
     const r = await fetch(
       `${PUBLIC_API_BASE}/ml/inference/chat/ask` +
         `?question=${encodeURIComponent(initialValue)}`
     );
+
+    previousSearch = initialValue;
+    initialValue = "";
 
     return await handleApiResponse(r);
   }
@@ -60,6 +64,7 @@
           <PromptStats
             bind:newSearch={initialValue}
             articles={initialPrompts.article_base}
+            {previousSearch}
             on:submit={() => (initialRequest = askInitial())}
           />
         </svelte:fragment>
