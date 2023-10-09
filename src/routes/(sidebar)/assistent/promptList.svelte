@@ -3,7 +3,7 @@
 
   import Searchbar from "./searchbar.svelte";
 
-  import { onMount } from "svelte";
+  import { onMount, tick } from "svelte";
   import { v4 as uuid } from "uuid";
   import { handleApiResponse } from "./utils";
   import { PUBLIC_API_BASE } from "$env/static/public";
@@ -19,6 +19,8 @@
   let dotCounter = 1;
   let followUp: string = "";
 
+  let listContainer: HTMLElement;
+
   async function renderPromptList(newContent: MLAssistantChat) {
     function truncate_content(chat: OpenAIChat, newLength: number): OpenAIChat {
       const truncated_content = chat.content.slice(0, newLength);
@@ -30,6 +32,7 @@
         id: chat.id,
       };
     }
+
     const existingIds = promptList.chats.map((chat) => chat.id);
 
     promptState = "rendering";
@@ -49,12 +52,16 @@
           truncate_content(chat, characterCount + 1),
         ];
 
+        listContainer.scrollTop = listContainer.scrollHeight;
         await new Promise((r) => setTimeout(r, 20));
       }
     }
 
     promptList = newContent;
     promptState = "stale";
+
+    await tick();
+    listContainer.scrollTop = listContainer.scrollHeight;
   }
 
   async function askFollowUp() {
@@ -70,6 +77,8 @@
     promptList.chats = [...promptList.chats, newChat];
 
     promptState = "querying";
+    await tick();
+    listContainer.scrollTop = listContainer.scrollHeight;
 
     const r = await fetch(`${PUBLIC_API_BASE}/ml/inference/chat/continue`, {
       method: "POST",
