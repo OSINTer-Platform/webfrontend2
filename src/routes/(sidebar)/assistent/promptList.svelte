@@ -1,30 +1,25 @@
 <script lang="ts">
-  import { PUBLIC_API_BASE } from "$env/static/public";
   import type { OpenAIChat, MLAssistantChat } from "$shared/types/api";
+
+  import Searchbar from "./searchbar.svelte";
 
   import { onMount } from "svelte";
   import { v4 as uuid } from "uuid";
-  import Searchbar from "./searchbar.svelte";
+  import { handleApiResponse } from "./utils";
+  import { PUBLIC_API_BASE } from "$env/static/public";
 
-  export let initialPrompt: string;
+  export let initialPrompts: MLAssistantChat;
 
-  let newPrompts: "querying" | "rendering" | "stale" = "querying";
   let promptList: MLAssistantChat = {
-    chats: [
-      {
-        role: "user",
-        content: initialPrompt,
-        visible: true,
-        id: uuid(),
-      },
-    ],
-    article_base: [],
+    chats: [],
     reached_max: false,
+    article_base: [],
   };
+  let promptState: "querying" | "rendering" | "stale" = "rendering";
   let dotCounter = 1;
   let followUp: string = "";
 
-  async function updatePromptList(newContent: MLAssistantChat) {
+  async function renderPromptList(newContent: MLAssistantChat) {
     function truncate_content(chat: OpenAIChat, newLength: number): OpenAIChat {
       const truncated_content = chat.content.slice(0, newLength);
 
@@ -37,7 +32,7 @@
     }
     const existingIds = promptList.chats.map((chat) => chat.id);
 
-    newPrompts = "rendering";
+    promptState = "rendering";
 
     for (const chat of newContent.chats) {
       if (existingIds.includes(chat.id) || !chat.visible) continue;
@@ -59,27 +54,7 @@
     }
 
     promptList = newContent;
-    newPrompts = "stale";
-  }
-
-  async function handleApiResponse(r: Response) {
-    if (r.ok) {
-      await updatePromptList(await r.json());
-    } else {
-      promptList.chats = [
-        ...promptList.chats,
-        {
-          role: "assistant",
-          content: "An unknown error occurred. Please try again later",
-          visible: true,
-          id: uuid(),
-        },
-      ];
-
-      promptList.reached_max = true;
-
-      newPrompts = "stale";
-    }
+    promptState = "stale";
   }
 
   async function askFollowUp() {
@@ -94,7 +69,7 @@
 
     promptList.chats = [...promptList.chats, newChat];
 
-    newPrompts = "querying";
+    promptState = "querying";
 
     const r = await fetch(`${PUBLIC_API_BASE}/ml/inference/chat/continue`, {
       method: "POST",
@@ -105,7 +80,9 @@
       },
     });
 
-    handleApiResponse(r);
+    const newPrompts = await handleApiResponse(r, promptList);
+    await renderPromptList(newPrompts);
+    promptState = "stale";
   }
 
   onMount(async () => {
@@ -113,13 +90,7 @@
       dotCounter = (dotCounter % 3) + 1;
     }, 600);
 
-    const r = await fetch(
-      `${PUBLIC_API_BASE}/ml/inference/chat/ask` +
-        `?question=${encodeURIComponent(initialPrompt)}` +
-        `&id=${encodeURIComponent(promptList.chats[0].id)}`
-    );
-
-    handleApiResponse(r);
+    renderPromptList(initialPrompts);
   });
 </script>
 
@@ -140,7 +111,7 @@
   {/if}
 {/each}
 
-{#if newPrompts === "querying"}
+{#if promptState === "querying"}
   <section
     class="
       w-full p-6 mb-6
@@ -153,7 +124,7 @@
   >
     {".".repeat(dotCounter)}
   </section>
-{:else if newPrompts === "stale" && !promptList.reached_max}
+{:else if promptState === "stale" && !promptList.reached_max}
   <Searchbar
     on:submit={askFollowUp}
     bind:value={followUp}

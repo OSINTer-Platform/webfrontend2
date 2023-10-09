@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-
   import Fa from "svelte-fa";
+
+  import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
   export let value: string = "";
   export let manualActive = false;
