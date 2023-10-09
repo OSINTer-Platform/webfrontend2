@@ -2,6 +2,7 @@
   import MajorSection from "./majorSection.svelte";
   import SearchPanel from "./searchQuery.svelte";
   import SourceSelect from "./sourceSelect.svelte";
+  import TwoHalfs from "$com/utils/twohalfs.svelte";
   import Fa from "svelte-fa";
 
   import {
@@ -20,44 +21,8 @@
   export let sourceCategories: ArticleCategories | undefined = undefined;
 </script>
 
-<div
-  class="
-	flex
-	flex-col
-	@5xl:flex-row
-
-	overflow-y-auto
-
-
-	px-2
-	py-4
-	sm:p-8
-
-	h-full
-	w-full
-"
->
-  <div
-    class="
-		flex
-		flex-col
-		shrink-0
-
-		w-full
-		h-fit
-
-		@5xl:h-full
-		@5xl:w-1/2
-		@5xl:overflow-auto
-
-		border-tertiary-500
-		dark:border-surface-400
-		@5xl:border-r
-		@5xl:pr-8
-
-		@container/half
-	"
-  >
+<TwoHalfs>
+  <svelte:fragment slot="first">
     <MajorSection title="Select Sources">
       <SourceSelect
         {sourceCategories}
@@ -68,20 +33,8 @@
     <hr
       class="sm:mb-8 mb-3 mt-3 text-tertiary-500 dark:text-surface-400 @5xl/full:hidden"
     />
-  </div>
-
-  <div
-    class="
-		flex
-		flex-col
-
-		w-full
-		@5xl:w-1/2
-		@5xl:pl-8
-
-		@container/half
-	"
-  >
+  </svelte:fragment>
+  <svelte:fragment slot="last">
     <MajorSection title="Search Query">
       <SearchPanel {searchQuery} />
 
@@ -124,8 +77,8 @@
         </div>
       </section>
     </MajorSection>
-  </div>
-</div>
+  </svelte:fragment>
+</TwoHalfs>
 
 <style lang="postcss">
   section {
