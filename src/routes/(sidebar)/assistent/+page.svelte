@@ -7,6 +7,7 @@
 
   import { handleApiResponse } from "./utils";
   import { PUBLIC_API_BASE } from "$env/static/public";
+  import TwoHalfs from "$com/utils/twohalfs.svelte";
 
   let initialValue = "";
   let initialRequest: null | Promise<MLAssistantChat> = null;
@@ -21,10 +22,11 @@
   }
 </script>
 
-<section
+<main
   class="
     flex flex-row w-full
     bg-surface-100 dark:bg-surface-800
+    @container/full
 "
 >
   {#if !initialRequest}
@@ -37,17 +39,11 @@
     {#await initialRequest}
       <Loader text="Loading AI answer" />
     {:then initialPrompts}
-      <main
-        class="
-          max-w-2xl
-          grow
-
-          min-h-full h-fit p-8 mx-auto
-          flex flex-col
-      "
-      >
-        <PromptList {initialPrompts} />
-      </main>
+      <TwoHalfs>
+        <svelte:fragment slot="first">
+          <PromptList {initialPrompts} />
+        </svelte:fragment>
+      </TwoHalfs>
     {/await}
   {/if}
-</section>
+</main>

@@ -103,41 +103,57 @@
   });
 </script>
 
-{#each promptList.chats as { content, visible, id, role } (id)}
-  {#if visible}
-    <section
-      class="
-      w-full p-6 mb-6
-      rounded-xl
-      border-2 border-primary-500
-
-      {role === 'assistant' ? 'dark:text-white' : 'text-xl text-primary-500'}
-      leading-6
-    "
-    >
-      {content}
-    </section>
-  {/if}
-{/each}
-
-{#if promptState === "querying"}
-  <section
+<section class="w-full max-w-prose max-h-full mx-auto flex flex-col">
+  <ul
+    bind:this={listContainer}
     class="
-      w-full p-6 mb-6
-      rounded-xl
-      border-2 border-primary-500
-
-      text-xl dark:text-white
-      leading-6
+      mb-6
+      grow overflow-x-auto
+      flex flex-col gap-6
     "
   >
-    {".".repeat(dotCounter)}
-  </section>
-{:else if promptState === "stale" && !promptList.reached_max}
-  <Searchbar
-    on:submit={askFollowUp}
-    bind:value={followUp}
-    manualActive={true}
-    placeholder={"Ask follow-up question"}
-  />
-{/if}
+    {#each promptList.chats as { content, visible, id, role } (id)}
+      {#if visible}
+        <li
+          class="
+            w-full p-6
+            border border-primary-500
+            flex flex-col gap-2
+
+            {role === 'assistant'
+            ? 'dark:text-white'
+            : 'text-xl text-primary-500'}
+            leading-6
+          "
+        >
+          {#each content.split("\n") as paragraph}
+            <p>{paragraph}</p>
+          {/each}
+        </li>
+      {/if}
+    {/each}
+
+    {#if promptState === "querying"}
+      <li
+        class="
+          w-full p-6
+          border border-primary-500
+
+          text-xl dark:text-white
+          leading-6
+        "
+      >
+        {".".repeat(dotCounter)}
+      </li>
+    {/if}
+  </ul>
+
+  {#if promptState === "stale" && !promptList.reached_max}
+    <Searchbar
+      on:submit={askFollowUp}
+      bind:value={followUp}
+      manualActive={true}
+      placeholder={"Ask follow-up question"}
+    />
+  {/if}
+</section>

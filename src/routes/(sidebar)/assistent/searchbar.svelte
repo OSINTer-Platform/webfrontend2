@@ -30,7 +30,6 @@
     [&:hover>svg]:text-primary-500 [&:focus-within>svg]:text-primary-500
 
     transition-all duration-300
-    rounded-xl
   "
   >
     <input
