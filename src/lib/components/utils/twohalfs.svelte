@@ -44,6 +44,8 @@
     <slot name="first" />
   </div>
 
+  <slot name="middle" />
+
   <div
     class="
 		flex

@@ -8,6 +8,7 @@
   import { handleApiResponse } from "./utils";
   import { PUBLIC_API_BASE } from "$env/static/public";
   import TwoHalfs from "$com/utils/twohalfs.svelte";
+  import PromptStats from "./promptStats.svelte";
 
   let initialValue = "";
   let initialRequest: null | Promise<MLAssistantChat> = null;
@@ -24,7 +25,7 @@
 
 <main
   class="
-    flex flex-row w-full
+    flex w-full
     bg-surface-100 dark:bg-surface-800
     @container/full
 "
@@ -42,6 +43,25 @@
       <TwoHalfs>
         <svelte:fragment slot="first">
           <PromptList {initialPrompts} />
+        </svelte:fragment>
+
+        <svelte:fragment slot="middle">
+          <div
+            class="
+              @5xl:hidden
+              w-full max-w-prose mx-auto
+            "
+          >
+            <hr class="text-surface-400/25 border my-12" />
+          </div>
+        </svelte:fragment>
+
+        <svelte:fragment slot="last">
+          <PromptStats
+            bind:newSearch={initialValue}
+            articles={initialPrompts.article_base}
+            on:submit={() => (initialRequest = askInitial())}
+          />
         </svelte:fragment>
       </TwoHalfs>
     {/await}
