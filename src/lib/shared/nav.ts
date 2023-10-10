@@ -1,4 +1,3 @@
-import type { IconDefinition } from "@fortawesome/fontawesome-common-types";
 import type { NavItem } from "$shared/types/internal";
 
 import {
@@ -8,6 +7,7 @@ import {
   faNewspaper,
   faMagnifyingGlass,
   faSitemap,
+  faQuestion,
 } from "@fortawesome/free-solid-svg-icons/index";
 
 export const navItems: {
@@ -56,6 +56,12 @@ export const navItems: {
       description: "Get an overview of the articles in OSINTer using ML",
       route: "/overview",
       icon: faSitemap,
+    },
+    {
+      title: "Assistent",
+      description: "Ask questions about data in OSINTer",
+      route: "/assistent",
+      icon: faQuestion,
     },
   ],
 };

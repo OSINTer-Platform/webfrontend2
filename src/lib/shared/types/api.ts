@@ -73,7 +73,7 @@ export type SortOrder = "desc" | "asc";
 export interface SearchQuery {
   limit: number;
 
-  sort_by: SortBy | undefined;
+  sort_by?: SortBy | undefined;
   sort_order: SortOrder | undefined;
 
   search_term?: string | undefined;
@@ -91,4 +91,17 @@ export interface AccessTokenWithDetails {
   token: string;
   maxAge: number;
   secure: boolean;
+}
+
+export interface OpenAIChat {
+  role: "user" | "assistant" | "system";
+  content: string;
+  visible: boolean;
+  id: string;
+}
+
+export interface MLAssistantChat {
+  chats: OpenAIChat[];
+  article_base: ArticleBase[];
+  reached_max: boolean;
 }
