@@ -15,7 +15,9 @@
   export let userCollections: Writable<{ [key: string]: Collection }>;
   export let article: ArticleBase;
   export let articleList: ArticleBase[];
-  export let read: boolean;
+  export let readArticles: string[];
+
+  $: read = readArticles.includes(article.id);
 </script>
 
 <hr class="text-tertiary-500 dark:text-surface-500" />

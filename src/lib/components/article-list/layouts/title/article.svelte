@@ -14,8 +14,9 @@
   export let userCollections: Writable<{ [key: string]: Collection }>;
   export let article: ArticleBase;
   export let articleList: ArticleBase[];
-  export let read: boolean;
+  export let readArticles: string[];
 
+  $: read = readArticles.includes(article.id);
   let similarArticles: null | Promise<ArticleBase[]> = null;
   let showSimilar = false;
 
@@ -156,7 +157,12 @@
         <li class="relative ml-3 md:ml-6 xl:ml-10">
           <div class="absolute w-full h-full bg-primary-600/10" />
 
-          <svelte:self {article} {userCollections} {articleList} read={false} />
+          <svelte:self
+            {article}
+            {userCollections}
+            {articleList}
+            {readArticles}
+          />
         </li>
       {/each}
     {/await}

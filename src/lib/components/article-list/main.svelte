@@ -9,9 +9,12 @@
   import TitleArticle from "./layouts/title/article.svelte";
 
   import { page } from "$app/stores";
+  import type { Collection } from "$shared/types/userItems";
+  import type { Readable } from "svelte/store";
 
   export let articles: ArticleBase[] = [];
   export let layout: ArticleListRender = "large";
+  export let tintReadArticles: boolean;
 
   const layouts: {
     [articleListRender in ArticleListRender]: { shell: any; article: any };
@@ -20,18 +23,19 @@
     title: { shell: TitleShell, article: TitleArticle },
   };
 
+  let alreadyRead: undefined | Readable<Collection>;
   $: alreadyRead = $page.data.alreadyRead;
+
+  let readArticles: string[];
+  $: readArticles = $alreadyRead && tintReadArticles ? $alreadyRead.ids : [];
 </script>
 
 <svelte:component this={layouts[layout].shell}>
   {#each articles as article}
-    {@const read =
-      $page.url.pathname.startsWith("/feed") &&
-      $alreadyRead?.ids.includes(article.id)}
     <svelte:component
       this={layouts[layout].article}
       {article}
-      {read}
+      {readArticles}
       articleList={articles}
       userCollections={$page.data.userCollections}
     />

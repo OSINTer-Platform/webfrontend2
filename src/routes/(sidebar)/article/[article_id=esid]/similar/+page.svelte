@@ -9,7 +9,7 @@
   export let data: PageData;
 </script>
 
-<List articles={data.similarArticles} class="relative">
+<List articles={data.similarArticles} class="relative" tintReadArticles={true}>
   <svelte:fragment slot="top">
     <a
       href="/article/{data.article.id}"

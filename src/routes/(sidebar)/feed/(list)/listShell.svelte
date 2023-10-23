@@ -17,4 +17,4 @@
       : filterArticles(alreadyRead, $feedLocalSearch);
 </script>
 
-<List articles={filteredArticles} />
+<List articles={filteredArticles} tintReadArticles={true} />
