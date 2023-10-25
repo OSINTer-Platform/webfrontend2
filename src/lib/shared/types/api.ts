@@ -22,7 +22,7 @@ export interface ArticleBase {
 
   read_times: number;
 
-  similar: string[];
+  similar?: string[];
 
   ml: {
     cluster: number;
@@ -51,6 +51,24 @@ export interface MLArticle {
     cluster: number;
     coordinates: [number, number];
   };
+}
+
+export interface ClusterBase {
+  id: string;
+  nr: number;
+  document_count: number;
+
+  title: string;
+  description: string;
+  summary: string;
+
+  keywords: string[];
+}
+
+export interface Cluster extends ClusterBase {
+  representative_documents: string[];
+  documents: string[];
+  dating: string[];
 }
 
 export interface ArticleCategories {
