@@ -4,6 +4,7 @@
 
   import Link from "../../../modalLink.svelte";
   import CollectionList from "../../components/collectionList.svelte";
+  import SmallLogo from "$assets/smallLogo.jpg";
 
   import { getTimespan } from "$lib/common/math";
   import { faStar } from "@fortawesome/free-regular-svg-icons";
@@ -45,25 +46,54 @@ dark:hover:bg-surface-500
     on:click|preventDefault|stopPropagation
     on:keydown|preventDefault|stopPropagation
     class="
-    relative
-    w-full md:w-32
-    max-h-80
-    aspect-video md:aspect-square
-    drop-shadow-lg
+      absolute-grid
+      w-full md:w-32 max-h-80
+      aspect-video md:aspect-square
+      drop-shadow-lg
 
-    [&:hover>div]:opacity-100
+      [&:hover>div]:opacity-100
   "
   >
+    <img
+      class="
+        w-full h-full
+        object-cover
+        rounded-md
+      "
+      loading="lazy"
+      alt="OSINTer logo"
+      src={SmallLogo}
+    />
+    <img
+      class="
+        w-full h-full
+        object-cover
+        rounded-md
+      "
+      loading="lazy"
+      alt="Article Overview"
+      src={article.image_url}
+    />
+
+    <div
+      class="
+      rounded-md
+      w-full h-full
+      bg-surface-100/60 dark:bg-surface-900/60
+      {read ? 'block' : 'hidden'}
+    "
+    />
+
     {#if Object.values($userCollections).length > 0}
       <div
         class="
         flex justify-center items-center
         h-full w-full
         bg-black/75 opacity-0
+        rounded-md
 
         transition-opacity
 
-        absolute z-10
         [&:focus-within>button>svg]:text-primary-500
       "
       >
@@ -84,17 +114,6 @@ dark:hover:bg-surface-500
         </CollectionList>
       </div>
     {/if}
-    <img
-      class:opacity-40={read}
-      class="
-        w-full h-full
-        object-cover
-        rounded-md
-      "
-      loading="lazy"
-      alt="Article Overview"
-      src={article.image_url}
-    />
   </div>
 
   <div
