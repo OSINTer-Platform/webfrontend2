@@ -7,7 +7,7 @@ const epochs: Array<[string, number]> = [
   ["second", 1],
 ];
 
-export function getTimespan(origDate: string) {
+export function getTimespan(origDate: string): string {
   if (!(origDate.includes("+") || origDate.includes("-"))) origDate += "+00:00";
   let timeSpan = (Date.now() - Date.parse(origDate)) / 1000;
   if (timeSpan < 60 * 10) return "Right now";
@@ -17,6 +17,8 @@ export function getTimespan(origDate: string) {
       return `${timeAmount} ${name}${timeAmount > 1 ? "s" : ""} ago`;
     }
   }
+
+  return origDate;
 }
 
 type ReadableMonths = { name: string; firstDate: Date; lastDate: Date }[];
