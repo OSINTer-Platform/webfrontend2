@@ -12,7 +12,7 @@ export async function drawLines(
   const lineGen = d3.line().curve(d3.curveBundle.beta(0.7));
 
   function getStrokeColor(selected: boolean): string {
-    return selected ? "rgba(100, 100, 200, 1)" : "rgba(100, 100, 100, 1)";
+    return selected ? "rgba(191, 20, 54, 1)" : "rgba(100, 100, 100, 1)";
   }
 
   function drawLine(

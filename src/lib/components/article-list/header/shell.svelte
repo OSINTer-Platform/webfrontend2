@@ -33,7 +33,8 @@
 	bg-surface-400/30
 	dark:bg-surface-800
 
-	dark:border-b
+	border-b
+  border-surface-300
 	dark:border-surface-400
 
 	p-6

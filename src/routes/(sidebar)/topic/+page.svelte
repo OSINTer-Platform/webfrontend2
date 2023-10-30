@@ -11,7 +11,6 @@
   import { faArrowTrendUp } from "@fortawesome/free-solid-svg-icons";
   import { writable } from "svelte/store";
   import { onMount } from "svelte";
-  import { showClusterGraph } from "$shared/state/topics";
   import { searchInCluster } from "$lib/common/filter";
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { slide } from "svelte/transition";
@@ -19,6 +18,7 @@
   export let data: PageData;
 
   let fullClusters: Promise<Cluster[] | null> = Promise.resolve(null);
+  let showClusterGraph = false;
 
   const clusterSearch = writable("");
   $: filteredClusters = data.clusters
@@ -32,7 +32,7 @@
       title: "Show cluster development",
       icon: faArrowTrendUp,
       action: () => {
-        $showClusterGraph = !$showClusterGraph;
+        showClusterGraph = !showClusterGraph;
       },
     },
   ];
@@ -59,15 +59,15 @@
     bind:searchValue={$clusterSearch}
     tabs={null}
   >
-    {#if $showClusterGraph}
+    {#if showClusterGraph}
       {#await fullClusters}
         <Loader text="Loading data for graph" />
       {:then clusters}
         {#if clusters}
           <section transition:slide>
-            <hr class="text-tertiary-600/50 my-12" />
+            <hr class="text-tertiary-800/50 my-12" />
             <TopicChart {clusters} search={$clusterSearch} />
-            <hr class="text-tertiary-600/50 my-12" />
+            <hr class="text-tertiary-800/50 my-12" />
           </section>
         {/if}
       {/await}
