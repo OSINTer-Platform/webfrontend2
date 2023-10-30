@@ -36,6 +36,7 @@
 <HeaderShell
   title={"Stored articles"}
   description={"A list of the articles you have recently viewed in OSINTer"}
+  searchAble={false}
   {modOptions}
   bind:searchValue={$localSearch}
 />

@@ -1,15 +1,20 @@
 <script lang="ts">
   import Fa from "svelte-fa";
   import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/index";
-  import { page } from "$app/stores";
+  import { onMount } from "svelte";
 
-  export let value: string = "";
-  export let placeholder: string = "";
-  export let containerClass: string = "";
-  export let inputClass: string = "";
+  export let value = "";
+  export let placeholder = "";
+  export let containerClass = "";
+  export let inputClass = "";
+  export let inputName = "";
+
+  onMount(() => {
+    value = "";
+  });
 </script>
 
-<form
+<div
   class="
     flex items-center
 
@@ -19,16 +24,12 @@
 
     {containerClass}
   "
-  action="/feed/search"
-  method="get"
 >
   <label class="flex gap-2 text-tertiary-800 m-2 w-full">
     <Fa icon={faMagnifyingGlass} />
 
     <input
-      name={$page.data.mlAvailability?.elser
-        ? "semantic_search"
-        : "search_term"}
+      name={inputName}
       bind:value
       {placeholder}
       class="
@@ -40,4 +41,4 @@
     />
   </label>
   <slot />
-</form>
+</div>

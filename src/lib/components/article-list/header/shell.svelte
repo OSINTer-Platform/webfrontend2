@@ -1,8 +1,10 @@
 <script lang="ts">
   import Search from "$inputs/search.svelte";
+  import ArticleSearch from "$inputs/articleSearch.svelte";
+  import Switch from "$inputs/switch.svelte";
+
   import Tabs from "$com/tabs.svelte";
   import ModList from "./modList.svelte";
-  import Switch from "$inputs/switch.svelte";
 
   import type { HeaderModOptions } from "$shared/types/internal";
   import { writable, type Writable } from "svelte/store";
@@ -13,6 +15,7 @@
   export let title: string;
   export let badge: string = "";
   export let description: string = "";
+  export let searchAble = true;
 
   export let tabs: null | {
     store: Writable<string>;
@@ -91,7 +94,8 @@
     <hr class="text-tertiary-600/50 my-4" />
   </slot>
 
-  <Search
+  <svelte:component
+    this={searchAble ? ArticleSearch : Search}
     bind:value={searchValue}
     placeholder={"Filter displayed articles"}
     containerClass={"w-full my-6"}
