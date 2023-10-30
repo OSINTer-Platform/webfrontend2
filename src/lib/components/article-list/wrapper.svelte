@@ -6,6 +6,7 @@
   export let articles: ArticleBase[];
   let classes: string = "";
   export { classes as class };
+  export let tintReadArticles: boolean;
 </script>
 
 <div
@@ -22,7 +23,7 @@
 >
   {#if articles.length > 0}
     <slot name="top" />
-    <List {articles} layout={$articleListRender} />
+    <List {articles} layout={$articleListRender} {tintReadArticles} />
     <slot name="bottom" />
   {:else}
     <div

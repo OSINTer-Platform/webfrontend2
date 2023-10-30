@@ -5,6 +5,7 @@
   import Switch from "$com/utils/switch.svelte";
 
   import type { HeaderModOptions } from "$shared/types/internal";
+  import { writable, type Writable } from "svelte/store";
 
   import { articleListRender, showRead } from "$state/state";
   import { page } from "$app/stores";
@@ -12,6 +13,15 @@
   export let title: string;
   export let badge: string = "";
   export let description: string = "";
+
+  export let tabs: null | {
+    store: Writable<string>;
+    options: { [key: string]: string };
+  } = {
+    store: articleListRender,
+    options: { Large: "large", "Title-View": "title" },
+  };
+  $: tabStore = tabs?.store ?? writable("");
 
   export let searchValue: string = "";
 
@@ -86,24 +96,23 @@
     containerClass={"w-full my-6"}
   />
 
-  <Tabs
-    bind:selected={$articleListRender}
-    options={{ Large: "large", "Title-View": "title" }}
-  >
-    <svelte:fragment slot="end">
-      {#if $page.data.user && $page.url.pathname.startsWith("/feed")}
-        <div
-          class="
-          ml-auto
-          self-center
-        "
-          title="{$showRead
-            ? 'Hide'
-            : 'Show'} articles which have been read already"
-        >
-          <Switch name="show-read" bind:checked={$showRead} />
-        </div>
-      {/if}
-    </svelte:fragment>
-  </Tabs>
+  {#if tabs}
+    <Tabs bind:selected={$tabStore} options={tabs.options}>
+      <svelte:fragment slot="end">
+        {#if $page.data.user && $page.url.pathname.startsWith("/feed")}
+          <div
+            class="
+            ml-auto
+            self-center
+          "
+            title="{$showRead
+              ? 'Hide'
+              : 'Show'} articles which have been read already"
+          >
+            <Switch name="show-read" bind:checked={$showRead} />
+          </div>
+        {/if}
+      </svelte:fragment>
+    </Tabs>
+  {/if}
 </aside>

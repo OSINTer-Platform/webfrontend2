@@ -2,6 +2,8 @@
   let classes: string = "w-40 h-40";
   export { classes as class };
   export let text: string | null = null;
+  export let rows: number = 3;
+  export let columns: number = 3;
 
   import { onMount } from "svelte";
 
@@ -27,22 +29,24 @@
 "
 >
   <div
+    style="
+      grid-template-rows: repeat({rows}, minmax(0, 1fr));
+      grid-template-columns: repeat({columns}, minmax(0, 1fr));
+    "
     class="
 		lds-grid
 
-		aspect-square
 		grid
-		grid-cols-3
-		grid-rows-3
 		gap-2
 		{classes}
 	"
   >
-    {#each Array(9) as _}
+    {#each Array(rows * columns) as _}
       <div
         class="
 				w-full
 				h-full
+        aspect-square
 
 				rounded-full
 				bg-primary-500

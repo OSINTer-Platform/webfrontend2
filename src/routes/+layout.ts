@@ -4,7 +4,7 @@ import type { Collection, User } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
 
 export const load = (async ({ fetch, route }) => {
-  const pagesWithSidebar = /^\/\(sidebar\)\/(\(app\)\/)?(feed|article).*/;
+  const pagesWithSidebar = /^\/\(sidebar\)\/(\(app\)\/)?(feed|article|topic).*/;
 
   const getUserObject = async (): Promise<User | null> => {
     const r = await fetch(`${PUBLIC_API_BASE}/auth/status`);

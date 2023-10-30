@@ -53,3 +53,18 @@ export const searchInArticle = (
   if ("author" in article && article.author && search(article.author))
     return true;
 };
+
+export const searchInCluster = (
+  cluster: { title: string; description: string; summary: string },
+  keyword: string
+) => {
+  keyword = keyword.toLowerCase();
+  const search = (content: string) =>
+    content.toLowerCase().indexOf(keyword) != -1;
+
+  return (
+    search(cluster.title) ||
+    search(cluster.description) ||
+    search(cluster.summary)
+  );
+};

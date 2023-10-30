@@ -8,6 +8,7 @@ import {
   faMagnifyingGlass,
   faSitemap,
   faQuestion,
+  faArrowTrendUp,
 } from "@fortawesome/free-solid-svg-icons/index";
 
 export const navItems: {
@@ -56,6 +57,12 @@ export const navItems: {
       description: "Get an overview of the articles in OSINTer using ML",
       route: "/overview",
       icon: faSitemap,
+    },
+    {
+      title: "Topics",
+      description: "Explore topics in OSINTer",
+      route: "/topic",
+      icon: faArrowTrendUp,
     },
     {
       title: "Assistent",

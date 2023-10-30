@@ -1,5 +1,5 @@
 import { filterArticles } from "$lib/common/filter";
-import { persisted } from "svelte-local-storage-store";
+import { persisted } from "svelte-persisted-store";
 import { derived, writable, type Writable, type Readable } from "svelte/store";
 
 import type { Article } from "../types/api";

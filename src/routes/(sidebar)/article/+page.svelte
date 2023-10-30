@@ -40,4 +40,4 @@
   bind:searchValue={$localSearch}
 />
 
-<List articles={$filteredArticles} />
+<List articles={$filteredArticles} tintReadArticles={false} />
