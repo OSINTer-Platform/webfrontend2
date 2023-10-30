@@ -5,6 +5,8 @@
 
   import TopBar from "./topbar.svelte";
   import Modals from "$com/modals/all.svelte";
+  import { ProgressBar } from "@prgm/sveltekit-progress-bar";
+
   import { modalState, darkMode } from "$state/state";
 
   export let data: LayoutData;
@@ -19,6 +21,8 @@
 </script>
 
 <svelte:window on:keydown={(e) => handleKeypress(e.key)} />
+
+<ProgressBar class="text-primary-500" zIndex={100} settleTime={300} />
 
 <div class="h-screen overflow-hidden flex flex-col" class:dark={$darkMode}>
   <Modals />
