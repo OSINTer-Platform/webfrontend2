@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Switch from "$utils/switch.svelte";
+  import Switch from "$inputs/switch.svelte";
   import OptionSection from "./optionSection.svelte";
 
   import type { SearchQuery, SortBy, SortOrder } from "$shared/types/api";
-  import Datetime from "$com/utils/datetime.svelte";
+  import Datetime from "$inputs/datetime.svelte";
   import { page } from "$app/stores";
 
   const sortBy: Array<{ value: SortBy; name: string }> = [

@@ -80,7 +80,7 @@
     p-4 sm:p-12
   "
   >
-    {#each filteredClusters.slice(0, 100) as cluster}
+    {#each filteredClusters as cluster}
       <ClusterListElement {cluster} />
     {/each}
   </main>

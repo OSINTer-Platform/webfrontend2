@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Search from "$com/utils/search.svelte";
+  import Search from "$inputs/search.svelte";
   import Tabs from "$com/tabs.svelte";
   import ModList from "./modList.svelte";
-  import Switch from "$com/utils/switch.svelte";
+  import Switch from "$inputs/switch.svelte";
 
   import type { HeaderModOptions } from "$shared/types/internal";
   import { writable, type Writable } from "svelte/store";

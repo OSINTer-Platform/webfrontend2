@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Search from "$com/utils/search.svelte";
-  import Switch from "$com/utils/switch.svelte";
+  import Search from "$inputs/search.svelte";
+  import Switch from "$inputs/switch.svelte";
 
   import { controlParams } from "../../state";
   const { dotSize, toolTipSize, deepSearch, articleSearch, enableSearch } =

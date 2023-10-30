@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Search from "$com/utils/search.svelte";
+  import Search from "$inputs/search.svelte";
 
   import type { ArticleCategories } from "$shared/types/api";
 

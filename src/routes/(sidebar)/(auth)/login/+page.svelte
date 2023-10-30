@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Switch from "$utils/switch.svelte";
+  import Switch from "$inputs/switch.svelte";
   import type { ActionData, PageData } from "./$types";
 
   export let form: ActionData;

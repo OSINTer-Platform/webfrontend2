@@ -1,7 +1,7 @@
 <script lang="ts">
   import ModalLink from "$com/modalLink.svelte";
-  import Search from "$com/utils/search.svelte";
-  import Switch from "$com/utils/switch.svelte";
+  import Search from "$inputs/search.svelte";
+  import Switch from "$inputs/switch.svelte";
 
   import type { Collection } from "$shared/types/userItems";
   import type { Updatable } from "$lib/common/customStores";

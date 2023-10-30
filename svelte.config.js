@@ -13,7 +13,7 @@ const config = {
       $shared: "src/lib/shared",
       $state: "src/lib/shared/state",
       $com: "src/lib/components",
-      $utils: "src/lib/components/utils",
+      $inputs: "src/lib/components/utils/inputs",
       $assets: "src/lib/assets",
     },
   },

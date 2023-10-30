@@ -1,6 +1,6 @@
 <script lang="ts">
   import Sidebar from "$com/sidebar/linkList.svelte";
-  import Search from "$com/utils/search.svelte";
+  import Search from "$inputs/search.svelte";
 
   import type { SidebarOption } from "$shared/types/internal";
   import type { ClusterBase } from "$shared/types/api";
