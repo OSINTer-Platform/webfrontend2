@@ -10,3 +10,5 @@ export const readClusters: Writable<{ [key: string]: Cluster }> = persisted(
 );
 
 export const articleSearch = writable("");
+
+export const showClusterGraph = writable(false);
