@@ -7,6 +7,7 @@
 
   import type { Cluster, ClusterBase } from "$shared/types/api";
   import { PUBLIC_API_BASE } from "$env/static/public";
+  import { page } from "$app/stores";
 
   export let cluster: ClusterBase;
 
@@ -60,33 +61,35 @@
     tags={cluster.keywords}
   >
     <svelte:fragment slot="actions">
-      <div
-        class="
-        flex justify-center items-center
-        h-full w-full
-        bg-black/75 opacity-0
-        rounded-md
+      {#if $page.data.user}
+        <div
+          class="
+          flex justify-center items-center
+          h-full w-full
+          bg-black/75 opacity-0
+          rounded-md
 
-        transition-opacity
+          transition-opacity
 
-        [&:focus-within>button>svg]:text-primary-500
-      "
-      >
-        <button
-          class="pb-2"
-          on:click={createCollection}
-          title="Create collection from cluster"
+          [&:focus-within>button>svg]:text-primary-500
+        "
         >
-          <Fa
-            icon={faStar}
-            class="
-            hover:text-primary-500
-            transition-colors
-            text-white/90 text-4xl
-          "
-          />
-        </button>
-      </div>
+          <button
+            class="pb-2"
+            on:click={createCollection}
+            title="Create collection from cluster"
+          >
+            <Fa
+              icon={faStar}
+              class="
+              hover:text-primary-500
+              transition-colors
+              text-white/90 text-4xl
+            "
+            />
+          </button>
+        </div>
+      {/if}
     </svelte:fragment>
   </Large>
 </a>
