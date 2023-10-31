@@ -27,6 +27,7 @@ export interface User {
   _id: string;
   username: string;
   active: boolean;
+  premium: number;
 
   already_read: string;
 
