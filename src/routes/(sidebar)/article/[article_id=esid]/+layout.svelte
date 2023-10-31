@@ -88,7 +88,7 @@
 
 <aside
   class="
-	bg-surface-400/30
+	bg-surface-200
 	dark:bg-surface-900
 
 	dark:border-b
