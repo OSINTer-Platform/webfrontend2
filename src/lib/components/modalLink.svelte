@@ -26,7 +26,7 @@
 <a
   on:click={(e) => showArticleModal(e)}
   on:contextmenu|preventDefault={() => goto(`/article/${articleId}`)}
-  data-sveltekit-preload-data="off"
+  data-sveltekit-preload-data="tap"
   href={`/article/${articleId}`}
   class={classes}
   {title}

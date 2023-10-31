@@ -177,11 +177,24 @@
 
   const changeTitle = async () => {
     if (title !== data.currentItem.name) {
-      title = title.trim().replaceAll("  ", " ");
+      title = title.trim();
       await changeName(data.currentItem, title, false);
       location.reload();
     }
   };
+
+  function keydown(e: any) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      changeTitle();
+    }
+  }
+
+  function keyup(e: any) {
+    title = e.target.textContent;
+  }
+
+  $: console.log(title);
 </script>
 
 <HeaderShell
@@ -191,39 +204,20 @@
   bind:searchValue={$feedLocalSearch}
 >
   <div class="relative" slot="title">
-    {#if ownsFeed}
-      <input
-        type="text"
-        on:blur={changeTitle}
-        on:keydown={async (e) => {
-          if (e.key === "Enter") {
-            changeTitle();
-          } else if (title.length > 25) {
-            title = title.slice(0, 24);
-          }
-        }}
-        maxlength="25"
-        bind:value={title}
-        class="
-				absolute
-				h-full w-full
-				bg-transparent
-				lg:text-5xl sm:text-4xl text-3xl
-				dark:text-white
-				outline-none
-
-				peer
-			"
-      />
-    {/if}
     <h1
+      on:blur={changeTitle}
+      on:keydown={keydown}
+      on:keyup={keyup}
       class="
-				lg:text-5xl sm:text-4xl text-3xl
-				whitespace-pre
-				{ownsFeed ? 'text-transparent' : 'dark:text-white'}
-				peer-hover:after:scale-x-100 peer-hover:after:origin-bottom-left
-				peer-focus:after:scale-x-100 peer-focus:after:origin-bottom-left
+        lg:text-5xl sm:text-4xl text-3xl
+        dark:text-white
+        focus:outline-none
 			"
+      contenteditable={ownsFeed ? "true" : "false"}
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck="false"
+      data-gramm="false"
     >
       {title}
     </h1>
@@ -247,6 +241,11 @@
 			scale-x-0 origin-bottom-right
 			transition-transform duration-300
 			bg-current;
+    }
+
+    &[contenteditable="true"] {
+      @apply hover:after:scale-x-100 hover:after:origin-bottom-left
+				focus:after:scale-x-100 focus:after:origin-bottom-left;
     }
   }
 </style>

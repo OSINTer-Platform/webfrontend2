@@ -49,17 +49,16 @@
   <header
     class="flex justify-between {description ? 'sm:mb-2' : 'sm:mb-10 mb-4'}"
   >
-    <section class="flex items-center gap-3 sm:gap-6">
+    <section class="flex items-start gap-3">
       <slot name="title">
         <h1 class="sm:text-5xl text-3xl dark:text-white">{title}</h1>
       </slot>
       {#if badge}
         <span
           class="
-					px-2
-					py-1
+					px-2 py-1
 					
-					sm:mt-3
+					mt-2 sm:mt-3
 					
 					rounded-full
 
@@ -78,7 +77,7 @@
       {/if}
     </section>
 
-    <section class="flex items-end">
+    <section class="flex items-start ml-3 md:ml-6 mt-1 sm:mt-2">
       <ModList {modOptions} />
     </section>
   </header>
