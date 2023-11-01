@@ -23,6 +23,7 @@
     drop-shadow-lg
 
     [&:hover>div]:opacity-100
+    hover:z-20
 "
 >
   <img

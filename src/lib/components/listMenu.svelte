@@ -26,24 +26,15 @@
 
   <div
     class="
-		hidden
-		absolute
+		hidden absolute z-20
+		top-12 right-0
 
-		top-12
-		right-0
+    w-52 sm:w-64
 
-		bg-surface-100
-		dark:bg-surface-800
+		bg-surface-100 dark:bg-surface-800
+		border border-tertiary-500
 
-		rounded-xl
-
-		border-tertiary-500
-		border
-
-    w-52
-		sm:w-64
-
-		shadow-xl
+		rounded-xl shadow-xl
 	"
   >
     <nav class="divide-y divide-tertiary-500 px-3 sm:py-2 sm:px-4">
