@@ -2,6 +2,8 @@ import type { SearchQuery } from "./types/api";
 import type { Inbuilt } from "./types/internal";
 import { PUBLIC_API_BASE } from "$env/static/public";
 
+export const contactEmail = "contact@osinter.dk";
+
 export const config: {
   images: {
     fullLogo: string;

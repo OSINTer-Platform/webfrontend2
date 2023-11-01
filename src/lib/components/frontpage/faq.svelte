@@ -2,8 +2,9 @@
   import Fa from "svelte-fa";
   import SvelteMarkdown from "svelte-markdown";
 
-  import { faCaretDown, faCaretRight } from "@fortawesome/free-solid-svg-icons";
+  import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
   import { slide } from "svelte/transition";
+  import { contactEmail } from "$shared/config";
 
   const faq = [
     {
@@ -20,14 +21,12 @@
     },
     {
       question: "How can I contribute?",
-      answer:
-        "As mentioned in the previous question, OSINTer unfortunately isn't - at the time of writing this - licensed under an open-source license, and as such it is currently technically not possible to contribute. With that said, if you are interested in contributing, [please reach out](mailto:skrivtilbertram@gmail.com) and I'm sure we can figure something out.",
+      answer: `As mentioned in the previous question, OSINTer unfortunately isn't - at the time of writing this - licensed under an open-source license, and as such it is currently technically not possible to contribute. With that said, if you are interested in contributing, [please reach out](mailto:${contactEmail}) and I'm sure we can figure something out.`,
       open: false,
     },
     {
       question: "I like the project, can I sponsor it?",
-      answer:
-        "Absolutely! Running this project has so-far been a completely unpaid journey, but that obviously isn't sustainable and therefore we are actively looking for sponsors. If you're considering it, please consider checking out our [github sponsors](https://github.com/bertmad3400).",
+      answer: `Absolutely! Running this project has so-far been a completely unpaid journey, but that obviously isn't sustainable and therefore we are actively looking for sponsors. If you're considering it, please consider checking out our [github sponsors](https://github.com/bertmad3400) or [reach out on mail](mailto:${contactEmail}).`,
       open: false,
     },
   ];

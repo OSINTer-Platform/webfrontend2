@@ -1,6 +1,8 @@
 <script lang="ts">
-  import { page } from "$app/stores";
   import LogoFull from "$assets/LogoFull.svelte";
+
+  import { page } from "$app/stores";
+  import { contactEmail } from "$shared/config";
 
   $: title = $page.error?.title ?? `${$page.status}: ${$page.error?.message}`;
 
@@ -9,7 +11,7 @@
     "We're sorry, something went wrong. If the error persist, please contact the system administrator responsible for this instance.";
 
   $: actions = $page.error?.actions ?? [
-    { title: "Contact us", href: "mailto:contact@osinter.dk" },
+    { title: "Contact us", href: `mailto:${contactEmail}` },
     { title: "Go back", action: () => history.back() },
   ];
 
