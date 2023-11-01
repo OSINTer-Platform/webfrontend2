@@ -1,24 +1,24 @@
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA256
 
-Contact: mailto:skrivtilbertram@gmail.com
-Expires: 2024-07-12T00:00:00.000Z
-Encryption: https://bertmad.dk/publickey.txt
+Contact: mailto:contact@osinter.dk
+Expires: 2025-10-01T00:00:00.000Z
+Encryption: https://bertmad.dk/div/publickey.txt
 Preferred-Languages: en,dk
 Canonical: https://osinter.dk/.well-known/security.txt
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAEBCAAdFiEEGLxR43jKcakNjudMPK1ZXs5ohZQFAmSueAcACgkQPK1ZXs5o
-hZTsOw//S8wBtGT/+nC8/cFBswevjTCRtNOIoHVjQh+e0gLvgzTxUKgSUcBQ8i63
-8L168fXEZHXnp1mavMUgx/gbka4vVsB2K3vgXXmXurLRGf5piJGWbQANjrxuILCx
-7cDyEfSE9ozdYM7r//24bjfg5J88ACKuVdX+4l2y64A4DKhGBg9Aez32KQCxQifs
-iqFZj2KiCTv0SdOsZdHgiF2CPGTnSrP59rS5gnwfRzIOv+pNNF3+1lflyVPM4tPX
-j6V1IbyU0os7G1GtxcPJcafpKKCRCgQNFIzJIVK/lST74X/uBR5d/ZNyLPQzNKbW
-L8FsOebUT9vvlhHNexYIm6lHR1TFIYqJjwINIIyH49804/+TBnpr9EjVBEpz+npu
-QWDiIEP4Ozyf8d08sP3sMy7vGB74eVtShLAsQs6XqdB9fDBn5Zu8gXwAYMHfKTor
-2qKX1BMBIp0T4PZyzGDrtWjqZ09goYG1UjrZSpwhJsnPyPJ/YtM7HkhNrY7LIXn8
-LSwsSRNyeI2fkGXVArytC1IsCF1w2qwOpGGQIUQS+zulpsA6yHNVJ7r8ua72QnVR
-NrRk9lXAzWemlB76fcLO4BH2QXylkx41LfI/cg1G0EU+PIDSD5wXa77hZ7AHkOMy
-S86szG4K4dMYumjmRED2vgGmTNWtXc4ndC5GWpCmh1VruBfaKZI=
-=SQTL
+iQIzBAEBCAAdFiEEGLxR43jKcakNjudMPK1ZXs5ohZQFAmVCVgkACgkQPK1ZXs5o
+hZRW3xAAgE7Oe7k3e1+COaLAQ7Q2XicKisYyx4q36rnOUYMRiKEdaKxgGTBiqT4v
+Aq6zqbZSfrKVCKQQKxOBbC211amU28w2xoXGoIcLa4r1XRuquD+9xLDDfSO1MEgO
+CesiItxK/TdCu+LcAqh//ej7C9/iTl7m2UzWc0Jcbr58hQU6yIkCghbUxbRelrv6
+ZjIbVYOi5tlkPghpfTkQINz3Y7NXFD6oY0ue26CADdb1XqIj7oyFiItelIrcn53Q
+VWeqxMpYfS+slb5nC9nkoeqtU4YlvTD91e76uxF6Dgdb5GR0a81MidpDENCHi/xV
+nmOlG5xIPVaYAbubxs8u8keFCRWrzdhDHm059EyKlRBdoG6XAyG1NMmmcWPfkDBz
+aaSsE+IluS39Q0PjDOxq0LSKaCCakvZgIm5+4/JrTrcj2vtS4OMHxoZ/d2zgXqV7
+AAb+QNsZw0T8Dze4xP6y0ZtfKRW5Czy7hfUWdpBr24gGNMwbGxxx5mDy27OqJNcj
+ZdLoQigvfhzDfWnCaLBRKU/e9IlkVS9jYl/wSES59IRoj0kpZauS+TRpinzzkwZv
+0d5IP4LxBsaRmWLdz9VchEKGw4gYQb/yBkKIwqSRDA6+AxZpOcdNdRMnlkbuzToW
+oKJ8FQP9R1wQV0NDj/Koc566PQgnXRqAZUhdGrlyaVQSsXMXII0=
+=si6F
 -----END PGP SIGNATURE-----
