@@ -1,11 +1,32 @@
 import { error } from "@sveltejs/kit";
 import type { LayoutLoad } from "./$types";
 
-export const load: LayoutLoad = async ({ parent }) => {
-  const { user } = await parent();
+export const load: LayoutLoad = async ({ parent, url }) => {
+  const { user, mlAvailability } = await parent();
+
+  type mlTypes = keyof typeof mlAvailability
+
+  const depends: { [key: string]: mlTypes } = {
+    "/topic": "clustering",
+    "/overview": "map",
+    "/assistent": "inference",
+  };
+
+  for (const [route, dependency] of Object.entries(depends)) {
+    if (url.pathname.startsWith(route) && !mlAvailability[dependency])
+      throw error(421, {
+        message: "",
+        title: "Requested functionality isn't available",
+        description: [
+          "This functionality requested is not available on this specific instance of OSINTer.",
+          "Believe this is a mistake?",
+          "Contact us below",
+        ],
+      });
+  }
 
   if (!user || !(user.premium > 0))
-    throw error(401, {
+    throw error(403, {
       message: "",
       title: "This page is reserved for beta-testers and B2B partners.",
       description: [
