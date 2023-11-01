@@ -3,7 +3,7 @@ import { updatable } from "$lib/common/customStores";
 import type { Collection, User } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
 
-export const load = (async ({ fetch, route }) => {
+export const load: LayoutLoad = async ({ fetch, route }) => {
   const pagesWithSidebar = /^\/\(sidebar\)\/(\(app\)\/)?(feed|article|topic).*/;
 
   const getUserObject = async (): Promise<User | null> => {
@@ -13,10 +13,14 @@ export const load = (async ({ fetch, route }) => {
 
   const getMlAvailability = async (): Promise<{
     clustering: boolean;
+    map: boolean;
     elser: boolean;
-  } | null> => {
+    inference: boolean;
+  }> => {
     const r = await fetch(`${PUBLIC_API_BASE}/ml/`);
-    return r.ok ? r.json() : null;
+    return r.ok
+      ? r.json()
+      : { clustering: false, map: false, elser: false, inference: false };
   };
 
   const user = await getUserObject();
@@ -59,4 +63,4 @@ export const load = (async ({ fetch, route }) => {
     burgerMenu: route.id !== "/",
     customSidebar: route.id ? pagesWithSidebar.test(route.id) : false,
   };
-}) satisfies LayoutLoad;
+};

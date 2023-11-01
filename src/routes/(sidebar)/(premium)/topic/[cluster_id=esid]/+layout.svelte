@@ -36,7 +36,7 @@
     {
       title: "Download MD files",
       icon: faDownload,
-      route: `${PUBLIC_API_BASE}/ml/articles/cluster/${encodeURIComponent(
+      route: `${PUBLIC_API_BASE}/ml/cluster/${encodeURIComponent(
         data.cluster.id
       )}/export`,
     },

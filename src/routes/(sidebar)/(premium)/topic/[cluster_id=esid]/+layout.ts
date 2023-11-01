@@ -9,7 +9,7 @@ export const load = (({ params, fetch }) => {
   const id = encodeURIComponent(params.cluster_id);
 
   async function fetchCluster(): Promise<Cluster> {
-    const r = await fetch(`${PUBLIC_API_BASE}/ml/articles/cluster/${id}`);
+    const r = await fetch(`${PUBLIC_API_BASE}/ml/cluster/${id}`);
 
     if (r.ok) {
       const cluster = await r.json();

@@ -13,7 +13,7 @@
 
   async function createCollection() {
     const r = await fetch(
-      `${PUBLIC_API_BASE}/ml/articles/cluster/${encodeURIComponent(cluster.id)}`
+      `${PUBLIC_API_BASE}/ml/cluster/${encodeURIComponent(cluster.id)}`
     );
 
     if (!r.ok) {

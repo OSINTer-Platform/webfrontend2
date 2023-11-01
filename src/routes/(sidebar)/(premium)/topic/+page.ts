@@ -7,9 +7,7 @@ import { error } from "@sveltejs/kit";
 
 export const load: PageLoad = async ({ fetch }) => {
   async function getClusters(): Promise<ClusterBase[]> {
-    const r = await fetch(
-      `${PUBLIC_API_BASE}/ml/articles/clusters?complete=false`
-    );
+    const r = await fetch(`${PUBLIC_API_BASE}/ml/clusters?complete=false`);
 
     if (r.ok) {
       return await r.json();

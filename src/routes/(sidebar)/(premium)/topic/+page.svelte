@@ -38,16 +38,16 @@
   ];
 
   onMount(() => {
-    fullClusters = fetch(
-      `${PUBLIC_API_BASE}/ml/articles/clusters?complete=true`
-    ).then((r) => {
-      if (r.ok) {
-        return r.json();
-      } else {
-        console.error("Error when fetching full clusters for graph");
-        return null;
+    fullClusters = fetch(`${PUBLIC_API_BASE}/ml/clusters?complete=true`).then(
+      (r) => {
+        if (r.ok) {
+          return r.json();
+        } else {
+          console.error("Error when fetching full clusters for graph");
+          return null;
+        }
       }
-    });
+    );
   });
 </script>
 

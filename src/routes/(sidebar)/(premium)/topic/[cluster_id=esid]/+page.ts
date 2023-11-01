@@ -9,7 +9,7 @@ export const load = (({ params, fetch }) => {
 
   async function fetchArticles(): Promise<ArticleBase[]> {
     const r = await fetch(
-      `${PUBLIC_API_BASE}/ml/articles/cluster/${id}/content?complete=false`
+      `${PUBLIC_API_BASE}/ml/cluster/${id}/content?complete=false`
     );
 
     if (r.ok) {

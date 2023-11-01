@@ -47,7 +47,7 @@
     complete: boolean
   ): Promise<Readable<MLArticle[]>> {
     const r = await fetch(
-      `${PUBLIC_API_BASE}/ml/articles/map/${complete ? "full" : "partial"}`
+      `${PUBLIC_API_BASE}/ml/map/${complete ? "full" : "partial"}`
     );
     if (r.status === 404)
       return Promise.reject({
