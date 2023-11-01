@@ -5,9 +5,8 @@ import type { PageLoad } from "./$types";
 
 import { error } from "@sveltejs/kit";
 
-export const load: PageLoad = async ({ fetch, parent }) => {
-  async function getClusters(permitted: boolean): Promise<ClusterBase[]> {
-    if (!permitted) return []
+export const load: PageLoad = async ({ fetch }) => {
+  async function getClusters(): Promise<ClusterBase[]> {
     const r = await fetch(
       `${PUBLIC_API_BASE}/ml/articles/clusters?complete=false`
     );
@@ -19,10 +18,7 @@ export const load: PageLoad = async ({ fetch, parent }) => {
     }
   }
 
-  const { user } = await parent()
-  const permitted = (user && user.premium > 0) ? true : false
-
   return {
-    clusters: getClusters(permitted),
+    clusters: getClusters(),
   };
 };
