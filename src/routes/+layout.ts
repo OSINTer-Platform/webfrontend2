@@ -1,5 +1,6 @@
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { updatable } from "$lib/common/customStores";
+import type { MLAvailability } from "$shared/types/api";
 import type { Collection, User } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
 
@@ -11,12 +12,7 @@ export const load: LayoutLoad = async ({ fetch, url }) => {
     return r.ok ? r.json() : null;
   };
 
-  const getMlAvailability = async (): Promise<{
-    clustering: boolean;
-    map: boolean;
-    elser: boolean;
-    inference: boolean;
-  }> => {
+  const getMlAvailability = async (): Promise<MLAvailability> => {
     const r = await fetch(`${PUBLIC_API_BASE}/ml/`);
     return r.ok
       ? r.json()

@@ -1,10 +1,11 @@
 import { error } from "@sveltejs/kit";
 import type { LayoutLoad } from "./$types";
+import type { MLAvailability } from "$shared/types/api";
 
 export const load: LayoutLoad = async ({ parent, url }) => {
   const { user, mlAvailability } = await parent();
 
-  type mlTypes = keyof typeof mlAvailability
+  type mlTypes = keyof MLAvailability;
 
   const depends: { [key: string]: mlTypes } = {
     "/topic": "clustering",

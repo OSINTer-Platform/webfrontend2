@@ -123,3 +123,10 @@ export interface MLAssistantChat {
   article_base: ArticleBase[];
   reached_max: boolean;
 }
+
+export interface MLAvailability {
+  clustering: boolean;
+  map: boolean;
+  elser: boolean;
+  inference: boolean;
+}
