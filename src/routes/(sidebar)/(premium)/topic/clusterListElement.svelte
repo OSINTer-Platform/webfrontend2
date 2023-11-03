@@ -31,7 +31,7 @@
 
 <hr class="text-tertiary-500 dark:text-surface-500" />
 
-<a data-sveltekit-preload-data="tap" href={`/topic/${cluster.id}`}>
+<a data-sveltekit-preload-data="off" href={`/topic/${cluster.id}`}>
   <Large
     title={cluster.title}
     description={cluster.description}
