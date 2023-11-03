@@ -22,25 +22,7 @@
 
 <hr class="text-tertiary-500 dark:text-surface-500" />
 
-<Link
-  articleId={article.id}
-  {articleList}
-  class="
-    grid
-    grid-cols-1
-    md:grid-cols-[auto_1fr]
-
-    gap-8
-
-    items-center
-
-    p-3
-    sm:p-6
-
-    hover:bg-surface-50
-    dark:hover:bg-surface-500
-  "
->
+<Link articleId={article.id} {articleList}>
   <Large
     title={article.title}
     description={article.description}
@@ -51,6 +33,7 @@
     }}
     imageUrl={article.image_url}
     tags={article.tags.automatic}
+    summary={article.summary ?? ""}
     {read}
   >
     <svelte:fragment slot="actions">

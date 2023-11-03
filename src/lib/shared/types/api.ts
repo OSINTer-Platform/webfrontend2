@@ -23,6 +23,7 @@ export interface ArticleBase {
   read_times: number;
 
   similar?: string[];
+  summary?: string;
 
   ml: {
     cluster: number;
@@ -35,8 +36,6 @@ export interface ArticleBase {
 export interface Article extends ArticleBase {
   formatted_content: string;
   content: string;
-
-  summary: string;
 }
 
 export interface MLArticle {

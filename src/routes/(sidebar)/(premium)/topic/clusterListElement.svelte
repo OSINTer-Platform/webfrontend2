@@ -31,25 +31,7 @@
 
 <hr class="text-tertiary-500 dark:text-surface-500" />
 
-<a
-  data-sveltekit-preload-data="tap"
-  href={`/topic/${cluster.id}`}
-  class="
-    grid
-    grid-cols-1
-    md:grid-cols-[auto_1fr]
-
-    gap-8
-
-    items-center
-
-    p-3
-    sm:p-6
-
-    hover:bg-surface-50
-    dark:hover:bg-surface-500
-  "
->
+<a data-sveltekit-preload-data="tap" href={`/topic/${cluster.id}`}>
   <Large
     title={cluster.title}
     description={cluster.description}
@@ -59,6 +41,7 @@
       hover: "",
     }}
     tags={cluster.keywords}
+    summary={cluster.summary}
   >
     <svelte:fragment slot="actions">
       {#if $page.data.user}
