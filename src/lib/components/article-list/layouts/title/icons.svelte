@@ -47,7 +47,7 @@
   {#if Object.values($userCollections).length > 0}
     <CollectionList
       {userCollections}
-      articleId={article.id}
+      {article}
       class="top-8 right-0"
       btnClass="px-2 btn"
     >

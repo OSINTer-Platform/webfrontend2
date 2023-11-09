@@ -2,6 +2,7 @@
   import { modalState } from "$state/state";
   import Article from "./article/index.svelte";
   import Search from "./search.svelte";
+  import AddCollection from "./addCollection.svelte";
 </script>
 
 {#if $modalState.modalType == "article"}
@@ -16,4 +17,6 @@
     callback={$modalState.modalContent.searchAction}
     searchText={$modalState.modalContent.searchText}
   />
+{:else if $modalState.modalType == "add-collection"}
+  <AddCollection article={$modalState.modalContent.article} />
 {/if}

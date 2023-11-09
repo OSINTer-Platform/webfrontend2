@@ -52,7 +52,7 @@
         >
           <CollectionList
             {userCollections}
-            articleId={article.id}
+            {article}
             class="top-10"
             btnClass="pb-2"
           >

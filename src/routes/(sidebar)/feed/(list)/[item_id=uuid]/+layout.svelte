@@ -193,8 +193,6 @@
   function keyup(e: any) {
     title = e.target.textContent;
   }
-
-  $: console.log(title);
 </script>
 
 <HeaderShell
