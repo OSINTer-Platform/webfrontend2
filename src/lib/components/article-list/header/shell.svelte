@@ -11,6 +11,7 @@
 
   import { articleListRender, showRead } from "$state/state";
   import { page } from "$app/stores";
+  import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
   export let title: string;
   export let badge: string = "";
@@ -109,11 +110,15 @@
             ml-auto
             self-center
           "
-            title="{$showRead
-              ? 'Hide'
-              : 'Show'} articles which have been read already"
           >
-            <Switch name="show-read" bind:checked={$showRead} />
+            <Switch
+              title="{$showRead
+                ? 'Show'
+                : 'Hide'} articles which have been read already"
+              name="show-read"
+              bind:checked={$showRead}
+              icons={{ on: faEye, off: faEyeSlash }}
+            />
           </div>
         {/if}
       </svelte:fragment>
