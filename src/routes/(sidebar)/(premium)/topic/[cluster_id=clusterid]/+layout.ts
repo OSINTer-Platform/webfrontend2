@@ -5,7 +5,7 @@ import { PUBLIC_API_BASE } from "$env/static/public";
 import { error } from "@sveltejs/kit";
 import { readClusters } from "$shared/state/topics";
 
-export const load = (({ params, fetch }) => {
+export const load: LayoutLoad = async ({ params, fetch }) => {
   const id = encodeURIComponent(params.cluster_id);
 
   async function fetchCluster(): Promise<Cluster> {
@@ -28,4 +28,4 @@ export const load = (({ params, fetch }) => {
   return {
     cluster: fetchCluster(),
   };
-}) satisfies LayoutLoad;
+};

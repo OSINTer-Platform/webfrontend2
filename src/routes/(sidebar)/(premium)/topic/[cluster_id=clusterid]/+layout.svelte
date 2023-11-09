@@ -51,6 +51,7 @@
 
   $: clusterDetails = {
     Nr: [data.cluster.nr.toString()],
+    ID: [data.cluster.id],
     Contains: [`${data.cluster.document_count} articles`],
     Keywords: data.cluster.keywords,
   };
