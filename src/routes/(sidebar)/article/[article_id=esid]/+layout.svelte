@@ -11,7 +11,11 @@
     faPaste,
   } from "@fortawesome/free-regular-svg-icons/index";
 
-  import { faDownload, faXmark } from "@fortawesome/free-solid-svg-icons/index";
+  import {
+    faDownload,
+    faSitemap,
+    faXmark,
+  } from "@fortawesome/free-solid-svg-icons/index";
 
   import { fullArticles } from "$state/storedArticles";
   import { goto } from "$app/navigation";
@@ -56,6 +60,15 @@
   let modOptions: Array<HeaderModOptions>;
 
   $: modOptions = [
+    ...(data.article.ml.cluster >= 0
+      ? [
+          {
+            title: "Go to article cluster",
+            icon: faSitemap,
+            route: `/topic/${data.article.ml.cluster}`,
+          },
+        ]
+      : []),
     {
       title: `Copy raw`,
       icon: faClipboard,

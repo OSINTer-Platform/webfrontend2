@@ -9,6 +9,7 @@
     faCaretDown,
     faCaretUp,
     faList,
+    faSitemap,
   } from "@fortawesome/free-solid-svg-icons";
   import { goto } from "$app/navigation";
   import { modalState } from "$shared/state/state";
@@ -29,8 +30,9 @@
       ? [
           {
             icon: showAll ? faCaretUp : faCaretDown,
-            description:
-              "{showAll ? 'Hide most' : 'Show all'} similar articles",
+            description: `${
+              showAll ? "Hide most" : "Show all"
+            } similar articles`,
             action: () => (showAll = !showAll),
           },
         ]
@@ -43,6 +45,17 @@
         goto(`/article/${mainArticle.id}/similar`);
       },
     },
+    ...(mainArticle.ml.cluster >= 0
+      ? [
+          {
+            icon: faSitemap,
+            description: "See article cluster",
+            action: () => {
+              goto(`/topic/${mainArticle.ml.cluster}`);
+            },
+          },
+        ]
+      : []),
   ];
 </script>
 
