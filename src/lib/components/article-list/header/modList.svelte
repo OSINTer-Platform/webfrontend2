@@ -12,12 +12,12 @@
 </script>
 
 <ListMenu listOptions={[modOptions]}>
-  <button class="{btnClass} md:hidden block">
+  <button class="{btnClass} 2xl:hidden block">
     <Fa icon={faBars} />
   </button>
 </ListMenu>
 
-<div class="md:flex hidden gap-4">
+<div class="2xl:flex hidden gap-4">
   {#each modOptions as { title, icon, route, action }}
     {#if route}
       <a href={route} {title} class={btnClass}><Fa {icon} /></a>
