@@ -15,6 +15,8 @@
     $showRead && alreadyReadCollection
       ? filterArticles(articles, $feedLocalSearch)
       : filterArticles(alreadyRead, $feedLocalSearch);
+
+  export let emptyMessage: { title: string; description: string } | null = null;
 </script>
 
-<List articles={filteredArticles} tintReadArticles={true} />
+<List articles={filteredArticles} tintReadArticles={true} {emptyMessage} />
