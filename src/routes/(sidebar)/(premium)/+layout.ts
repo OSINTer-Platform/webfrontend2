@@ -10,7 +10,7 @@ export const load: LayoutLoad = async ({ parent, url }) => {
   const depends: { [key: string]: mlTypes } = {
     "/topic": "clustering",
     "/overview": "map",
-    "/assistent": "inference",
+    "/assistant": "inference",
   };
 
   for (const [route, dependency] of Object.entries(depends)) {

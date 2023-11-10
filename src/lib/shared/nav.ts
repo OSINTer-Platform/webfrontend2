@@ -65,9 +65,9 @@ export const navItems: {
       icon: faArrowTrendUp,
     },
     {
-      title: "Assistent",
+      title: "Assistant",
       description: "Ask questions about data in OSINTer",
-      route: "/assistent",
+      route: "/assistant",
       icon: faQuestion,
     },
   ],
