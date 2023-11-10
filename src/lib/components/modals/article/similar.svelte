@@ -45,13 +45,13 @@
         goto(`/article/${mainArticle.id}/similar`);
       },
     },
-    ...(mainArticle.ml.cluster >= 0
+    ...(mainArticle.ml && mainArticle.ml.cluster >= 0
       ? [
           {
             icon: faSitemap,
             description: "See article cluster",
             action: () => {
-              goto(`/topic/${mainArticle.ml.cluster}`);
+              goto(`/topic/${mainArticle.ml?.cluster}`);
             },
           },
         ]

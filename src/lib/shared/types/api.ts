@@ -25,7 +25,7 @@ export interface ArticleBase {
   similar?: string[];
   summary?: string;
 
-  ml: {
+  ml?: {
     cluster: number;
     coordinates: [number, number];
   };
