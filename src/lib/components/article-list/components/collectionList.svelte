@@ -28,9 +28,9 @@
 >
   <slot />
   <div
-    on:keydown|stopPropagation
-    on:click|stopPropagation
-    on:mousedown|preventDefault
+    on:keydown|stopPropagation|preventDefault
+    on:click|stopPropagation|preventDefault
+    on:mousedown|stopPropagation|preventDefault
     class="
 		hidden absolute z-20
     p-2
