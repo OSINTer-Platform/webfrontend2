@@ -24,22 +24,7 @@
         type="checkbox"
         bind:group={$selectedSources}
         value={profile}
-        class="
-            w-4 h-4 aspect-square
-
-            bg-transparent
-            checked:bg-primary-500/50
-            focus:bg-transparent
-            checked:focus:bg-primary-500/50
-
-            focus:ring-0
-            focus:shadow-none
-            focus:ring-offset-0
-
-            rounded-sm
-
-            form-checkbox
-          "
+        class="w-4 checkbox"
       />
 
       <span class="font-normal text-sm text-black/60 dark:text-white"

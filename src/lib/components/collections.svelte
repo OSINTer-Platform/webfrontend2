@@ -71,17 +71,7 @@
           type="checkbox"
           id="collection-{collection._id}"
           checked={collection.ids.includes(articleId)}
-          class="
-        cursor-pointer
-        w-4 h-4 aspect-square
-
-        bg-transparent
-        checked:bg-primary-500/50
-
-        rounded-sm
-
-        form-checkbox
-      "
+          class="w-4 checkbox"
         />
 
         <label

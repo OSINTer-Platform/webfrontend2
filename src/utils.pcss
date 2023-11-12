@@ -16,6 +16,24 @@
 	active:scale-95;
 }
 
+.checkbox {
+  @apply aspect-square
+
+  bg-transparent
+  checked:bg-primary-500/50
+  focus:bg-transparent
+  checked:focus:bg-primary-500/50
+
+  focus:ring-0
+  focus:shadow-none
+  focus:ring-offset-0
+
+  rounded-sm
+
+  cursor-pointer
+  form-checkbox;
+}
+
 .link-underline {
   &:after {
     content: "";
