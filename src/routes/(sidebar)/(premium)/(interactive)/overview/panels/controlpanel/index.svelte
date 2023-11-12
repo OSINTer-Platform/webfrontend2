@@ -36,6 +36,6 @@
   <Controls />
 </PanelShell>
 
-<PanelShell class="min-h-0 shrink">
+<PanelShell class="h-96">
   <Sources {articleCategories} />
 </PanelShell>

@@ -3,8 +3,7 @@
   import Switch from "$inputs/switch.svelte";
 
   import { controlParams } from "../../state";
-  const { dotSize, toolTipSize, deepSearch, articleSearch, enableSearch } =
-    controlParams;
+  const { dotSize, articleSearch, enableSearch } = controlParams;
 </script>
 
 <div class="flex justify-between mb-4">
@@ -45,6 +44,7 @@
     "
 />
 
+<!--
 <div class="flex justify-between mb-4">
   <h3
     class="
@@ -82,6 +82,7 @@
       accent-primary-800
     "
 />
+-->
 
 <div class="flex justify-between">
   <label
@@ -109,6 +110,9 @@
     containerClass={"mt-4 mb-2"}
   />
 
+  <!--
+  Disabled, due to the backend being unable to query the large amounts of data needed for deep search
+  Gunicorn worker dies due to being out of memory
   <div class="flex justify-between">
     <label
       for="Enable Deep Search"
@@ -121,6 +125,7 @@
     >
       Enable deep search (slow):
     </label>
-    <Switch bind:checked={$deepSearch} name="Enable Deep Search" size={"xs"} />
+      <Switch bind:checked={$deepSearch} name="Enable Deep Search" size={"xs"} />
   </div>
+  -->
 {/if}

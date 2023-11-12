@@ -11,8 +11,10 @@
 <aside
   class="
   absolute z-20
+  top-5 left-5 bottom-5
   flex flex-col
-  w-80 top-10 left-10 bottom-10
+  w-80 p-4
+  overflow-y-auto
 "
 >
   <ControlPanel {articleCategories} />
