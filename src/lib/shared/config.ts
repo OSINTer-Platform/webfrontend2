@@ -10,7 +10,7 @@ export const config: {
   };
 } = {
   images: {
-    fullLogo: "https://gitlab.com/osinter/osinter/-/raw/master/logo/full.png",
+    fullLogo: "https://osinter.dk/fullLogo.png",
   },
 };
 

@@ -2,6 +2,7 @@
   import { config } from "$shared/config";
   import SvelteMarkdown from "svelte-markdown";
   import type { PageData } from "./$types";
+  import FullLogo from "$assets/fullLogo.png";
   export let data: PageData;
 
   $: readableDate = data.currentPost.date.toLocaleString();
@@ -77,11 +78,11 @@
       {data.currentPost.description}
     </p>
 
-    {#if data.currentPost.image != config.images.fullLogo}
+    {#if data.currentPost.image}
       <img src={data.currentPost.image} alt="Article description" />
     {:else}
       <img
-        src={config.images.fullLogo}
+        src={FullLogo}
         alt="Article description"
         class="aspect-[2/1] w-full object-cover"
       />

@@ -8,6 +8,6 @@ export interface Post {
   date: Date;
   author: string;
 
-  image: string;
+  image: string | null;
   content: string;
 }

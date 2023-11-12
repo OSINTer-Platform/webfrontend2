@@ -1,4 +1,3 @@
-import { config } from "$shared/config";
 import type { Post } from "$shared/types/blog";
 import matter from "gray-matter";
 
@@ -27,7 +26,7 @@ export const getPosts = (): { [key: string]: Post } =>
         date: new Date(matterPost.data.date),
         author: matterPost.data.author,
 
-        image: matterPost.data.image ?? config.images.fullLogo,
+        image: matterPost.data.image,
 
         content: matterPost.content,
       };
