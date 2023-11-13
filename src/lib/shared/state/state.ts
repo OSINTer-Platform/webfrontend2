@@ -1,21 +1,36 @@
-import { persisted } from "svelte-local-storage-store";
+import { persisted } from "svelte-persisted-store";
 import { writable, type Writable } from "svelte/store";
 
-import type { Article, ArticleCategories, SearchQuery } from "../types/api";
+import type {
+  Article,
+  ArticleBase,
+  ArticleCategories,
+  SearchQuery,
+} from "../types/api";
 import type { ArticleListRender } from "../types/internal";
 
 export const modalState: Writable<
   | {
       modalType: "search";
       modalContent: {
-        query: SearchQuery | undefined;
-        searchAction: (q: SearchQuery) => void;
-        searchText: string;
+        query?: SearchQuery;
+        searchAction?: (q: SearchQuery) => void;
+        searchText?: string;
       };
     }
   | {
       modalType: "article";
-      modalContent: { article: Article; categories: ArticleCategories };
+      modalContent: {
+        article: Article;
+        articleList: Array<{ id: string }>;
+        categories: ArticleCategories;
+      };
+    }
+  | {
+      modalType: "add-collection";
+      modalContent: {
+        article: ArticleBase;
+      };
     }
   | {
       modalType: null;
@@ -41,3 +56,5 @@ export const articleListRender: Writable<ArticleListRender> = persisted(
 
 export const feedLocalSearch = writable("");
 export const showRead = writable(true);
+
+export const darkMode = writable(true);

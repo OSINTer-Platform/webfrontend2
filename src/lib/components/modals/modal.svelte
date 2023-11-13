@@ -4,6 +4,7 @@
 
   let classes: string = "";
   export { classes as class };
+  export let style = "";
 
   const resetModal = () =>
     ($modalState = { modalType: null, modalContent: null });
@@ -14,20 +15,20 @@
   on:keydown={resetModal}
   transition:fade={{ duration: 200 }}
   class="
-	z-50
+    z-50
 
-	absolute
+    absolute
 
-	h-screen
-	w-screen
+    h-screen
+    w-screen
 
-	flex
-	flex-col
-	items-center
-	justify-center
+    flex
+    flex-col
+    items-center
+    justify-center
 
-	bg-black/60
-"
+    bg-black/60
+  "
 >
   <div
     on:click|stopPropagation
@@ -35,10 +36,11 @@
     in:fly={{ y: 50 }}
     out:fly={{ y: 50 }}
     class="
-		overflow-auto
-		cursor-auto
-		{classes}
-	"
+      overflow-auto
+      cursor-auto
+      {classes}
+    "
+    {style}
   >
     <slot />
   </div>

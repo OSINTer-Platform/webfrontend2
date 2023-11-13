@@ -1,24 +1,50 @@
 <script lang="ts">
-  import Fa from "svelte-fa/src/fa.svelte";
   import SvelteMarkdown from "svelte-markdown";
-
-  import Link from "../../components/link.svelte";
-  import CollectionList from "../../components/collectionList.svelte";
-
-  import { getTimespan } from "$lib/common/math";
-  import { faStar } from "@fortawesome/free-regular-svg-icons";
+  import Link from "../../../modalLink.svelte";
+  import Icons from "./icons.svelte";
+  import Loader from "$com/loader.svelte";
 
   import type { ArticleBase } from "$shared/types/api";
   import type { Collection } from "$shared/types/userItems";
   import type { Writable } from "svelte/store";
 
+  import { getTimespan } from "$lib/common/math";
+  import { PUBLIC_API_BASE } from "$env/static/public";
+
   export let userCollections: Writable<{ [key: string]: Collection }>;
   export let article: ArticleBase;
-  export let read: boolean;
+  export let articleList: ArticleBase[];
+  export let readArticles: string[];
+
+  $: read = readArticles.includes(article.id);
+  let similarArticles: null | Promise<ArticleBase[]> = null;
+  let showSimilar = false;
+
+  async function toggleShowSimilar(e: { detail: any }) {
+    if (e.detail !== article.id) return;
+
+    showSimilar = !showSimilar;
+
+    if (similarArticles) return;
+
+    similarArticles = fetch(
+      `${PUBLIC_API_BASE}/articles/${encodeURIComponent(article.id)}/similar`
+    ).then(async (r) => {
+      if (r.ok) {
+        return r.json();
+      } else {
+        console.error(
+          "Failed when querying similar articles for title-style article list dropdown"
+        );
+        return null;
+      }
+    });
+  }
 </script>
 
 <Link
   articleId={article.id}
+  {articleList}
   class="
   flex
   items-center
@@ -27,18 +53,19 @@
   md:p-2
   p-1
 
-  border-t
+  border-y
   border-tertiary-500
   dark:border-surface-400
+
+  [&+a]:border-t-0
 
   hover:bg-surface-50
   dark:hover:bg-surface-500
 
   [&:hover>aside]:flex
-  [&:hover>aside]:bg-surface-50
-  [&:hover>aside]:dark:bg-surface-500
   relative
 "
+  title={article.tags.automatic.map((tag) => tag.toUpperCase()).join(" | ")}
 >
   <p
     class="
@@ -93,9 +120,12 @@
 
     {read ? 'opacity-60 font-light' : ''}
     text-xs
+    leading-5
+
     md:text-sm
+    md:leading-6
+
     truncate
-    leading-6
     text-tertiary-800
 
     dark:text-white
@@ -104,38 +134,12 @@
     [&>strong]:text-primary-400
   "
     >
-      <SvelteMarkdown source={article.title} isInline />
+      <SvelteMarkdown source={article.description} isInline />
     </p>
   </div>
-  <aside
-    on:click|preventDefault|stopPropagation
-    on:keydown|preventDefault|stopPropagation
-    class="
-        absolute right-16 md:right-20 z-10
-        hidden justify-center
-        h-full px-2
-        bg-surface-100 dark:bg-surface-900
-      "
-  >
-    {#if Object.values($userCollections).length > 0}
-      <CollectionList
-        {userCollections}
-        articleId={article.id}
-        class="top-8 right-0"
-      >
-        <Fa
-          icon={faStar}
-          class="
-              ml-auto my-auto
-              text-lg md:text-xl
-              text-black/75 dark:text-white/90
-              hover:text-primary-500
-              transition-colors
-            "
-        />
-      </CollectionList>
-    {/if}
-  </aside>
+
+  <Icons {article} {userCollections} on:showSimilar={toggleShowSimilar} />
+
   <time
     title={article.publish_date}
     class:opacity-60={read}
@@ -143,3 +147,24 @@
     >{getTimespan(article.publish_date)}</time
   >
 </Link>
+
+{#if showSimilar && similarArticles}
+  <ul class="">
+    {#await similarArticles}
+      <Loader rows={1} class="m-6 w-14" />
+    {:then articleList}
+      {#each articleList as article}
+        <li class="relative ml-3 md:ml-6 xl:ml-10">
+          <div class="absolute w-full h-full bg-primary-600/10" />
+
+          <svelte:self
+            {article}
+            {userCollections}
+            {articleList}
+            {readArticles}
+          />
+        </li>
+      {/each}
+    {/await}
+  </ul>
+{/if}

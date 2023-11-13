@@ -3,9 +3,11 @@
   import { spawnArticleModal } from "$lib/common/state";
 
   export let articleId: string;
+  export let articleList: Array<{ id: string }>;
 
   let classes: string = "";
   export { classes as class };
+  export let title: string = "";
 
   const showArticleModal = (e: MouseEvent) => {
     const small = window.matchMedia(
@@ -17,7 +19,7 @@
 
     e.preventDefault();
 
-    spawnArticleModal(articleId);
+    spawnArticleModal(articleId, articleList);
   };
 </script>
 
@@ -27,6 +29,7 @@
   data-sveltekit-preload-data="off"
   href={`/article/${articleId}`}
   class={classes}
+  {title}
 >
   <slot />
 </a>

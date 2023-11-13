@@ -7,7 +7,7 @@
   import Faq from "$com/frontpage/faq.svelte";
   import Header from "$com/frontpage/header.svelte";
 
-  import Fa from "svelte-fa/src/fa.svelte";
+  import Fa from "svelte-fa";
 
   import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
   import { config } from "$shared/config";
@@ -38,8 +38,6 @@
   </header>
   <section class="bg-surface-100 dark:bg-surface-900">
     <div class="container p-4 sm:p-8 lg:p-12 xl:py-20">
-      <!--
-
       <div
         class="
 				p-4
@@ -59,12 +57,11 @@
 			"
       >
         <Fa icon={faExclamationCircle} class="text-3xl text-primary-800" />
-        Do keep in mind that OSINTer 5.0 is still under development and testing,
+        Do keep in mind that this OSINTer instance is for testing and development,
         and stability may vary.
       </div>
 
       <hr />
-      -->
 
       <InternalLinks />
 

@@ -1,36 +1,73 @@
+export interface ArticleTags {
+  automatic: string[];
+  interresting: { [key: string]: string[] };
+}
+
 export interface ArticleBase {
+  id: string;
+
   title: string;
   description: string;
+
   url: string;
   image_url: string;
 
   profile: string;
   source: string;
 
+  author: string | null;
+
   publish_date: string;
   inserted_at: string;
 
   read_times: number;
-  id: string;
-}
 
-export interface ArticleTags {
-  automatic: string[];
-  interresting: { [key: string]: string[] };
+  similar?: string[];
+  summary?: string;
+
+  ml?: {
+    cluster: number;
+    coordinates: [number, number];
+  };
+
+  tags: ArticleTags;
 }
 
 export interface Article extends ArticleBase {
-  author: string;
   formatted_content: string;
   content: string;
+}
 
-  tags: ArticleTags;
+export interface MLArticle {
+  id: string;
 
-  summary: string;
+  title: string;
+  description: string;
+  source: string;
+  profile: string;
+  publish_date: string;
   ml: {
-    similar: Array<string>;
     cluster: number;
+    coordinates: [number, number];
   };
+}
+
+export interface ClusterBase {
+  id: string;
+  nr: number;
+  document_count: number;
+
+  title: string;
+  description: string;
+  summary: string;
+
+  keywords: string[];
+}
+
+export interface Cluster extends ClusterBase {
+  representative_documents: string[];
+  documents: string[];
+  dating: string[];
 }
 
 export interface ArticleCategories {
@@ -53,20 +90,42 @@ export type SortOrder = "desc" | "asc";
 export interface SearchQuery {
   limit: number;
 
-  sort_by: SortBy | undefined;
+  sort_by?: SortBy | undefined;
   sort_order: SortOrder | undefined;
 
-  search_term: string | undefined;
-  highlight: boolean | undefined;
+  search_term?: string | undefined;
+  semantic_search?: string | undefined;
+  highlight?: boolean | undefined;
 
-  first_date: string | undefined;
-  last_date: string | undefined;
+  first_date?: string | undefined;
+  last_date?: string | undefined;
 
-  sources: string[];
+  sources?: string[];
+  ids?: string[];
 }
 
 export interface AccessTokenWithDetails {
   token: string;
   maxAge: number;
   secure: boolean;
+}
+
+export interface OpenAIChat {
+  role: "user" | "assistant" | "system";
+  content: string;
+  visible: boolean;
+  id: string;
+}
+
+export interface MLAssistantChat {
+  chats: OpenAIChat[];
+  article_base: ArticleBase[];
+  reached_max: boolean;
+}
+
+export interface MLAvailability {
+  clustering: boolean;
+  map: boolean;
+  elser: boolean;
+  inference: boolean;
 }

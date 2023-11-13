@@ -20,6 +20,13 @@ export const load = (({ params, fetch }) => {
     );
 
     if (!r.ok) {
+      if (r.status === 404) {
+        throw error(
+          r.status,
+          "The requested article unfortuantely wasn't found found"
+        );
+      }
+
       throw error(r.status, "Error when fetching article content.");
     }
 

@@ -1,14 +1,22 @@
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { updatable } from "$lib/common/customStores";
+import type { MLAvailability } from "$shared/types/api";
 import type { Collection, User } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
 
-export const load = (async ({ fetch, route }) => {
-  const pagesWithSidebar = /^\/\(sidebar\)\/(\(app\)\/)?(feed|article).*/;
+export const load: LayoutLoad = async ({ fetch, url }) => {
+  const pagesWithSidebar = ["/feed", "/article", "/topic"];
 
   const getUserObject = async (): Promise<User | null> => {
     const r = await fetch(`${PUBLIC_API_BASE}/auth/status`);
     return r.ok ? r.json() : null;
+  };
+
+  const getMlAvailability = async (): Promise<MLAvailability> => {
+    const r = await fetch(`${PUBLIC_API_BASE}/ml/`);
+    return r.ok
+      ? r.json()
+      : { clustering: false, map: false, elser: false, inference: false };
   };
 
   const user = await getUserObject();
@@ -43,11 +51,14 @@ export const load = (async ({ fetch, route }) => {
 
   return {
     user,
+    mlAvailability: getMlAvailability(),
 
     alreadyRead: updatable(updateAlreadyRead),
     userCollections: updatable(updateCollectionList),
 
-    burgerMenu: route.id !== "/",
-    customSidebar: route.id ? pagesWithSidebar.test(route.id) : false,
+    burgerMenu: url.pathname !== "/",
+    customSidebar: pagesWithSidebar.some((path) =>
+      url.pathname.startsWith(path)
+    ),
   };
-}) satisfies LayoutLoad;
+};

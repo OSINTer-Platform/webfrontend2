@@ -1,6 +1,7 @@
 <script lang="ts">
   import { config } from "$shared/config";
   import type { PageData } from "./$types";
+  import FullLogo from "$assets/fullLogo.png";
   export let data: PageData;
 </script>
 
@@ -68,7 +69,7 @@
 			"
         >
           <img
-            src={post.image}
+            src={post.image ?? FullLogo}
             alt="Article description"
             class="
 					aspect-video

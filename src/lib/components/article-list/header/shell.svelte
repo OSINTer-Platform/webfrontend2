@@ -1,17 +1,31 @@
 <script lang="ts">
-  import Search from "$com/utils/search.svelte";
+  import Search from "$inputs/search.svelte";
+  import ArticleSearch from "$inputs/articleSearch.svelte";
+  import Switch from "$inputs/switch.svelte";
+
   import Tabs from "$com/tabs.svelte";
   import ModList from "./modList.svelte";
-  import Switch from "$com/utils/switch.svelte";
 
   import type { HeaderModOptions } from "$shared/types/internal";
+  import { writable, type Writable } from "svelte/store";
 
   import { articleListRender, showRead } from "$state/state";
   import { page } from "$app/stores";
+  import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
   export let title: string;
   export let badge: string = "";
   export let description: string = "";
+  export let searchAble = true;
+
+  export let tabs: null | {
+    store: Writable<string>;
+    options: { [key: string]: string };
+  } = {
+    store: articleListRender,
+    options: { Large: "large", "Title-View": "title" },
+  };
+  $: tabStore = tabs?.store ?? writable("");
 
   export let searchValue: string = "";
 
@@ -20,10 +34,11 @@
 
 <aside
   class="
-	bg-surface-400/30
+	bg-surface-200
 	dark:bg-surface-800
 
-	dark:border-b
+	border-b
+  border-surface-300
 	dark:border-surface-400
 
 	p-6
@@ -35,17 +50,16 @@
   <header
     class="flex justify-between {description ? 'sm:mb-2' : 'sm:mb-10 mb-4'}"
   >
-    <section class="flex items-center gap-3 sm:gap-6">
+    <section class="flex items-start gap-3">
       <slot name="title">
         <h1 class="sm:text-5xl text-3xl dark:text-white">{title}</h1>
       </slot>
       {#if badge}
         <span
           class="
-					px-2
-					py-1
+					px-2 py-1
 					
-					sm:mt-3
+					mt-2 sm:mt-3
 					
 					rounded-full
 
@@ -64,7 +78,7 @@
       {/if}
     </section>
 
-    <section class="flex items-end">
+    <section class="flex items-start ml-3 md:ml-6 mt-1 sm:mt-2">
       <ModList {modOptions} />
     </section>
   </header>
@@ -80,30 +94,34 @@
     <hr class="text-tertiary-600/50 my-4" />
   </slot>
 
-  <Search
+  <svelte:component
+    this={searchAble ? ArticleSearch : Search}
     bind:value={searchValue}
     placeholder={"Filter displayed articles"}
     containerClass={"w-full my-6"}
   />
 
-  <Tabs
-    bind:selected={$articleListRender}
-    options={{ Large: "large", "Title-View": "title" }}
-  >
-    <svelte:fragment slot="end">
-      {#if $page.data.user && $page.url.pathname.startsWith("/feed")}
-        <div
-          class="
-          ml-auto
-          self-center
-        "
-          title="{$showRead
-            ? 'Hide'
-            : 'Show'} articles which have been read already"
-        >
-          <Switch name="show-read" bind:checked={$showRead} />
-        </div>
-      {/if}
-    </svelte:fragment>
-  </Tabs>
+  {#if tabs}
+    <Tabs bind:selected={$tabStore} options={tabs.options}>
+      <svelte:fragment slot="end">
+        {#if $page.data.user && $page.url.pathname.startsWith("/feed")}
+          <div
+            class="
+            ml-auto
+            self-center
+          "
+          >
+            <Switch
+              title="{$showRead
+                ? 'Show'
+                : 'Hide'} articles which have been read already"
+              name="show-read"
+              bind:checked={$showRead}
+              icons={{ on: faEye, off: faEyeSlash }}
+            />
+          </div>
+        {/if}
+      </svelte:fragment>
+    </Tabs>
+  {/if}
 </aside>

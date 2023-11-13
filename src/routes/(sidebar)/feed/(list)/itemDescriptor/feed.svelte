@@ -32,14 +32,21 @@
   $: feedSearch = currentItem.search_term
     ? `"${currentItem.search_term}"`
     : null;
+
   $: sources =
-    currentItem.sources.length > 0
+    currentItem.sources && currentItem.sources.length > 0
       ? currentItem.sources.map((v) => categories[v]?.name ?? v)
       : null;
 </script>
 
-{#if feedSearch}
-  <ListRender options={{ "Search Term": feedSearch }} mono={false} />
+{#if feedSearch || currentItem.semantic_search}
+  <ListRender
+    options={{
+      "Search Term": feedSearch,
+      "Semantic Search": currentItem.semantic_search,
+    }}
+    mono={false}
+  />
   <hr class="my-4 border-tertiary-700/50" />
 {/if}
 

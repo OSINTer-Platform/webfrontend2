@@ -1,4 +1,5 @@
 <script lang="ts">
+  import FullLogo from "$assets/fullLogo.png";
   import type { Post } from "$shared/types/blog";
 
   export let posts: Post[];
@@ -10,7 +11,7 @@
       href={route}
       class="
 			relative
-			block
+      flex justify-center items-center
 
 			border
 			border-surface-300
@@ -59,7 +60,7 @@
       />
 
       <img
-        src={image}
+        src={image ?? FullLogo}
         alt="Blog post"
         class="blur-sm transition-[filter] duration-300"
       />

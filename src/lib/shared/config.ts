@@ -2,13 +2,15 @@ import type { SearchQuery } from "./types/api";
 import type { Inbuilt } from "./types/internal";
 import { PUBLIC_API_BASE } from "$env/static/public";
 
+export const contactEmail = "contact@osinter.dk";
+
 export const config: {
   images: {
     fullLogo: string;
   };
 } = {
   images: {
-    fullLogo: "https://gitlab.com/osinter/osinter/-/raw/master/logo/full.png",
+    fullLogo: "https://osinter.dk/fullLogo.png",
   },
 };
 
@@ -61,6 +63,7 @@ export const getStandardSearch = (): SearchQuery => ({
   sort_order: "desc",
 
   search_term: "",
+  semantic_search: "",
   highlight: false,
 
   first_date: "",

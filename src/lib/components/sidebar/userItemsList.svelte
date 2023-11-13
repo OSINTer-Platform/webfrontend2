@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Fa from "svelte-fa/src/fa.svelte";
+  import Fa from "svelte-fa";
 
   import AppSwitcher from "./compontents/appSwitcher.svelte";
   import LinkNavShell from "./compontents/linkNav/shell.svelte";
@@ -14,6 +14,8 @@
   import { createItem, sanitizeQuery } from "$lib/common/userItems";
   import { goto } from "$app/navigation";
   import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
+  import { page } from "$app/stores";
+  import { toUrl } from "$lib/common/searchQuery";
 
   export let options: Array<UserItemSidebarOption> = [];
   export let user: User | null;
@@ -45,7 +47,6 @@
     $modalState = {
       modalType: "search",
       modalContent: {
-        query: undefined,
         searchText: "Create feed",
         searchAction: async (query: SearchQuery) => {
           await createItem("New Feed", sanitizeQuery(query), "feed", true);
@@ -54,6 +55,22 @@
             modalContent: null,
           });
           location.reload();
+        },
+      },
+    };
+  }
+
+  function spawnSearchModal(e: Event) {
+    e.preventDefault();
+
+    $modalState = {
+      modalType: "search",
+      modalContent: {
+        query: $page.data?.currentSearch,
+        searchText: "Search articles",
+        searchAction: (q) => {
+          modalState.set({ modalType: null, modalContent: null });
+          goto(`/feed/search?${toUrl(q)}`);
         },
       },
     };
@@ -75,6 +92,7 @@
     {#if options.length > 0}
       <LinkNavShell>
         <a
+          on:click={spawnSearchModal}
           href="/search"
           class="
           flex flex-row items-center
