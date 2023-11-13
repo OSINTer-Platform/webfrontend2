@@ -45,6 +45,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@elastic/apm-rum": "^5.15.0",
     "@fortawesome/free-brands-svg-icons": "^6.3.0",
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",

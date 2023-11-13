@@ -8,8 +8,19 @@
   import { ProgressBar } from "@prgm/sveltekit-progress-bar";
 
   import { modalState, darkMode } from "$state/state";
+  import { init as initApm } from "@elastic/apm-rum";
+  import { env } from "$env/dynamic/public";
 
   export let data: LayoutData;
+
+  if ("PUBLIC_APM_ENV" in env && "PUBLIC_APM_URL" in env) {
+    initApm({
+      serviceName: "OSINTer-webfrontend",
+      serverUrl: env.PUBLIC_APM_URL,
+      serviceVersion: "5.0",
+      environment: env.PUBLIC_APM_ENV,
+    });
+  }
 
   function handleKeypress(keyName: string) {
     switch (keyName) {
