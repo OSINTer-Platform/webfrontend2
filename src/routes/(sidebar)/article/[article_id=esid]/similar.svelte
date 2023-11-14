@@ -8,6 +8,7 @@
   import { slide } from "svelte/transition";
   import { onMount } from "svelte";
   import { browser } from "$app/environment";
+  import { page } from "$app/stores";
   import { showSimilar } from "$state/storedArticles";
   import { PUBLIC_API_BASE } from "$env/static/public";
 
@@ -19,6 +20,7 @@
 
   onMount(async () => {
     if (!browser) return;
+    if (!$page.data.user || $page.data.user.premium < 1) return;
 
     const r = await fetch(
       `${PUBLIC_API_BASE}/articles/${encodeURIComponent(article.id)}/similar`

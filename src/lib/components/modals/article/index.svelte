@@ -15,12 +15,15 @@
   import { PUBLIC_API_BASE } from "$env/static/public";
   import Loader from "$com/loader.svelte";
   import Similar from "./similar.svelte";
+  import { page } from "$app/stores";
 
   export let article: Article;
   export let articleCategories: ArticleCategories;
   export let articleList: Array<{ id: string }>;
-  let similarArticles: Promise<ArticleBase[]>;
-  $: similarArticles = getSimilar(article.id);
+
+  $: premium = $page.data.user && $page.data.user.premium > 0;
+  let similarArticles: Promise<ArticleBase[]> | null;
+  $: similarArticles = premium ? getSimilar(article.id) : null;
 
   let switchDirection: "left" | "right" = "left";
   let blockSwitching: boolean = false;
@@ -30,7 +33,7 @@
       `${PUBLIC_API_BASE}/articles/${encodeURIComponent(articleID)}/similar`
     );
     if (r.ok) return await r.json();
-    else console.error("Error when querying similar articles from modal");
+    console.error("Error when querying similar articles from modal");
   }
 
   async function handleKeypress(keyName: string) {
@@ -110,13 +113,15 @@
         {buttonActions}
       />
 
-      {#await similarArticles}
-        <Loader text="Loading similar articles" />
-      {:then articles}
-        {#if articles.length > 0}
-          <Similar {articles} mainArticle={article} />
-        {/if}
-      {/await}
+      {#if similarArticles}
+        {#await similarArticles}
+          <Loader text="Loading similar articles" />
+        {:then articles}
+          {#if articles.length > 0}
+            <Similar {articles} mainArticle={article} />
+          {/if}
+        {/await}
+      {/if}
     </article>
   {/key}
 </Modal>
