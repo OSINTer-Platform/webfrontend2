@@ -1,6 +1,6 @@
 export interface ArticleTags {
   automatic: string[];
-  interresting: { [key: string]: string[] };
+  interresting: { name: string, values: string[] }[];
 }
 
 export interface ArticleBase {

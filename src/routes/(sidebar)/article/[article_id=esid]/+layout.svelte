@@ -31,9 +31,9 @@
       extractedTags["Automatic Tags"] = tags.automatic;
     }
 
-    if (Object.keys(tags.interresting).length > 0) {
-      for (const [key, value] of Object.entries(tags.interresting)) {
-        extractedTags[key.toUpperCase()] = value;
+    if (tags.interresting.length > 0) {
+      for (const { name, values } of tags.interresting) {
+        extractedTags[name.toUpperCase()] = values;
       }
     }
 
