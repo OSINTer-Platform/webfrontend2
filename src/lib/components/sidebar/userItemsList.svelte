@@ -120,7 +120,7 @@
           {#if option.list.length > 0 || (user && hasButton(option.id))}
             <LinkNavOptions options={option}>
               <svelte:fragment slot="bottom">
-                {#if hasButton(option.id) && user}
+                {#if hasButton(option.id)}
                   <div class="px-4">
                     <button
                       on:click={creationFunctions[option.id]}
