@@ -6,7 +6,7 @@
     faBars,
     faCaretDown,
   } from "@fortawesome/free-solid-svg-icons/index";
-  import { faGitlab } from "@fortawesome/free-brands-svg-icons/index";
+  import { faGithub } from "@fortawesome/free-brands-svg-icons/index";
 
   import { navItems } from "$shared/nav";
   import { sideOpen } from "$state/state";
@@ -26,9 +26,9 @@
   $: socials = [
     {
       title: "Source-code",
-      route: "https://gitlab.com/OSINTer",
+      route: "https://github.com/OSINTer-Platform",
       blank: true,
-      icon: faGitlab,
+      icon: faGithub,
     },
     ...(user
       ? [{ title: "Logout", route: "/logout", icon: faArrowRightFromBracket }]

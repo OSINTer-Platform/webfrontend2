@@ -16,17 +16,17 @@
     {
       question: "Is OSINTer open-source?",
       answer:
-        "Well, technically not, but for your purpose it might be. While OSINTer isn't currently licensed under an approved open-sourc license (as defined by the OSI and FSF) it is still source-available, which means that you can always take a peak in the inner-workings of OSINTer at the public GitLab repos.",
+        "Yes! For a long period OSINTer was without license, but has recently been licensed under Affero GPL v3. This means that you not only can take a peak in the inner-workings of OSINTer at the [public Github repos](https://github.com/OSINTer-Platform), but also that we highly encourage participating in the developemnt of OSINTer.",
       open: true,
     },
     {
       question: "How can I contribute?",
-      answer: `As mentioned in the previous question, OSINTer unfortunately isn't - at the time of writing this - licensed under an open-source license, and as such it is currently technically not possible to contribute. With that said, if you are interested in contributing, [please reach out](mailto:${contactEmail}) and I'm sure we can figure something out.`,
+      answer: `As OSINTer is open-source we highly encourage contributions at [the public Github repos](https://github.com/OSINTer-Platform). Outside of that, we regularly do B2B deals and sponsoring is certainly possible too so if in doubt, [please reach out](mailto:${contactEmail}).`,
       open: false,
     },
     {
       question: "I like the project, can I sponsor it?",
-      answer: `Absolutely! Running this project has so-far been a completely unpaid journey, but that obviously isn't sustainable and therefore we are actively looking for sponsors. If you're considering it, please consider checking out our [github sponsors](https://github.com/bertmad3400) or [reach out on mail](mailto:${contactEmail}).`,
+      answer: `Absolutely! Running this project has so-far been a completely unpaid journey, but that obviously isn't sustainable and therefore we are actively looking for sponsors. If you're considering it, please consider checking out our [github sponsors](https://github.com/sponsors/OSINTer-Platform) or [reach out on mail](mailto:${contactEmail}).`,
       open: false,
     },
   ];
