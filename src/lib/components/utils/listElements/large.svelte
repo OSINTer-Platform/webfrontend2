@@ -183,8 +183,8 @@
     hidden btn
 
     w-10 p-3
-    bg-surface-500
-    border border-surface-500
+    dark:bg-surface-500 dark:hover:bg-primary-400/25
+    drop-shadow-md
 
     transition-transform
   "

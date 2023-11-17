@@ -49,7 +49,7 @@
 		overflow-y-auto
 		overflow-x-hidden
 
-		bg-surface-50
+		bg-surface-100
 		dark:bg-surface-800
 		scroll-smooth
 	"
