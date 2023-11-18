@@ -34,12 +34,14 @@ export function createItem(
   contents: SearchQuery,
   type: "feed",
   navigate?: NavDest,
+  subscribe?: boolean
 ): Promise<Feed | undefined>;
 export function createItem(
   feedName: string,
   contents: string[],
   type: "collection",
   navigate?: NavDest,
+  subscribe?: boolean
 ): Promise<Collection | undefined>;
 
 export async function createItem(
@@ -47,9 +49,12 @@ export async function createItem(
   contents: SearchQuery | string[],
   type: "feed" | "collection",
   navigate: NavDest = "none",
+  subscribe: boolean = false
 ): Promise<Feed | Collection | undefined> {
   const r = await fetch(
-    `${PUBLIC_API_BASE}/my/${type}s/${encodeURIComponent(feedName)}`,
+    `${PUBLIC_API_BASE}/my/${type}s/${encodeURIComponent(
+      feedName
+    )}?subscribe=${encodeURIComponent(subscribe)}`,
     {
       method: "POST",
       headers: {
