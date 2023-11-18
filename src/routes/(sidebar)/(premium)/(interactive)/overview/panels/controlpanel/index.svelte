@@ -28,11 +28,11 @@
   }}
 />
 
-<PanelShell class="mb-8">
+<PanelShell>
   <Pointermodes />
 </PanelShell>
 
-<PanelShell class="mb-8">
+<PanelShell>
   <Controls />
 </PanelShell>
 

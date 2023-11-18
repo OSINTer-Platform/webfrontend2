@@ -14,6 +14,13 @@
     controlParams,
   } from "../../state";
   import PanelShell from "../panelShell.svelte";
+  import Fa from "svelte-fa";
+  import {
+    faMagnifyingGlass,
+    faPlus,
+    type IconDefinition,
+  } from "@fortawesome/free-solid-svg-icons";
+  import { createItem } from "$lib/common/userItems";
 
   const { selectedSearch, showAllSelected } = controlParams;
 
@@ -25,9 +32,42 @@
 
   let alreadyRead: Updatable<null | Collection>;
   $: alreadyRead = $page.data?.alreadyRead;
+
+  let actionButtons: {
+    icon: IconDefinition;
+    description: string;
+    action: () => void;
+  }[] = [
+    {
+      icon: faMagnifyingGlass,
+      description: "See full list of articles",
+      action: () => {
+        createItem(
+          "Article Overview",
+          $searchedSelectedArticles.map((a) => a.id),
+          "collection",
+          "new",
+          false
+        );
+      },
+    },
+    {
+      icon: faPlus,
+      description: "Create collection from selected articles",
+      action: () => {
+        createItem(
+          "My Article Overview",
+          $searchedSelectedArticles.map((a) => a.id),
+          "collection",
+          "new",
+          true
+        );
+      },
+    },
+  ];
 </script>
 
-<PanelShell class="h-full">
+<PanelShell class="grow shrink min-h-0">
   <div class="flex justify-between items-end mb-4">
     <h1
       class="
@@ -42,7 +82,7 @@
           font-light text-2xl italic
         "
     >
-      {$selectedArticles.length} articles
+      {$searchedSelectedArticles.length} articles
     </p>
   </div>
 
@@ -83,4 +123,25 @@
       </li>
     {/each}
   </ul>
+</PanelShell>
+
+<PanelShell class="shrink-0">
+  <div
+    class="
+      flex h-14
+      border-surface-400 border
+      divide-surface-400/50 divide-x
+      dark:bg-surface-600/80
+      "
+  >
+    {#each actionButtons as { icon, description, action }}
+      <button
+        title={description}
+        class="btn active:scale-100 grow text-lg"
+        on:click={action}
+      >
+        <Fa {icon} />
+      </button>
+    {/each}
+  </div>
 </PanelShell>

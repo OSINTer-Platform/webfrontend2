@@ -12,7 +12,7 @@
   class="
   absolute z-20
   top-5 left-5 bottom-5
-  flex flex-col
+  flex flex-col gap-4
   w-80 p-4
   overflow-y-auto
 "
@@ -26,7 +26,7 @@
     absolute z-20
     top-10 right-10 bottom-10
 
-    flex flex-col
+    flex flex-col gap-4
     w-96
   "
   >
