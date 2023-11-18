@@ -7,18 +7,40 @@
   import Stats from "./stats.svelte";
 
   import { PUBLIC_API_BASE } from "$env/static/public";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import { toUrl } from "$lib/common/searchQuery";
-  import Stats from "./stats.svelte";
+  import { browser } from "$app/environment";
 
   export let data: PageData;
 
   let startDate = new Date(new Date().setDate(new Date().getDate() - 7));
   let stopDate = new Date();
 
+  let articleListContainer: HTMLDivElement | null = null;
+  let scrollIntervalID: any = null;
+  let hovering: boolean = false;
+
   let articles: Promise<null | ArticleBase[]> = new Promise((resolve) =>
     resolve(null)
   );
+
+  function startScroll(container: HTMLElement | null) {
+    if (!container) return;
+
+    container.scroll(0, 0);
+
+    if (scrollIntervalID) clearInterval(scrollIntervalID);
+
+    scrollIntervalID = setInterval(() => {
+      if (hovering) return;
+      container?.scrollTo(0, container.scrollTop + 1);
+      if (
+        container.scrollTop + container.clientHeight ==
+        container.scrollHeight
+      )
+        container.scroll(0, 0);
+    }, 20);
+  }
 
   async function fetchArticles(): Promise<null | ArticleBase[]> {
     const q: SearchQuery = {
@@ -38,23 +60,30 @@
     }
   }
 
-  onMount(() => {
+  $: startScroll(articleListContainer);
+
+  onMount(async () => {
+    if (!browser) return;
     articles = fetchArticles();
+    await articles;
+  });
+
+  onDestroy(() => {
+    clearInterval(scrollIntervalID);
   });
 </script>
 
-<main
-  class="
-    flex w-full
-    bg-surface-100 dark:bg-surface-800
-"
->
+<main class="flex w-full bg-surface-100 dark:bg-surface-800">
   {#await articles}
     <Loader text="Loading articles for dashboard" />
   {:then articleList}
     {#if articleList}
       <div class="flex h-full w-full p-8">
+        <!-- svelte-ignore a11y-mouse-events-have-key-events -->
         <div
+          on:mouseover={() => (hovering = true)}
+          on:mouseout={() => (hovering = false)}
+          bind:this={articleListContainer}
           class="
           flex flex-col shrink-0
           w-3/5 h-full pr-8
