@@ -18,15 +18,12 @@
         p-2 m-2
         aspect-square
 
-        flex flex-col justify-center items-center gap-4
+        flex flex-col justify-around items-center
 
+        border-t-2 border-b-2
         border-primary-500/50
 
-        border-t-2
-        border-b-2
-
-        even:border-l-2
-        odd:border-r-2
+        even:border-l-2 odd:border-r-2
 
         [&:nth-child(1)]:border-t-0
         [&:nth-child(2)]:border-t-0
