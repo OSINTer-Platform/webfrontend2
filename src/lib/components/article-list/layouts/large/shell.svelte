@@ -5,8 +5,6 @@
 
 	space-y-8
 	sm:space-y-4
-
-	overflow-auto
 "
 >
   <slot />
