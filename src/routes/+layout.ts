@@ -5,7 +5,7 @@ import type { Collection, User } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
 
 export const load: LayoutLoad = async ({ fetch, url }) => {
-  const pagesWithSidebar = ["/feed", "/article", "/topic"];
+  const pagesWithSidebar = ["/feed", "/article", "/topic", "/dashboard"];
 
   const getUserObject = async (): Promise<User | null> => {
     const r = await fetch(`${PUBLIC_API_BASE}/auth/status`);
@@ -56,6 +56,7 @@ export const load: LayoutLoad = async ({ fetch, url }) => {
     alreadyRead: updatable(updateAlreadyRead),
     userCollections: updatable(updateCollectionList),
 
+    topbar: !url.pathname.startsWith("/dashboard"),
     burgerMenu: url.pathname !== "/",
     customSidebar: pagesWithSidebar.some((path) =>
       url.pathname.startsWith(path)

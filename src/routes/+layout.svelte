@@ -37,12 +37,14 @@
 
 <div class="h-screen overflow-hidden flex flex-col" class:dark={$darkMode}>
   <Modals />
-  <div class="z-40 relative">
-    <TopBar
-      customSidebar={data.customSidebar}
-      burgerMenu={data.burgerMenu}
-      user={data.user}
-    />
-  </div>
+  {#if data.topbar}
+    <div class="z-40 relative">
+      <TopBar
+        customSidebar={data.customSidebar}
+        burgerMenu={data.burgerMenu}
+        user={data.user}
+      />
+    </div>
+  {/if}
   <slot />
 </div>

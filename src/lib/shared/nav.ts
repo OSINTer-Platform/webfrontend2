@@ -9,6 +9,7 @@ import {
   faSitemap,
   faQuestion,
   faArrowTrendUp,
+  faChartSimple,
 } from "@fortawesome/free-solid-svg-icons/index";
 
 export const navItems: {
@@ -29,6 +30,12 @@ export const navItems: {
         "Blog which will contain updates on the direction for OSINTer",
       route: "/blog",
       icon: faBullhorn,
+    },
+    {
+      title: "Dashboard",
+      description: "Dashboard of news in OSINTer",
+      route: "/dashboard",
+      icon: faChartSimple,
     },
   ],
   lists: [
