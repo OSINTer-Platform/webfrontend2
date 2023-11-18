@@ -6,20 +6,16 @@ export function scaleCoords(
   articles: MLArticle[],
   canvasWidth: number,
   canvasHeight: number,
-  margin: number = 0.025
+  margin: number = 0.05
 ) {
-  const aspectRatio = canvasWidth / canvasHeight;
-  const xMargin = margin;
-  const yMargin = margin * aspectRatio;
+  const startX = canvasWidth - (canvasWidth - canvasHeight) / 2;
+  const stopX = canvasWidth - startX;
 
   const xDomain = d3.extent(articles, (a) => a.ml.coordinates[0]) as [
     number,
     number
   ];
-  const xScale = d3
-    .scaleLinear()
-    .domain(xDomain)
-    .range([canvasWidth * xMargin, canvasWidth * (1 - xMargin)]);
+  const xScale = d3.scaleLinear().domain(xDomain).range([startX, stopX]);
 
   const yDomain = d3.extent(articles, (a) => a.ml.coordinates[1]) as [
     number,
@@ -28,7 +24,7 @@ export function scaleCoords(
   const yScale = d3
     .scaleLinear()
     .domain(yDomain)
-    .range([canvasHeight * (1 - yMargin), canvasHeight * yMargin]);
+    .range([canvasHeight * (1 - margin), canvasHeight * margin]);
 
   const scaledArticles: MLArticle[] = [];
 
