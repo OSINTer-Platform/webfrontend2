@@ -1,3 +1,17 @@
+* {
+  &::-webkit-scrollbar {
+    width: 4px;
+
+    border: none;
+    @apply bg-surface-300 dark:bg-surface-600;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 999px;
+    @apply bg-surface-400 dark:bg-surface-300;
+  }
+}
+
 .absolute-grid {
   @apply grid grid-cols-1;
 
@@ -101,7 +115,7 @@ label.input {
   @apply capitalize font-light dark:font-medium text-sm
 	pointer-events-none
 	absolute left-4 top-6
-	transition-colors transition-transform
+	transition-all
 	dark:text-white;
 
   transform-origin: 0 50%;
