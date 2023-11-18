@@ -54,7 +54,7 @@
                   "New feed",
                   sanitizeQuery(searchQuery),
                   "feed",
-                  true
+                  "current"
                 );
               }}><Fa icon={faPlus} /></button
             >

@@ -29,7 +29,7 @@
   } = {
     feeds: initiateFeedCreation,
     collections: async () => {
-      await createItem("New Collection", [], "collection", true);
+      await createItem("New Collection", [], "collection", "current");
       location.reload();
     },
   };
@@ -49,7 +49,7 @@
       modalContent: {
         searchText: "Create feed",
         searchAction: async (query: SearchQuery) => {
-          await createItem("New Feed", sanitizeQuery(query), "feed", true);
+          await createItem("New Feed", sanitizeQuery(query), "feed", "current");
           modalState.set({
             modalType: null,
             modalContent: null,

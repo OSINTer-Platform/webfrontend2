@@ -25,7 +25,12 @@
 
     const fullCluster: Cluster = await r.json();
 
-    createItem(fullCluster.title, fullCluster.documents, "collection", true);
+    createItem(
+      fullCluster.title,
+      fullCluster.documents,
+      "collection",
+      "current"
+    );
   }
 </script>
 

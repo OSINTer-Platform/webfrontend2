@@ -27,7 +27,7 @@
                 data.cluster.title,
                 data.cluster.documents,
                 "collection",
-                true
+                "current"
               );
             },
           },

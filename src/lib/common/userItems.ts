@@ -27,24 +27,26 @@ export const removeable = (user: User | null, item: ItemBase) => {
   return true;
 };
 
+type NavDest = "none" | "current" | "new";
+
 export function createItem(
   feedName: string,
   contents: SearchQuery,
   type: "feed",
-  navigate: boolean
+  navigate?: NavDest,
 ): Promise<Feed | undefined>;
 export function createItem(
   feedName: string,
   contents: string[],
   type: "collection",
-  navigate: boolean
+  navigate?: NavDest,
 ): Promise<Collection | undefined>;
 
 export async function createItem(
   feedName: string,
   contents: SearchQuery | string[],
   type: "feed" | "collection",
-  navigate: boolean = false
+  navigate: NavDest = "none",
 ): Promise<Feed | Collection | undefined> {
   const r = await fetch(
     `${PUBLIC_API_BASE}/my/${type}s/${encodeURIComponent(feedName)}`,
@@ -59,7 +61,10 @@ export async function createItem(
 
   if (r.ok) {
     const item: Feed | Collection = await r.json();
-    if (navigate) await goto(`/feed/${item._id}`);
+
+    if (navigate === "current") await goto(`/feed/${item._id}`);
+    else if (navigate === "new") window.open(`/feed/${item._id}`, "_blank");
+
     return item;
   } else {
     console.error(
@@ -72,20 +77,20 @@ export function updateItem(
   itemId: string,
   contents: SearchQuery,
   type: "feed",
-  navigate: boolean
+  navigate?: NavDest
 ): Promise<Feed | undefined>;
 export function updateItem(
   itemId: string,
   contents: string[],
   type: "collection",
-  navigate: boolean
+  navigate?: NavDest
 ): Promise<Collection | undefined>;
 
 export async function updateItem(
   itemId: string,
   contents: SearchQuery | string[],
   type: "feed" | "collection",
-  navigate: boolean = false
+  navigate: NavDest = "none"
 ): Promise<Feed | Collection | undefined> {
   const r = await fetch(`${PUBLIC_API_BASE}/user-items/${type}/${itemId}`, {
     method: "PUT",
@@ -97,7 +102,10 @@ export async function updateItem(
 
   if (r.ok) {
     const item: Feed | Collection = await r.json();
-    if (navigate) await goto(`/feed/${itemId}`);
+
+    if (navigate === "current") await goto(`/feed/${itemId}`);
+    else if (navigate === "new") window.open(`/feed/${itemId}`, "_blank");
+
     return item;
   } else {
     console.error(
@@ -109,7 +117,7 @@ export async function updateItem(
 export const changeName = async (
   item: ItemBase,
   newName: string,
-  navigate: boolean = false
+  navigate: NavDest = "none"
 ): Promise<boolean> => {
   const r = await fetch(
     `${PUBLIC_API_BASE}/user-items/${
@@ -121,7 +129,8 @@ export const changeName = async (
   );
 
   if (r.ok) {
-    if (navigate) await goto(`/feed/${item._id}`);
+    if (navigate === "current") await goto(`/feed/${item._id}`);
+    else if (navigate === "new") window.open(`/feed/${item._id}`, "_blank");
     return true;
   } else {
     console.error(

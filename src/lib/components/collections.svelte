@@ -27,8 +27,7 @@
     const newCollection = await updateItem(
       collectionId,
       contents,
-      "collection",
-      false
+      "collection"
     );
 
     if (newCollection) {

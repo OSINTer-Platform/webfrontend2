@@ -60,13 +60,13 @@
       icon: faFileClipboard,
       action: async () => {
         if (isFeed(data.currentItem)) {
-          await createItem("Copied Feed", data.currentItem, "feed", true);
+          await createItem("Copied Feed", data.currentItem, "feed", "current");
         } else if (isCollection(data.currentItem)) {
           await createItem(
             "Copied Collection",
             data.currentItem.ids,
             "collection",
-            true
+            "current"
           );
         }
         location.reload();
@@ -82,8 +82,7 @@
               const r = await updateItem(
                 data.currentItem._id,
                 [],
-                "collection",
-                false
+                "collection"
               );
               if (r) location.reload();
             },
@@ -105,8 +104,7 @@
                     await updateItem(
                       data.currentItem._id,
                       sanitizeQuery(query),
-                      "feed",
-                      false
+                      "feed"
                     );
                     modalState.set({
                       modalType: null,
@@ -178,7 +176,7 @@
   const changeTitle = async () => {
     if (title !== data.currentItem.name) {
       title = title.trim();
-      await changeName(data.currentItem, title, false);
+      await changeName(data.currentItem, title);
       location.reload();
     }
   };
