@@ -49,7 +49,7 @@ export async function createItem(
   contents: SearchQuery | string[],
   type: "feed" | "collection",
   navigate: NavDest = "none",
-  subscribe: boolean = false
+  subscribe: boolean = true
 ): Promise<Feed | Collection | undefined> {
   const r = await fetch(
     `${PUBLIC_API_BASE}/my/${type}s/${encodeURIComponent(
