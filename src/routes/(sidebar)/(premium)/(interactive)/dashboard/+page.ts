@@ -17,6 +17,8 @@ export const load: PageLoad = async ({ fetch }) => {
   }
 
   return {
+    customSidebar: true,
+    topbar: false,
     clusters: getClusters(),
   };
 };

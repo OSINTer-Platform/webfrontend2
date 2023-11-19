@@ -56,10 +56,6 @@ export const load: LayoutLoad = async ({ fetch, url }) => {
     alreadyRead: updatable(updateAlreadyRead),
     userCollections: updatable(updateCollectionList),
 
-    topbar: !url.pathname.startsWith("/dashboard"),
-    burgerMenu: url.pathname !== "/",
-    customSidebar: pagesWithSidebar.some((path) =>
-      url.pathname.startsWith(path)
-    ),
+    customSidebar: false,
   };
 };

@@ -16,9 +16,8 @@
   import LogoFull from "$assets/LogoFull.svelte";
   import ListMenu from "$com/listMenu.svelte";
   import LightSwitch from "$com/lightSwitch.svelte";
+  import { page } from "$app/stores";
 
-  export let customSidebar = false;
-  export let burgerMenu = false;
   export let user: User | null;
 
   let socials: Array<NavItem>;
@@ -58,12 +57,15 @@
 >
   <div class="flex items-center gap-2">
     <!-- Hamburger Menu -->
-    {#if burgerMenu}
+    {#if $page.data.burgerMenu ?? true}
       <button
         on:click={() => {
           $sideOpen = !$sideOpen;
         }}
-        class="btn xl:!hidden p-2 rounded-xl {customSidebar ? '' : 'sm:hidden'}"
+        class="
+          btn xl:!hidden p-2 rounded-xl
+          {$page.data.customSidebar ? '' : 'sm:hidden'}
+        "
       >
         <Fa icon={faBars} class="text-xl" />
       </button>

@@ -1,12 +1,10 @@
 <script lang="ts">
-  import type { LayoutData } from "./$types";
   import AppSwitcher from "$com/sidebar/nav.svelte";
-
-  export let data: LayoutData;
+  import { page } from "$app/stores";
 </script>
 
 <div class="flex flex-row flex-grow items-stretch min-h-0 relative">
-  {#if !data.customSidebar}
+  {#if !$page.data.customSidebar}
     <AppSwitcher />
   {/if}
   <slot />

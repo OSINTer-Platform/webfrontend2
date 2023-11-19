@@ -10,6 +10,7 @@
   import { modalState, darkMode } from "$state/state";
   import { init as initApm } from "@elastic/apm-rum";
   import { env } from "$env/dynamic/public";
+  import { page } from "$app/stores";
 
   export let data: LayoutData;
 
@@ -37,13 +38,9 @@
 
 <div class="h-screen overflow-hidden flex flex-col" class:dark={$darkMode}>
   <Modals />
-  {#if data.topbar}
+  {#if $page.data.topbar ?? true}
     <div class="z-40 relative">
-      <TopBar
-        customSidebar={data.customSidebar}
-        burgerMenu={data.burgerMenu}
-        user={data.user}
-      />
+      <TopBar user={data.user} />
     </div>
   {/if}
   <slot />
