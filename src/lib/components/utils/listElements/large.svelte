@@ -57,7 +57,7 @@
     <img
       class="
         w-full h-full
-        object-cover
+        object-cover overflow-hidden
         rounded-md
       "
       loading="lazy"
@@ -68,7 +68,7 @@
       <img
         class="
           w-full h-full
-          object-cover
+          object-cover overflow-hidden
           rounded-md
         "
         loading="lazy"
