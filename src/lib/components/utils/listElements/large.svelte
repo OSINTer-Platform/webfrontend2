@@ -157,7 +157,11 @@
     {#if tags.length > 0}
       <footer class="flex flex-wrap gap-2 mt-4">
         {#each tags as tag}
-          <p
+          <a
+            on:click|stopPropagation
+            href="/feed/search?sort_by=publish_date&search_term={encodeURIComponent(
+              tag
+            )}"
             class="
               py-1 px-3 rounded-full
               shrink-0
@@ -165,10 +169,13 @@
               border border-primary-500/50
               uppercase text-xs dark:font-bold
               dark:text-white/80
+
+              hover:bg-primary-400/60 hover:dark:bg-primary-700/75
+              transition-colors
             "
           >
             {tag}
-          </p>
+          </a>
         {/each}
       </footer>
     {/if}

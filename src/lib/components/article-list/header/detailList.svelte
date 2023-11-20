@@ -3,7 +3,11 @@
   import Fa from "svelte-fa";
 
   export let options: {
-    [key: string]: null | undefined | string | Array<string>;
+    [key: string]:
+      | null
+      | undefined
+      | string
+      | Array<string | { content: string; href: string }>;
   };
   export let mono = true;
 
@@ -37,9 +41,22 @@
         <div class:max-h-48={!showAll[name]} class="relative">
           <div class="h-full overflow-hidden flex flex-wrap gap-3">
             {#each value as subValue}
-              <p class="{boxClass} {mono ? 'uppercase' : 'capitalize'}">
-                {subValue}
-              </p>
+              {#if typeof subValue === "string"}
+                <p class="{boxClass} {mono ? 'uppercase' : 'capitalize'}">
+                  {subValue}
+                </p>
+              {:else}
+                <a
+                  href={subValue.href}
+                  class="
+                    {boxClass} {mono ? 'uppercase' : 'capitalize'}
+                    hover:bg-primary-400/60 hover:dark:bg-primary-700/75
+                    transition-colors
+                  "
+                >
+                  {subValue.content}
+                </a>
+              {/if}
             {/each}
           </div>
 

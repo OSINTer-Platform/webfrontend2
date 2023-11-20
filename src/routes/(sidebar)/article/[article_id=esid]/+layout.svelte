@@ -25,10 +25,17 @@
   export let data: LayoutData;
 
   function getTags(tags: ArticleTags) {
-    const extractedTags: { [key: string]: string[] } = {};
+    const extractedTags: {
+      [key: string]: string[] | { content: string; href: string }[];
+    } = {};
 
     if (tags.automatic.length > 1) {
-      extractedTags["Automatic Tags"] = tags.automatic;
+      extractedTags["Automatic Tags"] = tags.automatic.map((tag) => ({
+        content: tag,
+        href: `/feed/search?sort_by=publish_date&search_term=${encodeURIComponent(
+          tag
+        )}`,
+      }));
     }
 
     if (tags.interresting.length > 0) {
