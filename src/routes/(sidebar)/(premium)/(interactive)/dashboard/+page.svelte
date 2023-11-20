@@ -12,6 +12,7 @@
   import { toUrl } from "$lib/common/searchQuery";
   import { browser } from "$app/environment";
   import { error } from "@sveltejs/kit";
+  import { modalState } from "$shared/state/state";
 
   export let data: PageData;
 
@@ -31,7 +32,7 @@
     if (scrollIntervalID) clearInterval(scrollIntervalID);
 
     scrollIntervalID = setInterval(() => {
-      if (hovering) return;
+      if (hovering || $modalState.modalType) return;
       container?.scrollTo(0, container.scrollTop + 1);
       if (
         container.scrollTop + container.clientHeight ==
