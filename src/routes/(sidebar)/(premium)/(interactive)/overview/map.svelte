@@ -26,6 +26,7 @@
     d3Selection,
     d3Zoom,
     d3Drag,
+    closeArticles,
   } from "./state";
 
   import { handlePointerModeChange, scalePointerPosition } from "./events";
@@ -96,6 +97,23 @@
     $d3Selection?.on("mousemove", (event) =>
       recordPointerPosition(event.layerX, event.layerY)
     );
+
+    $d3Selection?.on("click", () => {
+      if ($closeArticles.length < 1) return;
+
+      const clusters: { [key: string]: number } = {};
+
+      for (const article of $closeArticles) {
+        const cluster = article.article.ml.cluster.toString();
+        clusters[cluster] = (clusters[cluster] ?? 0) + 1;
+      }
+
+      const primaryCluster = Object.entries(clusters).sort(
+        (a, b) => b[1] - a[1]
+      )[0][0];
+
+      window.open(`/topic/${primaryCluster}`, "_blank");
+    });
 
     d3Zoom.set(
       d3

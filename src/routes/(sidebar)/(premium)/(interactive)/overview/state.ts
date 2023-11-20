@@ -161,7 +161,7 @@ export const toolTips = derived(closeArticles, ($closeArticles) => {
   const titles: string[] = [];
 
   $closeArticles.slice(0, 10).forEach((a) => {
-    titles.push(a.article.title);
+    titles.push(`${a.article.ml.cluster}: ${a.article.title}`);
   });
 
   return titles;
