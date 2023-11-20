@@ -45,8 +45,7 @@
         bg-surface-200
         dark:bg-surface-900
 
-        dark:border-b
-        dark:border-surface-400
+        border-b border-surface-300 dark:border-surface-400
 
         sm:px-14
         p-6

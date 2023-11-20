@@ -104,8 +104,7 @@
 	bg-surface-200
 	dark:bg-surface-900
 
-	dark:border-b
-	dark:border-surface-400
+	border-b border-surface-300 dark:border-surface-400
 
 	p-6
 	sm:p-12
