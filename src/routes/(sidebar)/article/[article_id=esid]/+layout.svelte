@@ -38,8 +38,8 @@
       }));
     }
 
-    if (tags.interresting.length > 0) {
-      for (const { name, values } of tags.interresting) {
+    if (tags.interesting.length > 0) {
+      for (const { name, values } of tags.interesting) {
         extractedTags[name.toUpperCase()] = values;
       }
     }
