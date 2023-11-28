@@ -34,11 +34,19 @@
 </svelte:head>
 
 <HeaderShell
-  title={"Stored articles"}
+  title={"Recently viewed articles"}
   description={"A list of the articles you have recently viewed in OSINTer"}
   searchAble={false}
   {modOptions}
   bind:searchValue={$localSearch}
 />
 
-<List articles={$filteredArticles} tintReadArticles={false} />
+<List
+  articles={$filteredArticles}
+  tintReadArticles={false}
+  emptyMessage={{
+    title: "Well, no recently viewed articles",
+    description:
+      "Navigate to the feed section to start exploring the articles, and the ones you read on this devices will appear here",
+  }}
+/>
