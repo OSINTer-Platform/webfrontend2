@@ -11,7 +11,8 @@
 
   $: clusterCount = articles.reduce(
     (accumulator: { [key: string]: number }, article) => {
-      if (!article.ml?.cluster || article.ml.cluster == -1) return accumulator;
+      if (!article.ml?.cluster || article.ml.cluster.length < 1)
+        return accumulator;
       const clusterNr = article.ml.cluster.toString();
 
       if (!Object.keys(clusterTable).includes(clusterNr)) return accumulator;

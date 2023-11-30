@@ -67,7 +67,7 @@
   let modOptions: Array<HeaderModOptions>;
 
   $: modOptions = [
-    ...(data.article.ml && data.article.ml.cluster >= 0
+    ...(data.article.ml && data.article.ml.cluster.length > 0
       ? [
           {
             title: "Go to article cluster",

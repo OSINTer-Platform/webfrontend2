@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { MLArticle } from "$shared/types/api";
+  import type { ClusterBase, MLArticle } from "$shared/types/api";
   import type { Readable } from "svelte/store";
 
   import * as d3 from "d3";
@@ -20,6 +20,7 @@
     mapTransform,
     selectionBoundaries,
     articles as articleStore,
+    clusters as clusterStore,
     articleFilter,
     searchedSelectedArticles,
     toolTips,
@@ -27,6 +28,7 @@
     d3Zoom,
     d3Drag,
     closeArticles,
+    clusterNumbers,
   } from "./state";
 
   import { handlePointerModeChange, scalePointerPosition } from "./events";
@@ -39,6 +41,8 @@
   const selectionEnd = selectionBoundaries.end;
 
   export let articles: Readable<MLArticle[]>;
+  export let clusters: ClusterBase[];
+
   storeListeners.push(
     articles.subscribe((articleList) => articleStore.set(articleList))
   );
@@ -54,7 +58,13 @@
 
     clearAndScale([overlayCtx, ctx], $mapTransform);
 
-    drawArticlePoints(ctx, $articleFilter, $dotSize, $darkMode);
+    drawArticlePoints(
+      ctx,
+      $articleFilter,
+      $clusterNumbers,
+      $dotSize,
+      $darkMode
+    );
 
     if ($selectionStart && $selectionEnd) {
       drawSelectionBox(overlayCtx, $selectionStart, $selectionEnd);
@@ -62,6 +72,7 @@
       drawArticlePoints(
         overlayCtx,
         $searchedSelectedArticles.map((article) => ({ article, show: true })),
+        $clusterNumbers,
         $dotSize,
         $darkMode,
         "#ffffff"
@@ -90,6 +101,7 @@
   }
 
   onMount(() => {
+    clusterStore.set(clusters);
     setTimeout(drawCanvas, 200);
 
     d3Selection.set(d3.select("#map-overlay"));

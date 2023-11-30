@@ -45,7 +45,7 @@
         goto(`/article/${mainArticle.id}/similar`);
       },
     },
-    ...(mainArticle.ml && mainArticle.ml.cluster >= 0
+    ...(mainArticle.ml && mainArticle.ml.cluster.length > 0
       ? [
           {
             icon: faSitemap,

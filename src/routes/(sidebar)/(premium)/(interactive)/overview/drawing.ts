@@ -55,14 +55,13 @@ export function clearAndScale(
 export function drawArticlePoints(
   ctx: CanvasRenderingContext2D,
   filteredArticles: { article: MLArticle; show: boolean }[],
+  clusterNumbers: { [key: string]: number },
   pointSize: number,
   darkMode: boolean,
   dotColor: null | string = null
 ) {
-  const clusterMax = d3.max(
-    filteredArticles,
-    ({ article }) => article.ml.cluster
-  ) as number;
+  const clusterMax = d3.max(Object.values(clusterNumbers)) as number;
+
   const colorScale = d3
     .scaleSequential()
     .domain([0, clusterMax])
@@ -76,8 +75,8 @@ export function drawArticlePoints(
     } else {
       if (show) {
         ctx.fillStyle =
-          article.ml.cluster >= 0
-            ? colorScale(article.ml.cluster)
+          article.ml.cluster.length > 0 && article.ml.cluster in clusterNumbers
+            ? colorScale(clusterNumbers[article.ml.cluster])
             : darkMode
             ? "#ffffff"
             : "#000000";

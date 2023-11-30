@@ -26,7 +26,7 @@ export interface ArticleBase {
   summary?: string;
 
   ml?: {
-    cluster: number;
+    cluster: string;
     coordinates: [number, number];
   };
 
@@ -47,7 +47,7 @@ export interface MLArticle {
   profile: string;
   publish_date: string;
   ml: {
-    cluster: number;
+    cluster: string;
     coordinates: [number, number];
   };
 }

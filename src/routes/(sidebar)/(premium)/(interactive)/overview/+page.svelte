@@ -134,7 +134,7 @@
         text={`Loading articles for generating the map.\nThis might take a while`}
       />
     {:then articles}
-      <Map {articles} />
+      <Map {articles} clusters={data.clusters} />
     {:catch error}
       <div
         class="h-full mx-auto px-8 xl:max-w-5xl max-w-2xl flex flex-col justify-center items-center text-center dark:text-white"

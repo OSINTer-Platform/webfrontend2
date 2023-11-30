@@ -1,5 +1,5 @@
 import type { WritableWithDefault } from "$lib/common/customStores";
-import type { MLArticle } from "$shared/types/api";
+import type { ClusterBase, MLArticle } from "$shared/types/api";
 import type { Writable } from "svelte/store";
 
 import * as d3 from "d3";
@@ -82,10 +82,15 @@ function filterArticles(
 
 // Stores derived from scaled articles and state Stores
 export const articles: Writable<MLArticle[]> = writable([]);
+export const clusters: Writable<ClusterBase[]> = writable([]);
 
 export const articleProfiles = derived(articles, ($articles) => [
   ...new Set($articles.map((a) => a.profile).sort()),
 ]);
+
+export const clusterNumbers = derived(clusters, ($clusters) =>
+  Object.fromEntries($clusters.map((cluster) => [cluster.id, cluster.nr]))
+);
 
 export const scaledArticles = derived(
   [articles, mapDimensions],
@@ -157,15 +162,19 @@ export const closeArticles = derived(
   }
 );
 
-export const toolTips = derived(closeArticles, ($closeArticles) => {
-  const titles: string[] = [];
+export const toolTips = derived(
+  [closeArticles, clusterNumbers],
+  ([$closeArticles, $clusterNumbers]) => {
+    const titles: string[] = [];
 
-  $closeArticles.slice(0, 10).forEach((a) => {
-    titles.push(`${a.article.ml.cluster}: ${a.article.title}`);
-  });
+    $closeArticles.slice(0, 10).forEach((a) => {
+      const clusterNr = $clusterNumbers[a.article.ml.cluster] ?? -1;
+      titles.push(`${clusterNr}: ${a.article.title}`);
+    });
 
-  return titles;
-});
+    return titles;
+  }
+);
 
 // D3 related
 export const d3Selection: Writable<d3.Selection<
