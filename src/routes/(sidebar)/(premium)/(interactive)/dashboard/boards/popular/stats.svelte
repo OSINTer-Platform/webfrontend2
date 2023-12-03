@@ -6,18 +6,19 @@
   export let clusters: ClusterBase[];
 
   $: clusterTable = Object.fromEntries(
-    clusters.map((cluster) => [cluster.nr.toString(), cluster])
+    clusters.map((cluster) => [cluster.id, cluster])
   );
 
   $: clusterCount = articles.reduce(
     (accumulator: { [key: string]: number }, article) => {
       if (!article.ml?.cluster || article.ml.cluster.length < 1)
         return accumulator;
-      const clusterNr = article.ml.cluster.toString();
 
-      if (!Object.keys(clusterTable).includes(clusterNr)) return accumulator;
+      const clusterId = article.ml.cluster;
 
-      accumulator[clusterNr] = (accumulator[clusterNr] ?? 0) + 1;
+      if (!Object.keys(clusterTable).includes(clusterId)) return accumulator;
+
+      accumulator[clusterId] = (accumulator[clusterId] ?? 0) + 1;
 
       return accumulator;
     },
@@ -27,7 +28,7 @@
   $: commonClusters = Object.entries(clusterCount)
     .sort((a, b) => b[1] - a[1])
     .filter(([_, count]) => count > 3)
-    .map(([clusterNr, count]) => ({ cluster: clusterTable[clusterNr], count }));
+    .map(([clusterId, count]) => ({ cluster: clusterTable[clusterId], count }));
 
   $: readArticles = [...articles].sort((a, b) => b.read_times - a.read_times);
 </script>

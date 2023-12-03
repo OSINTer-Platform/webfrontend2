@@ -3,9 +3,9 @@
   import type { PageData } from "./$types";
 
   import Loader from "$com/loader.svelte";
-  import ArticleList from "$com/article-list/main.svelte";
-  import Stats from "./stats.svelte";
   import DateSlider from "./dateSlider.svelte";
+
+  import BoardPopular from "./boards/popular/index.svelte";
 
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { onDestroy, onMount } from "svelte";
@@ -76,35 +76,13 @@
   {#await articles}
     <Loader text="Loading articles for dashboard" />
   {:then articleList}
-    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <div
+    <BoardPopular
       on:mouseenter={() => (hovering = true)}
       on:mouseleave={() => (hovering = false)}
-      bind:this={articleListContainer}
-      class="
-        flex flex-col shrink-0
-        w-3/5 h-full pr-8
-        border-r border-tertiary-500 dark:border-surface-400
-
-        overflow-y-auto
-        "
-    >
-      <ArticleList
-        tintReadArticles={false}
-        articles={articleList.slice(0, 1500)}
-        layout="large"
-      />
-    </div>
-
-    <div
-      class="
-        flex flex-col gap-6
-        w-2/5 h-full pl-8
-      "
-    >
-      <Stats clusters={data.clusters} articles={articleList} />
-    </div>
-
+      bind:articleListContainer
+      {articleList}
+      clusters={data.clusters}
+    />
     <DateSlider
       bind:date={startDate}
       on:change={() => (articles = fetchArticles())}
