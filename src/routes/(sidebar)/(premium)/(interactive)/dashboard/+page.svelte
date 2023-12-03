@@ -35,8 +35,8 @@
       if (hovering || $modalState.modalType) return;
       container?.scrollTo(0, container.scrollTop + 1);
       if (
-        container.scrollTop + container.clientHeight ==
-        container.scrollHeight
+        container.scrollTop + container.clientHeight >
+        container.scrollHeight - 20
       )
         container.scroll(0, 0);
     }, 20);
