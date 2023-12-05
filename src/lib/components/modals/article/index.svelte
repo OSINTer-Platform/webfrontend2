@@ -86,44 +86,40 @@
 
 <Modal class="w-[80vw] h-[90vh] bg-surface-200 dark:bg-surface-700">
   {#key $modalState}
-    <article
-      class="
-		bg-surface-100
-		dark:bg-surface-800
+    <main class="w-full h-full overflow-y-auto">
+      <article
+        class="
+          py-8 px-16 mx-auto max-w-[100ch]
+          bg-surface-100 dark:bg-surface-800
+      "
+        in:fly|local={{
+          duration: 400,
+          easing: quintInOut,
+          x: switchDirection === "right" ? 200 : -200,
+        }}
+        out:fly|local={{
+          duration: 200,
+          easing: quintInOut,
+          x: switchDirection === "left" ? 200 : -200,
+        }}
+      >
+        <ArticleRender
+          {article}
+          {articleCategories}
+          header={true}
+          {buttonActions}
+        />
 
-		py-8
-		px-16
-		mx-auto
-
-		max-w-[100ch]
-	"
-      in:fly|local={{
-        duration: 400,
-        easing: quintInOut,
-        x: switchDirection === "right" ? 200 : -200,
-      }}
-      out:fly|local={{
-        duration: 200,
-        easing: quintInOut,
-        x: switchDirection === "left" ? 200 : -200,
-      }}
-    >
-      <ArticleRender
-        {article}
-        {articleCategories}
-        header={true}
-        {buttonActions}
-      />
-
-      {#if similarArticles}
-        {#await similarArticles}
-          <Loader text="Loading similar articles" />
-        {:then articles}
-          {#if articles.length > 0}
-            <Similar {articles} mainArticle={article} />
-          {/if}
-        {/await}
-      {/if}
-    </article>
+        {#if similarArticles}
+          {#await similarArticles}
+            <Loader text="Loading similar articles" />
+          {:then articles}
+            {#if articles.length > 0}
+              <Similar {articles} mainArticle={article} />
+            {/if}
+          {/await}
+        {/if}
+      </article>
+    </main>
   {/key}
 </Modal>
