@@ -44,14 +44,16 @@
     const currentArticleNr = articleList.map((a) => a.id).indexOf(article.id);
     if (currentArticleNr < 0) return;
 
-    let newArticleId: string = article.id;
+    let newArticleId: string | undefined;
     if (keyName === "ArrowLeft") {
-      newArticleId = articleList[currentArticleNr - 1].id;
+      newArticleId = articleList[currentArticleNr - 1]?.id;
       switchDirection = "left";
     } else if (keyName === "ArrowRight") {
-      newArticleId = articleList[currentArticleNr + 1].id;
+      newArticleId = articleList[currentArticleNr + 1]?.id;
       switchDirection = "right";
     }
+
+    if (!newArticleId) return;
 
     await spawnArticleModal(newArticleId, articleList);
     await new Promise((r) => setTimeout(r, 400)); // Wait for transitions
