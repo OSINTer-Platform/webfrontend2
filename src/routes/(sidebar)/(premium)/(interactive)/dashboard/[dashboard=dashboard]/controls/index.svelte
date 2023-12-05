@@ -1,5 +1,6 @@
 <script lang="ts">
   import DateSlider from "./dateSlider.svelte";
+  import Navigator from "./navigator.svelte";
 
   export let startDate: Date;
 </script>
@@ -12,4 +13,5 @@
 "
 >
   <DateSlider on:change date={startDate} />
+  <Navigator />
 </aside>
