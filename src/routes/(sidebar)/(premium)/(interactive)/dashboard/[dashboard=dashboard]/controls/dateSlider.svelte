@@ -27,7 +27,7 @@
 
 <div
   class="
-  grow flex rounded-full
+  shrink grow flex rounded-full
 
   bg-black opacity-5
   transition-color duration-300
@@ -42,7 +42,7 @@
     max={maxDate}
     step={1000 * 60 * 60 * 24}
     class="
-      grow h-2 my-4 mx-4
+      basis-0 min-w-0 shrink grow h-2 my-4 mx-4
 
       cursor-pointer
       appearance-none

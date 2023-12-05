@@ -78,7 +78,9 @@
   });
 </script>
 
-<main class="relative flex w-full p-8 bg-surface-100 dark:bg-surface-800">
+<main
+  class="relative flex w-full md:p-4 lg:p-8 bg-surface-100 dark:bg-surface-800"
+>
   {#await articles}
     <Loader text="Loading articles for dashboard" />
   {:then articleList}

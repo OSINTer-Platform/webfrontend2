@@ -7,7 +7,13 @@
 
 <aside
   class="
-  absolute bottom-4 left-20 right-20
+  absolute
+
+  bottom-2 left-2 right-2
+  sm:bottom-4 sm:left-5 sm:right-5
+  xl:left-10 xl:right-10
+  2xl:left-20 2xl:right-20
+
   flex gap-4
   [&:hover>div]:opacity-100
 "

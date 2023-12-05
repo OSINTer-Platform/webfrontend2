@@ -23,8 +23,7 @@
   bind:this={articleListContainer}
   class="
     flex flex-col shrink-0
-    w-full h-full pr-8
-    border-r border-tertiary-500 dark:border-surface-400
+    w-full h-full
 
     overflow-y-auto
     "

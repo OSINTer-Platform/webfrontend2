@@ -141,7 +141,7 @@
       <div>
         <h2
           class="
-            dark:text-white sm:text-4xl text-2xl
+            dark:text-white lg:text-4xl text-3xl
 
             {read ? 'opacity-75' : 'font-bold'}
             [&>strong]:font-semibold
@@ -153,7 +153,7 @@
 
         <p
           class="
-            text-lg
+            sm:text-lg md:text-base lg:text-lg
             {read ? 'font-light' : 'font-normal'}
             text-tertiary-900 dark:text-white/80
             [&>strong]:font-semibold
