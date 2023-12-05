@@ -5,7 +5,7 @@
   import Loader from "$com/loader.svelte";
   import DateSlider from "./dateSlider.svelte";
 
-  import BoardPopular from "./boards/popular/index.svelte";
+  import BoardTitle from "./boards/title/index.svelte";
 
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { onDestroy, onMount } from "svelte";
@@ -76,12 +76,11 @@
   {#await articles}
     <Loader text="Loading articles for dashboard" />
   {:then articleList}
-    <BoardPopular
+    <BoardTitle
       on:mouseenter={() => (hovering = true)}
       on:mouseleave={() => (hovering = false)}
       bind:articleListContainer
       {articleList}
-      clusters={data.clusters}
     />
     <DateSlider
       bind:date={startDate}
