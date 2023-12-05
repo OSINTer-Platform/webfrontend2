@@ -1,11 +1,13 @@
 <script lang="ts">
   import type { ArticleBase, SearchQuery } from "$shared/types/api";
   import type { PageData } from "./$types";
+  import type { Dashboards } from "$shared/types/internal";
 
   import Loader from "$com/loader.svelte";
   import DateSlider from "./dateSlider.svelte";
 
   import BoardTitle from "./boards/title/index.svelte";
+  import BoardPopular from "./boards/popular/index.svelte";
 
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { onDestroy, onMount } from "svelte";
@@ -23,6 +25,11 @@
   let hovering: boolean = false;
 
   let articles: Promise<ArticleBase[]> = new Promise((resolve) => resolve([]));
+
+  const dashboards: { [key in Dashboards]: any } = {
+    title: BoardTitle,
+    popular: BoardPopular,
+  };
 
   function startScroll(container: HTMLElement | null) {
     if (!container) return;
@@ -76,11 +83,13 @@
   {#await articles}
     <Loader text="Loading articles for dashboard" />
   {:then articleList}
-    <BoardTitle
+    <svelte:component
+      this={dashboards[data.dashboard]}
       on:mouseenter={() => (hovering = true)}
       on:mouseleave={() => (hovering = false)}
       bind:articleListContainer
       {articleList}
+      clusters={data.clusters}
     />
     <DateSlider
       bind:date={startDate}
