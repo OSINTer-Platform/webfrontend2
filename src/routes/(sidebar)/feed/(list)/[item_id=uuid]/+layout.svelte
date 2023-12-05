@@ -106,6 +106,8 @@
                       sanitizeQuery(query),
                       "feed"
                     );
+                    // Keept to avoid visual glitch with modal appearing and
+                    // then removed by the afterNavigate hook in root layout
                     modalState.set({
                       modalType: null,
                       modalContent: null,

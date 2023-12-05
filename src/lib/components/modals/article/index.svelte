@@ -67,7 +67,6 @@
     {
       title: "Read Article on OSINTer",
       action: () => {
-        $modalState = { modalType: null, modalContent: null };
         goto(`/article/${article.id}`);
       },
     },

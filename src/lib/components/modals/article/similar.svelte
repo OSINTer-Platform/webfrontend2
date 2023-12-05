@@ -12,7 +12,6 @@
     faSitemap,
   } from "@fortawesome/free-solid-svg-icons";
   import { goto } from "$app/navigation";
-  import { modalState } from "$shared/state/state";
 
   export let mainArticle: Article;
   export let articles: ArticleBase[];
@@ -41,7 +40,6 @@
       icon: faList,
       description: "See list of similar articles",
       action: () => {
-        $modalState = { modalType: null, modalContent: null };
         goto(`/article/${mainArticle.id}/similar`);
       },
     },

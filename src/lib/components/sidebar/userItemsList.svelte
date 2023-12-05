@@ -50,6 +50,8 @@
         searchText: "Create feed",
         searchAction: async (query: SearchQuery) => {
           await createItem("New Feed", sanitizeQuery(query), "feed", "current");
+          // Keept to avoid visual glitch with modal appearing and
+          // then removed by the afterNavigate hook in root layout
           modalState.set({
             modalType: null,
             modalContent: null,
@@ -69,7 +71,6 @@
         query: $page.data?.currentSearch,
         searchText: "Search articles",
         searchAction: (q) => {
-          modalState.set({ modalType: null, modalContent: null });
           goto(`/feed/search?${toUrl(q)}`);
         },
       },

@@ -11,6 +11,7 @@
   import { init as initApm } from "@elastic/apm-rum";
   import { env } from "$env/dynamic/public";
   import { page } from "$app/stores";
+  import { afterNavigate } from "$app/navigation";
 
   export let data: LayoutData;
 
@@ -30,6 +31,10 @@
         break;
     }
   }
+
+  afterNavigate(() => {
+    $modalState = { modalContent: null, modalType: null };
+  });
 </script>
 
 <svelte:window on:keydown={(e) => handleKeypress(e.key)} />
