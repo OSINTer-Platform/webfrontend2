@@ -4,7 +4,7 @@
   import type { Dashboards } from "$shared/types/internal";
 
   import Loader from "$com/loader.svelte";
-  import DateSlider from "./dateSlider.svelte";
+  import Controls from "./controls/index.svelte";
 
   import BoardTitle from "./boards/title/index.svelte";
   import BoardPopular from "./boards/popular/index.svelte";
@@ -18,11 +18,10 @@
 
   export let data: PageData;
 
-  let startDate = new Date(new Date().setDate(new Date().getDate() - 7));
-
   let articleListContainer: HTMLDivElement | null = null;
   let scrollIntervalID: any = null;
   let hovering: boolean = false;
+  let startDate: Date = new Date(new Date().setDate(new Date().getDate() - 7));
 
   let articles: Promise<ArticleBase[]> = new Promise((resolve) => resolve([]));
 
@@ -90,9 +89,6 @@
       bind:articleListContainer
       {articleList}
     />
-    <DateSlider
-      bind:date={startDate}
-      on:change={() => (articles = fetchArticles())}
-    />
+    <Controls bind:startDate on:change={() => (articles = fetchArticles())} />
   {/await}
 </main>

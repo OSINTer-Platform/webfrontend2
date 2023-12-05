@@ -27,11 +27,9 @@
 
 <div
   class="
-  absolute bottom-4 left-20 right-20
-  flex
-  rounded-full
+  grow flex rounded-full
 
-  bg-black/0 hover:bg-black/90 [&:hover>input]:opacity-100
+  bg-black opacity-5
   transition-color duration-300
 "
 >
@@ -52,7 +50,6 @@
       rounded-full accent-primary-500
       bg-primary-800 hover:bg-primary-600
 
-      opacity-10
       transition-all duration-300
       peer
     "
