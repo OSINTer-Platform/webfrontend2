@@ -89,7 +89,6 @@
       on:mouseleave={() => (hovering = false)}
       bind:articleListContainer
       {articleList}
-      clusters={data.clusters}
     />
     <DateSlider
       bind:date={startDate}

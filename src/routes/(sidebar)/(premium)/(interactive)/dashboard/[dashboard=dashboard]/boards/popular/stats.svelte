@@ -1,65 +1,47 @@
 <script lang="ts">
   import ModalLink from "$com/modalLink.svelte";
+  import Clusters from "./clusters.svelte";
+
   import type { ArticleBase, ClusterBase } from "$shared/types/api";
 
+  import { onMount } from "svelte";
+  import { browser } from "$app/environment";
+  import { PUBLIC_API_BASE } from "$env/static/public";
+  import Loader from "$com/loader.svelte";
+
   export let articles: ArticleBase[];
-  export let clusters: ClusterBase[];
 
-  $: clusterTable = Object.fromEntries(
-    clusters.map((cluster) => [cluster.id, cluster])
-  );
+  let clusters: Promise<ClusterBase[]> = Promise.resolve([]);
 
-  $: clusterCount = articles.reduce(
-    (accumulator: { [key: string]: number }, article) => {
-      if (!article.ml?.cluster || article.ml.cluster.length < 1)
-        return accumulator;
+  async function getClusters(): Promise<ClusterBase[]> {
+    const r = await fetch(`${PUBLIC_API_BASE}/ml/clusters?complete=false`);
 
-      const clusterId = article.ml.cluster;
+    if (r.ok) {
+      return await r.json();
+    } else if (r.status === 401) {
+      throw "You don't have access to topics list";
+    } else {
+      throw "Error when fetching topics list";
+    }
+  }
 
-      if (!Object.keys(clusterTable).includes(clusterId)) return accumulator;
-
-      accumulator[clusterId] = (accumulator[clusterId] ?? 0) + 1;
-
-      return accumulator;
-    },
-    {}
-  );
-
-  $: commonClusters = Object.entries(clusterCount)
-    .sort((a, b) => b[1] - a[1])
-    .filter(([_, count]) => count > 3)
-    .map(([clusterId, count]) => ({ cluster: clusterTable[clusterId], count }));
+  onMount(() => {
+    if (browser) {
+      clusters = getClusters();
+    }
+  });
 
   $: readArticles = [...articles].sort((a, b) => b.read_times - a.read_times);
 </script>
 
-<section class="shrink grow basis-0 min-h-0 flex flex-col">
-  <h2 class="text-2xl font-bold dark:text-white mb-2">Common clusters:</h2>
-
-  <ul class="flex flex-col shrink gap-4 overflow-y-scroll">
-    {#each commonClusters as { cluster, count }}
-      <a
-        href="/topic/{encodeURIComponent(cluster.id)}"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <li
-          class="
-            flex justify-between gap-8
-            w-full p-4
-            border border-primary-500
-            dark:text-white leading-6
-            truncate
-
-            hover:bg-primary-400/20
-          "
-        >
-          <span class="shrink truncate">{cluster.title}</span>
-          <span>{count} articles</span>
-        </li>
-      </a>
-    {/each}
-  </ul>
+<section class="shrink grow basis-0 min-h-0 flex flex-col justify-center">
+  {#await clusters}
+    <Loader text="Loading topics" />
+  {:then clusters}
+    <Clusters {articles} {clusters} />
+  {:catch e}
+    <h2 class="text-center dark:text-white font-bold text-2xl">{e}</h2>
+  {/await}
 </section>
 
 <section class="shrink grow basis-0 min-h-0 flex flex-col">

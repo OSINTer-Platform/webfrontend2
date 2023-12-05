@@ -2,11 +2,10 @@
   import ArticleList from "$com/article-list/main.svelte";
   import Stats from "./stats.svelte";
 
-  import type { ArticleBase, ClusterBase } from "$shared/types/api";
+  import type { ArticleBase } from "$shared/types/api";
 
   export let articleListContainer: HTMLDivElement | null;
   export let articleList: ArticleBase[];
-  export let clusters: ClusterBase[];
 </script>
 
 <div
@@ -34,5 +33,5 @@
     w-2/5 h-full pl-8
   "
 >
-  <Stats {clusters} articles={articleList} />
+  <Stats articles={articleList} />
 </div>
