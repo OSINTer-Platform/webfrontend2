@@ -2,6 +2,8 @@
   import Switch from "$inputs/switch.svelte";
   import type { ActionData, PageData } from "./$types";
 
+  import { enhance } from "$app/forms";
+
   export let form: ActionData;
   export let data: PageData;
 
@@ -20,9 +22,9 @@
     }
   }
 
-  let success = form?.success ?? true;
-  let title = success ? "Welcome back!" : "Failure!";
-  let detail =
+  $: success = form?.success ?? true;
+  $: title = success ? "Welcome back!" : "Failure!";
+  $: detail =
     form?.detail ??
     data.msg ??
     "Log in down below to continue with your journey into the wonderful world of CTI";
@@ -33,7 +35,7 @@
   <p class="font-light">{detail}</p>
 </header>
 
-<form method="post" class="w-full">
+<form method="post" class="w-full" use:enhance>
   <div class="input mb-2">
     <input
       id="username"

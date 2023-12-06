@@ -1,5 +1,7 @@
 <script lang="ts">
   import { faQuestionCircle } from "@fortawesome/free-regular-svg-icons";
+  import { enhance } from "$app/forms";
+
   import Fa from "svelte-fa";
 
   import type { ActionData } from "./$types";
@@ -24,9 +26,9 @@
     }
   }
 
-  let success = form?.success ?? true;
-  let title = success ? "Hi there!" : "Failure!";
-  let detail =
+  $: success = form?.success ?? true;
+  $: title = success ? "Hi there!" : "Failure!";
+  $: detail =
     form?.detail ??
     "Sign up down below to start with your journey into the wonderful world of CTI";
 </script>
@@ -36,7 +38,7 @@
   <p class="font-light">{detail}</p>
 </header>
 
-<form method="post" class="w-full">
+<form method="post" class="w-full" use:enhance>
   <div class="input mb-2">
     <input
       id="username"
