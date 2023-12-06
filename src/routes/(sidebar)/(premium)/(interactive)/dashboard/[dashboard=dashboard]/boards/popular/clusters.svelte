@@ -30,29 +30,31 @@
     .map(([clusterId, count]) => ({ cluster: clusterTable[clusterId], count }));
 </script>
 
-<h2 class="text-2xl font-bold dark:text-white mb-2">Common topics:</h2>
+{#if commonClusters.length > 0}
+  <h2 class="text-2xl font-bold dark:text-white mb-2">Common topics:</h2>
 
-<ul class="flex flex-col shrink gap-4 overflow-y-scroll">
-  {#each commonClusters as { cluster, count }}
-    <a
-      href="/topic/{encodeURIComponent(cluster.id)}"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <li
-        class="
-          flex justify-between gap-8
-          w-full p-4
-          border border-primary-500
-          dark:text-white leading-6
-          truncate
-
-          hover:bg-primary-400/20
-        "
+  <ul class="flex flex-col shrink gap-4 overflow-y-scroll">
+    {#each commonClusters as { cluster, count }}
+      <a
+        href="/topic/{encodeURIComponent(cluster.id)}"
+        target="_blank"
+        rel="noopener noreferrer"
       >
-        <span class="shrink truncate">{cluster.title}</span>
-        <span>{count} articles</span>
-      </li>
-    </a>
-  {/each}
-</ul>
+        <li
+          class="
+            flex justify-between gap-8
+            w-full p-4
+            border border-primary-500
+            dark:text-white leading-6
+            truncate
+
+            hover:bg-primary-400/20
+          "
+        >
+          <span class="shrink truncate">{cluster.title}</span>
+          <span>{count} articles</span>
+        </li>
+      </a>
+    {/each}
+  </ul>
+{/if}

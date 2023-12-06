@@ -34,7 +34,9 @@
   $: readArticles = [...articles].sort((a, b) => b.read_times - a.read_times);
 </script>
 
-<section class="shrink grow basis-0 min-h-0 flex flex-col justify-center">
+<section
+  class="empty:hidden shrink grow basis-0 min-h-0 flex flex-col justify-center"
+>
   {#await clusters}
     <Loader text="Loading topics" />
   {:then clusters}
