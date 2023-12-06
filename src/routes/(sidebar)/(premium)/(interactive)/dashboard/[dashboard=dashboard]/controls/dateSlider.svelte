@@ -42,7 +42,7 @@
     max={maxDate}
     step={1000 * 60 * 60 * 24}
     class="
-      basis-0 min-w-0 shrink grow h-2 my-4 mx-4
+      basis-0 w-16 shrink grow h-2 my-4 mx-4
 
       cursor-pointer
       appearance-none
