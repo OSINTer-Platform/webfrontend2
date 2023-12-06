@@ -18,6 +18,6 @@
   [&:hover>div]:opacity-100
 "
 >
-  <DateSlider on:change date={startDate} />
+  <DateSlider on:change bind:date={startDate} />
   <Navigator />
 </aside>
