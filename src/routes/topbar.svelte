@@ -77,15 +77,17 @@
 
   <section
     class="
-		flex
+    flex
 		flex-row
 
-		md:gap-8
-    gap-2
+		md:gap-8 gap-2
 	"
   >
     <!-- Navigate -->
-    <ListMenu listOptions={Object.values(navItems)}>
+    <ListMenu
+      listOptions={Object.values(navItems)}
+      containerClasses="hidden sm:block"
+    >
       <button
         class="
 				btn
