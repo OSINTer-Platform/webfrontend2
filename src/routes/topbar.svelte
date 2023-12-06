@@ -1,8 +1,8 @@
 <script lang="ts">
   import Fa from "svelte-fa";
   import {
-    faArrowRightToBracket,
     faArrowRightFromBracket,
+    faArrowRightToBracket,
     faBars,
     faCaretDown,
   } from "@fortawesome/free-solid-svg-icons/index";
@@ -17,6 +17,7 @@
   import ListMenu from "$com/listMenu.svelte";
   import LightSwitch from "$com/lightSwitch.svelte";
   import { page } from "$app/stores";
+  import { enhance } from "$app/forms";
 
   export let user: User | null;
 
@@ -29,9 +30,6 @@
       blank: true,
       icon: faGithub,
     },
-    ...(user
-      ? [{ title: "Logout", route: "/logout", icon: faArrowRightFromBracket }]
-      : [{ title: "Login", route: "/login", icon: faArrowRightToBracket }]),
   ];
 </script>
 
@@ -119,6 +117,24 @@
           <Fa icon={social.icon} class="text-xl" />
         </a>
       {/each}
+    </section>
+
+    <section class="flex items-center md:gap-3 gap-2">
+      {#if user}
+        <form method="POST" action="/logout" use:enhance>
+          <button title="Logout" type="submit" class="btn p-2 rounded-full">
+            <Fa icon={faArrowRightFromBracket} class="text-xl" />
+          </button>
+        </form>
+      {:else}
+        <a
+          data-sveltekit-preload-data="tap"
+          href="/login"
+          class="btn p-2 rounded-full"
+        >
+          <Fa icon={faArrowRightToBracket} class="text-xl" />
+        </a>
+      {/if}
     </section>
   </section>
 </header>
