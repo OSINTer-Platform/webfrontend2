@@ -15,12 +15,12 @@
   });
 
   let value: number = date.valueOf();
-  let slider: HTMLInputElement | undefined;
+  let clientWidth: number = 0;
 
   $: x = d3
     .scaleTime()
     .domain([minDate, maxDate])
-    .range([8, slider?.clientWidth ? slider.clientWidth - 8 : 0]);
+    .range([16, clientWidth - 32]);
 
   $: tooltipX = x(value);
 </script>
@@ -32,10 +32,10 @@
   bg-black opacity-5
   transition-color duration-300
 "
+  bind:clientWidth
 >
   <input
     on:change
-    bind:this={slider}
     bind:value
     type="range"
     min={minDate}
