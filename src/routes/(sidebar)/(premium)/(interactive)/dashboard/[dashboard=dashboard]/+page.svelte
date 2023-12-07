@@ -13,13 +13,14 @@
   import { onDestroy, onMount } from "svelte";
   import { toUrl } from "$lib/common/searchQuery";
   import { browser } from "$app/environment";
-  import { error } from "@sveltejs/kit";
   import { modalState } from "$shared/state/state";
 
   export let data: PageData;
 
   let articleListContainer: HTMLDivElement | null = null;
   let scrollIntervalID: any = null;
+  let loadRetries = 0;
+
   let hovering: boolean = false;
   let startDate: Date = new Date(new Date().setDate(new Date().getDate() - 7));
 
@@ -61,7 +62,7 @@
     if (r.ok) {
       return await r.json();
     } else {
-      throw error(r.status);
+      throw Error;
     }
   }
 
@@ -92,5 +93,35 @@
       {articleList}
     />
     <Controls bind:startDate on:change={() => (articles = fetchArticles())} />
+  {:catch}
+    <div
+      class="
+      h-full mx-auto px-8
+      xl:max-w-5xl max-w-2xl
+      flex flex-col
+      justify-center items-center text-center
+      dark:text-white"
+    >
+      <h2
+        class="xl:text-5xl md:text-4xl sm:text-3xl text-2xl font-bold md:mb-2"
+      >
+        Error when loading overview.
+      </h2>
+      <p
+        class="xl:text-2xl md:text-xl sm:text-lg font-light md:tracking-tighter mb-8"
+      >
+        An unknown error occurred when attempting to load the overview
+      </p>
+      <button
+        class="btn p-2 w-48 lg:p-4 lg:w-64 lg:text-xl font-bold
+        text-primary-600 dark:text-primary-600 dark:hover:text-primary-500
+        border-2 border-primary-600 dark:border-primary-500
+        "
+        on:click={() => {
+          loadRetries += 1;
+          articles = fetchArticles();
+        }}>Try again ({loadRetries})</button
+      >
+    </div>
   {/await}
 </main>
