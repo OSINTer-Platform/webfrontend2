@@ -48,7 +48,7 @@
   {#await articleQuery}
     <Loader text="Loading articles for dashboard" />
   {:then articles}
-    <ArticleList {articles} dashboard={data.dashboard} />
+    <ArticleList {articles} dashboard={data.dashboard} {fetchArticles} />
     <Controls
       bind:startDate
       on:change={() => (articleQuery = fetchArticles())}

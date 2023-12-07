@@ -2,7 +2,7 @@
   import type { ArticleBase } from "$shared/types/api";
   import type { Dashboards } from "$shared/types/internal";
 
-  import { onDestroy } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import { modalState } from "$shared/state/state";
 
   import BoardTitle from "./boards/title/index.svelte";
@@ -10,6 +10,7 @@
 
   export let articles: ArticleBase[];
   export let dashboard: Dashboards;
+  export let fetchArticles: () => Promise<ArticleBase[]>;
 
   let articleListContainer: HTMLDivElement | null = null;
   let hovering: boolean = false;
@@ -39,7 +40,24 @@
     }, 20);
   }
 
+  async function updateArticleList() {
+    try {
+      const newArticles = await fetchArticles();
+      articles = newArticles;
+    } catch {
+      console.error("Error when querying new articles");
+    }
+  }
+
   $: startScroll(articleListContainer);
+
+  onMount(() => {
+    // Query new articles every 10 minutes
+    intervalIDs["articleQuery"] = setInterval(
+      updateArticleList,
+      1000 * 60 * 10
+    );
+  });
 
   onDestroy(() => {
     Object.values(intervalIDs).forEach((id) => clearInterval(id));
