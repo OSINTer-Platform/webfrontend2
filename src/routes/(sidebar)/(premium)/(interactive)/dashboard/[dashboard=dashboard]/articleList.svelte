@@ -12,8 +12,9 @@
   export let dashboard: Dashboards;
 
   let articleListContainer: HTMLDivElement | null = null;
-  let scrollIntervalID: any = null;
   let hovering: boolean = false;
+
+  const intervalIDs: { [key: string]: number } = {};
 
   const dashboards: { [key in Dashboards]: any } = {
     title: BoardTitle,
@@ -25,9 +26,9 @@
 
     container.scroll(0, 0);
 
-    if (scrollIntervalID) clearInterval(scrollIntervalID);
+    clearInterval(intervalIDs["scroll"]);
 
-    scrollIntervalID = setInterval(() => {
+    intervalIDs["scroll"] = setInterval(() => {
       if (hovering || $modalState.modalType) return;
       container?.scrollTo(0, container.scrollTop + 1);
       if (
@@ -41,7 +42,7 @@
   $: startScroll(articleListContainer);
 
   onDestroy(() => {
-    clearInterval(scrollIntervalID);
+    Object.values(intervalIDs).forEach((id) => clearInterval(id));
   });
 </script>
 
