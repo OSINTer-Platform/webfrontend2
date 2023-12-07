@@ -4,11 +4,14 @@
     faArrowUpRightDots,
     faListUl,
   } from "@fortawesome/free-solid-svg-icons";
+  import { goto } from "$app/navigation";
 
   import type { Dashboards } from "$shared/types/internal";
   import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
   import Fa from "svelte-fa";
+
+  export let dashboard: Dashboards;
 
   const navOptions: {
     name: Dashboards;
@@ -26,6 +29,12 @@
       icon: faListUl,
     },
   ];
+
+  function updateDashboard(dashboard: Dashboards) {
+    const url = new URL($page.url);
+    url.searchParams.set("dashboard", dashboard);
+    goto(url, { replaceState: true });
+  }
 </script>
 
 <div
@@ -38,19 +47,18 @@
 "
 >
   {#each navOptions as { name, title, icon }}
+    <!-- -->
     <a
       {title}
-      href={`/dashboard/${name}`}
+      on:click|preventDefault={() => updateDashboard(name)}
+      href={`/dashboard/?dashboard=${name}`}
       class="
       btn
       my-auto w-10 aspect-square
       text-white
     "
     >
-      <Fa
-        {icon}
-        class={$page.params.dashboard === name ? "text-primary-500" : ""}
-      />
+      <Fa {icon} class={dashboard === name ? "text-primary-500" : ""} />
     </a>
   {/each}
 </div>

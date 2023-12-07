@@ -3,7 +3,13 @@
   import DateSlider from "./dateSlider.svelte";
   import Navigator from "./navigator.svelte";
 
+  import type { Dashboards } from "$shared/types/internal";
+
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
   export let startDate: Date;
+  export let dashboard: Dashboards;
 </script>
 
 <aside
@@ -39,6 +45,6 @@
       <LogoIcon class="h-4 w-4" />
     </a>
   </div>
-  <DateSlider on:change bind:date={startDate} />
-  <Navigator />
+  <DateSlider on:change={() => dispatch("date")} bind:date={startDate} />
+  <Navigator {dashboard} />
 </aside>

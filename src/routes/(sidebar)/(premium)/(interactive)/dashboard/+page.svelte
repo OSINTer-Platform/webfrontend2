@@ -51,7 +51,8 @@
     <ArticleList {articles} dashboard={data.dashboard} {fetchArticles} />
     <Controls
       bind:startDate
-      on:change={() => (articleQuery = fetchArticles())}
+      dashboard={data.dashboard}
+      on:date={() => (articleQuery = fetchArticles())}
     />
   {:catch}
     <div
