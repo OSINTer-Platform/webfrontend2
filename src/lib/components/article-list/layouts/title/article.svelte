@@ -153,7 +153,7 @@
     {#await similarArticles}
       <Loader rows={1} class="m-6 w-14" />
     {:then articleList}
-      {#each articleList as article}
+      {#each articleList as article (article.id)}
         <li class="relative ml-3 md:ml-6 xl:ml-10">
           <div class="absolute w-full h-full bg-primary-600/10" />
 

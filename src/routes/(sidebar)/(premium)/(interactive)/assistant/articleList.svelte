@@ -15,7 +15,7 @@
     {classes}
   "
 >
-  {#each articles as { id, title, description }}
+  {#each articles as { id, title, description } (id)}
     <ModalLink articleId={id} articleList={articles} title={description}>
       <li
         class="

@@ -31,7 +31,7 @@
 </script>
 
 <svelte:component this={layouts[layout].shell}>
-  {#each articles as article}
+  {#each articles as article (article.id)}
     <svelte:component
       this={layouts[layout].article}
       {article}
