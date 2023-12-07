@@ -79,17 +79,15 @@ input.input {
 
 	text-sm dark:text-white
 
-	disabled:cursor-not-allowed disabled:text-tertiary-600
-
 	transition-all duration-300;
 
-  &:hover:not([disabled]),
-  &:focus:not([disabled]) {
+  &:hover:not([disabled]):not([readonly]),
+  &:focus:not([disabled]):not([readonly]) {
     @apply border-white dark:border-surface-600 outline-primary-500/75;
   }
 
-  &:hover:not([disabled]) ~ label,
-  &:focus:not([disabled]) ~ label {
+  &:hover:not([disabled]):not([readonly]) ~ label,
+  &:focus:not([disabled]):not([readonly]) ~ label {
     @apply text-primary-500 dark:text-primary-400;
   }
 
@@ -119,6 +117,17 @@ label.input {
 	dark:text-white;
 
   transform-origin: 0 50%;
+}
+
+input.input {
+  &:disabled,
+  &:read-only {
+    @apply text-surface-300 cursor-not-allowed;
+
+    & ~ label {
+      @apply text-surface-300;
+    }
+  }
 }
 
 div.article-content-render {
