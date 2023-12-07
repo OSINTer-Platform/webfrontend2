@@ -6,10 +6,20 @@
   import type { Dashboards } from "$shared/types/internal";
 
   import { createEventDispatcher } from "svelte";
+  import { page } from "$app/stores";
+  import { goto } from "$app/navigation";
 
   const dispatch = createEventDispatcher();
   export let startDate: Date;
   export let dashboard: Dashboards;
+
+  function changeDate() {
+    const url = new URL($page.url);
+    url.searchParams.set("startDate", startDate.toISOString());
+    goto(url, { replaceState: true });
+
+    dispatch("date", { date: startDate });
+  }
 </script>
 
 <aside
@@ -45,6 +55,6 @@
       <LogoIcon class="h-4 w-4" />
     </a>
   </div>
-  <DateSlider on:change={() => dispatch("date")} bind:date={startDate} />
+  <DateSlider on:change={changeDate} bind:date={startDate} />
   <Navigator {dashboard} />
 </aside>

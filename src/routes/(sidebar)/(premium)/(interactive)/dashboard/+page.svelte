@@ -14,17 +14,18 @@
   export let data: PageData;
 
   let loadRetries = 0;
-  let startDate: Date = new Date(new Date().setDate(new Date().getDate() - 7));
   let articleQuery: Promise<ArticleBase[]> = new Promise((resolve) =>
     resolve([])
   );
 
-  async function fetchArticles(): Promise<ArticleBase[]> {
+  async function fetchArticles(
+    firstDate: Date | undefined = undefined
+  ): Promise<ArticleBase[]> {
     const q: SearchQuery = {
       sort_by: "publish_date",
       sort_order: "desc",
       limit: 10000,
-      first_date: startDate.toISOString(),
+      first_date: (firstDate ?? data.startDate).toISOString(),
     };
 
     const r = await fetch(`${PUBLIC_API_BASE}/articles/search?${toUrl(q)}`);
@@ -50,9 +51,11 @@
   {:then articles}
     <ArticleList {articles} dashboard={data.dashboard} {fetchArticles} />
     <Controls
-      bind:startDate
+      startDate={data.startDate}
       dashboard={data.dashboard}
-      on:date={() => (articleQuery = fetchArticles())}
+      on:date={(e) => {
+        articleQuery = fetchArticles(e.detail.date);
+      }}
     />
   {:catch}
     <div
