@@ -8,7 +8,7 @@
   import type { Readable } from "svelte/store";
 
   export let articleListContainer: HTMLDivElement | null;
-  export let articleList: ArticleBase[];
+  export let articles: ArticleBase[];
 
   let alreadyRead: undefined | Readable<Collection>;
   $: alreadyRead = $page.data.alreadyRead;
@@ -28,11 +28,11 @@
     overflow-y-auto
     "
 >
-  {#each articleList as article}
+  {#each articles as article}
     <Article
       {article}
       {readArticles}
-      {articleList}
+      articleList={articles}
       userCollections={$page.data.userCollections}
     />
   {/each}

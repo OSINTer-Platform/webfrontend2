@@ -1,53 +1,23 @@
 <script lang="ts">
   import type { ArticleBase, SearchQuery } from "$shared/types/api";
   import type { PageData } from "./$types";
-  import type { Dashboards } from "$shared/types/internal";
 
   import Loader from "$com/loader.svelte";
   import Controls from "./controls/index.svelte";
-
-  import BoardTitle from "./boards/title/index.svelte";
-  import BoardPopular from "./boards/popular/index.svelte";
+  import ArticleList from "./articleList.svelte";
 
   import { PUBLIC_API_BASE } from "$env/static/public";
-  import { onDestroy, onMount } from "svelte";
+  import { onMount } from "svelte";
   import { toUrl } from "$lib/common/searchQuery";
   import { browser } from "$app/environment";
-  import { modalState } from "$shared/state/state";
 
   export let data: PageData;
 
-  let articleListContainer: HTMLDivElement | null = null;
-  let scrollIntervalID: any = null;
   let loadRetries = 0;
-
-  let hovering: boolean = false;
   let startDate: Date = new Date(new Date().setDate(new Date().getDate() - 7));
-
-  let articles: Promise<ArticleBase[]> = new Promise((resolve) => resolve([]));
-
-  const dashboards: { [key in Dashboards]: any } = {
-    title: BoardTitle,
-    popular: BoardPopular,
-  };
-
-  function startScroll(container: HTMLElement | null) {
-    if (!container) return;
-
-    container.scroll(0, 0);
-
-    if (scrollIntervalID) clearInterval(scrollIntervalID);
-
-    scrollIntervalID = setInterval(() => {
-      if (hovering || $modalState.modalType) return;
-      container?.scrollTo(0, container.scrollTop + 1);
-      if (
-        container.scrollTop + container.clientHeight >
-        container.scrollHeight - 20
-      )
-        container.scroll(0, 0);
-    }, 20);
-  }
+  let articleQuery: Promise<ArticleBase[]> = new Promise((resolve) =>
+    resolve([])
+  );
 
   async function fetchArticles(): Promise<ArticleBase[]> {
     const q: SearchQuery = {
@@ -66,33 +36,23 @@
     }
   }
 
-  $: startScroll(articleListContainer);
-
   onMount(async () => {
     if (!browser) return;
-    articles = fetchArticles();
-    setTimeout(() => location.reload(), 1000 * 60 * 10);
-  });
-
-  onDestroy(() => {
-    clearInterval(scrollIntervalID);
+    articleQuery = fetchArticles();
   });
 </script>
 
 <main
   class="relative flex w-full md:p-4 lg:p-8 bg-surface-100 dark:bg-surface-800"
 >
-  {#await articles}
+  {#await articleQuery}
     <Loader text="Loading articles for dashboard" />
-  {:then articleList}
-    <svelte:component
-      this={dashboards[data.dashboard]}
-      on:mouseenter={() => (hovering = true)}
-      on:mouseleave={() => (hovering = false)}
-      bind:articleListContainer
-      {articleList}
+  {:then articles}
+    <ArticleList {articles} dashboard={data.dashboard} />
+    <Controls
+      bind:startDate
+      on:change={() => (articleQuery = fetchArticles())}
     />
-    <Controls bind:startDate on:change={() => (articles = fetchArticles())} />
   {:catch}
     <div
       class="
@@ -119,7 +79,7 @@
         "
         on:click={() => {
           loadRetries += 1;
-          articles = fetchArticles();
+          articleQuery = fetchArticles();
         }}>Try again ({loadRetries})</button
       >
     </div>

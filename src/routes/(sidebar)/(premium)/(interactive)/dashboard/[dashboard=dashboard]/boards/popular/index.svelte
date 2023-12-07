@@ -5,7 +5,7 @@
   import type { ArticleBase } from "$shared/types/api";
 
   export let articleListContainer: HTMLDivElement | null;
-  export let articleList: ArticleBase[];
+  export let articles: ArticleBase[];
 </script>
 
 <div
@@ -20,11 +20,7 @@
     overflow-y-auto
     "
 >
-  <ArticleList
-    tintReadArticles={false}
-    articles={articleList.slice(0, 1500)}
-    layout="large"
-  />
+  <ArticleList tintReadArticles={false} {articles} layout="large" />
 </div>
 
 <div
@@ -33,5 +29,5 @@
     w-2/5 h-full pl-8
   "
 >
-  <Stats articles={articleList} />
+  <Stats {articles} />
 </div>
