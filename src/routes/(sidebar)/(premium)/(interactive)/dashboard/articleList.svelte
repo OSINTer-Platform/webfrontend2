@@ -15,7 +15,8 @@
   let articleListContainer: HTMLDivElement | null = null;
   let hovering: boolean = false;
 
-  const intervalIDs: { [key: string]: number } = {};
+  let articleQueryIntervalId: undefined | number = undefined;
+  let scrollIntervalId: undefined | number = undefined;
 
   const dashboards: { [key in Dashboards]: any } = {
     title: BoardTitle,
@@ -27,9 +28,9 @@
 
     container.scroll(0, 0);
 
-    clearInterval(intervalIDs["scroll"]);
+    clearInterval(scrollIntervalId);
 
-    intervalIDs["scroll"] = setInterval(() => {
+    scrollIntervalId = setInterval(() => {
       if (hovering || $modalState.modalType) return;
       container?.scrollTo(0, container.scrollTop + 1);
       if (
@@ -53,14 +54,12 @@
 
   onMount(() => {
     // Query new articles every 10 minutes
-    intervalIDs["articleQuery"] = setInterval(
-      updateArticleList,
-      1000 * 60 * 10
-    );
+    articleQueryIntervalId = setInterval(updateArticleList, 1000 * 60 * 10);
   });
 
   onDestroy(() => {
-    Object.values(intervalIDs).forEach((id) => clearInterval(id));
+    clearInterval(articleQueryIntervalId);
+    clearInterval(scrollIntervalId);
   });
 </script>
 
