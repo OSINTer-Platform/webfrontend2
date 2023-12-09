@@ -24,21 +24,43 @@
   };
 
   function startScroll(container: HTMLElement | null) {
+    if (scrollIntervalId) cancelAnimationFrame(scrollIntervalId);
     if (!container) return;
-
     container.scroll(0, 0);
 
-    clearInterval(scrollIntervalId);
+    let start: DOMHighResTimeStamp = performance.now();
+    let scrollTop = 0;
 
-    scrollIntervalId = setInterval(() => {
-      if (hovering || $modalState.modalType) return;
-      container?.scrollTo(0, container.scrollTop + 1);
-      if (
-        container.scrollTop + container.clientHeight >
-        container.scrollHeight - 20
-      )
-        container.scroll(0, 0);
-    }, 20);
+    function end(container: HTMLElement) {
+      scrollIntervalId = requestAnimationFrame((t) => scroll(container, t));
+    }
+
+    function scroll(container: HTMLElement, timestamp: DOMHighResTimeStamp) {
+      if (!hovering && !$modalState.modalType) {
+        const scrollLength = Math.floor((timestamp - start) / 10);
+
+        if (scrollLength < 1) {
+          end(container);
+          return;
+        }
+
+        scrollTop = container.scrollTop + scrollLength;
+
+        container.scrollTop = scrollTop;
+
+        if (
+          container.scrollTop + container.clientHeight >
+          container.scrollHeight - 20
+        ) {
+          container.scroll(0, 0);
+        }
+      }
+
+      start = timestamp;
+      end(container);
+    }
+
+    end(container);
   }
 
   async function updateArticleList() {
