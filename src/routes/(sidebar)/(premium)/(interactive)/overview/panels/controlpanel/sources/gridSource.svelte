@@ -1,9 +1,11 @@
 <script lang="ts">
   import type { ArticleCategories } from "$shared/types/api";
-  import type { Writable } from "svelte/store";
 
   export let articleCategories: ArticleCategories;
-  export let selectedSources: Writable<string[]>;
+  export let selected: string[];
+  export let hovering: string;
+
+  $: hovering = selected.length > 0 ? hovering : "";
 </script>
 
 <div
@@ -32,17 +34,21 @@
         font-light dark:font-normal
 
         hover:bg-primary-500/20
-        {$selectedSources.includes(profile)
+        {selected.includes(profile)
         ? 'bg-primary-500/30 hover:bg-primary-500/40'
         : ''}
 
         transition-colors duration-150
       "
+      on:mouseenter={() => {
+        if (selected.length > 0) hovering = profile;
+      }}
+      on:mouseleave={() => (hovering = "")}
     >
       <input
         name="source-selection"
         type="checkbox"
-        bind:group={$selectedSources}
+        bind:group={selected}
         value={profile}
         class="hidden"
       />

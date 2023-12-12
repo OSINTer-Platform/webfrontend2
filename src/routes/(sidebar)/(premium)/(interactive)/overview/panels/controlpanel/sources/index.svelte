@@ -11,6 +11,10 @@
   export let articleCategories: ArticleCategories;
 
   let showAsGrid = true;
+  let selected: string[] = [];
+  let hovering: string = "";
+
+  $: $selectedSources = hovering ? [hovering, ...selected] : selected;
 </script>
 
 <div class="flex justify-between border-b-2 border-surface-400/50 mb-2 pb-2">
@@ -44,7 +48,7 @@
 </div>
 
 {#if showAsGrid}
-  <GridSource {articleCategories} {selectedSources} />
+  <GridSource {articleCategories} bind:selected bind:hovering />
 {:else}
-  <ListSource {articleCategories} {selectedSources} />
+  <ListSource {articleCategories} bind:selected bind:hovering />
 {/if}

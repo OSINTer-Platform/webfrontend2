@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { ArticleCategories } from "$shared/types/api";
-  import type { Writable } from "svelte/store";
 
   export let articleCategories: ArticleCategories;
-  export let selectedSources: Writable<string[]>;
+  export let selected: string[];
+  export let hovering: string;
 </script>
 
 <div class="overflow-auto">
@@ -18,11 +18,13 @@
         [&:hover>input]:bg-primary-500/20
         [&:hover>input:checked]:bg-primary-600/75
       "
+      on:mouseenter={() => (hovering = profile)}
+      on:mouseleave={() => (hovering = "")}
     >
       <input
         name="source-selection"
         type="checkbox"
-        bind:group={$selectedSources}
+        bind:group={selected}
         value={profile}
         class="w-4 checkbox"
       />
