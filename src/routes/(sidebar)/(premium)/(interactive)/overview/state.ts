@@ -23,6 +23,7 @@ export const controlParams: {
   selectedSearch: WritableWithDefault<string>;
   showAllSelected: WritableWithDefault<boolean>;
   selectedSources: WritableWithDefault<string[]>;
+  selectedClusters: WritableWithDefault<string[]>;
 } = {
   dotSize: writableWithDefault(1),
   toolTipSize: writableWithDefault(14),
@@ -33,6 +34,7 @@ export const controlParams: {
   selectedSearch: writableWithDefault(""),
   showAllSelected: writableWithDefault(false),
   selectedSources: writableWithDefault([]),
+  selectedClusters: writableWithDefault([]),
 };
 
 // Variables written to from event handlers
@@ -70,11 +72,14 @@ function filterArticles(
   article: MLArticle,
   search: string,
   deepSearch: boolean,
-  sources: string[]
+  sources: string[],
+  clusters: string[]
 ) {
   if (search.length > 0 && !searchInArticle(article, search, deepSearch))
     return false;
   else if (sources.length > 0 && !sources.includes(article.profile))
+    return false;
+  else if (clusters.length > 0 && !clusters.includes(article.ml.cluster))
     return false;
 
   return true;
@@ -104,9 +109,16 @@ export const articleFilter = derived(
     controlParams.articleSearch,
     controlParams.deepSearch,
     controlParams.selectedSources,
+    controlParams.selectedClusters,
     scaledArticles,
   ],
-  ([$articleSearch, $deepSearch, $selectedSources, $scaledArticles]) =>
+  ([
+    $articleSearch,
+    $deepSearch,
+    $selectedSources,
+    $selectedClusters,
+    $scaledArticles,
+  ]) =>
     $scaledArticles.map((article) => {
       return {
         article,
@@ -114,7 +126,8 @@ export const articleFilter = derived(
           article,
           $articleSearch,
           $deepSearch,
-          $selectedSources
+          $selectedSources,
+          $selectedClusters
         ),
       };
     })
@@ -201,6 +214,7 @@ export function resetState() {
   controlParams.articleSearch.reset();
   controlParams.enableSearch.reset();
   controlParams.selectedSources.reset();
+  controlParams.selectedClusters.reset();
 
   selectionBoundaries.start.reset();
   selectionBoundaries.end.reset();

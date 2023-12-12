@@ -128,7 +128,10 @@
       >
     </div>
   {:else if readyToMount}
-    <Panels articleCategories={data.sourceCategories} />
+    <Panels
+      articleCategories={data.sourceCategories}
+      clusters={data.clusters}
+    />
     {#await $mapData}
       <Loader
         text={`Loading articles for generating the map.\nThis might take a while`}

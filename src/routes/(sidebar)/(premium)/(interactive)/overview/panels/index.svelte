@@ -1,11 +1,12 @@
 <script lang="ts">
-  import type { ArticleCategories } from "$shared/types/api";
+  import type { ArticleCategories, ClusterBase } from "$shared/types/api";
 
   import { selectedArticles } from "../state";
   import ControlPanel from "./controlpanel/index.svelte";
   import SelectionPanel from "./selectionPanel/index.svelte";
 
   export let articleCategories: ArticleCategories;
+  export let clusters: ClusterBase[];
 </script>
 
 <aside
@@ -17,7 +18,7 @@
   overflow-y-auto
 "
 >
-  <ControlPanel {articleCategories} />
+  <ControlPanel {articleCategories} {clusters} />
 </aside>
 
 {#if $selectedArticles.length > 0}
