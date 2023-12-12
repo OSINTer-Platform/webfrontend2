@@ -39,11 +39,8 @@
 
 <div
   class="
-  flex rounded-full
-
-  bg-black opacity-5
-  transition-color duration-300
-  px-4
+  flex rounded-full px-4
+  bg-black
 "
 >
   {#each navOptions as { name, title, icon }}

@@ -17,6 +17,7 @@
   let articleQuery: Promise<ArticleBase[]> = new Promise((resolve) =>
     resolve([])
   );
+  let scrollSpeed = 1;
 
   async function fetchArticles(
     firstDate: Date | undefined = undefined
@@ -49,8 +50,14 @@
   {#await articleQuery}
     <Loader text="Loading articles for dashboard" />
   {:then articles}
-    <ArticleList {articles} dashboard={data.dashboard} {fetchArticles} />
+    <ArticleList
+      {articles}
+      dashboard={data.dashboard}
+      {fetchArticles}
+      {scrollSpeed}
+    />
     <Controls
+      bind:scrollSpeed
       startDate={data.startDate}
       dashboard={data.dashboard}
       on:date={(e) => {

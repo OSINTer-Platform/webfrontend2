@@ -11,6 +11,7 @@
   export let articles: ArticleBase[];
   export let dashboard: Dashboards;
   export let fetchArticles: () => Promise<ArticleBase[]>;
+  export let scrollSpeed: number;
 
   let articleListContainer: HTMLDivElement | null = null;
   let hovering: boolean = false;
@@ -29,7 +30,6 @@
     container.scroll(0, 0);
 
     let start: DOMHighResTimeStamp = performance.now();
-    let scrollTop = 0;
 
     function end(container: HTMLElement) {
       scrollIntervalId = requestAnimationFrame((t) => scroll(container, t));
@@ -37,16 +37,13 @@
 
     function scroll(container: HTMLElement, timestamp: DOMHighResTimeStamp) {
       if (!hovering && !$modalState.modalType) {
-        const scrollLength = Math.floor((timestamp - start) / 10);
+        const scrollLength = ((timestamp - start) / 20) * scrollSpeed;
 
         if (scrollLength < 1) {
           end(container);
           return;
         }
-
-        scrollTop = container.scrollTop + scrollLength;
-
-        container.scrollTop = scrollTop;
+        container.scrollBy({ top: scrollLength });
 
         if (
           container.scrollTop + container.clientHeight >

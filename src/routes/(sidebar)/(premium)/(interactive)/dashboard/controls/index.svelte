@@ -8,10 +8,12 @@
   import { createEventDispatcher } from "svelte";
   import { page } from "$app/stores";
   import { goto } from "$app/navigation";
+  import SpeedSlider from "./speedSlider.svelte";
 
   const dispatch = createEventDispatcher();
   export let startDate: Date;
   export let dashboard: Dashboards;
+  export let scrollSpeed: number;
 
   function changeDate() {
     const url = new URL($page.url);
@@ -32,15 +34,15 @@
   2xl:left-20 2xl:right-20
 
   flex gap-1 sm:gap-4
-  [&:hover>div]:opacity-100
+
+  [&>div]:opacity-5 [&:hover>div]:opacity-100
+  [&>div]:duration-300
 "
 >
   <div
     class="
     flex rounded-3xl overflow-hidden shrink-0
-
-    bg-black opacity-5
-    transition-color duration-300
+    bg-black
   "
   >
     <a
@@ -55,6 +57,9 @@
       <LogoIcon class="h-4 w-4" />
     </a>
   </div>
-  <DateSlider on:change={changeDate} bind:date={startDate} />
+  <div class="shrink grow flex gap-1 sm:gap-4">
+    <SpeedSlider bind:value={scrollSpeed} />
+    <DateSlider on:change={changeDate} bind:date={startDate} />
+  </div>
   <Navigator {dashboard} />
 </aside>
