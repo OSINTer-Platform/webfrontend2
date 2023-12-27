@@ -5,6 +5,7 @@
     faArrowRightToBracket,
     faBars,
     faCaretDown,
+    faHandHoldingDollar,
   } from "@fortawesome/free-solid-svg-icons/index";
   import { faGithub } from "@fortawesome/free-brands-svg-icons/index";
 
@@ -18,10 +19,12 @@
   import LightSwitch from "$com/lightSwitch.svelte";
   import { page } from "$app/stores";
   import { enhance } from "$app/forms";
+  import { onMount } from "svelte";
 
   export let user: User | null;
 
   let socials: Array<NavItem>;
+  let showSponser = false;
 
   $: socials = [
     {
@@ -31,6 +34,10 @@
       icon: faGithub,
     },
   ];
+
+  onMount(() => {
+    if (Math.floor(Math.random() * 20) == 0) showSponser = true;
+  });
 </script>
 
 <header
@@ -83,25 +90,36 @@
 		md:gap-8 gap-2
 	"
   >
-    <!-- Navigate -->
-    <ListMenu
-      listOptions={Object.values(navItems)}
-      containerClasses="hidden sm:block"
-    >
-      <button
-        class="
-				btn
-
-				py-2
-				px-6
-
-				rounded-xl
-			"
+    {#if showSponser}
+      <a
+        class="btn py-2 px-6 rounded-xl"
+        href="https://github.com/sponsors/OSINTer-Platform"
+        target="_blank"
+        rel="noopener noreferrer"
       >
-        Navigate
-        <Fa icon={faCaretDown} />
-      </button>
-    </ListMenu>
+        Sponsor us
+        <Fa icon={faHandHoldingDollar} />
+      </a>
+    {:else}
+      <ListMenu
+        listOptions={Object.values(navItems)}
+        containerClasses="hidden sm:block"
+      >
+        <button
+          class="
+          btn
+
+          py-2
+          px-6
+
+          rounded-xl
+        "
+        >
+          Navigate
+          <Fa icon={faCaretDown} />
+        </button>
+      </ListMenu>
+    {/if}
 
     <LightSwitch />
 
