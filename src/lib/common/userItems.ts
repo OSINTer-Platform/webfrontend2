@@ -67,7 +67,8 @@ export async function createItem(
   if (r.ok) {
     const item: Feed | Collection = await r.json();
 
-    if (navigate === "current") await goto(`/feed/${item._id}`);
+    if (navigate === "current")
+      await goto(`/feed/${item._id}`, { invalidateAll: true });
     else if (navigate === "new") window.open(`/feed/${item._id}`, "_blank");
 
     return item;
@@ -108,7 +109,8 @@ export async function updateItem(
   if (r.ok) {
     const item: Feed | Collection = await r.json();
 
-    if (navigate === "current") await goto(`/feed/${itemId}`);
+    if (navigate === "current")
+      await goto(`/feed/${itemId}`, { invalidateAll: true });
     else if (navigate === "new") window.open(`/feed/${itemId}`, "_blank");
 
     return item;
@@ -134,7 +136,8 @@ export const changeName = async (
   );
 
   if (r.ok) {
-    if (navigate === "current") await goto(`/feed/${item._id}`);
+    if (navigate === "current")
+      await goto(`/feed/${item._id}`, { invalidateAll: true });
     else if (navigate === "new") window.open(`/feed/${item._id}`, "_blank");
     return true;
   } else {

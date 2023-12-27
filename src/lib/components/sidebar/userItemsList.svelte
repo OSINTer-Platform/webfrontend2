@@ -30,7 +30,6 @@
     feeds: initiateFeedCreation,
     collections: async () => {
       await createItem("New Collection", [], "collection", "current");
-      location.reload();
     },
   };
 
@@ -50,13 +49,6 @@
         searchText: "Create feed",
         searchAction: async (query: SearchQuery) => {
           await createItem("New Feed", sanitizeQuery(query), "feed", "current");
-          // Keept to avoid visual glitch with modal appearing and
-          // then removed by the afterNavigate hook in root layout
-          modalState.set({
-            modalType: null,
-            modalContent: null,
-          });
-          location.reload();
         },
       },
     };

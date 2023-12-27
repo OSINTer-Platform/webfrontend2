@@ -13,7 +13,7 @@
     faXmark,
   } from "@fortawesome/free-solid-svg-icons/index";
   import { PUBLIC_API_BASE } from "$env/static/public";
-  import { goto } from "$app/navigation";
+  import { goto, invalidateAll } from "$app/navigation";
   import type { SearchQuery } from "$shared/types/api";
   import {
     changeName,
@@ -69,7 +69,6 @@
             "current"
           );
         }
-        location.reload();
       },
     },
     ...(data.currentItem.owner === data.user?._id &&
@@ -84,7 +83,7 @@
                 [],
                 "collection"
               );
-              if (r) location.reload();
+              if (r) invalidateAll();
             },
           },
         ]
@@ -112,7 +111,7 @@
                       modalType: null,
                       modalContent: null,
                     });
-                    location.reload();
+                    invalidateAll();
                   },
                   query: data.currentItem as Feed,
                 },
@@ -133,7 +132,7 @@
               );
 
               if (r.ok) {
-                goto("/feed");
+                goto("/feed", { invalidateAll: true });
               }
             },
           },
@@ -151,6 +150,7 @@
                     "Login down below for the ability to subscribe to and personalize feeds"
                   )}`
                 );
+                return;
               }
               const r = await fetch(
                 `${PUBLIC_API_BASE}/my/${data.currentItem.type}s/subscription/${data.currentItem._id}`,
@@ -158,7 +158,7 @@
               );
 
               if (r.ok) {
-                location.reload();
+                invalidateAll();
               }
             },
           },
@@ -178,8 +178,7 @@
   const changeTitle = async () => {
     if (title !== data.currentItem.name) {
       title = title.trim();
-      await changeName(data.currentItem, title);
-      location.reload();
+      await changeName(data.currentItem, title, "current");
     }
   };
 
