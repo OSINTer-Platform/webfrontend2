@@ -1,4 +1,4 @@
-import type { Article, ArticleBase } from "$shared/types/api";
+import type { ArticleBase } from "$shared/types/api";
 
 /**
  * includeIds control whether to INCLUDE or EXCLUDE articles with id contained in ids param

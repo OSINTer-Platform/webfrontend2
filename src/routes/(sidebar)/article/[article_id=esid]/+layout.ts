@@ -1,6 +1,6 @@
 import type { LayoutLoad } from "./$types";
 
-import type { Article } from "$shared/types/api";
+import type { FullArticle } from "$shared/types/api";
 
 import { get } from "svelte/store";
 import { fullArticles } from "$state/storedArticles";
@@ -10,7 +10,7 @@ import { error } from "@sveltejs/kit";
 export const load = (({ params, fetch }) => {
   const fullArticleList = get(fullArticles);
 
-  const fetchContent = async (): Promise<Article> => {
+  const fetchContent = async (): Promise<FullArticle> => {
     if (params.article_id in fullArticleList) {
       return fullArticleList[params.article_id];
     }

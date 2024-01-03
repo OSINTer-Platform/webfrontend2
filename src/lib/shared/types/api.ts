@@ -3,9 +3,11 @@ export interface ArticleTags {
   interesting: { name: string; values: string[] }[];
 }
 
-export interface ArticleBase {
+export interface Article {
   id: string;
+}
 
+export interface ArticleBase extends Article {
   title: string;
   description: string;
 
@@ -33,14 +35,12 @@ export interface ArticleBase {
   tags: ArticleTags;
 }
 
-export interface Article extends ArticleBase {
+export interface FullArticle extends ArticleBase {
   formatted_content: string;
   content: string;
 }
 
-export interface MLArticle {
-  id: string;
-
+export interface MLArticle extends Article {
   title: string;
   description: string;
   source: string;

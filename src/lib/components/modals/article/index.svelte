@@ -1,6 +1,6 @@
 <script lang="ts">
   import type {
-    Article,
+    FullArticle,
     ArticleBase,
     ArticleCategories,
   } from "$shared/types/api";
@@ -17,7 +17,7 @@
   import Similar from "./similar.svelte";
   import { page } from "$app/stores";
 
-  export let article: Article;
+  export let article: FullArticle;
   export let articleCategories: ArticleCategories;
   export let articleList: Array<{ id: string }>;
 
