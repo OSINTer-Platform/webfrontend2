@@ -15,6 +15,12 @@ export default ({ mode }: any) => {
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
+        "/elastic-articles/": {
+          target: process.env.VITE_ELASTIC_ARTICLES_TARGET,
+          secure: true,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/elastic-articles/, ""),
+        },
       },
     },
   });
