@@ -1,3 +1,8 @@
+export interface ArticleML {
+  cluser: string;
+  coordinates: [number, number];
+}
+
 export interface ArticleTags {
   automatic: string[];
   interesting: { name: string; values: string[] }[];
@@ -27,10 +32,7 @@ export interface ArticleBase extends Article {
   similar?: string[];
   summary?: string;
 
-  ml?: {
-    cluster: string;
-    coordinates: [number, number];
-  };
+  ml?: ArticleML;
 
   tags: ArticleTags;
 }
@@ -46,10 +48,7 @@ export interface MLArticle extends Article {
   source: string;
   profile: string;
   publish_date: string;
-  ml: {
-    cluster: string;
-    coordinates: [number, number];
-  };
+  ml: ArticleML;
 }
 
 export interface ClusterBase {
