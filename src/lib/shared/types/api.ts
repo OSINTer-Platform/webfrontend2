@@ -91,7 +91,7 @@ export interface SearchQuery {
   limit: number;
 
   sort_by?: SortBy | undefined;
-  sort_order: SortOrder | undefined;
+  sort_order?: SortOrder | undefined;
 
   search_term?: string | undefined;
   semantic_search?: string | undefined;
