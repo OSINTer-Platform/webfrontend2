@@ -16,7 +16,8 @@
   let articleListContainer: HTMLDivElement | null = null;
   let hovering: boolean = false;
 
-  let articleQueryIntervalId: undefined | number = undefined;
+  let articleQueryIntervalId: ReturnType<typeof setTimeout> | undefined =
+    undefined;
   let scrollIntervalId: undefined | number = undefined;
 
   const dashboards: { [key in Dashboards]: any } = {
