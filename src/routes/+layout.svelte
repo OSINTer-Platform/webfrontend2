@@ -24,10 +24,13 @@
     });
   }
 
-  function handleKeypress(keyName: string) {
-    switch (keyName) {
+  function handleKeypress(e: KeyboardEvent) {
+    switch (e.key) {
       case "Escape":
-        $modalState.pop();
+        if (e.getModifierState("Shift") || e.getModifierState("Control"))
+          modalState.set([]);
+        else $modalState.pop();
+
         break;
     }
   }
@@ -37,7 +40,7 @@
   });
 </script>
 
-<svelte:window on:keydown={(e) => handleKeypress(e.key)} />
+<svelte:window on:keydown={(e) => handleKeypress(e)} />
 
 <ProgressBar class="text-primary-500" zIndex={100} settleTime={300} />
 
