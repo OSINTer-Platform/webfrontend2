@@ -29,7 +29,7 @@
       case "Escape":
         if (e.getModifierState("Shift") || e.getModifierState("Control"))
           modalState.set([]);
-        else $modalState.pop();
+        else modalState.remove();
 
         break;
     }

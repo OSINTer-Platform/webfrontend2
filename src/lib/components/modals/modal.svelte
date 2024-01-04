@@ -6,7 +6,7 @@
   export { classes as class };
   export let style = "";
 
-  const resetModal = () => $modalState.pop();
+  const resetModal = () => modalState.remove();
 </script>
 
 <div

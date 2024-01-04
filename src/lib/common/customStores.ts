@@ -1,7 +1,38 @@
 import { get, writable, type Writable } from "svelte/store";
 
+export interface ListStore<T> extends Writable<T[]> {
+  remove: () => T | undefined;
+  append: (el: T) => void;
+  prepend: (el: T) => void;
+}
+
 export interface Updatable<T> extends Writable<T> {
   autoUpdate: () => void;
+}
+
+export function listStore<T>(initialVal: T[]): ListStore<T> {
+  const { subscribe, set, update } = writable(initialVal);
+
+  const remove = () => {
+    let el: T | undefined;
+    update((list) => {
+      el = list.pop();
+      return list;
+    });
+    return el;
+  };
+
+  const append = (el: T) => update((list) => [...list, el]);
+  const prepend = (el: T) => update((list) => [el, ...list]);
+
+  return {
+    subscribe,
+    set,
+    update,
+    remove,
+    append,
+    prepend,
+  };
 }
 
 export async function updatable<T>(

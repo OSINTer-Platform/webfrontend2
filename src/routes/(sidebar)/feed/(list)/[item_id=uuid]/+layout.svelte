@@ -95,7 +95,7 @@
             title: `Modify ${data.currentItem.type}`,
             icon: faPenToSquare,
             action: () => {
-              $modalState.push({
+              modalState.append({
                 modalType: "search",
                 modalContent: {
                   searchText: "Update feed",

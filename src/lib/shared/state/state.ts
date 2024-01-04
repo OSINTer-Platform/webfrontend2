@@ -1,3 +1,4 @@
+import { listStore } from "$lib/common/customStores";
 import { persisted } from "svelte-persisted-store";
 import { writable, type Writable } from "svelte/store";
 
@@ -9,36 +10,34 @@ import type {
 } from "../types/api";
 import type { ArticleListRender } from "../types/internal";
 
-export const modalState: Writable<
-  Array<
-    | {
-        modalType: "search";
-        modalContent: {
-          query?: SearchQuery;
-          searchAction?: (q: SearchQuery) => void;
-          searchText?: string;
-        };
-      }
-    | {
-        modalType: "article";
-        modalContent: {
-          article: FullArticle;
-          articleList: Array<{ id: string }>;
-          categories: ArticleCategories;
-        };
-      }
-    | {
-        modalType: "add-collection";
-        modalContent: {
-          article: ArticleBase;
-        };
-      }
-    | {
-        modalType: null;
-        modalContent: null;
-      }
-  >
-> = persisted("modalState", []);
+export const modalState = listStore<
+  | {
+      modalType: "search";
+      modalContent: {
+        query?: SearchQuery;
+        searchAction?: (q: SearchQuery) => void;
+        searchText?: string;
+      };
+    }
+  | {
+      modalType: "article";
+      modalContent: {
+        article: FullArticle;
+        articleList: Array<{ id: string }>;
+        categories: ArticleCategories;
+      };
+    }
+  | {
+      modalType: "add-collection";
+      modalContent: {
+        article: ArticleBase;
+      };
+    }
+  | {
+      modalType: null;
+      modalContent: null;
+    }
+>([]);
 
 // For controlling if the sidebar is open on small screens
 export const sideOpen: Writable<Boolean> = writable(false);

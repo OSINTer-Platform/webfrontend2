@@ -21,7 +21,7 @@
 		{btnClass}
 	"
   on:click={() =>
-    $modalState.push({
+    modalState.append({
       modalType: "add-collection",
       modalContent: { article: article },
     })}

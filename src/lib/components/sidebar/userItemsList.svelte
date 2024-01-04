@@ -43,7 +43,7 @@
       return;
     }
 
-    $modalState.push({
+    modalState.append({
       modalType: "search",
       modalContent: {
         searchText: "Create feed",
@@ -57,7 +57,7 @@
   function spawnSearchModal(e: Event) {
     e.preventDefault();
 
-    $modalState.push({
+    modalState.append({
       modalType: "search",
       modalContent: {
         query: $page.data?.currentSearch,
