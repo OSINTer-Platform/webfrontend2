@@ -1,4 +1,4 @@
-import { modalState } from "$state/state";
+import { modalState } from "$state/modals";
 import { fullArticles } from "$state/storedArticles";
 
 import { page } from "$app/stores";

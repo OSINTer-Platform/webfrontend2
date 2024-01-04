@@ -7,7 +7,9 @@
   import Modals from "$com/modals/all.svelte";
   import { ProgressBar } from "@prgm/sveltekit-progress-bar";
 
-  import { modalState, darkMode } from "$state/state";
+  import { darkMode } from "$state/state";
+  import { modalState } from "$state/modals";
+
   import { init as initApm } from "@elastic/apm-rum";
   import { env } from "$env/dynamic/public";
   import { page } from "$app/stores";

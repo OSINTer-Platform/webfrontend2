@@ -10,7 +10,7 @@
   import type { UserItemSidebarOption } from "$shared/types/internal";
   import type { User } from "$shared/types/userItems";
 
-  import { modalState } from "$shared/state/state";
+  import { modalState } from "$state/modals";
   import { createItem, sanitizeQuery } from "$lib/common/userItems";
   import { goto } from "$app/navigation";
   import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";

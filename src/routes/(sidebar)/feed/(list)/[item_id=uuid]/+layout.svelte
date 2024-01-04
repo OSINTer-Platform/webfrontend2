@@ -5,7 +5,9 @@
   import ItemDescriptor from "../itemDescriptor/main.svelte";
   import HeaderShell from "$com/article-list/header/shell.svelte";
 
-  import { feedLocalSearch, modalState } from "$state/state";
+  import { feedLocalSearch } from "$state/state";
+  import { modalState } from "$state/modals";
+
   import {
     faDownload,
     faPenToSquare,

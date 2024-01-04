@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { modalState } from "$state/state";
+  import { modalState } from "$state/modals";
   import Article from "./article/index.svelte";
   import Search from "./search.svelte";
   import AddCollection from "./addCollection.svelte";
 </script>
 
-{#each $modalState as modal}
+{#each $modalState as modal (modal.id)}
   {#if modal.modalType == "article"}
     <Article
       article={modal.modalContent.article}

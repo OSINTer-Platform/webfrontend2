@@ -1,6 +1,6 @@
 <script lang="ts">
   import Collections from "$com/collections.svelte";
-  import { modalState } from "$shared/state/state";
+  import { modalState } from "$state/modals";
   import type { ArticleBase } from "$shared/types/api";
   import type { Collection } from "$shared/types/userItems";
   import type { Writable } from "svelte/store";

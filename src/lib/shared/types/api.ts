@@ -1,5 +1,5 @@
 export interface ArticleML {
-  cluser: string;
+  cluster: string;
   coordinates: [number, number];
 }
 

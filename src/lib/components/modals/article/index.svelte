@@ -10,7 +10,6 @@
   import { spawnArticleModal } from "$lib/common/state";
   import { fly } from "svelte/transition";
   import { quintInOut } from "svelte/easing";
-  import { modalState } from "$shared/state/state";
   import { goto } from "$app/navigation";
   import { PUBLIC_API_BASE } from "$env/static/public";
   import Loader from "$com/loader.svelte";
@@ -84,7 +83,7 @@
 />
 
 <Modal class="w-[80vw] h-[90vh] bg-surface-200 dark:bg-surface-700">
-  {#key $modalState}
+  {#key article}
     <main class="w-full h-full overflow-y-auto">
       <article
         class="

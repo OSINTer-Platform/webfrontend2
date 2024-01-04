@@ -3,7 +3,7 @@
   import type { Dashboards } from "$shared/types/internal";
 
   import { onDestroy, onMount } from "svelte";
-  import { modalState } from "$shared/state/state";
+  import { modalState } from "$state/modals";
 
   import BoardTitle from "./boards/title/index.svelte";
   import BoardPopular from "./boards/popular/index.svelte";
