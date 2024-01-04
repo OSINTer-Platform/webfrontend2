@@ -1,9 +1,7 @@
 <script lang="ts">
   import type { ArticleBase } from "$shared/types/api";
 
-  import { onMount } from "svelte";
   import { page } from "$app/stores";
-  import { modalState } from "$shared/state/state";
 
   import Modal from "./modal.svelte";
   import Collections from "$com/collections.svelte";
@@ -11,12 +9,6 @@
 
   export let article: ArticleBase;
   let collectionSearch = "";
-
-  onMount(() => {
-    if (Object.keys($page.data.userCollections).length == 0) {
-      $modalState = { modalContent: null, modalType: null };
-    }
-  });
 </script>
 
 <Modal

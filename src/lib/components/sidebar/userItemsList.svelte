@@ -43,7 +43,7 @@
       return;
     }
 
-    $modalState = {
+    $modalState.push({
       modalType: "search",
       modalContent: {
         searchText: "Create feed",
@@ -51,13 +51,13 @@
           await createItem("New Feed", sanitizeQuery(query), "feed", "current");
         },
       },
-    };
+    });
   }
 
   function spawnSearchModal(e: Event) {
     e.preventDefault();
 
-    $modalState = {
+    $modalState.push({
       modalType: "search",
       modalContent: {
         query: $page.data?.currentSearch,
@@ -66,7 +66,7 @@
           goto(`/feed/search?${toUrl(q)}`);
         },
       },
-    };
+    });
   }
 
   function hasButton(

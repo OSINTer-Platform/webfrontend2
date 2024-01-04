@@ -37,7 +37,7 @@
     }
 
     function scroll(container: HTMLElement, timestamp: DOMHighResTimeStamp) {
-      if (!hovering && !$modalState.modalType) {
+      if (!hovering && $modalState.length === 0) {
         const scrollLength = ((timestamp - start) / 20) * scrollSpeed;
 
         if (scrollLength < 1) {

@@ -95,7 +95,7 @@
             title: `Modify ${data.currentItem.type}`,
             icon: faPenToSquare,
             action: () => {
-              $modalState = {
+              $modalState.push({
                 modalType: "search",
                 modalContent: {
                   searchText: "Update feed",
@@ -107,15 +107,12 @@
                     );
                     // Keept to avoid visual glitch with modal appearing and
                     // then removed by the afterNavigate hook in root layout
-                    modalState.set({
-                      modalType: null,
-                      modalContent: null,
-                    });
+                    modalState.set([]);
                     invalidateAll();
                   },
                   query: data.currentItem as Feed,
                 },
-              };
+              });
             },
           },
         ]

@@ -36,10 +36,13 @@ export async function spawnArticleModal(
     return list;
   });
 
-  modalState.set({
-    modalType: "article",
-    modalContent: { article, articleList, categories: articleCategories },
-  });
+  modalState.update((modals) => [
+    ...modals,
+    {
+      modalType: "article",
+      modalContent: { article, articleList, categories: articleCategories },
+    },
+  ]);
 
   const pageData = get(page).data;
 

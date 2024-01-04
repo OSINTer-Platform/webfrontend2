@@ -10,36 +10,35 @@ import type {
 import type { ArticleListRender } from "../types/internal";
 
 export const modalState: Writable<
-  | {
-      modalType: "search";
-      modalContent: {
-        query?: SearchQuery;
-        searchAction?: (q: SearchQuery) => void;
-        searchText?: string;
-      };
-    }
-  | {
-      modalType: "article";
-      modalContent: {
-        article: FullArticle;
-        articleList: Array<{ id: string }>;
-        categories: ArticleCategories;
-      };
-    }
-  | {
-      modalType: "add-collection";
-      modalContent: {
-        article: ArticleBase;
-      };
-    }
-  | {
-      modalType: null;
-      modalContent: null;
-    }
-> = persisted("modalState", {
-  modalType: null,
-  modalContent: null,
-});
+  Array<
+    | {
+        modalType: "search";
+        modalContent: {
+          query?: SearchQuery;
+          searchAction?: (q: SearchQuery) => void;
+          searchText?: string;
+        };
+      }
+    | {
+        modalType: "article";
+        modalContent: {
+          article: FullArticle;
+          articleList: Array<{ id: string }>;
+          categories: ArticleCategories;
+        };
+      }
+    | {
+        modalType: "add-collection";
+        modalContent: {
+          article: ArticleBase;
+        };
+      }
+    | {
+        modalType: null;
+        modalContent: null;
+      }
+  >
+> = persisted("modalState", []);
 
 // For controlling if the sidebar is open on small screens
 export const sideOpen: Writable<Boolean> = writable(false);

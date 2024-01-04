@@ -27,13 +27,13 @@
   function handleKeypress(keyName: string) {
     switch (keyName) {
       case "Escape":
-        $modalState = { modalType: null, modalContent: null };
+        $modalState.pop();
         break;
     }
   }
 
   afterNavigate(() => {
-    $modalState = { modalContent: null, modalType: null };
+    modalState.set([]);
   });
 </script>
 
