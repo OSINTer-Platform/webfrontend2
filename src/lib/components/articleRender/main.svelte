@@ -48,7 +48,7 @@
         <li>
           Written by <span
             class="text-black dark:text-primary-400 dark:font-bold"
-            >{article.author}</span
+            >{article.author ?? article.source}</span
           >
         </li>
         <li>

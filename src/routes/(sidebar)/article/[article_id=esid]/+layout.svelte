@@ -51,7 +51,7 @@
     {
       Sources: [
         `Medium: ${data.article.source}`,
-        `Author: ${data.article.author}`,
+        `Author: ${data.article.author ?? data.article.source}`,
       ],
     },
     {
