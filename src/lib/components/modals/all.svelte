@@ -3,6 +3,7 @@
   import Article from "./article/index.svelte";
   import Search from "./search.svelte";
   import AddCollection from "./addCollection.svelte";
+  import ArticleList from "./articleList.svelte";
 </script>
 
 {#each $modalState as modal, i (modal.id)}
@@ -22,5 +23,7 @@
     />
   {:else if modal.modalType == "add-collection"}
     <AddCollection article={modal.modalContent.article} />
+  {:else if modal.modalType == "article-list"}
+    <ArticleList articles={modal.modalContent.articles} />
   {/if}
 {/each}

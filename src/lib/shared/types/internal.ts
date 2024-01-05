@@ -70,4 +70,10 @@ export type Modal = (
         article: ArticleBase;
       };
     }
+  | {
+      modalType: "article-list";
+      modalContent: {
+        articles: ArticleBase[];
+      };
+    }
 ) & { id: string };
