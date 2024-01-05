@@ -1,15 +1,13 @@
 <script lang="ts">
-  export let options: { [key: string]: string };
+  export let options: { name: string; value: string }[];
 
-  $: formName = Object.entries(options)
-    .map(([name, value]) => value)
-    .join("-");
+  $: formName = options.map(({ value }) => value).join("-");
 
   export let selected: string;
 </script>
 
 <div class="flex gap-2">
-  {#each Object.entries(options) as [name, value]}
+  {#each options as { name, value }}
     <label
       class="
 			px-4 py-2
