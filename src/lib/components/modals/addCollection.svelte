@@ -4,7 +4,7 @@
   import { page } from "$app/stores";
 
   import Modal from "./modal.svelte";
-  import Collections from "$com/collections.svelte";
+  import CollectionList from "$com/collections/list.svelte";
   import Search from "$com/utils/inputs/search.svelte";
 
   export let article: ArticleBase;
@@ -35,7 +35,7 @@
 
   <hr class="border-surface-400 my-4" />
 
-  <Collections
+  <CollectionList
     showStats={true}
     userCollections={$page.data.userCollections}
     articleId={article.id}

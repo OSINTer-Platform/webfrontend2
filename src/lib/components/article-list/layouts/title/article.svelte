@@ -5,13 +5,10 @@
   import Loader from "$com/loader.svelte";
 
   import type { ArticleBase } from "$shared/types/api";
-  import type { Collection } from "$shared/types/userItems";
-  import type { Writable } from "svelte/store";
 
   import { getTimespan } from "$lib/common/math";
   import { PUBLIC_API_BASE } from "$env/static/public";
 
-  export let userCollections: Writable<{ [key: string]: Collection }>;
   export let article: ArticleBase;
   export let articleList: ArticleBase[];
   export let readArticles: string[];
@@ -138,7 +135,7 @@
     </p>
   </div>
 
-  <Icons {article} {userCollections} on:showSimilar={toggleShowSimilar} />
+  <Icons {article} on:showSimilar={toggleShowSimilar} />
 
   <time
     title={article.publish_date}
@@ -157,12 +154,7 @@
         <li class="relative ml-3 md:ml-6 xl:ml-10">
           <div class="absolute w-full h-full bg-primary-600/10" />
 
-          <svelte:self
-            {article}
-            {userCollections}
-            {articleList}
-            {readArticles}
-          />
+          <svelte:self {article} {articleList} {readArticles} />
         </li>
       {/each}
     {/await}

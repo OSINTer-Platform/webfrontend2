@@ -37,7 +37,6 @@
       {article}
       {readArticles}
       articleList={articles}
-      userCollections={$page.data.userCollections}
     />
   {/each}
 </svelte:component>

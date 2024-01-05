@@ -1,22 +1,18 @@
 <script lang="ts">
   import SmallLogo from "$assets/smallLogo.jpg";
   import Link from "$com/modalLink.svelte";
-  import CollectionList from "$com/article-list/components/collectionList.svelte";
+  import CollectionOverlay from "$com/collections/buttonOverlay.svelte";
   import SvelteMarkdown from "svelte-markdown";
   import Fa from "svelte-fa";
 
-  import { faStar } from "@fortawesome/free-regular-svg-icons";
   import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
   import { getTimespan } from "$lib/common/math";
   import { slide } from "svelte/transition";
 
   import type { ArticleBase } from "$shared/types/api";
-  import type { Collection } from "$shared/types/userItems";
-  import type { Writable } from "svelte/store";
 
   export let articleList: ArticleBase[];
   export let article: ArticleBase;
-  export let userCollections: Writable<{ [key: string]: Collection }>;
   export let readArticles: string[];
 
   let showSummary = false;
@@ -92,36 +88,7 @@
       "
       />
 
-      {#if Object.values($userCollections).length > 0}
-        <div
-          class="
-          flex justify-center items-center
-          h-full w-full
-          bg-black/75 opacity-0
-          rounded-md
-
-          transition-opacity
-
-          [&:focus-within>button>svg]:text-primary-500
-        "
-        >
-          <CollectionList
-            {userCollections}
-            {article}
-            class="top-10"
-            btnClass="pb-2"
-          >
-            <Fa
-              icon={faStar}
-              class="
-              hover:text-primary-500
-              transition-colors
-              text-white/90 text-5xl
-            "
-            />
-          </CollectionList>
-        </div>
-      {/if}
+      <CollectionOverlay {article} overlayClass="top-12" iconClass="text-5xl" />
     </div>
 
     <div class="flex flex-col justify-center">
