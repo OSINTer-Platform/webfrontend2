@@ -5,12 +5,14 @@
   import AddCollection from "./addCollection.svelte";
 </script>
 
-{#each $modalState as modal (modal.id)}
+{#each $modalState as modal, i (modal.id)}
+  {@const topModal = i + 1 == $modalState.length}
   {#if modal.modalType == "article"}
     <Article
       article={modal.modalContent.article}
       articleCategories={modal.modalContent.categories}
       articleList={modal.modalContent.articleList}
+      {topModal}
     />
   {:else if modal.modalType == "search"}
     <Search
