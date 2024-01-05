@@ -42,7 +42,7 @@
   });
 </script>
 
-<svelte:window on:keydown={(e) => handleKeypress(e)} />
+<svelte:window on:keydown|capture={(e) => handleKeypress(e)} />
 
 <ProgressBar class="text-primary-500" zIndex={100} settleTime={300} />
 
