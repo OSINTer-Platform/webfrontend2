@@ -1,28 +1,21 @@
 <script lang="ts">
   import type { ArticleBase } from "$shared/types/api";
-
-  import Modal from "./modal.svelte";
-  import List from "$com/article-list/main.svelte";
-
-  import { ListRenderModes } from "$shared/config";
   import type { ArticleListRender } from "$shared/types/internal";
+
+  import Modal from "../modal.svelte";
   import Switch from "$com/utils/inputs/switch.svelte";
-  import { page } from "$app/stores";
-  import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-  import { filterArticles } from "$lib/common/filter";
   import Search from "$com/utils/inputs/search.svelte";
 
-  export let articles: ArticleBase[];
+  import { ListRenderModes } from "$shared/config";
+  import { page } from "$app/stores";
+  import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+  import Loader from "$com/loader.svelte";
+  import List from "./list.svelte";
+
+  export let articles: ArticleBase[] | Promise<ArticleBase[]>;
   let listRenderMode: ArticleListRender = "large";
   let showRead: boolean = true;
   let search: string = "";
-
-  $: alreadyReadCollection = $page.data.alreadyRead;
-  $: filteredArticles = filterArticles(
-    articles,
-    search,
-    !showRead && alreadyReadCollection ? $alreadyReadCollection?.ids : []
-  );
 </script>
 
 <Modal
@@ -85,11 +78,9 @@
     {/if}
   </div>
 
-  <main class="m-6 sm:m-12 mt-3 sm:mt-6 overflow-y-auto">
-    <List
-      articles={filteredArticles}
-      tintReadArticles={true}
-      layout={listRenderMode}
-    />
-  </main>
+  {#await articles}
+    <Loader text="Loading list articles" />
+  {:then articles}
+    <List {articles} {search} {showRead} {listRenderMode} />
+  {/await}
 </Modal>

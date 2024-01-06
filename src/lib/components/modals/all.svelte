@@ -3,7 +3,7 @@
   import Article from "./article/index.svelte";
   import Search from "./search.svelte";
   import AddCollection from "./addCollection.svelte";
-  import ArticleList from "./articleList.svelte";
+  import ArticleList from "./articleList/index.svelte";
 </script>
 
 {#each $modalState as modal, i (modal.id)}

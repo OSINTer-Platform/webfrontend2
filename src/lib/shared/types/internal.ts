@@ -73,7 +73,7 @@ export type Modal = (
   | {
       modalType: "article-list";
       modalContent: {
-        articles: ArticleBase[];
+        articles: ArticleBase[] | Promise<ArticleBase[]>;
       };
     }
 ) & { id: string };
