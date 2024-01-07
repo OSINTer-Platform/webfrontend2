@@ -21,6 +21,8 @@
     type IconDefinition,
   } from "@fortawesome/free-solid-svg-icons";
   import { createItem } from "$lib/common/userItems";
+  import { getBaseArticles } from "$lib/common/elasticsearch";
+  import { modalState } from "$shared/state/modals";
 
   const { selectedSearch, showAllSelected } = controlParams;
 
@@ -42,13 +44,15 @@
       icon: faMagnifyingGlass,
       description: "See full list of articles",
       action: () => {
-        createItem(
-          "Article Overview",
-          $searchedSelectedArticles.map((a) => a.id),
-          "collection",
-          "new",
-          false
-        );
+        modalState.append({
+          modalType: "article-list",
+          modalContent: {
+            articles: getBaseArticles({
+              limit: 0,
+              ids: $searchedSelectedArticles.map((a) => a.id),
+            }),
+          },
+        });
       },
     },
     {
