@@ -46,6 +46,7 @@
   "type": "module",
   "dependencies": {
     "@elastic/apm-rum": "^5.15.0",
+    "@elastic/search-application-client": "^8.9.0-1",
     "@fortawesome/free-brands-svg-icons": "^6.3.0",
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",

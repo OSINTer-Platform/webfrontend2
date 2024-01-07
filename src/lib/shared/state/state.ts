@@ -2,7 +2,7 @@ import { persisted } from "svelte-persisted-store";
 import { writable, type Writable } from "svelte/store";
 
 import type {
-  Article,
+  FullArticle,
   ArticleBase,
   ArticleCategories,
   SearchQuery,
@@ -21,7 +21,7 @@ export const modalState: Writable<
   | {
       modalType: "article";
       modalContent: {
-        article: Article;
+        article: FullArticle;
         articleList: Array<{ id: string }>;
         categories: ArticleCategories;
       };

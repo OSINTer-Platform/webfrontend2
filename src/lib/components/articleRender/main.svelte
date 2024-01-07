@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { Article, ArticleCategories } from "$shared/types/api";
+  import type { FullArticle, ArticleCategories } from "$shared/types/api";
   import type { HeadingList, ParsedEvent } from "$lib/common/ToC";
 
   import { MDtoToC } from "$lib/common/ToC";
 
   import SvelteMarkdown from "svelte-markdown";
 
-  export let article: Article;
+  export let article: FullArticle;
   export let articleCategories: ArticleCategories | null = null;
   export let header: Boolean = true;
 
