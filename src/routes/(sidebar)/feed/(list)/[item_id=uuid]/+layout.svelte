@@ -5,7 +5,9 @@
   import ItemDescriptor from "../itemDescriptor/main.svelte";
   import HeaderShell from "$com/article-list/header/shell.svelte";
 
-  import { feedLocalSearch, modalState } from "$state/state";
+  import { feedLocalSearch } from "$state/state";
+  import { modalState } from "$state/modals";
+
   import {
     faDownload,
     faPenToSquare,
@@ -95,7 +97,7 @@
             title: `Modify ${data.currentItem.type}`,
             icon: faPenToSquare,
             action: () => {
-              $modalState = {
+              modalState.append({
                 modalType: "search",
                 modalContent: {
                   searchText: "Update feed",
@@ -107,15 +109,12 @@
                     );
                     // Keept to avoid visual glitch with modal appearing and
                     // then removed by the afterNavigate hook in root layout
-                    modalState.set({
-                      modalType: null,
-                      modalContent: null,
-                    });
+                    modalState.set([]);
                     invalidateAll();
                   },
                   query: data.currentItem as Feed,
                 },
-              };
+              });
             },
           },
         ]

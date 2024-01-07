@@ -1,13 +1,12 @@
 <script lang="ts">
-  import { modalState } from "$state/state";
+  import { modalState } from "$state/modals";
   import { fly, fade } from "svelte/transition";
 
   let classes: string = "";
   export { classes as class };
   export let style = "";
 
-  const resetModal = () =>
-    ($modalState = { modalType: null, modalContent: null });
+  const resetModal = () => modalState.remove();
 </script>
 
 <div

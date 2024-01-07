@@ -6,12 +6,16 @@
   import Tabs from "$com/tabs.svelte";
   import ModList from "./modList.svelte";
 
-  import type { HeaderModOptions } from "$shared/types/internal";
+  import type {
+    ArticleListRender,
+    HeaderModOptions,
+  } from "$shared/types/internal";
   import { writable, type Writable } from "svelte/store";
 
   import { articleListRender, showRead } from "$state/state";
   import { page } from "$app/stores";
   import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+  import { ListRenderModes } from "$shared/config";
 
   export let title: string;
   export let badge: string = "";
@@ -20,10 +24,10 @@
 
   export let tabs: null | {
     store: Writable<string>;
-    options: { [key: string]: string };
+    options: { name: string; value: ArticleListRender }[];
   } = {
     store: articleListRender,
-    options: { Large: "large", "Title-View": "title" },
+    options: ListRenderModes,
   };
   $: tabStore = tabs?.store ?? writable("");
 

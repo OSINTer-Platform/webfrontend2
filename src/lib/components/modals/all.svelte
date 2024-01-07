@@ -1,22 +1,29 @@
 <script lang="ts">
-  import { modalState } from "$state/state";
+  import { modalState } from "$state/modals";
   import Article from "./article/index.svelte";
   import Search from "./search.svelte";
   import AddCollection from "./addCollection.svelte";
+  import ArticleList from "./articleList/index.svelte";
 </script>
 
-{#if $modalState.modalType == "article"}
-  <Article
-    article={$modalState.modalContent.article}
-    articleCategories={$modalState.modalContent.categories}
-    articleList={$modalState.modalContent.articleList}
-  />
-{:else if $modalState.modalType == "search"}
-  <Search
-    searchQuery={$modalState.modalContent.query}
-    callback={$modalState.modalContent.searchAction}
-    searchText={$modalState.modalContent.searchText}
-  />
-{:else if $modalState.modalType == "add-collection"}
-  <AddCollection article={$modalState.modalContent.article} />
-{/if}
+{#each $modalState as modal, i (modal.id)}
+  {@const topModal = i + 1 == $modalState.length}
+  {#if modal.modalType == "article"}
+    <Article
+      article={modal.modalContent.article}
+      articleCategories={modal.modalContent.categories}
+      articleList={modal.modalContent.articleList}
+      {topModal}
+    />
+  {:else if modal.modalType == "search"}
+    <Search
+      searchQuery={modal.modalContent.query}
+      callback={modal.modalContent.searchAction}
+      searchText={modal.modalContent.searchText}
+    />
+  {:else if modal.modalType == "add-collection"}
+    <AddCollection article={modal.modalContent.article} />
+  {:else if modal.modalType == "article-list"}
+    <ArticleList articles={modal.modalContent.articles} />
+  {/if}
+{/each}

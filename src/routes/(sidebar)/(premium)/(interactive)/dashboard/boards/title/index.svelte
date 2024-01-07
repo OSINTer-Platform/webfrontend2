@@ -29,11 +29,6 @@
     "
 >
   {#each articles as article (article.id)}
-    <Article
-      {article}
-      {readArticles}
-      articleList={articles}
-      userCollections={$page.data.userCollections}
-    />
+    <Article {article} {readArticles} articleList={articles} />
   {/each}
 </div>

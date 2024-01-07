@@ -1,13 +1,17 @@
 <script lang="ts">
-  import Collections from "$com/collections.svelte";
-  import { modalState } from "$shared/state/state";
+  import Fa from "svelte-fa";
+  import CollectionList from "./list.svelte";
+
+  import { faStar } from "@fortawesome/free-regular-svg-icons";
+  import { modalState } from "$state/modals";
+
   import type { ArticleBase } from "$shared/types/api";
   import type { Collection } from "$shared/types/userItems";
   import type { Writable } from "svelte/store";
 
   export let btnClass: string = "";
-  let classes: string = "";
-  export { classes as class };
+  export let iconClass: string = "";
+  export let overlayClass: string = "";
 
   export let userCollections: Writable<{ [key: string]: Collection }>;
   export let article: ArticleBase;
@@ -21,12 +25,19 @@
 		{btnClass}
 	"
   on:click={() =>
-    modalState.set({
+    modalState.append({
       modalType: "add-collection",
       modalContent: { article: article },
     })}
 >
-  <slot />
+  <Fa
+    icon={faStar}
+    class="
+    hover:text-primary-500
+    transition-colors
+    text-white/90 {iconClass}
+  "
+  />
   <div
     on:keydown|stopPropagation|preventDefault
     on:click|stopPropagation|preventDefault
@@ -41,9 +52,9 @@
 		rounded-lg shadow-xl
 
 		cursor-default
-		{classes}
+		{overlayClass}
 	"
   >
-    <Collections {userCollections} articleId={article.id} />
+    <CollectionList {userCollections} articleId={article.id} />
   </div>
 </button>

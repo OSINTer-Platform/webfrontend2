@@ -1,4 +1,10 @@
 import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import type {
+  ArticleBase,
+  FullArticle,
+  ArticleCategories,
+  SearchQuery,
+} from "./api";
 
 export type ArticleListRender = "large" | "title";
 
@@ -40,3 +46,34 @@ export type SidebarOption = {
 export interface UserItemSidebarOption extends SidebarOption {
   id: "inbuilts" | "feeds" | "collections" | "clusters";
 }
+
+export type Modal = (
+  | {
+      modalType: "search";
+      modalContent: {
+        query?: SearchQuery;
+        searchAction?: (q: SearchQuery) => void;
+        searchText?: string;
+      };
+    }
+  | {
+      modalType: "article";
+      modalContent: {
+        article: FullArticle;
+        articleList: Array<{ id: string }>;
+        categories: ArticleCategories;
+      };
+    }
+  | {
+      modalType: "add-collection";
+      modalContent: {
+        article: ArticleBase;
+      };
+    }
+  | {
+      modalType: "article-list";
+      modalContent: {
+        articles: ArticleBase[] | Promise<ArticleBase[]>;
+      };
+    }
+) & { id: string };

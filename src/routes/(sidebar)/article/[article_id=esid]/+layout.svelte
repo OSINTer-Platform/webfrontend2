@@ -9,6 +9,7 @@
   import {
     faClipboard,
     faPaste,
+    faStar,
   } from "@fortawesome/free-regular-svg-icons/index";
 
   import {
@@ -21,6 +22,7 @@
   import { goto } from "$app/navigation";
 
   import { PUBLIC_API_BASE } from "$env/static/public";
+  import { modalState } from "$shared/state/modals";
 
   export let data: LayoutData;
 
@@ -76,6 +78,15 @@
           },
         ]
       : []),
+    {
+      title: "Add to collection",
+      icon: faStar,
+      action: () =>
+        modalState.append({
+          modalType: "add-collection",
+          modalContent: { article: data.article },
+        }),
+    },
     {
       title: `Copy raw`,
       icon: faClipboard,

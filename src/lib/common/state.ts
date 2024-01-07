@@ -1,4 +1,4 @@
-import { modalState } from "$state/state";
+import { modalState } from "$state/modals";
 import { fullArticles } from "$state/storedArticles";
 
 import { page } from "$app/stores";
@@ -36,7 +36,7 @@ export async function spawnArticleModal(
     return list;
   });
 
-  modalState.set({
+  modalState.append({
     modalType: "article",
     modalContent: { article, articleList, categories: articleCategories },
   });

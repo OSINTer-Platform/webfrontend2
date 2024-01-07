@@ -7,7 +7,9 @@
   import Modals from "$com/modals/all.svelte";
   import { ProgressBar } from "@prgm/sveltekit-progress-bar";
 
-  import { modalState, darkMode } from "$state/state";
+  import { darkMode } from "$state/state";
+  import { modalState } from "$state/modals";
+
   import { init as initApm } from "@elastic/apm-rum";
   import { env } from "$env/dynamic/public";
   import { page } from "$app/stores";
@@ -24,20 +26,23 @@
     });
   }
 
-  function handleKeypress(keyName: string) {
-    switch (keyName) {
+  function handleKeypress(e: KeyboardEvent) {
+    switch (e.key) {
       case "Escape":
-        $modalState = { modalType: null, modalContent: null };
+        if (e.getModifierState("Shift") || e.getModifierState("Control"))
+          modalState.set([]);
+        else modalState.remove();
+
         break;
     }
   }
 
   afterNavigate(() => {
-    $modalState = { modalContent: null, modalType: null };
+    modalState.set([]);
   });
 </script>
 
-<svelte:window on:keydown={(e) => handleKeypress(e.key)} />
+<svelte:window on:keydown|capture={(e) => handleKeypress(e)} />
 
 <ProgressBar class="text-primary-500" zIndex={100} settleTime={300} />
 
