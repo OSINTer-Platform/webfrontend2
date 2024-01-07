@@ -1,4 +1,4 @@
-import type { FullArticle, SearchQuery } from "$shared/types/api";
+import type { ArticleBase, FullArticle, SearchQuery } from "$shared/types/api";
 import {
   PUBLIC_ELASTIC_ARTICLES_SEARCH,
   PUBLIC_ELASTIC_ARTICLES_KEY,
@@ -14,6 +14,23 @@ const client = Client(
   PUBLIC_ELASTIC_ARTICLES_KEY,
   {}
 );
+
+const BaseArticleFields: NonEmptyArray<keyof ArticleBase> = [
+  "title",
+  "description",
+  "url",
+  "profile",
+  "source",
+  "image_url",
+  "author",
+  "publish_date",
+  "inserted_at",
+  "tags",
+  "similar",
+  "summary",
+  "ml",
+  "read_times",
+];
 
 function createRequest(
   query: SearchQuery,
@@ -37,6 +54,16 @@ function createRequest(
 
   return request;
 }
+
+export const getFullArticles = (query: SearchQuery): Promise<FullArticle[]> =>
+  searchArticles(query, {
+    include_fields: [...BaseArticleFields, "formatted_content", "content"],
+  });
+
+export const getBaseArticles = (query: SearchQuery): Promise<ArticleBase[]> =>
+  searchArticles(query, {
+    include_fields: BaseArticleFields,
+  });
 
 export async function searchArticles<K extends keyof FullArticle>(
   query: SearchQuery,
