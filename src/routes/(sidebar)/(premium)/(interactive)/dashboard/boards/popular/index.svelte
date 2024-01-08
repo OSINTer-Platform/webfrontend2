@@ -20,7 +20,12 @@
     overflow-y-auto
     "
 >
-  <ArticleList tintReadArticles={false} {articles} layout="large" />
+  <ArticleList
+    tintReadArticles={false}
+    {articles}
+    layout="large"
+    listLenLimit={0}
+  />
 </div>
 
 <div

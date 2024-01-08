@@ -8,6 +8,8 @@
   import TitleShell from "./layouts/title/shell.svelte";
   import TitleArticle from "./layouts/title/article.svelte";
 
+  import Loader from "./loader.svelte";
+
   import { page } from "$app/stores";
   import type { Collection } from "$shared/types/userItems";
   import type { Readable } from "svelte/store";
@@ -15,6 +17,9 @@
   export let articles: ArticleBase[] = [];
   export let layout: ArticleListRender = "large";
   export let tintReadArticles: boolean;
+  export let listLenLimit = 200;
+
+  let chunksVisible = 1;
 
   const layouts: {
     [articleListRender in ArticleListRender]: { shell: any; article: any };
@@ -28,10 +33,17 @@
 
   let readArticles: string[];
   $: readArticles = $alreadyRead && tintReadArticles ? $alreadyRead.ids : [];
+
+  $: limitedArticles =
+    listLenLimit > 0
+      ? articles.slice(0, listLenLimit * chunksVisible)
+      : articles;
+
+  $: showLoader = limitedArticles.length < articles.length;
 </script>
 
 <svelte:component this={layouts[layout].shell}>
-  {#each articles as article (article.id)}
+  {#each limitedArticles as article (article.id)}
     <svelte:component
       this={layouts[layout].article}
       {article}
@@ -39,4 +51,7 @@
       articleList={articles}
     />
   {/each}
+  {#if showLoader}
+    <Loader bind:chunksVisible />
+  {/if}
 </svelte:component>

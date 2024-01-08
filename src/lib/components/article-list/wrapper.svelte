@@ -7,6 +7,7 @@
   let classes: string = "";
   export { classes as class };
   export let tintReadArticles: boolean;
+  export let listLenLimit = 100;
 
   let defaultMessage: {
     title: string;
@@ -34,7 +35,12 @@
 >
   {#if articles.length > 0}
     <slot name="top" />
-    <List {articles} layout={$articleListRender} {tintReadArticles} />
+    <List
+      {articles}
+      layout={$articleListRender}
+      {tintReadArticles}
+      {listLenLimit}
+    />
     <slot name="bottom" />
   {:else}
     <div
