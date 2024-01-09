@@ -18,6 +18,15 @@
     selectedSources.length == Object.keys(sourceCategories).length;
   $: noneSelected = selectedSources.length == 0;
 
+  $: searchedSources =
+    sourceSearch.length > 0 && sourceCategories
+      ? Object.fromEntries(
+          Object.entries(sourceCategories).filter(([name, _]) =>
+            name.toLowerCase().includes(sourceSearch)
+          )
+        )
+      : sourceCategories;
+
   onMount(async () => {
     if (!sourceCategories) {
       const r = await fetch(`${PUBLIC_API_BASE}/articles/categories`);
@@ -40,6 +49,9 @@
     placeholder={"Filter sources..."}
     inputClass={"w-26"}
     containerClass="grow"
+    infoText={`${
+      searchedSources ? Object.keys(searchedSources).length : 0
+    } sources`}
   />
 
   <button
@@ -80,10 +92,8 @@
 	overflow-auto
 "
 >
-  {#if sourceCategories}
-    {#each Object.entries(sourceCategories) as [profileName, { name, image, url }]}
-      {@const visible =
-        sourceSearch.length == 0 || name.toLowerCase().includes(sourceSearch)}
+  {#if searchedSources !== undefined}
+    {#each Object.entries(searchedSources) as [profileName, { name, image, url }]}
       {@const selected = selectedSources.includes(profileName)}
 
       <li>
@@ -96,25 +106,24 @@
           class="hidden"
         />
 
-        {#if visible}
-          <label
-            for="{profileName}-checkbox"
+        <label
+          for="{profileName}-checkbox"
+          class="
+              flex
+              items-center
+              gap-2
+
+              cursor-pointer
+
+              {selected
+            ? 'bg-primary-300/30 dark:bg-primary-500/30'
+            : 'hover:bg-surface-200 dark:hover:bg-surface-500'}
+            "
+        >
+          <img
+            alt="{name} icon"
+            src={image}
             class="
-				flex
-				items-center
-				gap-2
-
-				cursor-pointer
-
-				{selected
-              ? 'bg-primary-300/30 dark:bg-primary-500/30'
-              : 'hover:bg-surface-200 dark:hover:bg-surface-500'}
-			"
-          >
-            <img
-              alt="{name} icon"
-              src={image}
-              class="
 					w-12
 					aspect-square
 
@@ -129,23 +138,23 @@
 
 					m-4
 				"
-            />
+          />
 
-            <div class="grow">
-              <h3
-                class="
+          <div class="grow">
+            <h3
+              class="
 						font-semibold
 						@:md/half:text-xl
 						dark:text-white
 					"
-              >
-                {name}
-              </h3>
-              <a
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="
+            >
+              {name}
+            </h3>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="
 						font-light
 						text-tertiary-900
 						dark:text-white/75
@@ -156,27 +165,26 @@
 						text-xs
 						@md/half:text-base
 					">{url.replace("https://", "")}</a
-              >
-            </div>
+            >
+          </div>
 
-            <div
-              class="
+          <div
+            class="
 					m-4
 					p-2
 					rounded-full
 
 					{selected ? 'bg-primary-500' : 'border border-tertiary-500'}
 				"
-            >
-              <Fa
-                icon={selected ? faCheck : faPlus}
-                class="{selected
-                  ? 'text-primary-100'
-                  : 'text-tertiary-900'} text-lg"
-              />
-            </div>
-          </label>
-        {/if}
+          >
+            <Fa
+              icon={selected ? faCheck : faPlus}
+              class="{selected
+                ? 'text-primary-100'
+                : 'text-tertiary-900'} text-lg"
+            />
+          </div>
+        </label>
       </li>
     {/each}
   {:else}
