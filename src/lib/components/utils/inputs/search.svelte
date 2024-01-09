@@ -34,15 +34,17 @@
       bind:value
       {placeholder}
       class="
-      grow h-full
-      bg-transparent placeholder-tertiary-800 text-xs dark:text-white
-      border-0 focus:outline-none focus:border-0
-      {inputClass}
+        grow h-full min-w-0 shrink-1
+        bg-transparent placeholder-tertiary-800 text-xs dark:text-white
+        border-0 focus:outline-none focus:border-0
+        {inputClass}
     "
     />
 
     {#if infoText}
-      <p class="text-xs text-black/60 dark:text-white/60">{infoText}</p>
+      <p class="text-xs text-black/60 dark:text-white/60 shrink-0">
+        {infoText}
+      </p>
     {/if}
   </label>
   <slot />

@@ -1,9 +1,13 @@
 <script lang="ts">
+  import { page } from "$app/stores";
   import Search from "$inputs/search.svelte";
   import Switch from "$inputs/switch.svelte";
 
   import { controlParams } from "../../state";
   const { dotSize, articleSearch, enableSearch } = controlParams;
+
+  $: listCount = $page.data.listElementCount;
+  $: searchInfo = listCount ? `${$listCount} articles` : "";
 </script>
 
 <div class="flex justify-between mb-4">
@@ -108,6 +112,7 @@
     placeholder={"Search in articles"}
     bind:value={$articleSearch}
     containerClass={"mt-4 mb-2"}
+    infoText={searchInfo}
   />
 
   <!--

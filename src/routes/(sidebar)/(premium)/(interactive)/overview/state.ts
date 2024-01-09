@@ -133,7 +133,7 @@ export const articleFilter = derived(
     })
 );
 
-const filteredArticles = derived(articleFilter, (articleFilter) =>
+export const filteredArticles = derived(articleFilter, (articleFilter) =>
   articleFilter.filter(({ show }) => show).map(({ article }) => article)
 );
 

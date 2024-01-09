@@ -22,6 +22,7 @@
     articles as articleStore,
     clusters as clusterStore,
     articleFilter,
+    filteredArticles,
     searchedSelectedArticles,
     toolTips,
     d3Selection,
@@ -32,6 +33,7 @@
   } from "./state";
 
   import { handlePointerModeChange, scalePointerPosition } from "./events";
+  import { page } from "$app/stores";
 
   const storeListeners: Array<() => void> = [];
 
@@ -159,8 +161,11 @@
     );
   });
 
+  $: $page.data?.listElementCount?.set?.($filteredArticles.length);
+
   onDestroy(() => {
     storeListeners.forEach((unsubscriber) => unsubscriber());
+    $page.data?.listElementCount?.set?.(0);
   });
 
   afterUpdate(() => requestAnimationFrame(drawCanvas));
