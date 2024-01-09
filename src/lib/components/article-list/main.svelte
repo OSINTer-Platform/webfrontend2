@@ -11,6 +11,8 @@
   import Loader from "./loader.svelte";
 
   import { page } from "$app/stores";
+  import { onDestroy } from "svelte";
+
   import type { Collection } from "$shared/types/userItems";
   import type { Readable } from "svelte/store";
 
@@ -40,6 +42,10 @@
       : articles;
 
   $: showLoader = limitedArticles.length < articles.length;
+
+  $: $page.data?.listElementCount?.set?.(articles.length);
+
+  onDestroy(() => $page.data?.listElementCount?.set?.(0));
 </script>
 
 <svelte:component this={layouts[layout].shell}>

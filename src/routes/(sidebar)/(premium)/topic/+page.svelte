@@ -10,10 +10,11 @@
 
   import { faArrowTrendUp } from "@fortawesome/free-solid-svg-icons";
   import { writable } from "svelte/store";
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import { searchInCluster } from "$lib/common/filter";
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { slide } from "svelte/transition";
+  import { page } from "$app/stores";
 
   export let data: PageData;
 
@@ -27,6 +28,8 @@
       (c) => $clusterSearch.length < 1 || searchInCluster(c, $clusterSearch)
     );
 
+  $: $page.data?.listElementCount?.set?.(filteredClusters.length);
+
   const modOptions: HeaderModOptions[] = [
     {
       title: "Show cluster development",
@@ -36,6 +39,8 @@
       },
     },
   ];
+
+  onDestroy(() => $page.data?.listElementCount?.set?.(0));
 
   onMount(() => {
     fullClusters = fetch(`${PUBLIC_API_BASE}/ml/clusters?complete=true`).then(
@@ -59,6 +64,7 @@
     {modOptions}
     bind:searchValue={$clusterSearch}
     tabs={null}
+    contentType="topics"
   >
     {#if showClusterGraph}
       {#await fullClusters}

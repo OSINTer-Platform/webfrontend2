@@ -6,6 +6,7 @@
   export let placeholder = "";
   export let containerClass = "";
   export let inputClass = "";
+  export let infoText = "";
 
   let inputName = $page.data.mlAvailability?.elser
     ? "semantic_search"
@@ -13,5 +14,12 @@
 </script>
 
 <form action="/feed/search" method="get">
-  <Search bind:value {placeholder} {containerClass} {inputClass} {inputName} />
+  <Search
+    bind:value
+    {placeholder}
+    {containerClass}
+    {inputClass}
+    {inputName}
+    {infoText}
+  />
 </form>

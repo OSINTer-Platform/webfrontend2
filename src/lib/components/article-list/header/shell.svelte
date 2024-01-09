@@ -21,6 +21,7 @@
   export let badge: string = "";
   export let description: string = "";
   export let searchAble = true;
+  export let contentType = "articles";
 
   export let tabs: null | {
     store: Writable<string>;
@@ -34,6 +35,9 @@
   export let searchValue: string = "";
 
   export let modOptions: Array<HeaderModOptions> = [];
+
+  $: listCount = $page.data.listElementCount;
+  $: searchInfo = listCount ? `${$listCount} ${contentType}` : "";
 </script>
 
 <aside
@@ -103,6 +107,7 @@
     bind:value={searchValue}
     placeholder={"Filter displayed articles"}
     containerClass={"w-full my-6"}
+    infoText={searchInfo}
   />
 
   {#if tabs}

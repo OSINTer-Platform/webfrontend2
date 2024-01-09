@@ -8,6 +8,7 @@
   export let containerClass = "";
   export let inputClass = "";
   export let inputName = "";
+  export let infoText = "";
 
   onMount(() => {
     value = "";
@@ -25,7 +26,7 @@
     {containerClass}
   "
 >
-  <label class="flex gap-2 text-tertiary-800 m-2 w-full">
+  <label class="flex gap-2 text-tertiary-800 m-2 w-full cursor-text">
     <Fa icon={faMagnifyingGlass} />
 
     <input
@@ -39,6 +40,10 @@
       {inputClass}
     "
     />
+
+    {#if infoText}
+      <p class="text-xs text-black/60 dark:text-white/60">{infoText}</p>
+    {/if}
   </label>
   <slot />
 </div>

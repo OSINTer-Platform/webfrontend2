@@ -16,6 +16,9 @@
   let listRenderMode: ArticleListRender = "large";
   let showRead: boolean = true;
   let search: string = "";
+
+  $: listCount = $page.data.listElementCount;
+  $: searchInfo = listCount ? `${$listCount} articles` : "";
 </script>
 
 <Modal
@@ -61,6 +64,7 @@
       bind:value={search}
       placeholder="Filter articles..."
       containerClass="grow"
+      infoText={searchInfo}
     />
 
     {#if $page.data.user}
