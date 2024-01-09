@@ -50,6 +50,8 @@
             articles: getBaseArticles({
               limit: 0,
               ids: $searchedSelectedArticles.map((a) => a.id),
+              sort_by: "publish_date",
+              sort_order: "desc",
             }),
           },
         });
