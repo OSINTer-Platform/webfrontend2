@@ -4,8 +4,6 @@
   export let articleCategories: ArticleCategories;
   export let selected: string[];
   export let hovering: string;
-
-  $: hovering = selected.length > 0 ? hovering : "";
 </script>
 
 <div
@@ -40,9 +38,7 @@
 
         transition-colors duration-150
       "
-      on:mouseenter={() => {
-        if (selected.length > 0) hovering = profile;
-      }}
+      on:mouseenter={() => (hovering = profile)}
       on:mouseleave={() => (hovering = "")}
     >
       <input
