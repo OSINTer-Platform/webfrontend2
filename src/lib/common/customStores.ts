@@ -56,6 +56,7 @@ export async function updatable<T>(
 
 export interface WritableWithDefault<ContentType>
   extends Writable<ContentType> {
+  afterReset: (handler: () => void) => () => void;
   reset: (duration?: number, steps?: number) => void;
   contentDefault: ContentType;
 }
@@ -63,6 +64,7 @@ export function writableWithDefault<ContentType>(
   contentDefault: ContentType
 ): WritableWithDefault<ContentType> {
   const internalStore: Writable<ContentType> = writable(contentDefault);
+  const afterResetSubs: Array<() => void> = [];
 
   async function taperNumber(duration: number, numberDefault: number) {
     const prevVal = get(internalStore);
@@ -95,6 +97,15 @@ export function writableWithDefault<ContentType>(
     } else {
       internalStore.set(contentDefault);
     }
+    afterResetSubs.forEach((handler) => handler());
+  }
+
+  function afterReset(handler: () => void) {
+    afterResetSubs.push(handler);
+    return () => {
+      const i = afterResetSubs.indexOf(handler);
+      if (i > -1) afterResetSubs.splice(i, 1);
+    };
   }
 
   return {
@@ -102,6 +113,7 @@ export function writableWithDefault<ContentType>(
     set: internalStore.set,
     update: internalStore.update,
     reset,
+    afterReset,
     contentDefault,
   };
 }
