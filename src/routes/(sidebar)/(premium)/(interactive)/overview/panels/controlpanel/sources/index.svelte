@@ -5,6 +5,7 @@
   import ListSource from "./listSource.svelte";
 
   import { controlParams } from "../../../state";
+  import { onDestroy } from "svelte";
 
   const { selectedSources } = controlParams;
 
@@ -15,6 +16,13 @@
   let hovering: string = "";
 
   $: $selectedSources = hovering ? [hovering, ...selected] : selected;
+
+  onDestroy(
+    selectedSources.afterReset(() => {
+      selected = [];
+      hovering = "";
+    })
+  );
 </script>
 
 <div class="flex justify-between border-b-2 border-surface-400/50 mb-2 pb-2">

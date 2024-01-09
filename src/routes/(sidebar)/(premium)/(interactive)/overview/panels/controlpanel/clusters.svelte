@@ -5,6 +5,7 @@
 
   import { searchInCluster } from "$lib/common/filter";
   import { controlParams } from "../../state";
+  import { onDestroy } from "svelte";
 
   const { selectedClusters } = controlParams;
 
@@ -22,6 +23,13 @@
   let hover = "";
 
   $: $selectedClusters = hover ? [hover, ...selected] : selected;
+
+  onDestroy(
+    selectedClusters.afterReset(() => {
+      selected = [];
+      hover = "";
+    })
+  );
 </script>
 
 <div class="flex justify-between border-b-2 border-surface-400/50 mb-2 pb-2">
