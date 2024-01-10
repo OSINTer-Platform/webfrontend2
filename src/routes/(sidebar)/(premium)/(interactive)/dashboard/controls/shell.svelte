@@ -1,19 +1,15 @@
 <script lang="ts">
-  import LogoIcon from "$assets/LogoIcon.svelte";
   import DateSlider from "./dateSlider.svelte";
+  import LogoIcon from "$assets/LogoIcon.svelte";
   import Navigator from "./navigator.svelte";
 
-  import type { Dashboards } from "$shared/types/internal";
-
-  import { createEventDispatcher } from "svelte";
-  import { page } from "$app/stores";
   import { goto } from "$app/navigation";
-  import SpeedSlider from "./speedSlider.svelte";
+  import { page } from "$app/stores";
+  import { createEventDispatcher } from "svelte";
+
+  export let startDate: Date;
 
   const dispatch = createEventDispatcher();
-  export let startDate: Date;
-  export let dashboard: Dashboards;
-  export let scrollSpeed: number;
 
   function changeDate() {
     const url = new URL($page.url);
@@ -58,8 +54,8 @@
     </a>
   </div>
   <div class="shrink grow flex gap-1 sm:gap-4">
-    <SpeedSlider bind:value={scrollSpeed} />
+    <slot />
     <DateSlider on:change={changeDate} bind:date={startDate} />
   </div>
-  <Navigator {dashboard} />
+  <Navigator />
 </aside>

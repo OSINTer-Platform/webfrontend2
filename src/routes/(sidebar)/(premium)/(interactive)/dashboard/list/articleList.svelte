@@ -1,12 +1,11 @@
 <script lang="ts">
   import type { ArticleBase } from "$shared/types/api";
-  import type { Dashboards } from "$shared/types/internal";
+  import type { Dashboards } from "./common";
 
   import { onDestroy, onMount } from "svelte";
   import { modalState } from "$state/modals";
 
   import BoardTitle from "./boards/title/index.svelte";
-  import BoardPopular from "./boards/popular/index.svelte";
 
   export let articles: ArticleBase[];
   export let dashboard: Dashboards;
@@ -22,7 +21,6 @@
 
   const dashboards: { [key in Dashboards]: any } = {
     title: BoardTitle,
-    popular: BoardPopular,
   };
 
   function startScroll(container: HTMLElement | null) {

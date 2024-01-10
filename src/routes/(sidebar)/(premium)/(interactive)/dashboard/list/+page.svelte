@@ -50,16 +50,10 @@
   {#await articleQuery}
     <Loader text="Loading articles for dashboard" />
   {:then articles}
-    <ArticleList
-      {articles}
-      dashboard={data.dashboard}
-      {fetchArticles}
-      {scrollSpeed}
-    />
+    <ArticleList {articles} dashboard="title" {fetchArticles} {scrollSpeed} />
     <Controls
       bind:scrollSpeed
       startDate={data.startDate}
-      dashboard={data.dashboard}
       on:date={(e) => {
         articleQuery = fetchArticles(e.detail.date);
       }}

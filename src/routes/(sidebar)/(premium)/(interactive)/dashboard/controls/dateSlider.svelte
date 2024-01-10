@@ -25,7 +25,7 @@
   $: tooltipX = x(value);
 </script>
 
-<div class="w-2/3 md:w-4/5 flex rounded-full bg-black" bind:clientWidth>
+<div class="grow flex rounded-full bg-black" bind:clientWidth>
   <input
     on:change
     bind:value

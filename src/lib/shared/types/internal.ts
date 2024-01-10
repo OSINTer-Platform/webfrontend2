@@ -8,9 +8,6 @@ import type {
 
 export type ArticleListRender = "large" | "title";
 
-export const dashboards = ["title", "popular"] as const;
-export type Dashboards = (typeof dashboards)[number];
-
 export interface Inbuilt {
   id: string;
   title: string;
