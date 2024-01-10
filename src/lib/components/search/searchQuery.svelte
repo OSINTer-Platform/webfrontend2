@@ -69,7 +69,6 @@
         placeholder=" "
         class="input"
       >
-        <option selected disabled>Sort By</option>
         {#each sortBy as { value, name }}
           <option {value}>{name}</option>
         {/each}
@@ -85,7 +84,6 @@
         placeholder=" "
         class="input"
       >
-        <option selected disabled>Sort Order</option>
         {#each sortOrder as { value, name }}
           <option {value}>{name}</option>
         {/each}
