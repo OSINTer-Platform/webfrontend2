@@ -54,6 +54,12 @@ export const getBaseArticles = (query: SearchQuery): Promise<ArticleBase[]> =>
     include_fields: BaseArticleFields,
   });
 
+const extractArticles = (response: any) =>
+  response.hits.hits.map((hit: any) => ({
+    id: hit._id,
+    ...(hit._source as object),
+  }));
+
 export async function searchArticles<K extends keyof FullArticle>(
   query: SearchQuery,
   options: {
@@ -66,7 +72,7 @@ export async function searchArticles<K extends keyof FullArticle>(
 
   const response = await createRequest(query, options).search();
 
-  return response.hits.hits.map((hit) => hit._source) as any[];
+  return extractArticles(response) as any[];
 }
 
 async function largeSearch<K extends keyof FullArticle>(
@@ -86,10 +92,7 @@ async function largeSearch<K extends keyof FullArticle>(
       ...search_after,
     });
     const response = await request.search();
-    const results = response.hits.hits.map((hit) => ({
-      id: hit._id,
-      ...(hit._source as object),
-    })) as Pick<FullArticle, K | "id">[];
+    const results = extractArticles(response) as Pick<FullArticle, K | "id">[];
 
     articles.push(...results);
 
