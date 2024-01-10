@@ -21,7 +21,7 @@
     type IconDefinition,
   } from "@fortawesome/free-solid-svg-icons";
   import { createItem } from "$lib/common/userItems";
-  import { getBaseArticles } from "$lib/common/elasticsearch";
+  import { getBaseArticles } from "$lib/common/elasticsearch/search";
   import { modalState } from "$shared/state/modals";
 
   const { selectedSearch, showAllSelected } = controlParams;

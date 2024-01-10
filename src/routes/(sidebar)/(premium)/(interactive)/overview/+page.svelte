@@ -8,7 +8,7 @@
   import { browser } from "$app/environment";
   import { controlParams, mapDimensions } from "./state";
   import { config } from "$shared/config";
-  import { searchArticles } from "$lib/common/elasticsearch";
+  import { searchArticles } from "$lib/common/elasticsearch/search";
 
   import Loader from "$com/loader.svelte";
   import Panels from "./panels/index.svelte";

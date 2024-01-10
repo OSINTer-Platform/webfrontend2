@@ -1,19 +1,8 @@
 import type { ArticleBase, FullArticle, SearchQuery } from "$shared/types/api";
-import {
-  PUBLIC_ELASTIC_ARTICLES_SEARCH,
-  PUBLIC_ELASTIC_ARTICLES_KEY,
-} from "$env/static/public";
 
-import Client from "@elastic/search-application-client";
+import { client } from "./common";
 
 type NonEmptyArray<T> = [T, ...T[]];
-
-const client = Client(
-  "osinter-articles",
-  PUBLIC_ELASTIC_ARTICLES_SEARCH,
-  PUBLIC_ELASTIC_ARTICLES_KEY,
-  {}
-);
 
 const BaseArticleFields: NonEmptyArray<keyof ArticleBase> = [
   "title",
