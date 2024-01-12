@@ -1,13 +1,11 @@
-import { clusterToLineData, type ClusterWithDate, type Point } from "./data";
+import type { Line } from "./data";
 
 import * as d3 from "d3";
 
 export async function drawLines(
-  clusters: ClusterWithDate[],
+  lines: Line[],
   ctx: null | CanvasRenderingContext2D,
-  pointerStatus: Point | null = null,
-  scaleX: d3.ScaleTime<number, number, never>,
-  scaleY: d3.ScaleLinear<number, number, never>
+  pointerStatus: Line | null = null
 ) {
   const lineGen = d3.line().curve(d3.curveBundle.beta(0.7));
 
@@ -17,12 +15,12 @@ export async function drawLines(
 
   function drawLine(
     ctx: CanvasRenderingContext2D,
-    data: [number, number][],
+    data: { x: number; y: number }[],
     selected: boolean
   ) {
     ctx.strokeStyle = getStrokeColor(selected);
     ctx.beginPath();
-    lineGen.context(ctx)(data);
+    lineGen.context(ctx)(data.map(({ x, y }) => [x, y]));
     ctx.stroke();
     ctx.closePath();
   }
@@ -31,18 +29,7 @@ export async function drawLines(
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   ctx.lineWidth = 2;
 
-  for (const cluster of clusters) {
-    drawLine(
-      ctx,
-      await clusterToLineData(cluster, scaleX, scaleY),
-      !Boolean(pointerStatus)
-    );
-  }
+  lines.forEach((line) => drawLine(ctx, line.points, !Boolean(pointerStatus)));
 
-  if (pointerStatus)
-    drawLine(
-      ctx,
-      await clusterToLineData(pointerStatus.cluster, scaleX, scaleY),
-      true
-    );
+  if (pointerStatus) drawLine(ctx, pointerStatus.points, true);
 }

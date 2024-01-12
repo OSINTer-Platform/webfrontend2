@@ -1,15 +1,25 @@
 <script lang="ts">
-  import type { Cluster } from "$shared/types/api";
-  import { getPathPoints, type ClusterWithDate, type Point } from "./data";
+  import { getPathPoints, type Point, type Line } from "./data";
 
   import * as d3 from "d3";
   import { afterUpdate, onMount } from "svelte";
-  import { searchInCluster } from "$lib/common/filter";
-  import { drawLines } from "./canvas";
+  import { drawLines as drawCanvas } from "./canvas";
   import { goto } from "$app/navigation";
 
-  export let search: string;
-  export let clusters: Cluster[];
+  export let lines: Line[];
+
+  export let xDomain: undefined | [number, number] = undefined;
+  export let yDomain: undefined | [number, number] = undefined;
+
+  export let customXAxisScale:
+    | undefined
+    | (d3.AxisScale<d3.NumberValue> & {
+        range: (range: d3.NumberValue[]) => d3.NumberValue[];
+      }) = undefined;
+
+  export let hoverLinePrecision = 50;
+  export let containerClass = "";
+  export let yAxisText = "";
 
   let svg: SVGElement;
   let tipSvg: SVGElement; // Used for displaying tooltips
@@ -18,10 +28,10 @@
   let canvas: HTMLCanvasElement;
   $: ctx = canvas?.getContext("2d");
 
-  const margins: { [key in "top" | "bottom" | "left" | "right"]: number } = {
+  const margins = {
     top: 20,
     bottom: 20,
-    left: 30,
+    left: 40,
     right: 30,
   };
 
@@ -34,36 +44,34 @@
   $: innerHeight = height - margins.top - margins.bottom;
   $: innerWidth = width - margins.left - margins.right;
 
-  let clustersWithDate: ClusterWithDate[];
-  $: clustersWithDate = clusters.map((cluster) => ({
-    ...cluster,
-    dating: cluster.dating
-      .map((date) => new Date(date))
-      .sort((a, b) => a.getTime() - b.getTime()),
-  }));
-
-  let processedClusters: ClusterWithDate[];
-  $: processedClusters =
-    search.length > 0
-      ? clustersWithDate.filter((c) => searchInCluster(c, search))
-      : clustersWithDate;
-
-  $: documentCounts = processedClusters.map((c) => c.document_count);
+  const getAllCords = (lines: Line[], axis: "x" | "y") =>
+    lines.map((line) => line.points.map((point) => point[axis])).flat();
 
   $: scaleX = d3
-    .scaleTime()
-    .domain([new Date("2022"), new Date()])
+    .scaleLinear()
+    .domain(xDomain ?? (d3.extent(getAllCords(lines, "x")) as [number, number]))
     .range([margins.left, width - margins.right]);
 
   $: scaleY = d3
     .scaleLinear()
-    .domain([0, d3.max(documentCounts)] as [number, number])
+    .domain(yDomain ?? (d3.extent(getAllCords(lines, "y")) as [number, number]))
     .nice()
     .range([height - margins.bottom, margins.top]);
 
+  $: customXAxisScale?.range([margins.left, width - margins.right]);
+
+  $: processedLines = lines.map(({ title, href, points }) => ({
+    title,
+    href,
+    points: points.map(({ x, y }) => ({
+      x: scaleX(x),
+      y: scaleY(y),
+    })),
+  }));
+
   $: d3.select(xAxis).call(
     d3
-      .axisBottom(scaleX)
+      .axisBottom(customXAxisScale ?? scaleX)
       .ticks(width / 80)
       .tickSizeOuter(0)
   );
@@ -76,15 +84,12 @@
         .attr("stroke-opacity", 0.2)
     );
 
-  let pathPoints: Promise<Point[]>;
-  $: pathPoints = getPathPoints(processedClusters, scaleX, scaleY);
+  $: pathPoints = getPathPoints(processedLines, hoverLinePrecision);
 
   async function pointermoved(event: d3.ClientPointEvent) {
-    const points = await pathPoints;
-
     [xm, ym] = d3.pointer(event);
 
-    const closePoint = d3.least(points, (point) =>
+    const closePoint = d3.least(pathPoints, (point) =>
       Math.hypot(point.x - xm, point.y - ym)
     );
 
@@ -93,36 +98,35 @@
     pointer = closePoint;
   }
 
+  const drawLines = () => drawCanvas(processedLines, ctx, pointer?.line);
+
   $: d3.select(tipSvg).on("pointermove", (e: d3.ClientPointEvent) => {
     pointermoved(e);
-    drawLines(processedClusters, ctx, pointer, scaleX, scaleY);
+    drawLines();
   });
 
   $: d3.select(tipSvg).on("pointerleave", () => {
     pointer = null;
-    drawLines(processedClusters, ctx, pointer, scaleX, scaleY);
+    drawLines();
   });
 
   $: d3.select(tipSvg).on("click", () => {
-    if (!pointer) return;
-    goto(`/topic/${pointer.cluster.id}`);
+    const href = pointer?.line.href;
+    if (href) goto(href);
   });
 
   afterUpdate(() => {
-    drawLines(processedClusters, ctx, pointer, scaleX, scaleY);
+    drawLines();
   });
 
   onMount(() => {
-    setTimeout(
-      () => drawLines(processedClusters, ctx, null, scaleX, scaleY),
-      100
-    );
+    setTimeout(() => drawLines(), 100);
   });
 </script>
 
 <div
   id="map-container"
-  class="w-full h-[30rem] relative"
+  class="{containerClass} relative"
   bind:clientWidth={width}
   bind:clientHeight={height}
 >
@@ -136,7 +140,7 @@
     <g bind:this={xAxis} transform="translate(0,{height - margins.bottom})" />
     <g bind:this={yAxis} transform="translate({margins.left},0)">
       <text x={-margins.left} y="10" fill="currentColor" text-anchor="start"
-        >↑ Documents per cluster</text
+        >{yAxisText}</text
       >
     </g>
   </svg>
@@ -165,8 +169,8 @@
         stroke-width="1.5"
       >
         <text y="-20" fill="currentColor" text-anchor="middle">
-          {pointer.cluster.title.slice(0, 100)}
-          {pointer.cluster.title.length > 100 ? "..." : ""}
+          {pointer.line.title.slice(0, 100)}
+          {pointer.line.title.length > 100 ? "..." : ""}
         </text>
         <circle r="5" />
       </g>

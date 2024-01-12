@@ -1,7 +1,7 @@
 <script lang="ts">
   import HeaderShell from "$com/article-list/header/shell.svelte";
   import ClusterListElement from "./clusterListElement.svelte";
-  import TopicChart from "./chart/topicChart.svelte";
+  import TopicChart from "./chart.svelte";
   import Loader from "$com/loader.svelte";
 
   import type { PageData } from "./$types";
