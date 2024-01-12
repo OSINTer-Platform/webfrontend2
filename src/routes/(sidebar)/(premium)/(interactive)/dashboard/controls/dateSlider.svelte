@@ -3,7 +3,7 @@
   import * as d3 from "d3";
 
   const maxDate = new Date().setDate(new Date().getDate() - 1);
-  const minDate = new Date().setMonth(new Date().getMonth() - 3);
+  const minDate = new Date().setFullYear(new Date().getFullYear() - 3);
 
   export let date: Date;
   $: date = new Date(value);
