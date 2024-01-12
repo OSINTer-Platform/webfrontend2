@@ -1,6 +1,9 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { faArrowUpRightDots } from "@fortawesome/free-solid-svg-icons";
+  import {
+    faArrowUpRightDots,
+    faListUl,
+  } from "@fortawesome/free-solid-svg-icons";
 
   import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
@@ -14,6 +17,11 @@
     {
       href: "/dashboard/list",
       title: "See popular articles and topics",
+      icon: faListUl,
+    },
+    {
+      href: "/dashboard/stats",
+      title: "See metrics and statistics for new articles",
       icon: faArrowUpRightDots,
     },
   ];
