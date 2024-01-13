@@ -58,14 +58,36 @@
     .nice()
     .range([innerHeight, 0]);
 
-  $: processedLines = lines.map(({ title, href, points }) => ({
-    title,
-    href,
-    points: points.map(({ x, y }) => ({
-      x: scaleX(x),
-      y: scaleY(y),
-    })),
-  }));
+  function processLines(
+    lines: Line[],
+    scaleX: d3.ScaleLinear<number, number, never>,
+    scaleY: d3.ScaleLinear<number, number, never>
+  ) {
+    const processed = lines.map(({ title, href, points }) => ({
+      title,
+      href,
+      points: points.map(({ x, y }) => ({
+        x: scaleX(x),
+        y: scaleY(y),
+      })),
+    }));
+
+    processed.forEach((line) => {
+      line.points.push({
+        x: innerWidth,
+        y: line.points.at(-1)?.y ?? scaleY(0),
+      });
+
+      line.points.unshift({
+        x: line.points[0].x,
+        y: innerHeight,
+      });
+    });
+
+    return processed;
+  }
+
+  $: processedLines = processLines(lines, scaleX, scaleY);
 
   $: xAxisScale = (customXAxisScale ?? scaleX.copy()).range([
     margins.left,
