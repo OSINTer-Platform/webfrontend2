@@ -1,7 +1,7 @@
 <script lang="ts">
   import * as d3 from "d3";
 
-  import Chart from "$com/charts/linechart/chart.svelte";
+  import Chart from "$com/charts/linechart/index.svelte";
 
   import { searchInCluster } from "$lib/common/filter";
 
