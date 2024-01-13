@@ -11,11 +11,11 @@
   export let xDomain: undefined | [number, number] = undefined;
   export let yDomain: undefined | [number, number] = undefined;
 
-  export let customXAxisScale:
-    | undefined
-    | (d3.AxisScale<d3.NumberValue> & {
-        range: (range: d3.NumberValue[]) => d3.NumberValue[];
-      }) = undefined;
+  type CustomScale = d3.AxisScale<d3.NumberValue> & {
+    range: (range: d3.NumberValue[]) => d3.NumberValue[];
+  };
+  export let customXAxisScale: undefined | CustomScale = undefined;
+  export let customYAxisScale: undefined | CustomScale = undefined;
 
   export let hoverLinePrecision = 50;
   export let containerClass = "";
@@ -50,15 +50,13 @@
   $: scaleX = d3
     .scaleLinear()
     .domain(xDomain ?? (d3.extent(getAllCords(lines, "x")) as [number, number]))
-    .range([margins.left, width - margins.right]);
+    .range([0, innerWidth]);
 
   $: scaleY = d3
     .scaleLinear()
     .domain(yDomain ?? (d3.extent(getAllCords(lines, "y")) as [number, number]))
     .nice()
-    .range([height - margins.bottom, margins.top]);
-
-  $: customXAxisScale?.range([margins.left, width - margins.right]);
+    .range([innerHeight, 0]);
 
   $: processedLines = lines.map(({ title, href, points }) => ({
     title,
@@ -69,14 +67,23 @@
     })),
   }));
 
+  $: xAxisScale = (customXAxisScale ?? scaleX.copy()).range([
+    margins.left,
+    width - margins.right,
+  ]);
+  $: yAxisScale = (customYAxisScale ?? scaleY.copy()).range([
+    height - margins.bottom,
+    margins.top,
+  ]);
+
   $: d3.select(xAxis).call(
     d3
-      .axisBottom(customXAxisScale ?? scaleX)
+      .axisBottom(xAxisScale as any)
       .ticks(width / 80)
       .tickSizeOuter(0)
   );
   $: d3.select(yAxis)
-    .call(d3.axisLeft(scaleY))
+    .call(d3.axisLeft(yAxisScale as any))
     .call((g) =>
       g
         .selectAll(".tick line")
