@@ -70,15 +70,15 @@
   $: upperList = [
     {
       title: "Emerging Tags",
-      items: convertTermAggs(data.metrics.new_tags),
+      items: convertTermAggs(data.metrics.limited.new_tags),
     },
     {
       title: "Common CVE's",
-      items: convertTermAggs(data.metrics.cves),
+      items: convertTermAggs(data.metrics.limited.cves),
     },
     {
       title: "Emerging clusters",
-      items: convertClusters(convertTermAggs(data.metrics.clusters)),
+      items: convertClusters(convertTermAggs(data.metrics.limited.clusters)),
     },
     {
       title: "Most Read Articles",
@@ -112,7 +112,12 @@
     divide-surface-300/25 divide-x-2
   "
   >
-    <Lower startDate={data.startDate} significantTags={data.metrics.new_tags} />
+    <Lower
+      startDate={data.startDate}
+      significantTags={data.metrics.limited.new_tags}
+      cves={data.metrics.limited.cves}
+      tags={data.metrics.global.tags}
+    />
   </section>
 
   <Controls startDate={data.startDate} />

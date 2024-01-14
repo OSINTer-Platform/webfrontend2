@@ -25,10 +25,15 @@ export async function getDashboardMetrics(
   endDate: Date,
   metricCount: number = 50
 ): Promise<{
-  cves: TermAgg;
-  sources: TermAgg;
-  new_tags: SignificantTermAgg;
-  clusters: SignificantTermAgg;
+  global: {
+    tags: TermAgg;
+  };
+  limited: {
+    cves: TermAgg;
+    sources: TermAgg;
+    new_tags: SignificantTermAgg;
+    clusters: SignificantTermAgg;
+  };
   articles: Array<{
     title: string;
     id: string;
@@ -73,10 +78,24 @@ export async function getDashboardMetrics(
     },
   });
 
-  const response = await request.search();
+  const globalRequest = client();
+  globalRequest.addParameter("aggregations", {
+    tags: {
+      terms: {
+        field: "tags.automatic",
+        size: metricCount,
+      },
+    },
+  });
+
+  const responses = await Promise.all([
+    globalRequest.search(),
+    request.search(),
+  ]);
 
   return {
-    ...response.aggregations,
-    articles: extractDocHits(response),
+    global: responses[0].aggregations,
+    limited: responses[1].aggregations,
+    articles: extractDocHits(responses[1]),
   } as any;
 }

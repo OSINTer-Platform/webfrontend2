@@ -1,9 +1,14 @@
 <script lang="ts">
-  import type { SignificantTermAgg } from "$lib/common/elasticsearch/aggregations";
   import TrendChart from "./trendChart/index.svelte";
+  import type {
+    SignificantTermAgg,
+    TermAgg,
+  } from "$lib/common/elasticsearch/aggregations";
 
   export let startDate: Date;
   export let significantTags: SignificantTermAgg;
+  export let cves: TermAgg;
+  export let tags: TermAgg;
 </script>
 
 <section class="flex flex-col p-4">
