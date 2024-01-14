@@ -10,6 +10,7 @@
 
   import Controls from "../controls/shell.svelte";
   import Upper from "./upper.svelte";
+  import Lower from "./lower.svelte";
 
   export let data: PageData;
 
@@ -110,7 +111,9 @@
     grid grid-cols-2 grid-rows-1
     divide-surface-300/25 divide-x-2
   "
-  />
+  >
+    <Lower startDate={data.startDate} significantTags={data.metrics.new_tags} />
+  </section>
 
   <Controls startDate={data.startDate} />
 </main>
