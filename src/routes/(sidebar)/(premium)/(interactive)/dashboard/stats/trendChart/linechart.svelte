@@ -30,9 +30,4 @@
 
 <TrendInput {keywords} />
 
-<Linechart
-  {lines}
-  {customXAxisScale}
-  {xDomain}
-  containerClass="h-full w-full"
-/>
+<Linechart {lines} {customXAxisScale} {xDomain} containerClass="h-full -ml-4" />

@@ -23,7 +23,7 @@
   }
 </script>
 
-<aside class="flex flex-wrap gap-2 w-full">
+<aside class="flex flex-wrap gap-2 w-full mb-2">
   {#each $keywords.toSorted() as keyword}
     <button
       class="
