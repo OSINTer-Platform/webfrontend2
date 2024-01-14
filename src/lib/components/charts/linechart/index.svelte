@@ -40,5 +40,7 @@
     {hoverLinePrecision}
     {containerClass}
     {yAxisText}
-  />
+  >
+    <slot />
+  </Chart>
 {/if}
