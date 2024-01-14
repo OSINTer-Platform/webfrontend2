@@ -2,11 +2,14 @@
   import * as d3 from "d3";
 
   import Linechart from "$com/charts/linechart/index.svelte";
+  import TrendInput from "./trendInput.svelte";
 
   import type { Trend } from "./common";
+  import type { Writable } from "svelte/store";
 
   export let trends: Trend[];
   export let startDate: Date;
+  export let keywords: Writable<string[]>;
 
   let xDomain: [number, number];
   $: xDomain = [startDate.getTime(), new Date().getTime()];
@@ -25,6 +28,11 @@
   }));
 </script>
 
-<Linechart {lines} {customXAxisScale} {xDomain} containerClass="h-full w-full"
-  ><slot /></Linechart
->
+<TrendInput {keywords} />
+
+<Linechart
+  {lines}
+  {customXAxisScale}
+  {xDomain}
+  containerClass="h-full w-full"
+/>

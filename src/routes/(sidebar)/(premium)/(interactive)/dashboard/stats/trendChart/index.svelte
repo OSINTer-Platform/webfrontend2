@@ -8,12 +8,13 @@
 
   import Linechart from "./linechart.svelte";
   import Loader from "$com/loader.svelte";
+  import type { Writable } from "svelte/store";
 
   export let startDate: Date;
-  export let keywords: string[] = [];
+  export let keywords: Writable<string[]>;
   let mounted = false;
 
-  $: trends = updateTrends(keywords, startDate, mounted);
+  $: trends = updateTrends($keywords, startDate, mounted);
 
   const getArticles = async (
     keyword: string,
@@ -72,5 +73,5 @@
 {#await trends}
   <Loader text="Loading stats" />
 {:then trends}
-  <Linechart {trends} {startDate}><slot /></Linechart>
+  <Linechart {trends} {startDate} {keywords} />
 {/await}

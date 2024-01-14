@@ -1,0 +1,65 @@
+<script lang="ts">
+  import type { Writable } from "svelte/store";
+
+  import Fa from "svelte-fa";
+
+  import { faPlus, faX } from "@fortawesome/free-solid-svg-icons";
+
+  export let keywords: Writable<string[]>;
+  let trendInput = "";
+
+  const removeKeyword = (remove: string) =>
+    keywords.update((words) => words.filter((w) => w !== remove));
+
+  function catchTrendInput(e: InputEvent) {
+    if (
+      ["insertLineBreak", "insertParagraph"].includes(e.inputType) ||
+      (e.inputType === "insertText" && e.data === " ")
+    ) {
+      e.preventDefault();
+      $keywords = [...$keywords, trendInput];
+      trendInput = "";
+    }
+  }
+</script>
+
+<aside class="flex flex-wrap gap-2 w-full">
+  {#each $keywords.toSorted() as keyword}
+    <button
+      class="
+        flex items-center gap-1 p-1
+        border border-surface-300/25
+        bg-surface-800/80
+        text-xs dark:text-white
+        cursor-pointer
+      "
+      on:click={() => removeKeyword(keyword)}
+      title="Remove {keyword}"
+    >
+      <Fa icon={faX} />
+      {keyword}
+    </button>
+  {/each}
+
+  <label
+    class="
+    flex justify-center items-center gap-2 p-1
+    border border-surface-300/50 hover:border-surface-300/75
+    transition-colors duration-300
+    text-tertiary-800 cursor-text text-xs
+  "
+  >
+    <Fa icon={faPlus} />
+
+    <input
+      bind:value={trendInput}
+      on:beforeinput={catchTrendInput}
+      placeholder="Add trend"
+      class="
+        grow h-full w-20
+        bg-transparent text-xs dark:text-white
+        border-0 focus:outline-none focus:border-0
+    "
+    />
+  </label>
+</aside>
