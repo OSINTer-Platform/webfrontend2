@@ -2,7 +2,7 @@
   import * as d3 from "d3";
 
   import Linechart from "$com/charts/linechart/index.svelte";
-  import TrendInput from "./trendInput.svelte";
+  import TagLine from "../tagline.svelte";
 
   import type { Trend } from "./common";
   import type { Writable } from "svelte/store";
@@ -28,6 +28,6 @@
   }));
 </script>
 
-<TrendInput {keywords} />
+<TagLine {keywords} />
 
 <Linechart {lines} {customXAxisScale} {xDomain} containerClass="h-full -ml-4" />

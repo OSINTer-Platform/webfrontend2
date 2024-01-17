@@ -5,8 +5,9 @@
 
   import { faPlus, faX } from "@fortawesome/free-solid-svg-icons";
 
+  export let wordProcessor: (w: string) => string = (w) => w;
   export let keywords: Writable<string[]>;
-  let trendInput = "";
+  let tagInput = "";
 
   const removeKeyword = (remove: string) =>
     keywords.update((words) => words.filter((w) => w !== remove));
@@ -17,8 +18,8 @@
       (e.inputType === "insertText" && e.data === " ")
     ) {
       e.preventDefault();
-      $keywords = [...$keywords, trendInput];
-      trendInput = "";
+      $keywords = [...$keywords, wordProcessor(tagInput)];
+      tagInput = "";
     }
   }
 </script>
@@ -52,9 +53,9 @@
     <Fa icon={faPlus} />
 
     <input
-      bind:value={trendInput}
+      bind:value={tagInput}
       on:beforeinput={catchTrendInput}
-      placeholder="Add trend"
+      placeholder="Add tag"
       class="
         grow h-full w-20
         bg-transparent text-xs dark:text-white
