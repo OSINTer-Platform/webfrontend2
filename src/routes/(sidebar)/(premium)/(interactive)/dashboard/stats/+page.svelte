@@ -116,7 +116,7 @@
       startDate={data.startDate}
       significantTags={data.metrics.limited.new_tags}
       cves={data.metrics.limited.cves}
-      tags={data.metrics.global.tags}
+      globalTags={data.metrics.global.tags}
     />
   </section>
 

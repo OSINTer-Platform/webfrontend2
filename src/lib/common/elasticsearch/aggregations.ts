@@ -20,6 +20,39 @@ export interface SignificantTermAgg {
   }>;
 }
 
+export async function getTags(
+  selectedTags: string[],
+  metricCount: number = 50
+): Promise<{ tags: TermAgg; hitCount: number }> {
+  const request = client();
+
+  request.addParameter("limit", 0);
+  request.addParameter("track_total", true);
+  request.addParameter("aggregations", {
+    tags: {
+      terms: {
+        field: "tags.automatic",
+        size: metricCount,
+      },
+    },
+  });
+
+  if (selectedTags.length > 0)
+    request.addParameter(
+      "filters",
+      selectedTags.map((tag) => ({ term: { "tags.automatic": tag } }))
+    );
+
+  const response = await request.search();
+
+  const hitCount =
+    typeof response.hits.total === "number"
+      ? response.hits.total
+      : response.hits.total?.value;
+
+  return { tags: response.aggregations?.tags, hitCount } as any;
+}
+
 export async function getDashboardMetrics(
   startDate: Date,
   endDate: Date,

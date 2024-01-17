@@ -1,6 +1,8 @@
 <script lang="ts">
   import { writable } from "svelte/store";
+
   import TrendChart from "./trendChart/index.svelte";
+  import Wordcloud from "./wordcloud/index.svelte";
   import Fa from "svelte-fa";
 
   import type {
@@ -18,7 +20,7 @@
 
   export let significantTags: SignificantTermAgg;
   export let cves: TermAgg;
-  export let tags: TermAgg;
+  export let globalTags: TermAgg;
 
   const initialKeywordCount = 10;
 
@@ -46,7 +48,7 @@
     {
       title: "Popular tags",
       icon: faRankingStar,
-      words: tags.buckets.map((b) => b.key).slice(0, initialKeywordCount),
+      words: globalTags.buckets.map((b) => b.key).slice(0, initialKeywordCount),
     },
   ];
 </script>
@@ -75,4 +77,8 @@
   </header>
   <TrendChart {startDate} {keywords} />
 </section>
-<section class="" />
+
+<section class="flex flex-col py-2 px-6">
+  <h3 class="font-bold dark:text-white text-2xl mb-1">Common article tags</h3>
+  <Wordcloud />
+</section>
