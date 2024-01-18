@@ -38,10 +38,10 @@
             on:contextmenu|preventDefault={() => window.open(href, "_blank")}
             data-sveltekit-preload-data="off"
             class="
-              block pb-1
-              bg-surface-300/10 rounded-b-xl
+              block pb-1 rounded-b-xl
+              bg-surface-400/10 dark:bg-surface-400/20
 
-              hover:bg-surface-300/20
+              hover:bg-surface-400/20 dark:hover:bg-surface-300/20
               transition-color duration-300
             "
           >

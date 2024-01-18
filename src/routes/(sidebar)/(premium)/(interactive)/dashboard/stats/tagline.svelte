@@ -32,8 +32,7 @@
       on:mouseleave={() => (hoverText = "")}
       class="
         flex items-center gap-1 p-1
-        border border-surface-300/25
-        bg-surface-800/80
+        border border-surface-400/50
         text-xs
         cursor-pointer
 
