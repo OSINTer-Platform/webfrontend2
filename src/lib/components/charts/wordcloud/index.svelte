@@ -16,12 +16,13 @@
     padding?: number;
     size?: number;
     getSize?: (w: number, h: number, scale: [number, number]) => number;
-    getColor?: (size: number, text: string) => string;
+    getColor?: (size: number, text: string, hoverText: string) => string;
   } = {};
 
   let width: number = 0;
   let height: number = 0;
   let mounted = false;
+  let hoverText = "";
 
   let placedWords: PlacedCloudWord[] = [];
 
@@ -40,8 +41,18 @@
     href,
   }));
 
-  const colorFactory = (sizeRange: [number, number]) =>
-    d3.scaleLog(sizeRange, ["#680B1D", "#CC2936"]);
+  const colorFactory = (sizeRange: [number, number]) => {
+    const scale = d3.scaleLog(sizeRange, ["#680B1D", "#CC2936"]);
+
+    return (size: number, text: string, hoverText: string) => {
+      if (hoverText.length > 0) {
+        if (text === hoverText) return "#CC2936";
+        else return "#680B1D";
+      } else {
+        return scale(size);
+      }
+    };
+  };
 
   $: getColor = options.getColor ?? colorFactory(sizeRange);
 
@@ -103,10 +114,12 @@
           }}
         >
           <text
+            on:mouseenter={() => (hoverText = word.text)}
+            on:mouseleave={() => (hoverText = "")}
             style="font-family: {options.fontFamily ?? 'sans-serif'};"
             font-size={word.size}
             transform={`translate(${word.x}, ${word.y}) rotate(${word.rotate})`}
-            fill={getColor(word.size, word.text)}>{word.text}</text
+            fill={getColor(word.size, word.text, hoverText)}>{word.text}</text
           >
         </a>
       {/each}
