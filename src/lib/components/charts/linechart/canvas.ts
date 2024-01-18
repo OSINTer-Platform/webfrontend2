@@ -4,6 +4,7 @@ import * as d3 from "d3";
 
 export async function drawLines(
   lines: Line[],
+  hoveredLineTitles: string[],
   ctx: null | CanvasRenderingContext2D,
   pointerStatus: Line | null = null
 ) {
@@ -29,7 +30,14 @@ export async function drawLines(
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   ctx.lineWidth = 2;
 
-  lines.forEach((line) => drawLine(ctx, line.points, !Boolean(pointerStatus)));
+  const hoveredLines =
+    hoveredLineTitles.length > 0
+      ? lines.filter((l) => hoveredLineTitles.includes(l.title))
+      : [];
+  const highlight = Boolean(pointerStatus) || hoveredLines.length > 0;
+
+  lines.forEach((line) => drawLine(ctx, line.points, !highlight));
 
   if (pointerStatus) drawLine(ctx, pointerStatus.points, true);
+  hoveredLines.forEach((line) => drawLine(ctx, line.points, true));
 }

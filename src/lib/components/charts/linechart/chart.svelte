@@ -7,6 +7,7 @@
   import { goto } from "$app/navigation";
 
   export let lines: Line[];
+  export let hoveredLines: string[] = [];
 
   export let xDomain: undefined | [number, number] = undefined;
   export let yDomain: undefined | [number, number] = undefined;
@@ -127,7 +128,8 @@
     pointer = closePoint;
   }
 
-  const drawLines = () => drawCanvas(processedLines, ctx, pointer?.line);
+  const drawLines = () =>
+    drawCanvas(processedLines, hoveredLines, ctx, pointer?.line);
 
   $: d3.select(tipSvg).on("pointermove", (e: d3.ClientPointEvent) => {
     pointermoved(e);

@@ -9,6 +9,7 @@
   import type { Line } from "./data";
 
   export let lines: Line[];
+  export let hoveredLines: string[] = [];
 
   export let xDomain: undefined | [number, number] = undefined;
   export let yDomain: undefined | [number, number] = undefined;
@@ -33,6 +34,7 @@
 {#if mount}
   <Chart
     {lines}
+    {hoveredLines}
     {xDomain}
     {yDomain}
     {customXAxisScale}
