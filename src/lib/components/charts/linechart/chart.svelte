@@ -33,7 +33,7 @@
     top: 20,
     bottom: 20,
     left: 40,
-    right: 30,
+    right: 20,
   };
 
   let height: number = 0;
