@@ -38,7 +38,16 @@ function createRequest(
   });
 
   Object.entries(options).forEach(([k, v]) => {
-    request.addParameter(k, v);
+    // Convert search_after elements to string, to avoid comma numbers
+    // See https://discuss.elastic.co/t/bug-when-using-list-with-comma-number-in-elastic-search-template-tojson/351274
+    if (k === "search_after" && typeof v === "object") {
+      request.addParameter(
+        k,
+        v.map((el) => `${el}`)
+      );
+    } else {
+      request.addParameter(k, v);
+    }
   });
 
   return request;
