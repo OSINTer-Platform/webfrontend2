@@ -11,6 +11,9 @@
   import Controls from "../controls/shell.svelte";
   import Upper from "./upper.svelte";
   import Lower from "./lower.svelte";
+  import { modalState } from "$shared/state/modals";
+  import { getBaseArticles } from "$lib/common/elasticsearch/search";
+  import { spawnArticleModal } from "$lib/common/state";
 
   export let data: PageData;
 
@@ -34,6 +37,20 @@
       href: `/feed/search?sort_by=publish_date&highlight=true&search_term=${encodeURIComponent(
         `"${bucket.key}"`
       )}`,
+      action: () => {
+        modalState.append({
+          modalType: "article-list",
+          modalContent: {
+            articles: getBaseArticles({
+              limit: 0,
+              highlight: true,
+              sort_by: "publish_date",
+              sort_order: "desc",
+              search_term: `"${bucket.key}"`,
+            }),
+          },
+        });
+      },
     }));
   };
 
@@ -48,6 +65,20 @@
       .map(([{ title, description, score }, cluster]) => ({
         large: true,
         title: cluster?.title ?? title,
+        href: `/topic/${title}`,
+        action: () => {
+          modalState.append({
+            modalType: "article-list",
+            modalContent: {
+              articles: getBaseArticles({
+                limit: 0,
+                sort_by: "publish_date",
+                sort_order: "desc",
+                cluster_id: title,
+              }),
+            },
+          });
+        },
         description,
         score,
       }));
@@ -64,6 +95,9 @@
       large: false,
       score: scale(read_times),
       href: `/article/${id}`,
+      action: () => {
+        spawnArticleModal(id, articles);
+      },
     }));
   };
 

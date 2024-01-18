@@ -6,7 +6,8 @@
       description: string;
       score: number;
       large: boolean;
-      href?: string;
+      href: string;
+      action?: () => void;
     }>;
   }>;
 </script>
@@ -22,12 +23,20 @@
   >
     <h3 class="font-bold dark:text-white text-2xl mb-3">{title}</h3>
     <ol class="h-full flex flex-col gap-2 overflow-y-auto">
-      {#each items as { title, description, score, large, href }}
+      {#each items as { title, description, score, large, href, action }}
         <li>
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href={href ?? "#"}
+            {href}
+            on:click={(e) => {
+              if (action) {
+                e.preventDefault();
+                action();
+              }
+            }}
+            on:contextmenu|preventDefault={() => window.open(href, "_blank")}
+            data-sveltekit-preload-data="off"
             class="
               block pb-1
               bg-surface-300/10 rounded-b-xl

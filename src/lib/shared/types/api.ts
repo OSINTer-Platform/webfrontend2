@@ -101,6 +101,7 @@ export interface SearchQuery {
 
   sources?: string[];
   ids?: string[];
+  cluster_id?: string;
 }
 
 export interface AccessTokenWithDetails {

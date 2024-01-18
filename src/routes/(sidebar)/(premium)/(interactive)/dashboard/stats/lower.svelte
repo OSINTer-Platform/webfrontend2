@@ -28,11 +28,13 @@
     significantTags.buckets.map((b) => b.key).slice(0, initialKeywordCount)
   );
 
-  const trendOptions: {
+  let trendOptions: {
     title: string;
     icon: IconDefinition;
     words: string[];
-  }[] = [
+  }[];
+
+  $: trendOptions = [
     {
       title: "CVE's",
       icon: faBug,
