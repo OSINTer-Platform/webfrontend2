@@ -11,6 +11,8 @@
   export let startDate: Date;
   export let keywords: Writable<string[]>;
 
+  let hoverText = "";
+
   let xDomain: [number, number];
   $: xDomain = [startDate.getTime(), new Date().getTime()];
 
@@ -28,6 +30,12 @@
   }));
 </script>
 
-<TagLine {keywords} />
+<TagLine {keywords} bind:hoverText />
 
-<Linechart {lines} {customXAxisScale} {xDomain} containerClass="h-full -ml-4" />
+<Linechart
+  {lines}
+  hoveredLines={hoverText.length > 0 ? [hoverText] : []}
+  {customXAxisScale}
+  {xDomain}
+  containerClass="h-full -ml-4"
+/>
