@@ -7,6 +7,7 @@
 
   export let wordProcessor: (w: string) => string = (w) => w;
   export let keywords: Writable<string[]>;
+  export let hoverText = "";
   let tagInput = "";
 
   const removeKeyword = (remove: string) =>
@@ -27,12 +28,20 @@
 <aside class="flex flex-wrap gap-2 w-full mb-2">
   {#each $keywords.toSorted() as keyword}
     <button
+      on:mouseenter={() => (hoverText = keyword)}
+      on:mouseleave={() => (hoverText = "")}
       class="
         flex items-center gap-1 p-1
         border border-surface-300/25
         bg-surface-800/80
-        text-xs dark:text-white
+        text-xs
         cursor-pointer
+
+        {hoverText.length > 0 && hoverText !== keyword
+        ? 'text-black/50 dark:text-white/50'
+        : 'dark:text-white'}
+
+        transition-colors
       "
       on:click={() => removeKeyword(keyword)}
       title="Remove {keyword}"
