@@ -19,10 +19,11 @@
     getColor?: (size: number, text: string, hoverText: string) => string;
   } = {};
 
+  export let hoverText = "";
+
   let width: number = 0;
   let height: number = 0;
   let mounted = false;
-  let hoverText = "";
 
   let placedWords: PlacedCloudWord[] = [];
 
@@ -104,6 +105,7 @@
   <svg {width} {height} text-anchor="middle">
     <g>
       {#each placedWords as word}
+        {@const color = getColor(word.size, word.text, hoverText)}
         <a
           href={word.href ?? "#"}
           on:click={(e) => {
@@ -116,10 +118,14 @@
           <text
             on:mouseenter={() => (hoverText = word.text)}
             on:mouseleave={() => (hoverText = "")}
-            style="font-family: {options.fontFamily ?? 'sans-serif'};"
+            style="
+              font-family: {options.fontFamily ?? 'sans-serif'};
+              fill: {color};
+            "
+            class="transition-colors duration-75"
             font-size={word.size}
             transform={`translate(${word.x}, ${word.y}) rotate(${word.rotate})`}
-            fill={getColor(word.size, word.text, hoverText)}>{word.text}</text
+            >{word.text}</text
           >
         </a>
       {/each}

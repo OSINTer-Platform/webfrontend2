@@ -10,6 +10,7 @@
 
   let selectedTags: Writable<string[]> = writable([]);
   let mounted = false;
+  let hoverText = "";
 
   const queryTags = (
     selected: string[],
@@ -34,10 +35,10 @@
   });
 </script>
 
-<Tagline keywords={selectedTags} />
+<Tagline keywords={selectedTags} bind:hoverText />
 
 {#await tags}
   <Loader text="Loading tags" />
 {:then tags}
-  <Cloud {tags} {selectedTags} />
+  <Cloud bind:hoverText {tags} {selectedTags} />
 {/await}
