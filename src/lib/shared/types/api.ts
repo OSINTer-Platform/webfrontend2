@@ -10,6 +10,11 @@ export interface ArticleTags {
 
 export interface Article {
   id: string;
+  highlights?: {
+    title?: string[];
+    description?: string[];
+    content?: string[];
+  };
 }
 
 export interface ArticleBase extends Article {
@@ -61,6 +66,11 @@ export interface ClusterBase {
   summary: string;
 
   keywords: string[];
+  highlights?: {
+    title?: string[];
+    description?: string[];
+    summary?: string[];
+  };
 }
 
 export interface Cluster extends ClusterBase {

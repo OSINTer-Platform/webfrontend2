@@ -1,8 +1,15 @@
-import type { ArticleBase, FullArticle, SearchQuery } from "$shared/types/api";
+import type {
+  Article,
+  ArticleBase,
+  FullArticle,
+  SearchQuery,
+} from "$shared/types/api";
 
 import { client, extractDocHits } from "./common";
 
 type NonEmptyArray<T> = [T, ...T[]];
+type SpecificArticle<K extends keyof FullArticle> = Pick<FullArticle, K> &
+  Article;
 
 const BaseArticleFields: NonEmptyArray<keyof ArticleBase> = [
   "title",
@@ -69,7 +76,7 @@ export async function searchArticles<K extends keyof FullArticle>(
     include_fields: NonEmptyArray<K>;
     search_after?: NonEmptyArray<unknown>;
   }
-): Promise<Pick<FullArticle, K | "id">[]> {
+): Promise<SpecificArticle<K>[]> {
   if (query.limit > 10000 || query.limit === 0)
     return await largeSearch(query, options.include_fields);
 
@@ -81,8 +88,8 @@ export async function searchArticles<K extends keyof FullArticle>(
 async function largeSearch<K extends keyof FullArticle>(
   query: SearchQuery,
   include_fields: NonEmptyArray<K>
-): Promise<Pick<FullArticle, K | "id">[]> {
-  const articles: Pick<FullArticle, K | "id">[] = [];
+): Promise<SpecificArticle<K>[]> {
+  const articles: SpecificArticle<K>[] = [];
   let priorLimit = query.limit;
   let search_after: { search_after?: NonEmptyArray<unknown> } = {};
 
@@ -95,7 +102,7 @@ async function largeSearch<K extends keyof FullArticle>(
       ...search_after,
     });
     const response = await request.search();
-    const results = extractDocHits(response) as Pick<FullArticle, K | "id">[];
+    const results = extractDocHits(response) as SpecificArticle<K>[];
 
     articles.push(...results);
 
