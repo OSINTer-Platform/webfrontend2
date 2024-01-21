@@ -6,6 +6,7 @@
 
   import type { ArticleBase } from "$shared/types/api";
 
+  import { eclipseConcat } from "$lib/common/strings";
   import { getTimespan } from "$lib/common/math";
   import { PUBLIC_API_BASE } from "$env/static/public";
 
@@ -109,7 +110,14 @@
     [&>strong]:text-primary-600
   "
     >
-      <SvelteMarkdown source={article.title} isInline />
+      {#if article.highlights?.title}
+        <SvelteMarkdown
+          source={eclipseConcat(article.highlights.title)}
+          isInline
+        />
+      {:else}
+        {article.title}
+      {/if}
     </h1>
 
     <p
@@ -131,7 +139,14 @@
     [&>strong]:text-primary-400
   "
     >
-      <SvelteMarkdown source={article.description} isInline />
+      {#if article.highlights?.description}
+        <SvelteMarkdown
+          source={eclipseConcat(article.highlights.description)}
+          isInline
+        />
+      {:else}
+        {article.description}
+      {/if}
     </p>
   </div>
 

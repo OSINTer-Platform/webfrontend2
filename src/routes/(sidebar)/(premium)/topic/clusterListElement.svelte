@@ -38,8 +38,8 @@
 
 <a data-sveltekit-preload-data="off" href={`/topic/${cluster.id}`}>
   <Large
-    title={cluster.title}
-    description={cluster.description}
+    title={{ text: cluster.title, markdown: false }}
+    description={{ text: cluster.description, markdown: false }}
     leftLegend={{ text: `Nr ${cluster.nr}`, hover: "" }}
     rightLegend={{
       text: `${cluster.document_count} articles`,

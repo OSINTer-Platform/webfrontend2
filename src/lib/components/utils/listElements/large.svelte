@@ -5,8 +5,8 @@
   import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
   import { slide } from "svelte/transition";
 
-  export let title: string;
-  export let description: string;
+  export let title: { text: string; markdown: boolean };
+  export let description: { text: string; markdown: boolean };
 
   export let leftLegend: { text: string; hover: string };
   export let rightLegend: { text: string; hover: string };
@@ -124,7 +124,11 @@
           [&>strong]:text-primary-600
         "
       >
-        <SvelteMarkdown source={title} isInline />
+        {#if title.markdown}
+          <SvelteMarkdown source={title.text} isInline />
+        {:else}
+          {title.text}
+        {/if}
       </h2>
 
       <p
@@ -136,7 +140,11 @@
           [&>strong]:text-primary-600
         "
       >
-        <SvelteMarkdown source={description} isInline />
+        {#if description.markdown}
+          <SvelteMarkdown source={description.text} isInline />
+        {:else}
+          {description.text}
+        {/if}
       </p>
     </div>
 
