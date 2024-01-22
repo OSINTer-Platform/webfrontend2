@@ -34,6 +34,7 @@ function createRequest(
     include_fields?: NonEmptyArray<string>;
     search_after?: NonEmptyArray<unknown>;
     sort_tiebreaker?: boolean;
+    filters?: Array<{ [key: string]: any }>;
   }
 ) {
   const verifyContent = (v: any) =>
@@ -60,25 +61,35 @@ function createRequest(
   return request;
 }
 
-export const getFullArticles = (query: SearchQuery): Promise<FullArticle[]> =>
+export const getFullArticles = (
+  query: SearchQuery,
+  options?: { filters?: Array<{ [key: string]: any }> }
+): Promise<FullArticle[]> =>
   searchArticles(query, {
+    ...options,
     include_fields: [...BaseArticleFields, "formatted_content", "content"],
   });
 
-export const getBaseArticles = (query: SearchQuery): Promise<ArticleBase[]> =>
-  searchArticles(query, {
+export const getBaseArticles = (
+  query: SearchQuery,
+  options?: { filters?: Array<{ [key: string]: any }> }
+): Promise<ArticleBase[]> => {
+  return searchArticles(query, {
+    ...options,
     include_fields: BaseArticleFields,
   });
+};
 
 export async function searchArticles<K extends keyof FullArticle>(
   query: SearchQuery,
   options: {
     include_fields: NonEmptyArray<K>;
     search_after?: NonEmptyArray<unknown>;
+    filters?: Array<{ [key: string]: any }>;
   }
 ): Promise<SpecificArticle<K>[]> {
   if (query.limit > 10000 || query.limit === 0)
-    return await largeSearch(query, options.include_fields);
+    return await largeSearch(query, options);
 
   const response = await createRequest(query, options).search();
 
@@ -87,7 +98,10 @@ export async function searchArticles<K extends keyof FullArticle>(
 
 async function largeSearch<K extends keyof FullArticle>(
   query: SearchQuery,
-  include_fields: NonEmptyArray<K>
+  options: {
+    include_fields: NonEmptyArray<K>;
+    filters?: Array<{ [key: string]: any }>;
+  }
 ): Promise<SpecificArticle<K>[]> {
   const articles: SpecificArticle<K>[] = [];
   let priorLimit = query.limit;
@@ -97,7 +111,7 @@ async function largeSearch<K extends keyof FullArticle>(
     const limit = priorLimit >= 10000 || priorLimit === 0 ? 10000 : priorLimit;
     const limitedQuery = { ...query, limit };
     const request = createRequest(limitedQuery, {
-      include_fields,
+      ...options,
       sort_tiebreaker: true,
       ...search_after,
     });
