@@ -111,7 +111,7 @@
       items: convertTermAggs(data.metrics.limited.cves),
     },
     {
-      title: "Emerging clusters",
+      title: "Emerging topics",
       items: convertClusters(convertTermAggs(data.metrics.limited.clusters)),
     },
     {
