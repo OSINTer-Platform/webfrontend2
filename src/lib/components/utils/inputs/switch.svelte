@@ -8,6 +8,7 @@
   export let containerClass: string = "";
   export let iconClass: string = "";
   export let title: string = "";
+  export let value: string = "true";
 
   export let icons: null | { off: IconDefinition; on: IconDefinition } = null;
 </script>
@@ -21,6 +22,7 @@
     class="peer hidden"
     bind:checked
     on:change
+    {value}
     {name}
     id={name}
   />

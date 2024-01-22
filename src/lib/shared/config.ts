@@ -62,14 +62,14 @@ export const inbuiltFeeds: { [key: string]: Inbuilt } = {
 };
 
 export const getStandardSearch = (): SearchQuery => ({
-  limit: 100,
+  limit: 200,
 
   sort_by: "publish_date",
   sort_order: "desc",
 
   search_term: "",
   semantic_search: "",
-  highlight: false,
+  highlight: true,
 
   first_date: "",
   last_date: "",

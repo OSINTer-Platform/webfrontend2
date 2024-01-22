@@ -10,7 +10,7 @@ export function fromUrl(params: URLSearchParams): SearchQuery {
 
     search_term: params.get("search_term") || undefined,
     semantic_search: params.get("semantic_search") || undefined,
-    highlight: Boolean(params.get("search_term") && params.get("highlight")),
+    highlight: Boolean(params.get("highlight")),
 
     first_date: params.get("first_date") || undefined,
     last_date: params.get("last_date") || undefined,
