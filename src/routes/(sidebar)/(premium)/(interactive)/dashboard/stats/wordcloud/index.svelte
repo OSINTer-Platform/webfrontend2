@@ -58,11 +58,14 @@
     if (!browser) return;
     mounted = true;
   });
+
+  const tagProcessor = (w: string) => w.toLowerCase();
 </script>
 
 <Tagline
   keywords={selectedTags}
   bind:hoverText
+  {tagProcessor}
   buttons={[
     {
       title: `Show ${totalHits} articles`,

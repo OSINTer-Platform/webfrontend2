@@ -6,7 +6,7 @@
   import { faPlus, faX } from "@fortawesome/free-solid-svg-icons";
   import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
-  export let wordProcessor: (w: string) => string = (w) => w;
+  export let tagProcessor: (w: string) => string = (w) => w;
   export let keywords: Writable<string[]>;
   export let hoverText = "";
   export let buttons: {
@@ -26,7 +26,7 @@
       (e.inputType === "insertText" && e.data === " ")
     ) {
       e.preventDefault();
-      $keywords = [...$keywords, wordProcessor(tagInput)];
+      $keywords = [...$keywords, tagProcessor(tagInput)];
       tagInput = "";
     }
   }

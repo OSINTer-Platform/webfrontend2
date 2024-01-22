@@ -12,9 +12,9 @@
 
   let words: CloudWord[];
   $: words = tags.tags.buckets.map((b) => ({
-    text: b.key,
+    text: `${b.key[0].toUpperCase()}${b.key.slice(1)}`,
     size: b.doc_count,
-    action: (w) => selectedTags.set([...$selectedTags, w.text]),
+    action: () => selectedTags.set([...$selectedTags, b.key]),
   }));
 
   onDestroy(() => {
