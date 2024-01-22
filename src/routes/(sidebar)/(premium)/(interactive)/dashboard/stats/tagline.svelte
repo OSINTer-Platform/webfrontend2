@@ -4,10 +4,17 @@
   import Fa from "svelte-fa";
 
   import { faPlus, faX } from "@fortawesome/free-solid-svg-icons";
+  import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
   export let wordProcessor: (w: string) => string = (w) => w;
   export let keywords: Writable<string[]>;
   export let hoverText = "";
+  export let buttons: {
+    title: string;
+    content: string;
+    icon: IconDefinition;
+    action: () => void;
+  }[] = [];
   let tagInput = "";
 
   const removeKeyword = (remove: string) =>
@@ -71,4 +78,23 @@
     "
     />
   </label>
+
+  {#each buttons as { title, content, action, icon }}
+    <button
+      class="
+        flex items-center gap-1 p-1
+        border border-surface-400/50
+
+        text-xs
+        text-black/50 dark:text-white/50
+        hover-text-white hover:dark:text-white
+        transition-colors
+      "
+      on:click={action}
+      {title}
+    >
+      <Fa {icon} />
+      {content}
+    </button>
+  {/each}
 </aside>
