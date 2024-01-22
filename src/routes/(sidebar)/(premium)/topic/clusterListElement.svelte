@@ -8,6 +8,7 @@
   import type { Cluster, ClusterBase } from "$shared/types/api";
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { page } from "$app/stores";
+  import { faRectangleList } from "@fortawesome/free-solid-svg-icons";
 
   export let cluster: ClusterBase;
 
@@ -46,7 +47,15 @@
       hover: "",
     }}
     tags={cluster.keywords}
-    summary={cluster.summary}
+    textExpands={[
+      {
+        title: "cluster summary",
+        icon: faRectangleList,
+        content: cluster.summary,
+        expanded: false,
+        markdown: false,
+      },
+    ]}
   >
     <svelte:fragment slot="actions">
       {#if $page.data.user}

@@ -3,6 +3,11 @@
   import { eclipseConcat } from "$lib/common/strings";
 
   import type { ArticleBase } from "$shared/types/api";
+  import {
+    faHighlighter,
+    faRectangleList,
+    type IconDefinition,
+  } from "@fortawesome/free-solid-svg-icons";
 
   import Large from "$com/utils/listElements/large.svelte";
   import CollectionOverlay from "$com/collections/buttonOverlay.svelte";
@@ -24,6 +29,39 @@
     article.highlights?.description && showHighlights
       ? { text: eclipseConcat(article.highlights.description), markdown: true }
       : { text: article.description, markdown: false };
+
+  let textExpands: {
+    title: string;
+    icon: IconDefinition;
+    content: string;
+    expanded: boolean;
+    markdown: boolean;
+  }[];
+
+  $: textExpands = [
+    ...(article.highlights?.content && article.highlights.content.length > 0
+      ? [
+          {
+            title: "highlights",
+            icon: faHighlighter,
+            content: eclipseConcat(article.highlights.content),
+            expanded: false,
+            markdown: true,
+          },
+        ]
+      : []),
+    ...(article.summary && article.summary.length > 0
+      ? [
+          {
+            title: "summary",
+            icon: faRectangleList,
+            content: article.summary,
+            expanded: false,
+            markdown: false,
+          },
+        ]
+      : []),
+  ];
 </script>
 
 <hr class="text-tertiary-500 dark:text-surface-500" />
@@ -39,7 +77,7 @@
     }}
     imageUrl={article.image_url}
     tags={article.tags.automatic}
-    summary={article.summary ?? ""}
+    {textExpands}
     {read}
   >
     <svelte:fragment slot="actions">
