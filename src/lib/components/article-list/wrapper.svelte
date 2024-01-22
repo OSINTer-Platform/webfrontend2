@@ -7,6 +7,7 @@
   let classes: string = "";
   export { classes as class };
   export let tintReadArticles: boolean;
+  export let showHighlights: boolean;
   export let listLenLimit = 100;
 
   let defaultMessage: {
@@ -38,6 +39,7 @@
     <List
       {articles}
       layout={$articleListRender}
+      {showHighlights}
       {tintReadArticles}
       {listLenLimit}
     />

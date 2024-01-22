@@ -19,6 +19,7 @@
   export let articles: ArticleBase[] = [];
   export let layout: ArticleListRender = "large";
   export let tintReadArticles: boolean;
+  export let showHighlights: boolean;
   export let listLenLimit = 200;
 
   let chunksVisible = 1;
@@ -54,6 +55,7 @@
       this={layouts[layout].article}
       {article}
       {readArticles}
+      {showHighlights}
       articleList={articles}
     />
   {/each}

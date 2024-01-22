@@ -44,6 +44,7 @@
 <List
   articles={$filteredArticles}
   tintReadArticles={false}
+  showHighlights={false}
   emptyMessage={{
     title: "Well, no recently viewed articles",
     description:

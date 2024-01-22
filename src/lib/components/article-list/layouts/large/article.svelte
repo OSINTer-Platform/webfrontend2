@@ -11,16 +11,19 @@
   export let article: ArticleBase;
   export let articleList: ArticleBase[];
   export let readArticles: string[];
+  export let showHighlights: boolean;
 
   $: read = readArticles.includes(article.id);
 
-  $: title = article.highlights?.title
-    ? { text: eclipseConcat(article.highlights.title), markdown: true }
-    : { text: article.title, markdown: false };
+  $: title =
+    article.highlights?.title && showHighlights
+      ? { text: eclipseConcat(article.highlights.title), markdown: true }
+      : { text: article.title, markdown: false };
 
-  $: description = article.highlights?.description
-    ? { text: eclipseConcat(article.highlights.description), markdown: true }
-    : { text: article.description, markdown: false };
+  $: description =
+    article.highlights?.description && showHighlights
+      ? { text: eclipseConcat(article.highlights.description), markdown: true }
+      : { text: article.description, markdown: false };
 </script>
 
 <hr class="text-tertiary-500 dark:text-surface-500" />

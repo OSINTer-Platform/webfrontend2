@@ -13,6 +13,7 @@
   export let article: ArticleBase;
   export let articleList: ArticleBase[];
   export let readArticles: string[];
+  export let showHighlights: boolean;
 
   $: read = readArticles.includes(article.id);
   let similarArticles: null | Promise<ArticleBase[]> = null;
@@ -110,7 +111,7 @@
     [&>strong]:text-primary-600
   "
     >
-      {#if article.highlights?.title}
+      {#if article.highlights?.title && showHighlights}
         <SvelteMarkdown
           source={eclipseConcat(article.highlights.title)}
           isInline
@@ -139,7 +140,7 @@
     [&>strong]:text-primary-400
   "
     >
-      {#if article.highlights?.description}
+      {#if article.highlights?.description && showHighlights}
         <SvelteMarkdown
           source={eclipseConcat(article.highlights.description)}
           isInline

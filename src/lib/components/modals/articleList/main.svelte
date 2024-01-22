@@ -8,15 +8,23 @@
 
   import { ListRenderModes } from "$shared/config";
   import { page } from "$app/stores";
-  import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+  import {
+    faEye,
+    faEyeSlash,
+    faHeading,
+    faHighlighter,
+  } from "@fortawesome/free-solid-svg-icons";
+  import { hasHighlights } from "$lib/common/filter";
 
   export let articles: ArticleBase[];
   let listRenderMode: ArticleListRender = "large";
   let showRead: boolean = true;
+  let showHighlights: boolean = true;
   let search: string = "";
 
   $: listCount = $page.data.listElementCount;
   $: searchInfo = listCount ? `${$listCount} articles` : "";
+  $: articleWithHighlight = hasHighlights(articles);
 </script>
 
 <div class="flex gap-6 px-6 sm:px-12 mt-3 sm:mt-6">
@@ -56,19 +64,39 @@
     infoText={searchInfo}
   />
 
-  {#if $page.data.user}
+  {#if articleWithHighlight || $page.data.user}
     <div class="self-center flex gap-2">
-      <Switch
-        title="{showRead
-          ? 'Show'
-          : 'Hide'} articles which have been read already"
-        name="show-read"
-        bind:checked={showRead}
-        icons={{ on: faEye, off: faEyeSlash }}
-        size="lg"
-      />
+      {#if $page.data.user}
+        <Switch
+          title="{showRead
+            ? 'Show'
+            : 'Hide'} articles which have been read already"
+          name="show-read"
+          bind:checked={showRead}
+          icons={{ on: faEye, off: faEyeSlash }}
+          size="lg"
+        />
+      {/if}
+      {#if articleWithHighlight}
+        <Switch
+          title={showHighlights
+            ? "Show article search highlights"
+            : "Show article title"}
+          name="show-read"
+          bind:checked={showHighlights}
+          icons={{ on: faHighlighter, off: faHeading }}
+          iconClass="text-sm"
+          size="lg"
+        />
+      {/if}
     </div>
   {/if}
 </div>
 
-<List {articles} {search} {showRead} {listRenderMode} />
+<List
+  {articles}
+  {search}
+  {showRead}
+  {listRenderMode}
+  showHighlights={showHighlights && articleWithHighlight}
+/>

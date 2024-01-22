@@ -68,3 +68,14 @@ export const searchInCluster = (
     search(cluster.summary)
   );
 };
+
+export const hasHighlights = (articles: ArticleBase[] | undefined) => {
+  if (Array.isArray(articles)) {
+    return articles.some(
+      (a) =>
+        a.highlights && Object.values(a.highlights).some((v) => v.length > 0)
+    );
+  }
+
+  return false;
+};

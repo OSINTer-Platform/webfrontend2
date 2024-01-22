@@ -10,6 +10,7 @@
   export let articles: ArticleBase[];
   export let search: string;
   export let showRead: boolean;
+  export let showHighlights: boolean;
   export let listRenderMode: ArticleListRender;
 
   $: alreadyReadCollection = $page.data.alreadyRead;
@@ -25,5 +26,6 @@
     articles={filteredArticles}
     tintReadArticles={true}
     layout={listRenderMode}
+    {showHighlights}
   />
 </main>
