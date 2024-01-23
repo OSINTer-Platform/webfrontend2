@@ -21,6 +21,7 @@
     keywords.update((words) => words.filter((w) => w !== remove));
 
   function catchTrendInput(e: InputEvent) {
+    if (!tagInput.trim()) return;
     if (
       ["insertLineBreak", "insertParagraph"].includes(e.inputType) ||
       (e.inputType === "insertText" && e.data === " ")
