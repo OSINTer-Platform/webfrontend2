@@ -18,15 +18,20 @@
 
   $: customXAxisScale = d3.scaleTime().domain(xDomain);
 
+  const getTrendPoints = (trend: Date[], extend: [number, number]) =>
+    trend.length > 0
+      ? trend.map((date, i) => ({ x: date.getTime(), y: i }))
+      : [
+          { x: extend[0], y: 0 },
+          { x: extend[1], y: 0 },
+        ];
+
   $: lines = trends.map((trend) => ({
     title: trend.name,
     href: `/feed/search?sort_by=publish_date&highlight=true&search_term=${encodeURIComponent(
       `"${trend.name}"`
     )}`,
-    points: trend.trend.map((date, i) => ({
-      x: date.getTime(),
-      y: i + 1,
-    })),
+    points: getTrendPoints(trend.trend, xDomain),
   }));
 </script>
 
