@@ -4,7 +4,7 @@ export const eclipseConcat = (s: string[]) => {
   if (finalString[0] !== finalString[0].toUpperCase())
     finalString = "..." + finalString;
 
-  if ([".", "?", "!"].includes(finalString)) finalString += "...";
+  if (![".", "?", "!"].includes(finalString)) finalString += "...";
 
   return finalString;
 };
