@@ -50,7 +50,7 @@
         text-white
       "
     >
-      <LogoIcon class="h-4 w-4" />
+      <LogoIcon class="h-4 w-4" mode="dark" />
     </a>
   </div>
   <div class="shrink grow flex gap-1 sm:gap-4">
