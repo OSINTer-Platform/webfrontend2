@@ -1,7 +1,6 @@
 <script lang="ts">
   import Search from "$inputs/search.svelte";
   import ArticleSearch from "$inputs/articleSearch.svelte";
-  import Switch from "$inputs/switch.svelte";
 
   import Tabs from "$com/tabs.svelte";
   import ModList from "./modList.svelte";
@@ -12,15 +11,8 @@
   } from "$shared/types/internal";
   import { writable, type Writable } from "svelte/store";
 
-  import { hasHighlights } from "$lib/common/filter";
-  import { articleListRender, showRead, showHighlights } from "$state/state";
+  import { articleListRender } from "$state/state";
   import { page } from "$app/stores";
-  import {
-    faEye,
-    faEyeSlash,
-    faHeading,
-    faHighlighter,
-  } from "@fortawesome/free-solid-svg-icons";
   import { ListRenderModes } from "$shared/config";
 
   export let title: string;
@@ -44,7 +36,6 @@
 
   $: listCount = $page.data.listElementCount;
   $: searchInfo = listCount ? `${$listCount} ${contentType}` : "";
-  $: articleWithHighlight = hasHighlights($page.data.articles);
 </script>
 
 <aside
@@ -119,39 +110,7 @@
 
   {#if tabs}
     <Tabs bind:selected={$tabStore} options={tabs.options}>
-      <svelte:fragment slot="end">
-        {#if $page.url.pathname.startsWith("/feed") && ($page.data.user || articleWithHighlight)}
-          <div
-            class="
-            ml-auto flex gap-2
-            self-center
-          "
-          >
-            {#if $page.data.user}
-              <Switch
-                title="{$showRead
-                  ? 'Show'
-                  : 'Hide'} articles which have been read already"
-                name="show-read"
-                bind:checked={$showRead}
-                icons={{ on: faEye, off: faEyeSlash }}
-              />
-            {/if}
-
-            {#if articleWithHighlight}
-              <Switch
-                title={showHighlights
-                  ? "Show article search highlights"
-                  : "Show article title"}
-                name="show-higlights"
-                bind:checked={$showHighlights}
-                icons={{ on: faHighlighter, off: faHeading }}
-                iconClass="text-xs"
-              />
-            {/if}
-          </div>
-        {/if}
-      </svelte:fragment>
+      <div id="header-tab-space" class="ml-auto" slot="end" />
     </Tabs>
   {/if}
 </aside>
