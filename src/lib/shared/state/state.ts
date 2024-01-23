@@ -20,4 +20,4 @@ export const feedLocalSearch = writable("");
 export const showRead = writable(true);
 export const showHighlights = writable(true);
 
-export const darkMode = writable(true);
+export const darkMode = persisted("darkMode", true);
