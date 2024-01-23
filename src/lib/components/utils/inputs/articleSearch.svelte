@@ -1,16 +1,11 @@
 <script lang="ts">
   import Search from "./search.svelte";
-  import { page } from "$app/stores";
 
   export let value = "";
   export let placeholder = "";
   export let containerClass = "";
   export let inputClass = "";
   export let infoText = "";
-
-  let inputName = $page.data.mlAvailability?.elser
-    ? "semantic_search"
-    : "search_term";
 </script>
 
 <form action="/feed/search" method="get">
@@ -19,7 +14,8 @@
     {placeholder}
     {containerClass}
     {inputClass}
-    {inputName}
+    inputName="search_term"
     {infoText}
   />
+  <input name="highlight" value="true" type="checkbox" checked hidden />
 </form>
