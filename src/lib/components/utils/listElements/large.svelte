@@ -208,11 +208,11 @@
   <aside class="absolute right-2 bottom-2 gap-2 hidden">
     {#each textExpands as { title, icon, expanded }}
       <button
-        title="Show {title}"
+        title="Show article {title}"
         class="
           btn w-10 p-3 opacity-85
           dark:bg-surface-500 dark:hover:bg-primary-400/25
-          drop-shadow-md transition-transform
+          shadow-black/25 dark:shadow-black shadow-sm transition-transform
         "
         on:click|preventDefault|stopPropagation={() => (expanded = !expanded)}
       >

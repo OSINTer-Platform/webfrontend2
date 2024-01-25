@@ -1,13 +1,19 @@
+<script lang="ts" context="module">
+  export const showingSummary = writable(false);
+  export const showingHighlights = writable(false);
+</script>
+
 <script lang="ts">
+  import { writable } from "svelte/store";
   import { getTimespan } from "$lib/common/math";
   import { eclipseConcat } from "$lib/common/strings";
-
-  import type { ArticleBase } from "$shared/types/api";
   import {
     faHighlighter,
     faRectangleList,
-    type IconDefinition,
   } from "@fortawesome/free-solid-svg-icons";
+
+  import type { ArticleBase } from "$shared/types/api";
+  import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
   import Large from "$com/utils/listElements/large.svelte";
   import CollectionOverlay from "$com/collections/buttonOverlay.svelte";
@@ -45,7 +51,7 @@
             title: "highlights",
             icon: faHighlighter,
             content: eclipseConcat(article.highlights.content),
-            expanded: false,
+            expanded: $showingHighlights,
             markdown: true,
           },
         ]
@@ -56,7 +62,7 @@
             title: "summary",
             icon: faRectangleList,
             content: article.summary,
-            expanded: false,
+            expanded: $showingSummary,
             markdown: false,
           },
         ]
