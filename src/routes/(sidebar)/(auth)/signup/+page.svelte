@@ -12,6 +12,7 @@
   let password: string = "";
   let repeatPassword: string = "";
   let email: string = "";
+  let signupCode: string = "";
 
   let formError: string | null = null;
   $: {
@@ -109,6 +110,18 @@
 				link-underline
 			"><Fa icon={faQuestionCircle} class="mb-0.5" /></a
     >
+  </div>
+
+  <div class="input mb-2">
+    <input
+      id="signupCode"
+      name="signupCode"
+      placeholder=" "
+      class="input"
+      type="text"
+      bind:value={signupCode}
+    />
+    <label for="signupCode" class="input">Signup Code - (Optional)</label>
   </div>
 
   <hr class="text-surface-400/25 border my-6" />
