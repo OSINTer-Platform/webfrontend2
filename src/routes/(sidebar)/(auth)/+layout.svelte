@@ -10,27 +10,19 @@
 
     flex
     flex-row
+
+    overflow-x-auto
 "
 >
   <main
     class="
-      max-w-md
-      lg:max-w-lg
-      grow
-
-      h-fit
-
-      p-8
-
-      m-auto
-
-      flex
-      flex-col
-
-      gap-8
-      justify-center
+      flex flex-col gap-8
       items-center
-"
+      p-8 sm:py-16 m-auto
+
+      max-w-md lg:max-w-lg grow
+      h-fit
+  "
   >
     <slot />
   </main>
