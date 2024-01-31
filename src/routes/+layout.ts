@@ -2,11 +2,9 @@ import { PUBLIC_API_BASE } from "$env/static/public";
 import { updatable } from "$lib/common/customStores";
 import type { MLAvailability } from "$shared/types/api";
 import type { Collection, User } from "$shared/types/userItems";
-import { writable } from "svelte/store";
 import type { LayoutLoad } from "./$types";
 
-export const load: LayoutLoad = async ({ fetch, url }) => {
-  const pagesWithSidebar = ["/feed", "/article", "/topic", "/dashboard"];
+export const load: LayoutLoad = async ({ fetch }) => {
 
   const getUserObject = async (): Promise<User | null> => {
     const r = await fetch(`${PUBLIC_API_BASE}/auth/status`);
