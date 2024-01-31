@@ -15,6 +15,7 @@
     faHighlighter,
   } from "@fortawesome/free-solid-svg-icons";
   import { hasHighlights } from "$lib/common/filter";
+  import { listElementCount } from "$state/state";
 
   export let articles: ArticleBase[];
   let listRenderMode: ArticleListRender = "large";
@@ -22,8 +23,6 @@
   let showHighlights: boolean = true;
   let search: string = "";
 
-  $: listCount = $page.data.listElementCount;
-  $: searchInfo = listCount ? `${$listCount} articles` : "";
   $: articleWithHighlight = hasHighlights(articles);
 </script>
 
@@ -61,7 +60,7 @@
     bind:value={search}
     placeholder="Filter articles..."
     containerClass="grow"
-    infoText={searchInfo}
+    infoText={`${$listElementCount} articles`}
   />
 
   {#if articleWithHighlight || $page.data.user}

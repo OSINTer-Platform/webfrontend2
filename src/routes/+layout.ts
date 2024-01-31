@@ -56,7 +56,6 @@ export const load: LayoutLoad = async ({ fetch, url }) => {
 
     alreadyRead: updatable(updateAlreadyRead),
     userCollections: updatable(updateCollectionList),
-    listElementCount: writable(0),
 
     customSidebar: false,
   };

@@ -4,7 +4,7 @@
 
   import * as d3 from "d3";
   import { afterUpdate, onDestroy, onMount } from "svelte";
-  import { darkMode } from "$state/state";
+  import { darkMode, listElementCount } from "$state/state";
   import {
     clearAndScale,
     drawArticlePoints,
@@ -33,7 +33,6 @@
   } from "./state";
 
   import { handlePointerModeChange, scalePointerPosition } from "./events";
-  import { page } from "$app/stores";
 
   const storeListeners: Array<() => void> = [];
 
@@ -161,11 +160,11 @@
     );
   });
 
-  $: $page.data?.listElementCount?.set?.($filteredArticles.length);
+  $: listElementCount.set($filteredArticles.length);
 
   onDestroy(() => {
     storeListeners.forEach((unsubscriber) => unsubscriber());
-    $page.data?.listElementCount?.set?.(0);
+    listElementCount.set(0);
   });
 
   afterUpdate(() => requestAnimationFrame(drawCanvas));

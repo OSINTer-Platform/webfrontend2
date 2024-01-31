@@ -14,7 +14,7 @@
   import { searchInCluster } from "$lib/common/filter";
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { slide } from "svelte/transition";
-  import { page } from "$app/stores";
+  import { listElementCount } from "$shared/state/state";
 
   export let data: PageData;
 
@@ -28,7 +28,7 @@
       (c) => $clusterSearch.length < 1 || searchInCluster(c, $clusterSearch)
     );
 
-  $: $page.data?.listElementCount?.set?.(filteredClusters.length);
+  $: listElementCount.set(filteredClusters.length);
 
   const modOptions: HeaderModOptions[] = [
     {
@@ -40,7 +40,7 @@
     },
   ];
 
-  onDestroy(() => $page.data?.listElementCount?.set?.(0));
+  onDestroy(() => listElementCount.set(0));
 
   onMount(() => {
     fullClusters = fetch(`${PUBLIC_API_BASE}/ml/clusters?complete=true`).then(

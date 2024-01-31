@@ -13,7 +13,12 @@
   import { writable, type Writable } from "svelte/store";
 
   import { hasHighlights } from "$lib/common/filter";
-  import { articleListRender, showRead, showHighlights } from "$state/state";
+  import {
+    articleListRender,
+    showRead,
+    showHighlights,
+    listElementCount,
+  } from "$state/state";
   import { page } from "$app/stores";
   import {
     faEye,
@@ -42,8 +47,6 @@
 
   export let modOptions: Array<HeaderModOptions> = [];
 
-  $: listCount = $page.data.listElementCount;
-  $: searchInfo = listCount ? `${$listCount} ${contentType}` : "";
   $: articleWithHighlight = hasHighlights($page.data.articles);
 </script>
 
@@ -114,7 +117,7 @@
     bind:value={searchValue}
     placeholder={"Filter displayed articles"}
     containerClass={"w-full my-6"}
-    infoText={searchInfo}
+    infoText={`${$listElementCount} ${contentType}`}
   />
 
   {#if tabs}
