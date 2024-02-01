@@ -7,9 +7,6 @@
   import Faq from "$com/frontpage/faq.svelte";
   import Header from "$com/frontpage/header.svelte";
 
-  import Fa from "svelte-fa";
-
-  import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
   import { config } from "$shared/config";
 </script>
 
