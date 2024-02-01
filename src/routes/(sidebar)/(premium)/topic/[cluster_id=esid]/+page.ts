@@ -4,7 +4,7 @@ import type { ArticleBase } from "$shared/types/api";
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { error } from "@sveltejs/kit";
 
-export const load = (({ params, fetch }) => {
+export const load = (async ({ params, fetch }) => {
   const id = encodeURIComponent(params.cluster_id);
 
   async function fetchArticles(): Promise<ArticleBase[]> {
@@ -20,6 +20,6 @@ export const load = (({ params, fetch }) => {
   }
 
   return {
-    articles: fetchArticles(),
+    articles: await fetchArticles(),
   };
 }) satisfies PageLoad;

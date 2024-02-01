@@ -26,7 +26,18 @@ export const load = (async ({ parent, fetch }) => {
     }
   };
 
-  const getProtectedData = async (url: string, type: "feed" | "collection") => {
+  async function getProtectedData(
+    url: string,
+    type: "feed"
+  ): Promise<{ [key: string]: Feed }>;
+  async function getProtectedData(
+    url: string,
+    type: "collection"
+  ): Promise<{ [key: string]: Collection }>;
+  async function getProtectedData(
+    url: string,
+    type: "feed" | "collection"
+  ): Promise<{ [key: string]: Feed } | { [key: string]: Collection }> {
     const r = await fetch(`${PUBLIC_API_BASE}/${url}`);
 
     if (r.ok) {
@@ -39,7 +50,7 @@ export const load = (async ({ parent, fetch }) => {
     } else {
       throw (r.status, `Error when fetching ${type}s.`);
     }
-  };
+  }
 
   const categories = fetchCategories();
 
@@ -47,24 +58,25 @@ export const load = (async ({ parent, fetch }) => {
   const user = parentData.user;
 
   if (user) {
-    const data: {
-      customSidebar: boolean;
-      feeds: Promise<{ [key: string]: Feed }>;
-      collections: Promise<{ [key: string]: Collection }>;
-      sourceCategories: Promise<ArticleCategories>;
-    } = {
-      customSidebar: true,
-      feeds: getProtectedData("my/feeds/list", "feed"),
-      collections: getProtectedData("my/collections/list", "collection"),
-      sourceCategories: categories,
-    };
+    const [feeds, collections, sourceCategories] = await Promise.all([
+      getProtectedData("my/feeds/list", "feed"),
+      getProtectedData("my/collections/list", "collection"),
+      categories,
+    ]);
 
-    return data;
-  } else {
     return {
       customSidebar: true,
-      feeds: getStandardFeeds(),
-      sourceCategories: categories,
+      feeds,
+      collections,
+      sourceCategories
+    };
+  } else {
+    const [feeds, sourceCategories] = await Promise.all([getStandardFeeds(), categories])
+
+    return {
+      customSidebar: true,
+      feeds,
+      sourceCategories,
     };
   }
 }) satisfies LayoutLoad;

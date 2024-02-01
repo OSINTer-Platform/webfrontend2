@@ -17,6 +17,6 @@ export const load = (async ({ params, fetch }) => {
   };
 
   return {
-    currentItem: fetchItem(),
+    currentItem: await fetchItem(),
   };
 }) satisfies LayoutLoad;

@@ -17,6 +17,6 @@ export const load = (async ({ fetch, parent }) => {
   };
 
   return {
-    articles: fetchArticles(),
+    articles: await fetchArticles(),
   };
 }) satisfies PageLoad;

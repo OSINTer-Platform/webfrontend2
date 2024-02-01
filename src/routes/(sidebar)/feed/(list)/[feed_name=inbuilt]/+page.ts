@@ -4,7 +4,7 @@ import { inbuiltFeeds } from "$shared/config";
 import type { ArticleBase } from "$shared/types/api";
 import { error } from "@sveltejs/kit";
 
-export const load = (({ params, fetch }) => {
+export const load = (async ({ params, fetch }) => {
   const fetchArticles = async (): Promise<ArticleBase[]> => {
     const r = await fetch(inbuiltFeeds[params.feed_name].url.toString());
     if (r.ok) {
@@ -15,6 +15,6 @@ export const load = (({ params, fetch }) => {
   };
 
   return {
-    articles: fetchArticles(),
+    articles: await fetchArticles(),
   };
 }) satisfies PageLoad;

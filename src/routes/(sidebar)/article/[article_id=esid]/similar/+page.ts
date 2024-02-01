@@ -3,7 +3,7 @@ import type { ArticleBase } from "$shared/types/api";
 import { error } from "@sveltejs/kit";
 import type { PageLoad } from "./$types";
 
-export const load: PageLoad = ({ params, fetch }) => {
+export const load: PageLoad = async ({ params, fetch }) => {
   async function fetchSimilarArticles(): Promise<ArticleBase[]> {
     const r = await fetch(
       `${PUBLIC_API_BASE}/articles/${params.article_id}/similar`
@@ -25,5 +25,5 @@ export const load: PageLoad = ({ params, fetch }) => {
     }
   }
 
-  return { similarArticles: fetchSimilarArticles() };
+  return { similarArticles: await fetchSimilarArticles() };
 };

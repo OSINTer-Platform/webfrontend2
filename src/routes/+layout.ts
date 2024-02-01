@@ -5,7 +5,6 @@ import type { Collection, User } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
 
 export const load: LayoutLoad = async ({ fetch }) => {
-
   const getUserObject = async (): Promise<User | null> => {
     const r = await fetch(`${PUBLIC_API_BASE}/auth/status`);
     return r.ok ? r.json() : null;
@@ -18,9 +17,9 @@ export const load: LayoutLoad = async ({ fetch }) => {
       : { clustering: false, map: false, elser: false, inference: false };
   };
 
-  const user = await getUserObject();
-
-  const updateCollectionList = async (): Promise<{
+  const updateCollectionList = async (
+    user: User | null
+  ): Promise<{
     [key: string]: Collection;
   }> => {
     if (!user) return {};
@@ -37,7 +36,9 @@ export const load: LayoutLoad = async ({ fetch }) => {
     );
   };
 
-  const updateAlreadyRead = async (): Promise<Collection | null> => {
+  const updateAlreadyRead = async (
+    user: User | null
+  ): Promise<Collection | null> => {
     if (!user) return null;
 
     const rCollection = await fetch(
@@ -48,13 +49,18 @@ export const load: LayoutLoad = async ({ fetch }) => {
     return await rCollection.json();
   };
 
+  const user = await getUserObject();
+  const [mlAvailability, alreadyRead, userCollections] = await Promise.all([
+    getMlAvailability(),
+    updatable(() => updateAlreadyRead(user)),
+    updatable(() => updateCollectionList(user)),
+  ]);
+
   return {
     user,
-    mlAvailability: getMlAvailability(),
-
-    alreadyRead: updatable(updateAlreadyRead),
-    userCollections: updatable(updateCollectionList),
-
+    mlAvailability,
+    alreadyRead,
+    userCollections,
     customSidebar: false,
   };
 };

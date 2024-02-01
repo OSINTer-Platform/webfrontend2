@@ -18,8 +18,13 @@ export const load: PageLoad = async ({ parent, fetch }) => {
     }
   }
 
+  const [metrics, clusters] = await Promise.all([
+    getDashboardMetrics(startDate, new Date()),
+    getClusters(),
+  ]);
+
   return {
-    metrics: getDashboardMetrics(startDate, new Date()),
-    clusters: getClusters(),
+    metrics,
+    clusters,
   };
 };

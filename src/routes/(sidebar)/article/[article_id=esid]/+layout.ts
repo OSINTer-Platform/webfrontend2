@@ -7,7 +7,7 @@ import { fullArticles } from "$state/storedArticles";
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { error } from "@sveltejs/kit";
 
-export const load = (({ params, fetch }) => {
+export const load = (async ({ params, fetch }) => {
   const fullArticleList = get(fullArticles);
 
   const fetchContent = async (): Promise<FullArticle> => {
@@ -41,6 +41,6 @@ export const load = (({ params, fetch }) => {
   };
 
   return {
-    article: fetchContent(),
+    article: await fetchContent(),
   };
 }) satisfies LayoutLoad;

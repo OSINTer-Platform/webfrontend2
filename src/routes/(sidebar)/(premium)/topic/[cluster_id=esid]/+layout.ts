@@ -26,6 +26,6 @@ export const load: LayoutLoad = async ({ params, fetch }) => {
   }
 
   return {
-    cluster: fetchCluster(),
+    cluster: await fetchCluster(),
   };
 };

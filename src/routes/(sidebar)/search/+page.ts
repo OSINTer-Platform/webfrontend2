@@ -15,6 +15,6 @@ export const load = (async ({ fetch }) => {
   };
 
   return {
-    sourceCategories: fetchCategories(),
+    sourceCategories: await fetchCategories(),
   };
 }) satisfies PageLoad;

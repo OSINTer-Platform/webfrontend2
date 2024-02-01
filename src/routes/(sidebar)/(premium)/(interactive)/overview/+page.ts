@@ -25,8 +25,13 @@ export const load: PageLoad = async ({ fetch }) => {
     }
   };
 
+  const [sourceCategories, clusters] = await Promise.all([
+    fetchCategories(),
+    getClusters(),
+  ]);
+
   return {
-    sourceCategories: fetchCategories(),
-    clusters: getClusters(),
+    sourceCategories,
+    clusters,
   };
 };
