@@ -4,13 +4,10 @@
   import Article from "./article.svelte";
 
   import type { ArticleBase } from "$shared/types/api";
-  import type { Collection } from "$shared/types/userItems";
-  import type { Readable } from "svelte/store";
 
   export let articleListContainer: HTMLDivElement | null;
   export let articles: ArticleBase[];
 
-  let alreadyRead: undefined | Readable<Collection>;
   $: alreadyRead = $page.data.alreadyRead;
 
   let readArticles: string[];

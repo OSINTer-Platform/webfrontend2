@@ -14,9 +14,6 @@
   import { onDestroy } from "svelte";
   import { listElementCount } from "$shared/state/state";
 
-  import type { Collection } from "$shared/types/userItems";
-  import type { Readable } from "svelte/store";
-
   export let articles: ArticleBase[] = [];
   export let layout: ArticleListRender = "large";
   export let tintReadArticles: boolean;
@@ -32,7 +29,6 @@
     title: { shell: TitleShell, article: TitleArticle },
   };
 
-  let alreadyRead: undefined | Readable<Collection>;
   $: alreadyRead = $page.data.alreadyRead;
 
   let readArticles: string[];

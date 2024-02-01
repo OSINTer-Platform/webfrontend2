@@ -3,9 +3,6 @@
   import Search from "$inputs/search.svelte";
   import Switch from "$inputs/switch.svelte";
 
-  import type { Collection } from "$shared/types/userItems";
-  import type { Updatable } from "$lib/common/customStores";
-
   import { onDestroy } from "svelte";
   import { page } from "$app/stores";
   import {
@@ -32,7 +29,6 @@
     })
   );
 
-  let alreadyRead: Updatable<null | Collection>;
   $: alreadyRead = $page.data?.alreadyRead;
 
   let actionButtons: {
