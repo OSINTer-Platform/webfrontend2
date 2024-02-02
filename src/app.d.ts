@@ -26,6 +26,12 @@ declare global {
       customSidebar: boolean;
       alreadyRead: Updatable<Collection | null>;
       userCollections: Updatable<{ [key: string]: Collection }>;
+      meta: {
+        title?: string | { visual: string; meta: string };
+        description?: string;
+        image?: string;
+        type?: string;
+      };
     }
     // interface Platform {}
   }

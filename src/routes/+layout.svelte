@@ -42,6 +42,19 @@
   });
 </script>
 
+<svelte:head>
+  {#if typeof $page.data.meta.title === "string"}
+    <title>{$page.data.meta.title}</title>
+    <meta property="og:title" content={$page.data.meta.title} />
+  {:else if $page.data.meta.title !== undefined}
+    <title>{$page.data.meta.title.visual}</title>
+    <meta property="og:title" content={$page.data.meta.title.meta} />
+  {/if}
+  <meta property="og:description" content={$page.data.meta.description} />
+  <meta property="og:image" content={$page.data.meta.image} />
+  <meta property="og:type" content={$page.data.meta.type} />
+</svelte:head>
+
 <svelte:window on:keydown|capture={(e) => handleKeypress(e)} />
 
 <ProgressBar class="text-primary-500" zIndex={100} settleTime={300} />

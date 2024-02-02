@@ -40,7 +40,15 @@ export const load = (async ({ params, fetch }) => {
     return article;
   };
 
+  const article = await fetchContent();
+
   return {
-    article: await fetchContent(),
+    article,
+    meta: {
+      title: `${article.title} | OSINTer`,
+      description: article.description,
+      image: article.image_url,
+      type: "article",
+    },
   };
 }) satisfies LayoutLoad;

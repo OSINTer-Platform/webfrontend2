@@ -14,5 +14,10 @@ export const load: LayoutLoad = ({ url }) => {
     startDate: getStartDate(),
     customSidebar: true,
     topbar: false,
+    meta: {
+      title: "Dashboards | OSINTer",
+      description:
+        "Get an overview of the threat-landscape using our dashboards",
+    },
   };
 };

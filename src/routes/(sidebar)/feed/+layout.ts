@@ -53,6 +53,11 @@ export const load = (async ({ parent, fetch }) => {
   }
 
   const categories = fetchCategories();
+  const meta = {
+    title: "Your Feeds | OSINTer",
+    description:
+      "Curious on the newest happenings in the cybersecurity sphere? Well, look no further...",
+  };
 
   const parentData = await parent();
   const user = parentData.user;
@@ -65,15 +70,20 @@ export const load = (async ({ parent, fetch }) => {
     ]);
 
     return {
+      meta,
       customSidebar: true,
       feeds,
       collections,
-      sourceCategories
+      sourceCategories,
     };
   } else {
-    const [feeds, sourceCategories] = await Promise.all([getStandardFeeds(), categories])
+    const [feeds, sourceCategories] = await Promise.all([
+      getStandardFeeds(),
+      categories,
+    ]);
 
     return {
+      meta,
       customSidebar: true,
       feeds,
       sourceCategories,

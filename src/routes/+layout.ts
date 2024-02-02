@@ -1,5 +1,6 @@
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { updatable } from "$lib/common/customStores";
+import { config } from "$shared/config";
 import type { MLAvailability } from "$shared/types/api";
 import type { Collection, User } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
@@ -62,5 +63,15 @@ export const load: LayoutLoad = async ({ fetch }) => {
     alreadyRead,
     userCollections,
     customSidebar: false,
+    meta: {
+      title: {
+        visual: "OSINTer",
+        meta: "OSINTer - The one-stop shop for cybersecurity news",
+      },
+      description:
+        "Helping companies, organisations and individuals tackle the cyber-threats of tomorrow",
+      image: config.images.fullLogo,
+      type: "website",
+    },
   };
 };

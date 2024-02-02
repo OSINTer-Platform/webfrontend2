@@ -16,7 +16,13 @@ export const load = (async ({ params, fetch }) => {
     }
   };
 
+  const currentItem = await fetchItem();
+
   return {
-    currentItem: await fetchItem(),
+    currentItem,
+    meta: {
+      title: `${currentItem.name} | OSINTer`,
+      description: `News related to the ${currentItem.type} "${currentItem.name}"`,
+    },
   };
 }) satisfies LayoutLoad;

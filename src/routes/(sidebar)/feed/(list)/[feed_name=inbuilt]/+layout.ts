@@ -1,12 +1,15 @@
 import { inbuiltFeeds } from "$shared/config";
-import type { Inbuilt } from "$shared/types/internal";
 
 import type { LayoutLoad } from "./$types";
 
 export const load = (async ({ params }) => {
-  const content: { currentItem: Inbuilt } = {
-    currentItem: inbuiltFeeds[params.feed_name],
-  };
+  const feed = inbuiltFeeds[params.feed_name];
 
-  return content;
+  return {
+    currentItem: feed,
+    meta: {
+      title: `${feed.title} | OSINTer`,
+      description: feed.desc,
+    },
+  };
 }) satisfies LayoutLoad;

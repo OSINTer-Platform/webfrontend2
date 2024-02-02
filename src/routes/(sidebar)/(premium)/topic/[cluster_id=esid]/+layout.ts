@@ -25,7 +25,13 @@ export const load: LayoutLoad = async ({ params, fetch }) => {
     }
   }
 
+  const cluster = await fetchCluster();
+
   return {
-    cluster: await fetchCluster(),
+    cluster,
+    meta: {
+      title: `${cluster.title} | OSINTer`,
+      description: cluster.description,
+    },
   };
 };

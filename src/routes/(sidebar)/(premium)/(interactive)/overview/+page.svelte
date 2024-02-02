@@ -7,7 +7,6 @@
   import { onMount } from "svelte";
   import { browser } from "$app/environment";
   import { controlParams, mapDimensions } from "./state";
-  import { config } from "$shared/config";
   import { searchArticles } from "$lib/common/elasticsearch/search";
 
   import Loader from "$com/loader.svelte";
@@ -94,18 +93,6 @@
     }
   });
 </script>
-
-<svelte:head>
-  <title>OSINTer - Overview</title>
-  <meta property="og:title" content="OSINTer - Use ML to map articles" />
-  <meta
-    property="og:description"
-    content="The overview in OSINTer uses advanced unsupervised machine-learning to cluster articles for easy viewing"
-  />
-  <meta property="og:image" content={config.images.fullLogo} />
-  <meta property="og:url" content="https://osinter.dk/overview" />
-  <meta property="og:type" content="website" />
-</svelte:head>
 
 <div
   id="map-container"

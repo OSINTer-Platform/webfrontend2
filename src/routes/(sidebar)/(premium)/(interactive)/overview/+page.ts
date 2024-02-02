@@ -33,5 +33,10 @@ export const load: PageLoad = async ({ fetch }) => {
   return {
     sourceCategories,
     clusters,
+    meta: {
+      title: "Overview | OSINTer",
+      description:
+        "Use our map-like article-mapping to do a deep-dive on specific topics",
+    },
   };
 };

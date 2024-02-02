@@ -16,5 +16,10 @@ export const load = (async ({ fetch }) => {
 
   return {
     sourceCategories: await fetchCategories(),
+    meta: {
+      title: "Article search | OSINTer",
+      description:
+        "Find specific articles in OSINTer, or check out different topics using search",
+    },
   };
 }) satisfies PageLoad;

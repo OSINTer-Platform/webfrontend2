@@ -11,15 +11,6 @@
   let headings: HeadingList = [];
 </script>
 
-<svelte:head>
-  <title>OSINTer - {article.title}</title>
-  <meta property="og:title" content="OSINTer - {article.title}" />
-  <meta property="og:description" content={article.description} />
-  <meta property="og:image" content={article.image_url} />
-  <meta property="og:url" content="https://osinter.dk/article/{article.id}" />
-  <meta property="og:type" content="article" />
-</svelte:head>
-
 {#key data.article}
   <Similar article={data.article} />
 {/key}
