@@ -18,8 +18,6 @@
     flex flex-col
     overflow-y-auto
 
-    rounded-xl
-    border border-tertiary-500
     bg-surface-100 dark:bg-surface-800
   "
   style="max-height: min(90vh, 40rem)"

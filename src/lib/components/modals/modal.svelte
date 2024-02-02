@@ -5,6 +5,7 @@
   let classes: string = "";
   export { classes as class };
   export let style = "";
+  export let border = true;
 
   const resetModal = () => modalState.remove();
 </script>
@@ -14,18 +15,9 @@
   on:keydown={resetModal}
   transition:fade={{ duration: 200 }}
   class="
-    z-50
-
-    absolute
-
-    h-screen
-    w-screen
-
-    flex
-    flex-col
-    items-center
-    justify-center
-
+    z-50 absolute
+    h-screen w-screen
+    flex flex-col items-center justify-center
     bg-black/60
   "
 >
@@ -38,6 +30,8 @@
       overflow-auto
       cursor-auto
       {classes}
+
+      {border ? 'rounded-xl border border-tertiary-500' : ''}
     "
     {style}
   >

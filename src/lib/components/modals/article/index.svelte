@@ -105,7 +105,10 @@
   }}
 />
 
-<Modal class="w-[80vw] h-[90vh] bg-surface-200 dark:bg-surface-700">
+<Modal
+  border={false}
+  class="w-[80vw] h-[90vh] bg-surface-200 dark:bg-surface-700"
+>
   {#key article}
     <main class="w-full h-full overflow-y-auto">
       <article
