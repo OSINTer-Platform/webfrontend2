@@ -4,6 +4,7 @@
   import Chart from "$com/charts/linechart/index.svelte";
 
   import { searchInCluster } from "$lib/common/filter";
+  import { goto } from "$app/navigation";
 
   import type { Cluster } from "$shared/types/api";
 
@@ -34,8 +35,8 @@
       : clustersWithDate;
 
   $: lines = processedClusters.map((c) => ({
+    id: c.id,
     title: c.title,
-    href: `/topic/${encodeURIComponent(c.id)}`,
     points: c.dating.map((d, i) => ({ x: d, y: i + 1 })),
   }));
 </script>
@@ -46,4 +47,9 @@
   {customXAxisScale}
   containerClass="w-full h-[30rem] "
   yAxisText="↑ Documents per cluster"
+  on:click={(e) => {
+    if (e) {
+      goto(`/topic/${encodeURIComponent(e.detail.id)}`);
+    }
+  }}
 />

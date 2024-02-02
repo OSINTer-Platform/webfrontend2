@@ -1,8 +1,8 @@
 import * as d3 from "d3";
 
 export type Line = {
+  id: string;
   title: string;
-  href?: string;
   points: Array<{
     x: number;
     y: number;

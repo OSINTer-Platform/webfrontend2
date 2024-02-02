@@ -42,6 +42,7 @@
     {hoverLinePrecision}
     {containerClass}
     {yAxisText}
+    on:click
   >
     <slot />
   </Chart>

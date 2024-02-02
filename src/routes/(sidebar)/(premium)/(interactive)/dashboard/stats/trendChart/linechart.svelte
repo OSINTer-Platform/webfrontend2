@@ -6,6 +6,8 @@
 
   import type { Trend } from "./common";
   import type { Writable } from "svelte/store";
+  import { modalState } from "$shared/state/modals";
+  import { getBaseArticles } from "$lib/common/elasticsearch/search";
 
   export let trends: Trend[];
   export let startDate: Date;
@@ -27,12 +29,25 @@
         ];
 
   $: lines = trends.map((trend) => ({
+    id: trend.name,
     title: trend.name,
-    href: `/feed/search?sort_by=publish_date&highlight=true&search_term=${encodeURIComponent(
-      `"${trend.name}"`
-    )}`,
     points: getTrendPoints(trend.trend, xDomain),
   }));
+
+  function showListModal(e: CustomEvent<{ id: string }>) {
+    modalState.append({
+      modalType: "article-list",
+      modalContent: {
+        articles: getBaseArticles({
+          limit: 0,
+          sort_by: "publish_date",
+          sort_order: "desc",
+          highlight: true,
+          search_term: `"${e.detail.id}"`,
+        }),
+      },
+    });
+  }
 </script>
 
 <TagLine {keywords} bind:hoverText />
@@ -43,4 +58,5 @@
   {customXAxisScale}
   {xDomain}
   containerClass="h-full -ml-4"
+  on:click={showListModal}
 />

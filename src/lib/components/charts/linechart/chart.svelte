@@ -2,9 +2,8 @@
   import { getPathPoints, type Point, type Line } from "./data";
 
   import * as d3 from "d3";
-  import { afterUpdate, onMount } from "svelte";
+  import { afterUpdate, onMount, createEventDispatcher } from "svelte";
   import { drawLines as drawCanvas } from "./canvas";
-  import { goto } from "$app/navigation";
 
   export let lines: Line[];
   export let hoveredLines: string[] = [];
@@ -21,6 +20,8 @@
   export let hoverLinePrecision = 50;
   export let containerClass = "";
   export let yAxisText = "";
+
+  const dispatch = createEventDispatcher<{ click: Line }>();
 
   let svg: SVGElement;
   let tipSvg: SVGElement; // Used for displaying tooltips
@@ -66,9 +67,9 @@
   ) {
     const processed = lines
       .filter((line) => line.points.length > 0)
-      .map(({ title, href, points }) => ({
+      .map(({ id, title, points }) => ({
+        id,
         title,
-        href,
         points: points.map(({ x, y }) => ({
           x: scaleX(x),
           y: scaleY(y),
@@ -142,8 +143,7 @@
   });
 
   $: d3.select(tipSvg).on("click", () => {
-    const href = pointer?.line.href;
-    if (href) goto(href);
+    dispatch("click", pointer?.line);
   });
 
   afterUpdate(() => {
