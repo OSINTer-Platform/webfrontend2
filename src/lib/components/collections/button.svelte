@@ -44,7 +44,7 @@
     on:mousedown|stopPropagation|preventDefault
     class="
 		hidden absolute z-20
-    p-2
+    p-2 max-w-md
 
 		bg-surface-100 dark:bg-surface-800
 		border border-tertiary-500
