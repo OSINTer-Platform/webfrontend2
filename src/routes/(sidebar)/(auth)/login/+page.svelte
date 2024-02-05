@@ -36,7 +36,7 @@
 </header>
 
 <form method="post" class="w-full" use:enhance>
-  <div class="input mb-2">
+  <div class="input mb-6">
     <input
       id="username"
       name="username"
@@ -48,7 +48,7 @@
     <label for="username" class="input">Username</label>
   </div>
 
-  <div class="input mb-2">
+  <div class="input mb-3">
     <input
       id="password"
       name="password"

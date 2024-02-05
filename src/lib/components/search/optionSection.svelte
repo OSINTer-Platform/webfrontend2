@@ -29,6 +29,6 @@
   <Fa icon={faCircleQuestion} class="text-tertiary-700" />
 </h2>
 
-<section class="mb-4">
+<section class="my-6 flex flex-col gap-4">
   <slot />
 </section>
