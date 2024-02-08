@@ -1,11 +1,12 @@
 import { PUBLIC_API_BASE } from "$env/static/public";
-import { updatable } from "$lib/common/customStores";
+import { cookieStore, updatable } from "$lib/common/customStores";
 import { config } from "$shared/config";
 import type { MLAvailability } from "$shared/types/api";
+import type { ArticleListRender } from "$shared/types/internal";
 import type { Collection, User } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
 
-export const load: LayoutLoad = async ({ fetch }) => {
+export const load: LayoutLoad = async ({ fetch, data }) => {
   const getUserObject = async (): Promise<User | null> => {
     const r = await fetch(`${PUBLIC_API_BASE}/auth/status`);
     return r.ok ? r.json() : null;
@@ -72,6 +73,13 @@ export const load: LayoutLoad = async ({ fetch }) => {
         "Helping companies, organisations and individuals tackle the cyber-threats of tomorrow",
       image: config.images.fullLogo,
       type: "website",
+    },
+    settings: {
+      darkMode: cookieStore("settings-darkMode", data.cookies.darkMode ?? true),
+      listRenderMode: cookieStore<ArticleListRender>(
+        "settings-listRenderMode",
+        data.cookies.listRenderMode ?? "large"
+      ),
     },
   };
 };

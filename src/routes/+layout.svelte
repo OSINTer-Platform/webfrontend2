@@ -7,7 +7,6 @@
   import Modals from "$com/modals/all.svelte";
   import { ProgressBar } from "@prgm/sveltekit-progress-bar";
 
-  import { darkMode } from "$state/state";
   import { modalState } from "$state/modals";
 
   import { init as initApm } from "@elastic/apm-rum";
@@ -16,6 +15,8 @@
   import { afterNavigate } from "$app/navigation";
 
   export let data: LayoutData;
+
+  $: darkMode = $page.data.settings.darkMode;
 
   if ("PUBLIC_APM_ENV" in env && "PUBLIC_APM_URL" in env) {
     initApm({

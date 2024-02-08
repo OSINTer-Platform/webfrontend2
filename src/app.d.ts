@@ -4,6 +4,8 @@ import type { User } from "$shared/types/userItems";
 import type { Updatable } from "$lib/common/customStores";
 import type { MLAvailability } from "$shared/types/api";
 import type { Collection } from "$shared/types/userItems";
+import type { Writable } from "svelte/store";
+import type { ArticleListRender } from "$shared/types/internal";
 
 // for information about these interfaces
 declare global {
@@ -31,6 +33,10 @@ declare global {
         description?: string;
         image?: string;
         type?: string;
+      };
+      settings: {
+        darkMode: Writable<boolean>;
+        listRenderMode: Writable<ArticleListRender>;
       };
     }
     // interface Platform {}

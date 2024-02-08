@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { articleListRender } from "$state/state";
+  import { page } from "$app/stores";
   import type { ArticleBase } from "$shared/types/api";
   import List from "./main.svelte";
 
@@ -9,6 +9,8 @@
   export let tintReadArticles: boolean;
   export let showHighlights: boolean;
   export let listLenLimit = 100;
+
+  $: articleListRender = $page.data.settings.listRenderMode;
 
   let defaultMessage: {
     title: string;

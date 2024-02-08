@@ -4,7 +4,8 @@
 
   import * as d3 from "d3";
   import { afterUpdate, onDestroy, onMount } from "svelte";
-  import { darkMode, listElementCount } from "$state/state";
+  import { page } from "$app/stores";
+  import { listElementCount } from "$state/state";
   import {
     clearAndScale,
     drawArticlePoints,
@@ -33,6 +34,8 @@
   } from "./state";
 
   import { handlePointerModeChange, scalePointerPosition } from "./events";
+
+  $: darkMode = $page.data.settings.darkMode;
 
   const storeListeners: Array<() => void> = [];
 

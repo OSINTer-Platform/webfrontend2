@@ -10,15 +10,10 @@
     ArticleListRender,
     HeaderModOptions,
   } from "$shared/types/internal";
-  import { writable, type Writable } from "svelte/store";
+  import type { Writable } from "svelte/store";
 
   import { hasHighlights } from "$lib/common/filter";
-  import {
-    articleListRender,
-    showRead,
-    showHighlights,
-    listElementCount,
-  } from "$state/state";
+  import { showRead, showHighlights, listElementCount } from "$state/state";
   import { page } from "$app/stores";
   import {
     faEye,
@@ -38,10 +33,10 @@
     store: Writable<string>;
     options: { name: string; value: ArticleListRender }[];
   } = {
-    store: articleListRender,
+    store: $page.data.settings.listRenderMode,
     options: ListRenderModes,
   };
-  $: tabStore = tabs?.store ?? writable("");
+  $: tabStore = tabs?.store ?? $page.data.settings.listRenderMode;
 
   export let searchValue: string = "";
 
