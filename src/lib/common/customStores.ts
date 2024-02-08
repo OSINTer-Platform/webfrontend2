@@ -1,4 +1,5 @@
-import { get, writable, type Writable } from "svelte/store";
+import { browser } from "$app/environment";
+import { get, writable, type Updater, type Writable } from "svelte/store";
 
 export interface ListStore<T> extends Writable<T[]> {
   remove: () => T | undefined;
@@ -115,5 +116,88 @@ export function writableWithDefault<ContentType>(
     reset,
     afterReset,
     contentDefault,
+  };
+}
+
+export type CookieOptions = {
+  sameSite: string;
+  secure: boolean;
+  path: string;
+  expires: Date;
+};
+
+export function cookieStore<T>(
+  key: string,
+  defaultVal: T,
+  options: Partial<CookieOptions> = {}
+): Writable<T> {
+  const cookieOptions: CookieOptions = {
+    sameSite: "strict",
+    secure: true,
+    path: "/",
+    expires: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+    ...options,
+  };
+
+  // Use encodeURIComponent to encode " as some libraries will remove those when parsing cookies
+  const serialize = (content: T): string =>
+    encodeURIComponent(JSON.stringify(content));
+  const deserialize = (content: string): T =>
+    JSON.parse(decodeURIComponent(content));
+
+  function getInitialVal(key: string, defaultVal: T) {
+    if (!browser) return defaultVal;
+
+    const cookie = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith(`${key}=`))
+      ?.split("=")[1];
+
+    if (cookie) {
+      try {
+        return deserialize(cookie);
+      } catch {
+        return defaultVal;
+      }
+    } else {
+      return defaultVal;
+    }
+  }
+
+  function setCookie(key: string, value: T) {
+    if (!browser) return;
+
+    let cookieString = `${key}=${serialize(
+      value
+    )}; Expires=${cookieOptions.expires.toString()}; SameSite=${
+      cookieOptions.sameSite
+    }; Path=${cookieOptions.path}`;
+    if (cookieOptions.secure) {
+      cookieString += "; Secure";
+    }
+
+    document.cookie = cookieString;
+  }
+
+  const initialVal = getInitialVal(key, defaultVal);
+  const internal = writable(initialVal);
+
+  function set(value: T) {
+    internal.set(value);
+    setCookie(key, value);
+  }
+
+  function update(update_fn: Updater<T>) {
+    internal.update((val) => {
+      const newVal = update_fn(val);
+      setCookie(key, newVal);
+      return newVal;
+    });
+  }
+
+  return {
+    subscribe: internal.subscribe,
+    set: set,
+    update: update,
   };
 }
