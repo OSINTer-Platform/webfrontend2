@@ -1,6 +1,7 @@
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { cookieStore, updatable } from "$lib/common/customStores";
 import { config } from "$shared/config";
+import { writable } from "svelte/store";
 import type { MLAvailability } from "$shared/types/api";
 import type { ArticleListRender } from "$shared/types/internal";
 import type { Collection, User } from "$shared/types/userItems";
@@ -76,6 +77,7 @@ export const load: LayoutLoad = async ({ fetch, data }) => {
     },
     settings: {
       darkMode: cookieStore("settings-darkMode", data.cookies.darkMode ?? true),
+      renderExternal: writable(false),
       listRenderMode: cookieStore<ArticleListRender>(
         "settings-listRenderMode",
         data.cookies.listRenderMode ?? "large"

@@ -82,7 +82,7 @@
   {#each [1, 2, 3] as _}
     {#each similarArticles as article}
       <ModalLink
-        articleId={article.id}
+        {article}
         class="shrink-0 h-40 w-52 sm:w-72 sm:aspect-video absolute-grid"
         title={article.description}
         articleList={similarArticles}

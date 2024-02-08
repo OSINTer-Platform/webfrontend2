@@ -42,7 +42,7 @@
 </script>
 
 <Link
-  articleId={article.id}
+  {article}
   {articleList}
   class="
   flex

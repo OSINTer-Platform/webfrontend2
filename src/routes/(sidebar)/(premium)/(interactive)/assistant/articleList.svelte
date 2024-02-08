@@ -15,8 +15,8 @@
     {classes}
   "
 >
-  {#each articles as { id, title, description } (id)}
-    <ModalLink articleId={id} articleList={articles} title={description}>
+  {#each articles as article (article.id)}
+    <ModalLink {article} articleList={articles} title={article.description}>
       <li
         class="
           w-full p-4
@@ -27,7 +27,7 @@
           hover:bg-primary-400/20
         "
       >
-        {title}
+        {article.title}
       </li>
     </ModalLink>
   {/each}

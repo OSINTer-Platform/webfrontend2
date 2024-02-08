@@ -37,6 +37,7 @@ declare global {
       settings: {
         darkMode: Writable<boolean>;
         listRenderMode: Writable<ArticleListRender>;
+        renderExternal: Writable<boolean>;
       };
     }
     // interface Platform {}

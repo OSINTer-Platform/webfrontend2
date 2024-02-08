@@ -64,7 +64,7 @@
 >
   {#each articleList as article}
     <ModalLink
-      articleId={article.id}
+      {article}
       articleList={articles}
       class="
       p-4

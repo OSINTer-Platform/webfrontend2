@@ -55,6 +55,7 @@
           include_fields: [
             "title",
             "description",
+            "url",
             "profile",
             "source",
             "ml",

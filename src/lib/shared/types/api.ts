@@ -50,6 +50,7 @@ export interface FullArticle extends ArticleBase {
 export interface MLArticle extends Article {
   title: string;
   description: string;
+  url: string;
   source: string;
   profile: string;
   publish_date: string;

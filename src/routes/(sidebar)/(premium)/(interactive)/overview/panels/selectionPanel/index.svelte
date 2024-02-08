@@ -114,7 +114,7 @@
         title={article.description}
       >
         <ModalLink
-          articleId={article.id}
+          {article}
           articleList={$searchedSelectedArticles}
           class="
               block py-2 truncate

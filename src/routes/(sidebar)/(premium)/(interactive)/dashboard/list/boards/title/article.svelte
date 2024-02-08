@@ -22,7 +22,7 @@
 
 <hr class="text-tertiary-500 dark:text-surface-500 my-3" />
 
-<Link articleId={article.id} {articleList}>
+<Link {article} {articleList}>
   <article
     class="
       relative

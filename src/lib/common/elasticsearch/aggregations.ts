@@ -69,6 +69,7 @@ export async function getDashboardMetrics(
   };
   articles: Array<{
     title: string;
+    url: string;
     id: string;
     read_times: number;
   }>;
@@ -78,7 +79,7 @@ export async function getDashboardMetrics(
   // For most commonly read articles
   request.addParameter("limit", metricCount);
   request.addParameter("sort_by", "read_times");
-  request.addParameter("include_fields", ["title", "read_times"]);
+  request.addParameter("include_fields", ["title", "read_times", "url"]);
 
   request.addParameter("first_date", startDate.toISOString());
   request.addParameter("last_date", endDate.toISOString());

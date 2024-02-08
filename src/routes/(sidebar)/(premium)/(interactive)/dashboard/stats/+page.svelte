@@ -14,6 +14,9 @@
   import { modalState } from "$shared/state/modals";
   import { getBaseArticles } from "$lib/common/elasticsearch/search";
   import { spawnArticleModal } from "$lib/common/state";
+  import { page } from "$app/stores";
+
+  $: renderExternal = $page.data.settings.renderExternal;
 
   export let data: PageData;
 
@@ -84,20 +87,21 @@
       }));
 
   const convertArticles = (
-    articles: { title: string; id: string; read_times: number }[]
+    articles: { title: string; id: string; read_times: number; url: string }[],
+    external: boolean
   ) => {
     const max = d3.max(articles, (a) => a.read_times) ?? 0;
     const scale = d3.scaleLinear([0, max], [0, 1]);
 
-    return articles.map(({ title, id, read_times }) => ({
+    return articles.map(({ title, id, read_times, url }) => ({
       title: title,
       description: `${read_times} reads`,
       large: false,
       score: scale(read_times),
       href: `/article/${id}`,
-      action: () => {
-        spawnArticleModal(id, articles);
-      },
+      action: external
+        ? () => window.open(url, "_blank")
+        : () => spawnArticleModal(id, articles),
     }));
   };
 
@@ -116,7 +120,7 @@
     },
     {
       title: "Most Read Articles",
-      items: convertArticles(data.metrics.articles),
+      items: convertArticles(data.metrics.articles, $renderExternal),
     },
   ];
 </script>
