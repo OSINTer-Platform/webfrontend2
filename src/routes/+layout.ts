@@ -9,7 +9,7 @@ import type { LayoutLoad } from "./$types";
 
 export const load: LayoutLoad = async ({ fetch, data }) => {
   const getUserObject = async (): Promise<User | null> => {
-    const r = await fetch(`${PUBLIC_API_BASE}/auth/status`);
+    const r = await fetch(`${PUBLIC_API_BASE}/my/user/`);
     return r.ok ? r.json() : null;
   };
 
@@ -76,11 +76,16 @@ export const load: LayoutLoad = async ({ fetch, data }) => {
       type: "website",
     },
     settings: {
-      darkMode: cookieStore("settings-darkMode", data.cookies.darkMode ?? true),
-      renderExternal: writable(false),
+      darkMode: cookieStore(
+        "settings-darkMode",
+        data.cookies.darkMode ?? user?.settings.dark_mode ?? true
+      ),
+      renderExternal: writable(user?.settings.render_external ?? false),
       listRenderMode: cookieStore<ArticleListRender>(
         "settings-listRenderMode",
-        data.cookies.listRenderMode ?? "large"
+        data.cookies.listRenderMode ??
+          user?.settings.list_render_mode ??
+          "large"
       ),
     },
   };

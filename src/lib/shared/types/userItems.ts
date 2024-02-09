@@ -1,4 +1,5 @@
 import type { SearchQuery } from "./api";
+import type { ArticleListRender } from "./internal";
 
 export interface ItemBase {
   _id: string;
@@ -36,4 +37,10 @@ export interface User {
 
   feeds: Feed[];
   collections: Collection[];
+
+  settings: {
+    dark_mode: boolean;
+    render_external: boolean;
+    list_render_mode: ArticleListRender;
+  };
 }
