@@ -59,6 +59,9 @@ export const load: LayoutLoad = async ({ fetch, data }) => {
     updatable(() => updateCollectionList(user)),
   ]);
 
+  const dateInAnHour = new Date()
+  dateInAnHour.setHours(dateInAnHour.getHours() + 1);
+
   return {
     user: writable(user),
     mlAvailability,
@@ -78,14 +81,16 @@ export const load: LayoutLoad = async ({ fetch, data }) => {
     settings: {
       darkMode: cookieStore(
         "settings-darkMode",
-        data.cookies.darkMode ?? user?.settings.dark_mode ?? true
+        data.cookies.darkMode ?? user?.settings.dark_mode ?? true,
+        { expires: dateInAnHour }
       ),
       renderExternal: writable(user?.settings.render_external ?? false),
       listRenderMode: cookieStore<ArticleListRender>(
         "settings-listRenderMode",
         data.cookies.listRenderMode ??
-          user?.settings.list_render_mode ??
-          "large"
+        user?.settings.list_render_mode ??
+        "large",
+        { expires: dateInAnHour }
       ),
     },
   };
