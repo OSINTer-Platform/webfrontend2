@@ -23,6 +23,7 @@
   let showHighlights: boolean = true;
   let search: string = "";
 
+  $: user = $page.data.user;
   $: articleWithHighlight = hasHighlights(articles);
 </script>
 
@@ -63,9 +64,9 @@
     infoText={`${$listElementCount} articles`}
   />
 
-  {#if articleWithHighlight || $page.data.user}
+  {#if articleWithHighlight || $user}
     <div class="self-center flex gap-2">
-      {#if $page.data.user}
+      {#if $user}
         <Switch
           title="{showRead
             ? 'Show'

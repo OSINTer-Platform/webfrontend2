@@ -11,6 +11,7 @@
   import { PUBLIC_API_BASE } from "$env/static/public";
 
   export let data: LayoutData;
+  $: user = data.user;
 
   let modOptions: Array<HeaderModOptions>;
 
@@ -20,7 +21,7 @@
       icon: faDownload,
       route: `${PUBLIC_API_BASE}/articles/search/export?${data.searchUrl}`,
     },
-    ...(data.user
+    ...($user
       ? [
           {
             title: "Create feed",

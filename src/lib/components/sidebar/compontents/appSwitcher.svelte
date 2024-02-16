@@ -9,6 +9,8 @@
     faArrowRightFromBracket,
     faArrowRightToBracket,
   } from "@fortawesome/free-solid-svg-icons";
+
+  $: user = $page.data.user;
 </script>
 
 <div
@@ -65,7 +67,7 @@
     </ul>
   {/each}
 
-  {#if $page.data.user}
+  {#if $user}
     <form method="POST" action="/logout" class="mt-auto" use:enhance>
       <button
         type="submit"

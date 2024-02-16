@@ -4,12 +4,14 @@
 
   import ListShell from "../listShell.svelte";
 
+  $: user = data.user;
+
   $: emptyMessage =
     data.currentItem.type == "collection"
       ? {
           title: "This is an empty collection",
           description:
-            data.user?._id === data.currentItem.owner
+            $user?._id === data.currentItem.owner
               ? "Add articles by going to feeds, hovering over an article/article image and hover over the star"
               : "The owner of this feed haven't any articles to it",
         }

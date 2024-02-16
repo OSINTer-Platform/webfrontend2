@@ -24,7 +24,7 @@ declare global {
     // interface Locals {}
     interface PageData {
       mlAvailability: MLAvailability;
-      user: User | null;
+      user: Writable<User | null>;
       customSidebar: boolean;
       alreadyRead: Updatable<Collection | null>;
       userCollections: Updatable<{ [key: string]: Collection }>;

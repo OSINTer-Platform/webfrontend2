@@ -60,7 +60,7 @@ export const load: LayoutLoad = async ({ fetch, data }) => {
   ]);
 
   return {
-    user,
+    user: writable(user),
     mlAvailability,
     alreadyRead,
     userCollections,

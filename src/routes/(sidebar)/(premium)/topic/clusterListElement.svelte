@@ -12,6 +12,8 @@
 
   export let cluster: ClusterBase;
 
+  $: user = $page.data.user;
+
   async function createCollection() {
     const r = await fetch(
       `${PUBLIC_API_BASE}/ml/cluster/${encodeURIComponent(cluster.id)}`
@@ -58,7 +60,7 @@
     ]}
   >
     <svelte:fragment slot="actions">
-      {#if $page.data.user}
+      {#if $user}
         <div
           class="
           flex justify-center items-center

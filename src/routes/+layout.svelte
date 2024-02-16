@@ -17,6 +17,7 @@
   export let data: LayoutData;
 
   $: darkMode = $page.data.settings.darkMode;
+  $: user = data.user;
 
   if ("PUBLIC_APM_ENV" in env && "PUBLIC_APM_URL" in env) {
     initApm({
@@ -64,7 +65,7 @@
   <Modals />
   {#if $page.data.topbar ?? true}
     <div class="z-40 relative">
-      <TopBar user={data.user} />
+      <TopBar user={$user} />
     </div>
   {/if}
   <slot />

@@ -37,6 +37,7 @@
     options: ListRenderModes,
   };
   $: tabStore = tabs?.store ?? $page.data.settings.listRenderMode;
+  $: user = $page.data.user;
 
   export let searchValue: string = "";
 
@@ -118,14 +119,14 @@
   {#if tabs}
     <Tabs bind:selected={$tabStore} options={tabs.options}>
       <svelte:fragment slot="end">
-        {#if $page.url.pathname.startsWith("/feed") && ($page.data.user || articleWithHighlight)}
+        {#if $page.url.pathname.startsWith("/feed") && ($user || articleWithHighlight)}
           <div
             class="
             ml-auto flex gap-2
             self-center
           "
           >
-            {#if $page.data.user}
+            {#if $user}
               <Switch
                 title="{$showRead
                   ? 'Show'

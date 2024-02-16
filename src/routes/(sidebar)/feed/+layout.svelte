@@ -15,7 +15,9 @@
 
   let search: boolean;
   $: search = $page.url.pathname.startsWith("/feed/search");
+
+  $: user = data.user;
 </script>
 
-<Sidebar {feeds} {collections} user={data.user} {search} />
+<Sidebar {feeds} {collections} user={$user} {search} />
 <slot />

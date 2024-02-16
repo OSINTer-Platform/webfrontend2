@@ -32,6 +32,8 @@
 
   export let data: LayoutData;
 
+  $: user = data.user;
+
   function isFeed(item: Feed | Collection): item is Feed {
     return item.type == "feed";
   }
@@ -43,13 +45,12 @@
   let modOptions: Array<HeaderModOptions>;
 
   $: itemRemoveable =
-    data.user &&
-    (data.user.feed_ids.includes(data.currentItem._id) ||
-      data.user.collection_ids.includes(data.currentItem._id)) &&
-    removeable(data.user, data.currentItem);
+    $user &&
+    ($user.feed_ids.includes(data.currentItem._id) ||
+      $user.collection_ids.includes(data.currentItem._id)) &&
+    removeable($user, data.currentItem);
 
-  $: itemSubscribeable =
-    !itemRemoveable && removeable(data.user, data.currentItem);
+  $: itemSubscribeable = !itemRemoveable && removeable($user, data.currentItem);
 
   $: modOptions = [
     {
@@ -73,7 +74,7 @@
         }
       },
     },
-    ...(data.currentItem.owner === data.user?._id &&
+    ...(data.currentItem.owner === $user?._id &&
     data.currentItem.type === "collection"
       ? [
           {
@@ -90,8 +91,7 @@
           },
         ]
       : []),
-    ...(data.currentItem.owner === data.user?._id &&
-    data.currentItem.type == "feed"
+    ...(data.currentItem.owner === $user?._id && data.currentItem.type == "feed"
       ? [
           {
             title: `Modify ${data.currentItem.type}`,
@@ -143,7 +143,7 @@
             title: `Sub to ${data.currentItem.type}`,
             icon: faPlus,
             action: async () => {
-              if (!data.user) {
+              if (!$user) {
                 goto(
                   `/login?msg=${encodeURIComponent(
                     "Login down below for the ability to subscribe to and personalize feeds"
@@ -168,7 +168,7 @@
   let ownsFeed: boolean;
   let title: string = data.currentItem.name;
 
-  $: ownsFeed = data.currentItem.owner === data.user?._id;
+  $: ownsFeed = data.currentItem.owner === $user?._id;
 
   const setTitle = (newVal: string) => (title = newVal);
 

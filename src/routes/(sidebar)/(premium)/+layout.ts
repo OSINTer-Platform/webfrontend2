@@ -1,9 +1,11 @@
 import { error } from "@sveltejs/kit";
 import type { LayoutLoad } from "./$types";
 import type { MLAvailability } from "$shared/types/api";
+import { get } from "svelte/store";
 
 export const load: LayoutLoad = async ({ parent, url }) => {
   const { user, mlAvailability } = await parent();
+  const userContent = get(user);
 
   type mlTypes = keyof MLAvailability;
 
@@ -26,7 +28,7 @@ export const load: LayoutLoad = async ({ parent, url }) => {
       });
   }
 
-  if (!user || !(user.premium > 0))
+  if (!userContent || !(userContent.premium > 0))
     throw error(403, {
       message: "",
       title: "This page is reserved for beta-testers and B2B partners.",

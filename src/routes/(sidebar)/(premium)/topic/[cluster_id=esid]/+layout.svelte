@@ -13,11 +13,12 @@
   import { faStar } from "@fortawesome/free-regular-svg-icons";
 
   export let data: LayoutData;
+  $: user = data.user;
 
   let modOptions: Array<HeaderModOptions>;
 
   $: modOptions = [
-    ...(data.user
+    ...($user
       ? [
           {
             title: "Convert to collection",

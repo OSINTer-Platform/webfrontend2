@@ -21,7 +21,8 @@
   export let articleList: Array<{ id: string }>;
   export let topModal: boolean;
 
-  $: premium = $page.data.user && $page.data.user.premium > 0;
+  $: user = $page.data.user;
+  $: premium = $user && $user.premium > 0;
   let similarArticles: Promise<ArticleBase[]> | null;
   $: similarArticles = premium ? getSimilar(article.id) : null;
 

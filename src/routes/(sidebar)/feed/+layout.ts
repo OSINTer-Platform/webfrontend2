@@ -4,6 +4,7 @@ import type { ArticleCategories } from "$shared/types/api";
 
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { error } from "@sveltejs/kit";
+import { get } from "svelte/store";
 
 export const load = (async ({ parent, fetch }) => {
   const fetchCategories = async (): Promise<ArticleCategories> => {
@@ -60,7 +61,7 @@ export const load = (async ({ parent, fetch }) => {
   };
 
   const parentData = await parent();
-  const user = parentData.user;
+  const user = get(parentData.user);
 
   if (user) {
     const [feeds, collections, sourceCategories] = await Promise.all([
