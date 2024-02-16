@@ -4,6 +4,7 @@
   import Search from "./search.svelte";
   import AddCollection from "./addCollection.svelte";
   import ArticleList from "./articleList/index.svelte";
+  import UserSettings from "./userSettings/index.svelte";
 </script>
 
 {#each $modalState as modal, i (modal.id)}
@@ -25,5 +26,7 @@
     <AddCollection article={modal.modalContent.article} />
   {:else if modal.modalType == "article-list"}
     <ArticleList articles={modal.modalContent.articles} />
+  {:else if modal.modalType == "user-settings"}
+    <UserSettings {topModal} />
   {/if}
 {/each}

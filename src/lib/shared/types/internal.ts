@@ -73,4 +73,8 @@ export type Modal = (
         articles: ArticleBase[] | Promise<ArticleBase[]>;
       };
     }
+  | {
+      modalType: "user-settings";
+      modalContent: null;
+    }
 ) & { id: string };
