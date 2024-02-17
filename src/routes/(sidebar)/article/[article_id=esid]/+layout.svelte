@@ -117,6 +117,14 @@
   ];
 </script>
 
+<svelte:head>
+  <meta property="article:published_time" content={data.article.publish_date} />
+  <meta
+    property="article:author"
+    content={data.article.author ?? data.article.source}
+  />
+</svelte:head>
+
 <aside
   class="
 	bg-surface-200
