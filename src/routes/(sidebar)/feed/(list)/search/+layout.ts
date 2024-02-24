@@ -8,5 +8,12 @@ export const load = (async ({ url, parent }) => {
 
   if (!parentData.mlAvailability?.elser)
     searchQuery.semantic_search = undefined;
-  return { currentSearch: searchQuery, searchUrl: toUrl(searchQuery) };
+  return {
+    currentSearch: searchQuery,
+    searchUrl: toUrl(searchQuery),
+    meta: {
+      title: "Custom search | OSINTer",
+      description: "See articles matching your custom search",
+    },
+  };
 }) satisfies LayoutLoad;

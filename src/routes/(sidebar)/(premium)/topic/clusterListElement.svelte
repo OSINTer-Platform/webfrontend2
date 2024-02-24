@@ -8,8 +8,11 @@
   import type { Cluster, ClusterBase } from "$shared/types/api";
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { page } from "$app/stores";
+  import { faRectangleList } from "@fortawesome/free-solid-svg-icons";
 
   export let cluster: ClusterBase;
+
+  $: user = $page.data.user;
 
   async function createCollection() {
     const r = await fetch(
@@ -38,18 +41,26 @@
 
 <a data-sveltekit-preload-data="off" href={`/topic/${cluster.id}`}>
   <Large
-    title={cluster.title}
-    description={cluster.description}
+    title={{ text: cluster.title, markdown: false }}
+    description={{ text: cluster.description, markdown: false }}
     leftLegend={{ text: `Nr ${cluster.nr}`, hover: "" }}
     rightLegend={{
       text: `${cluster.document_count} articles`,
       hover: "",
     }}
     tags={cluster.keywords}
-    summary={cluster.summary}
+    textExpands={[
+      {
+        title: "cluster summary",
+        icon: faRectangleList,
+        content: cluster.summary,
+        expanded: false,
+        markdown: false,
+      },
+    ]}
   >
     <svelte:fragment slot="actions">
-      {#if $page.data.user}
+      {#if $user}
         <div
           class="
           flex justify-center items-center

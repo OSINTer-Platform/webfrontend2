@@ -2,13 +2,15 @@
   import { navItems } from "$shared/nav";
 
   import { page } from "$app/stores";
-  import { enhance } from "$app/forms";
 
   import Fa from "svelte-fa";
   import {
-    faArrowRightFromBracket,
     faArrowRightToBracket,
+    faGear,
   } from "@fortawesome/free-solid-svg-icons";
+  import { modalState } from "$shared/state/modals";
+
+  $: user = $page.data.user;
 </script>
 
 <div
@@ -65,21 +67,22 @@
     </ul>
   {/each}
 
-  {#if $page.data.user}
-    <form method="POST" action="/logout" class="mt-auto" use:enhance>
+  {#if $user}
+    <div class="mt-auto" title="Change user settings">
       <button
-        type="submit"
+        on:click={() =>
+          modalState.append({ modalType: "user-settings", modalContent: null })}
         class="
-        btn
-        flex flex-col justify-center
-        w-full aspect-square
-        border-t border-surface-200 dark:border-surface-500
+          btn
+          flex flex-col justify-center
+          w-full aspect-square
+          border-t border-surface-200 dark:border-surface-500
       "
       >
-        <Fa icon={faArrowRightFromBracket} class="sm:text-2xl -mb-2" />
-        <span class="sm:font-bold text-xs">Logout</span>
+        <Fa icon={faGear} class="sm:text-2xl -mb-2" />
+        <span class="sm:font-bold text-xs">Settings</span>
       </button>
-    </form>
+    </div>
   {:else}
     <a
       data-sveltekit-preload-data="tap"

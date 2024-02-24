@@ -2,6 +2,7 @@
   import Search from "$inputs/search.svelte";
   import Switch from "$inputs/switch.svelte";
 
+  import { listElementCount } from "$shared/state/state";
   import { controlParams } from "../../state";
   const { dotSize, articleSearch, enableSearch } = controlParams;
 </script>
@@ -108,6 +109,7 @@
     placeholder={"Search in articles"}
     bind:value={$articleSearch}
     containerClass={"mt-4 mb-2"}
+    infoText={`${$listElementCount} articles`}
   />
 
   <!--

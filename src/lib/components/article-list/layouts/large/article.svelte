@@ -1,31 +1,75 @@
 <script lang="ts">
-  import Fa from "svelte-fa";
-
-  import Link from "../../../modalLink.svelte";
-  import CollectionList from "../../components/collectionList.svelte";
-
   import { getTimespan } from "$lib/common/math";
-  import { faStar } from "@fortawesome/free-regular-svg-icons";
+  import { eclipseConcat } from "$lib/common/strings";
 
   import type { ArticleBase } from "$shared/types/api";
-  import type { Collection } from "$shared/types/userItems";
-  import type { Writable } from "svelte/store";
-  import Large from "$com/utils/listElements/large.svelte";
+  import {
+    faHighlighter,
+    faRectangleList,
+    type IconDefinition,
+  } from "@fortawesome/free-solid-svg-icons";
 
-  export let userCollections: Writable<{ [key: string]: Collection }>;
+  import Large from "$com/utils/listElements/large.svelte";
+  import CollectionOverlay from "$com/collections/buttonOverlay.svelte";
+  import Link from "$com/modalLink.svelte";
+
   export let article: ArticleBase;
   export let articleList: ArticleBase[];
   export let readArticles: string[];
+  export let showHighlights: boolean;
 
   $: read = readArticles.includes(article.id);
+
+  $: title =
+    article.highlights?.title && showHighlights
+      ? { text: eclipseConcat(article.highlights.title), markdown: true }
+      : { text: article.title, markdown: false };
+
+  $: description =
+    article.highlights?.description && showHighlights
+      ? { text: eclipseConcat(article.highlights.description), markdown: true }
+      : { text: article.description, markdown: false };
+
+  let textExpands: {
+    title: string;
+    icon: IconDefinition;
+    content: string;
+    expanded: boolean;
+    markdown: boolean;
+  }[];
+
+  $: textExpands = [
+    ...(article.highlights?.content && article.highlights.content.length > 0
+      ? [
+          {
+            title: "highlights",
+            icon: faHighlighter,
+            content: eclipseConcat(article.highlights.content),
+            expanded: false,
+            markdown: true,
+          },
+        ]
+      : []),
+    ...(article.summary && article.summary.length > 0
+      ? [
+          {
+            title: "summary",
+            icon: faRectangleList,
+            content: article.summary,
+            expanded: false,
+            markdown: false,
+          },
+        ]
+      : []),
+  ];
 </script>
 
 <hr class="text-tertiary-500 dark:text-surface-500" />
 
-<Link articleId={article.id} {articleList}>
+<Link {article} {articleList}>
   <Large
-    title={article.title}
-    description={article.description}
+    {title}
+    {description}
     leftLegend={{ text: article.source, hover: `Profile: ${article.profile}` }}
     rightLegend={{
       text: getTimespan(article.publish_date),
@@ -33,40 +77,11 @@
     }}
     imageUrl={article.image_url}
     tags={article.tags.automatic}
-    summary={article.summary ?? ""}
+    {textExpands}
     {read}
   >
     <svelte:fragment slot="actions">
-      {#if Object.values($userCollections).length > 0}
-        <div
-          class="
-          flex justify-center items-center
-          h-full w-full
-          bg-black/75 opacity-0
-          rounded-md
-
-          transition-opacity
-
-          [&:focus-within>button>svg]:text-primary-500
-        "
-        >
-          <CollectionList
-            {userCollections}
-            {article}
-            class="top-10"
-            btnClass="pb-2"
-          >
-            <Fa
-              icon={faStar}
-              class="
-              hover:text-primary-500
-              transition-colors
-              text-white/90 text-4xl
-            "
-            />
-          </CollectionList>
-        </div>
-      {/if}
+      <CollectionOverlay {article} />
     </svelte:fragment>
   </Large>
 </Link>

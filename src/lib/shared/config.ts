@@ -1,5 +1,5 @@
 import type { SearchQuery } from "./types/api";
-import type { Inbuilt } from "./types/internal";
+import type { ArticleListRender, Inbuilt } from "./types/internal";
 import { PUBLIC_API_BASE } from "$env/static/public";
 
 export const contactEmail = "contact@osinter.dk";
@@ -13,6 +13,11 @@ export const config: {
     fullLogo: "https://osinter.dk/fullLogo.png",
   },
 };
+
+export const ListRenderModes: { name: string; value: ArticleListRender }[] = [
+  { name: "Large", value: "large" },
+  { name: "Title-view", value: "title" },
+];
 
 const daySeconds = 24 * 60 * 60 * 1000;
 type Intervals = "day" | "week" | "month";
@@ -57,14 +62,14 @@ export const inbuiltFeeds: { [key: string]: Inbuilt } = {
 };
 
 export const getStandardSearch = (): SearchQuery => ({
-  limit: 100,
+  limit: 200,
 
   sort_by: "publish_date",
   sort_order: "desc",
 
   search_term: "",
   semantic_search: "",
-  highlight: false,
+  highlight: true,
 
   first_date: "",
   last_date: "",

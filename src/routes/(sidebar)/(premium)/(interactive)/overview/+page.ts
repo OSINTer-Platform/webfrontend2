@@ -25,8 +25,18 @@ export const load: PageLoad = async ({ fetch }) => {
     }
   };
 
+  const [sourceCategories, clusters] = await Promise.all([
+    fetchCategories(),
+    getClusters(),
+  ]);
+
   return {
-    sourceCategories: fetchCategories(),
-    clusters: getClusters(),
+    sourceCategories,
+    clusters,
+    meta: {
+      title: "Overview | OSINTer",
+      description:
+        "Use our map-like article-mapping to do a deep-dive on specific topics",
+    },
   };
 };

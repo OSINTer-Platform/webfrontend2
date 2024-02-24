@@ -35,5 +35,10 @@ export const load = (async () => {
     months,
     monthLookup,
     currentMonth: writable(months[0].id),
+    meta: {
+      title: "Previous months | OSINTer",
+      description:
+        "Go back in time using OSINTer and get articles from specific months",
+    },
   };
 }) satisfies LayoutLoad;

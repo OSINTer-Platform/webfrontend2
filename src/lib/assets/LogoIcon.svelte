@@ -1,5 +1,6 @@
 <script lang="ts">
   let classes = "w-10";
+  export let mode: "dark" | "light" | null = null;
 
   export { classes as class };
 </script>
@@ -8,7 +9,10 @@
   x="0px"
   y="0px"
   viewBox="0 0 108.90153 113.79986"
-  class="{classes} dark:hidden"
+  class="
+    {classes}
+    {mode === 'light' ? '' : mode === 'dark' ? 'hidden' : 'dark:hidden'}
+  "
 >
   <style type="text/css" id="style124">
     .st0 {
@@ -30,7 +34,10 @@
   x="0px"
   y="0px"
   viewBox="0 0 108.90153 113.79986"
-  class="{classes} hidden dark:block"
+  class="
+    {classes}
+    {mode === 'light' ? 'hidden' : mode === 'dark' ? '' : 'hidden dark:block'}
+  "
 >
   <style type="text/css" id="style124">
     .st0 {

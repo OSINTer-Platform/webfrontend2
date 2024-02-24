@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { articleListRender } from "$state/state";
+  import { page } from "$app/stores";
   import type { ArticleBase } from "$shared/types/api";
   import List from "./main.svelte";
 
@@ -7,6 +7,10 @@
   let classes: string = "";
   export { classes as class };
   export let tintReadArticles: boolean;
+  export let showHighlights: boolean;
+  export let listLenLimit = 100;
+
+  $: articleListRender = $page.data.settings.listRenderMode;
 
   let defaultMessage: {
     title: string;
@@ -34,7 +38,13 @@
 >
   {#if articles.length > 0}
     <slot name="top" />
-    <List {articles} layout={$articleListRender} {tintReadArticles} />
+    <List
+      {articles}
+      layout={$articleListRender}
+      {showHighlights}
+      {tintReadArticles}
+      {listLenLimit}
+    />
     <slot name="bottom" />
   {:else}
     <div

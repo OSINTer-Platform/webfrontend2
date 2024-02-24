@@ -1,16 +1,16 @@
 import type { LayoutLoad } from "./$types";
 
-import type { Article } from "$shared/types/api";
+import type { FullArticle } from "$shared/types/api";
 
 import { get } from "svelte/store";
 import { fullArticles } from "$state/storedArticles";
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { error } from "@sveltejs/kit";
 
-export const load = (({ params, fetch }) => {
+export const load = (async ({ params, fetch }) => {
   const fullArticleList = get(fullArticles);
 
-  const fetchContent = async (): Promise<Article> => {
+  const fetchContent = async (): Promise<FullArticle> => {
     if (params.article_id in fullArticleList) {
       return fullArticleList[params.article_id];
     }
@@ -40,7 +40,15 @@ export const load = (({ params, fetch }) => {
     return article;
   };
 
+  const article = await fetchContent();
+
   return {
-    article: fetchContent(),
+    article,
+    meta: {
+      title: `${article.title} | OSINTer`,
+      description: article.description,
+      image: article.image_url,
+      type: "article",
+    },
   };
 }) satisfies LayoutLoad;

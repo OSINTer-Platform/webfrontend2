@@ -1,19 +1,17 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import type { MLArticle } from "$shared/types/api";
+  import type { MLArticle, ArticleML } from "$shared/types/api";
   import type { Readable } from "svelte/store";
 
   import { derived, readable, writable } from "svelte/store";
   import { onMount } from "svelte";
   import { browser } from "$app/environment";
   import { controlParams, mapDimensions } from "./state";
-
-  import { PUBLIC_API_BASE } from "$env/static/public";
+  import { searchArticles } from "$lib/common/elasticsearch/search";
 
   import Loader from "$com/loader.svelte";
   import Panels from "./panels/index.svelte";
   import Map from "./map.svelte";
-  import { config } from "$shared/config";
 
   export let data: PageData;
 
@@ -25,13 +23,18 @@
 
   const { deepSearch } = controlParams;
 
-  function sanitizeArticleList<PartialArticle extends MLArticle>(
-    articles: PartialArticle[]
-  ): PartialArticle[] {
-    const completeArticles: PartialArticle[] = [];
+  type MLUndefined = Omit<MLArticle, "ml"> & { ml?: ArticleML };
+
+  function containsML(article: MLUndefined): article is MLArticle {
+    return article.ml !== undefined;
+  }
+
+  function sanitizeArticleList(articles: MLUndefined[]): MLArticle[] {
+    const completeArticles: MLArticle[] = [];
 
     articles.forEach((a) => {
       if (
+        containsML(a) &&
         a.ml.coordinates &&
         a.ml.coordinates[0] != 0 &&
         a.ml.coordinates[1] != 0
@@ -43,26 +46,31 @@
     return completeArticles;
   }
 
-  async function queryArticles(
-    complete: boolean
-  ): Promise<Readable<MLArticle[]>> {
-    const r = await fetch(
-      `${PUBLIC_API_BASE}/ml/map/${complete ? "full" : "partial"}`
-    );
-    if (r.status === 404)
-      return Promise.reject({
-        title: "Overview isn't available",
-        description:
-          "The overview feature unfortunately is not available on this OSINTer instance",
-      });
-    else if (!r.ok)
+  async function queryArticles(complete: boolean) {
+    let articles;
+    try {
+      articles = await searchArticles(
+        { limit: 0 },
+        {
+          include_fields: [
+            "title",
+            "description",
+            "url",
+            "profile",
+            "source",
+            "ml",
+            "publish_date",
+          ],
+        }
+      );
+    } catch {
       return Promise.reject({
         title: "Error when fetching data for map",
         description:
           "It seems the network is at fault. Contact the system administrator if error persists",
       });
+    }
 
-    const articles: MLArticle[] = await r.json();
     return readable(sanitizeArticleList(articles));
   }
 
@@ -86,18 +94,6 @@
     }
   });
 </script>
-
-<svelte:head>
-  <title>OSINTer - Overview</title>
-  <meta property="og:title" content="OSINTer - Use ML to map articles" />
-  <meta
-    property="og:description"
-    content="The overview in OSINTer uses advanced unsupervised machine-learning to cluster articles for easy viewing"
-  />
-  <meta property="og:image" content={config.images.fullLogo} />
-  <meta property="og:url" content="https://osinter.dk/overview" />
-  <meta property="og:type" content="website" />
-</svelte:head>
 
 <div
   id="map-container"

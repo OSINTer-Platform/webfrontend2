@@ -11,6 +11,7 @@ export const actions = {
     const password = data.get("password")?.toString() ?? "";
     const repeatPassword = data.get("repeat-password")?.toString() ?? "";
     const email = data.get("email")?.toString() ?? "";
+    const signupCode = data.get("signupCode")?.toString() ?? "";
 
     if (!username) {
       return fail(422, {
@@ -38,7 +39,12 @@ export const actions = {
       headers: new Headers({
         "Content-Type": "application/x-www-form-urlencoded",
       }),
-      body: new URLSearchParams({ username, password, email }).toString(),
+      body: new URLSearchParams({
+        username,
+        password,
+        email,
+        signup_code: signupCode,
+      }).toString(),
     });
 
     if (r.ok) {

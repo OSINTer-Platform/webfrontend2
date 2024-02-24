@@ -6,7 +6,9 @@
   export let size: "xs" | "sm" | "base" | "md" | "lg" | "xl" | "2xl" = "base";
   export let name: string = "";
   export let containerClass: string = "";
+  export let iconClass: string = "";
   export let title: string = "";
+  export let value: string = "true";
 
   export let icons: null | { off: IconDefinition; on: IconDefinition } = null;
 </script>
@@ -20,6 +22,7 @@
     class="peer hidden"
     bind:checked
     on:change
+    {value}
     {name}
     id={name}
   />
@@ -48,7 +51,10 @@
   "
     >
       {#if icons}
-        <Fa icon={checked ? icons.on : icons.off} class="w-3/4 aspect-square" />
+        <Fa
+          icon={checked ? icons.on : icons.off}
+          class="w-3/4 aspect-square {iconClass}"
+        />
       {/if}
     </div>
   </span>

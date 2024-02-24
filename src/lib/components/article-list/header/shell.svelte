@@ -6,30 +6,44 @@
   import Tabs from "$com/tabs.svelte";
   import ModList from "./modList.svelte";
 
-  import type { HeaderModOptions } from "$shared/types/internal";
-  import { writable, type Writable } from "svelte/store";
+  import type {
+    ArticleListRender,
+    HeaderModOptions,
+  } from "$shared/types/internal";
+  import type { Writable } from "svelte/store";
 
-  import { articleListRender, showRead } from "$state/state";
+  import { hasHighlights } from "$lib/common/filter";
+  import { showRead, showHighlights, listElementCount } from "$state/state";
   import { page } from "$app/stores";
-  import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+  import {
+    faEye,
+    faEyeSlash,
+    faHeading,
+    faHighlighter,
+  } from "@fortawesome/free-solid-svg-icons";
+  import { ListRenderModes } from "$shared/config";
 
   export let title: string;
   export let badge: string = "";
   export let description: string = "";
   export let searchAble = true;
+  export let contentType = "articles";
 
   export let tabs: null | {
     store: Writable<string>;
-    options: { [key: string]: string };
+    options: { name: string; value: ArticleListRender }[];
   } = {
-    store: articleListRender,
-    options: { Large: "large", "Title-View": "title" },
+    store: $page.data.settings.listRenderMode,
+    options: ListRenderModes,
   };
-  $: tabStore = tabs?.store ?? writable("");
+  $: tabStore = tabs?.store ?? $page.data.settings.listRenderMode;
+  $: user = $page.data.user;
 
   export let searchValue: string = "";
 
   export let modOptions: Array<HeaderModOptions> = [];
+
+  $: articleWithHighlight = hasHighlights($page.data.articles);
 </script>
 
 <aside
@@ -99,26 +113,41 @@
     bind:value={searchValue}
     placeholder={"Filter displayed articles"}
     containerClass={"w-full my-6"}
+    infoText={`${$listElementCount} ${contentType}`}
   />
 
   {#if tabs}
     <Tabs bind:selected={$tabStore} options={tabs.options}>
       <svelte:fragment slot="end">
-        {#if $page.data.user && $page.url.pathname.startsWith("/feed")}
+        {#if $page.url.pathname.startsWith("/feed") && ($user || articleWithHighlight)}
           <div
             class="
-            ml-auto
+            ml-auto flex gap-2
             self-center
           "
           >
-            <Switch
-              title="{$showRead
-                ? 'Show'
-                : 'Hide'} articles which have been read already"
-              name="show-read"
-              bind:checked={$showRead}
-              icons={{ on: faEye, off: faEyeSlash }}
-            />
+            {#if $user}
+              <Switch
+                title="{$showRead
+                  ? 'Show'
+                  : 'Hide'} articles which have been read already"
+                name="show-read"
+                bind:checked={$showRead}
+                icons={{ on: faEye, off: faEyeSlash }}
+              />
+            {/if}
+
+            {#if articleWithHighlight}
+              <Switch
+                title={showHighlights
+                  ? "Show article search highlights"
+                  : "Show article title"}
+                name="show-higlights"
+                bind:checked={$showHighlights}
+                icons={{ on: faHighlighter, off: faHeading }}
+                iconClass="text-xs"
+              />
+            {/if}
           </div>
         {/if}
       </svelte:fragment>

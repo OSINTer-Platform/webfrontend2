@@ -1,27 +1,28 @@
 <script lang="ts">
   import type {
-    Article,
+    FullArticle,
     ArticleBase,
     ArticleCategories,
   } from "$shared/types/api";
   import Modal from "../modal.svelte";
   import ArticleRender from "$com/articleRender/main.svelte";
 
-  import { spawnArticleModal } from "$lib/common/state";
   import { fly } from "svelte/transition";
   import { quintInOut } from "svelte/easing";
-  import { modalState } from "$shared/state/state";
   import { goto } from "$app/navigation";
   import { PUBLIC_API_BASE } from "$env/static/public";
   import Loader from "$com/loader.svelte";
   import Similar from "./similar.svelte";
   import { page } from "$app/stores";
+  import { modalState } from "$shared/state/modals";
 
-  export let article: Article;
+  export let article: FullArticle;
   export let articleCategories: ArticleCategories;
   export let articleList: Array<{ id: string }>;
+  export let topModal: boolean;
 
-  $: premium = $page.data.user && $page.data.user.premium > 0;
+  $: user = $page.data.user;
+  $: premium = $user && $user.premium > 0;
   let similarArticles: Promise<ArticleBase[]> | null;
   $: similarArticles = premium ? getSimilar(article.id) : null;
 
@@ -36,8 +37,8 @@
     console.error("Error when querying similar articles from modal");
   }
 
-  async function handleKeypress(keyName: string) {
-    if (keyName !== "ArrowRight" && keyName !== "ArrowLeft") return;
+  async function handleKeypress(e: KeyboardEvent) {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
 
     if (articleList.length < 2) return;
 
@@ -45,17 +46,39 @@
     if (currentArticleNr < 0) return;
 
     let newArticleId: string | undefined;
-    if (keyName === "ArrowLeft") {
+    if (e.key === "ArrowLeft") {
       newArticleId = articleList[currentArticleNr - 1]?.id;
       switchDirection = "left";
-    } else if (keyName === "ArrowRight") {
+    } else if (e.key === "ArrowRight") {
       newArticleId = articleList[currentArticleNr + 1]?.id;
       switchDirection = "right";
     }
 
     if (!newArticleId) return;
 
-    await spawnArticleModal(newArticleId, articleList);
+    const newArticle: FullArticle | null = await fetch(
+      `${PUBLIC_API_BASE}/articles/${newArticleId}/content`
+    ).then((r) => {
+      if (!r.ok) return null;
+      return r.json();
+    });
+
+    if (!newArticle || !topModal) return;
+
+    modalState.update((modals) => {
+      const topModal = modals.pop();
+      if (!topModal) return [];
+
+      if (topModal.modalType === "article") {
+        topModal.modalContent.article = newArticle;
+      }
+
+      return [...modals, topModal];
+    });
+
+    $page.data.userCollections.autoUpdate();
+    $page.data.alreadyRead.autoUpdate();
+
     await new Promise((r) => setTimeout(r, 400)); // Wait for transitions
   }
 
@@ -75,16 +98,19 @@
 
 <svelte:window
   on:keydown={async (e) => {
-    if (!blockSwitching) {
+    if (!blockSwitching && topModal) {
       blockSwitching = true;
-      await handleKeypress(e.key);
+      await handleKeypress(e);
       blockSwitching = false;
     }
   }}
 />
 
-<Modal class="w-[80vw] h-[90vh] bg-surface-200 dark:bg-surface-700">
-  {#key $modalState}
+<Modal
+  border={false}
+  class="w-[80vw] h-[90vh] bg-surface-200 dark:bg-surface-700"
+>
+  {#key article}
     <main class="w-full h-full overflow-y-auto">
       <article
         class="
@@ -92,12 +118,12 @@
           bg-surface-100 dark:bg-surface-800
       "
         in:fly|local={{
-          duration: 400,
+          duration: blockSwitching ? 400 : 0,
           easing: quintInOut,
           x: switchDirection === "right" ? 200 : -200,
         }}
         out:fly|local={{
-          duration: 200,
+          duration: blockSwitching ? 200 : 0,
           easing: quintInOut,
           x: switchDirection === "left" ? 200 : -200,
         }}

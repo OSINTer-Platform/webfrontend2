@@ -1,6 +1,11 @@
 // See https://kit.svelte.dev/docs/types#app
 
 import type { User } from "$shared/types/userItems";
+import type { Updatable } from "$lib/common/customStores";
+import type { MLAvailability } from "$shared/types/api";
+import type { Collection } from "$shared/types/userItems";
+import type { Writable } from "svelte/store";
+import type { ArticleListRender } from "$shared/types/internal";
 
 // for information about these interfaces
 declare global {
@@ -17,7 +22,24 @@ declare global {
       }>;
     }
     // interface Locals {}
-    // interface PageData {}
+    interface PageData {
+      mlAvailability: MLAvailability;
+      user: Writable<User | null>;
+      customSidebar: boolean;
+      alreadyRead: Updatable<Collection | null>;
+      userCollections: Updatable<{ [key: string]: Collection }>;
+      meta: {
+        title?: string | { visual: string; meta: string };
+        description?: string;
+        image?: string;
+        type?: string;
+      };
+      settings: {
+        darkMode: Writable<boolean>;
+        listRenderMode: Writable<ArticleListRender>;
+        renderExternal: Writable<boolean>;
+      };
+    }
     // interface Platform {}
   }
 }

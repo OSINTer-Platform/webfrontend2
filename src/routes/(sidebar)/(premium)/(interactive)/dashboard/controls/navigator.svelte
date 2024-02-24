@@ -4,37 +4,27 @@
     faArrowUpRightDots,
     faListUl,
   } from "@fortawesome/free-solid-svg-icons";
-  import { goto } from "$app/navigation";
 
-  import type { Dashboards } from "$shared/types/internal";
   import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
   import Fa from "svelte-fa";
 
-  export let dashboard: Dashboards;
-
   const navOptions: {
-    name: Dashboards;
+    href: string;
     title: string;
     icon: IconDefinition;
   }[] = [
     {
-      name: "popular",
+      href: "/dashboard/list",
       title: "See popular articles and topics",
-      icon: faArrowUpRightDots,
-    },
-    {
-      name: "title",
-      title: "Get just a list of new articles",
       icon: faListUl,
     },
+    {
+      href: "/dashboard/stats",
+      title: "See metrics and statistics for new articles",
+      icon: faArrowUpRightDots,
+    },
   ];
-
-  function updateDashboard(dashboard: Dashboards) {
-    const url = new URL($page.url);
-    url.searchParams.set("dashboard", dashboard);
-    goto(url, { replaceState: true });
-  }
 </script>
 
 <div
@@ -43,19 +33,20 @@
   bg-black
 "
 >
-  {#each navOptions as { name, title, icon }}
-    <!-- -->
+  {#each navOptions as { href, title, icon }}
     <a
       {title}
-      on:click|preventDefault={() => updateDashboard(name)}
-      href={`/dashboard/?dashboard=${name}`}
+      {href}
       class="
       btn
       my-auto w-10 aspect-square
       text-white
     "
     >
-      <Fa {icon} class={dashboard === name ? "text-primary-500" : ""} />
+      <Fa
+        {icon}
+        class={$page.url.pathname === href ? "text-primary-500" : ""}
+      />
     </a>
   {/each}
 </div>

@@ -1,11 +1,23 @@
+export interface ArticleML {
+  cluster: string;
+  coordinates: [number, number];
+}
+
 export interface ArticleTags {
   automatic: string[];
   interesting: { name: string; values: string[] }[];
 }
 
-export interface ArticleBase {
+export interface Article {
   id: string;
+  highlights?: {
+    title?: string[];
+    description?: string[];
+    content?: string[];
+  };
+}
 
+export interface ArticleBase extends Article {
   title: string;
   description: string;
 
@@ -25,31 +37,24 @@ export interface ArticleBase {
   similar?: string[];
   summary?: string;
 
-  ml?: {
-    cluster: string;
-    coordinates: [number, number];
-  };
+  ml?: ArticleML;
 
   tags: ArticleTags;
 }
 
-export interface Article extends ArticleBase {
+export interface FullArticle extends ArticleBase {
   formatted_content: string;
   content: string;
 }
 
-export interface MLArticle {
-  id: string;
-
+export interface MLArticle extends Article {
   title: string;
   description: string;
+  url: string;
   source: string;
   profile: string;
   publish_date: string;
-  ml: {
-    cluster: string;
-    coordinates: [number, number];
-  };
+  ml: ArticleML;
 }
 
 export interface ClusterBase {
@@ -62,6 +67,11 @@ export interface ClusterBase {
   summary: string;
 
   keywords: string[];
+  highlights?: {
+    title?: string[];
+    description?: string[];
+    summary?: string[];
+  };
 }
 
 export interface Cluster extends ClusterBase {
@@ -102,6 +112,7 @@ export interface SearchQuery {
 
   sources?: string[];
   ids?: string[];
+  cluster_id?: string;
 }
 
 export interface AccessTokenWithDetails {

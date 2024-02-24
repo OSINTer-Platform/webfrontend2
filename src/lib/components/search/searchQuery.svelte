@@ -69,7 +69,6 @@
         placeholder=" "
         class="input"
       >
-        <option selected disabled>Sort By</option>
         {#each sortBy as { value, name }}
           <option {value}>{name}</option>
         {/each}
@@ -85,7 +84,6 @@
         placeholder=" "
         class="input"
       >
-        <option selected disabled>Sort Order</option>
         {#each sortOrder as { value, name }}
           <option {value}>{name}</option>
         {/each}
@@ -114,7 +112,7 @@
       <label for="limit" class="input">Limit</label>
 
       <div
-        class="absolute top-5 right-3"
+        class="absolute top-1/2 -translate-y-1/2 right-3"
         title={limitEnabled
           ? "Disable limit. WARNING: Will load LARGE amounts of data."
           : "Enable limit. Strongly recommended"}
@@ -163,7 +161,7 @@
       <label for="search_term" class="input">Search Term</label>
 
       <div
-        class="absolute top-5 right-3"
+        class="absolute top-1/2 -translate-y-1/2 right-3"
         title="{searchQuery.highlight
           ? 'Disable'
           : 'Enable'} highlighting of search matches"

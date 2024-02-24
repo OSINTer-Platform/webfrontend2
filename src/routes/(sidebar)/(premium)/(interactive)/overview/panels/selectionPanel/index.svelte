@@ -3,9 +3,6 @@
   import Search from "$inputs/search.svelte";
   import Switch from "$inputs/switch.svelte";
 
-  import type { Collection } from "$shared/types/userItems";
-  import type { Updatable } from "$lib/common/customStores";
-
   import { onDestroy } from "svelte";
   import { page } from "$app/stores";
   import {
@@ -21,6 +18,8 @@
     type IconDefinition,
   } from "@fortawesome/free-solid-svg-icons";
   import { createItem } from "$lib/common/userItems";
+  import { getBaseArticles } from "$lib/common/elasticsearch/search";
+  import { modalState } from "$shared/state/modals";
 
   const { selectedSearch, showAllSelected } = controlParams;
 
@@ -30,7 +29,6 @@
     })
   );
 
-  let alreadyRead: Updatable<null | Collection>;
   $: alreadyRead = $page.data?.alreadyRead;
 
   let actionButtons: {
@@ -42,13 +40,17 @@
       icon: faMagnifyingGlass,
       description: "See full list of articles",
       action: () => {
-        createItem(
-          "Article Overview",
-          $searchedSelectedArticles.map((a) => a.id),
-          "collection",
-          "new",
-          false
-        );
+        modalState.append({
+          modalType: "article-list",
+          modalContent: {
+            articles: getBaseArticles({
+              limit: 0,
+              ids: $searchedSelectedArticles.map((a) => a.id),
+              sort_by: "publish_date",
+              sort_order: "desc",
+            }),
+          },
+        });
       },
     },
     {
@@ -112,7 +114,7 @@
         title={article.description}
       >
         <ModalLink
-          articleId={article.id}
+          {article}
           articleList={$searchedSelectedArticles}
           class="
               block py-2 truncate

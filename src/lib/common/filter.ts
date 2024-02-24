@@ -1,4 +1,4 @@
-import type { Article, ArticleBase } from "$shared/types/api";
+import type { ArticleBase } from "$shared/types/api";
 
 /**
  * includeIds control whether to INCLUDE or EXCLUDE articles with id contained in ids param
@@ -67,4 +67,15 @@ export const searchInCluster = (
     search(cluster.description) ||
     search(cluster.summary)
   );
+};
+
+export const hasHighlights = (articles: ArticleBase[] | undefined) => {
+  if (Array.isArray(articles)) {
+    return articles.some(
+      (a) =>
+        a.highlights && Object.values(a.highlights).some((v) => v.length > 0)
+    );
+  }
+
+  return false;
 };

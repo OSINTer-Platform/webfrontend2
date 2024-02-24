@@ -4,6 +4,7 @@ import type { ArticleCategories } from "$shared/types/api";
 
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { error } from "@sveltejs/kit";
+import { get } from "svelte/store";
 
 export const load = (async ({ parent, fetch }) => {
   const fetchCategories = async (): Promise<ArticleCategories> => {
@@ -26,7 +27,18 @@ export const load = (async ({ parent, fetch }) => {
     }
   };
 
-  const getProtectedData = async (url: string, type: "feed" | "collection") => {
+  async function getProtectedData(
+    url: string,
+    type: "feed"
+  ): Promise<{ [key: string]: Feed }>;
+  async function getProtectedData(
+    url: string,
+    type: "collection"
+  ): Promise<{ [key: string]: Collection }>;
+  async function getProtectedData(
+    url: string,
+    type: "feed" | "collection"
+  ): Promise<{ [key: string]: Feed } | { [key: string]: Collection }> {
     const r = await fetch(`${PUBLIC_API_BASE}/${url}`);
 
     if (r.ok) {
@@ -39,32 +51,43 @@ export const load = (async ({ parent, fetch }) => {
     } else {
       throw (r.status, `Error when fetching ${type}s.`);
     }
-  };
+  }
 
   const categories = fetchCategories();
+  const meta = {
+    title: "Your Feeds | OSINTer",
+    description:
+      "Curious on the newest happenings in the cybersecurity sphere? Well, look no further...",
+  };
 
   const parentData = await parent();
-  const user = parentData.user;
+  const user = get(parentData.user);
 
   if (user) {
-    const data: {
-      customSidebar: boolean;
-      feeds: Promise<{ [key: string]: Feed }>;
-      collections: Promise<{ [key: string]: Collection }>;
-      sourceCategories: Promise<ArticleCategories>;
-    } = {
-      customSidebar: true,
-      feeds: getProtectedData("my/feeds/list", "feed"),
-      collections: getProtectedData("my/collections/list", "collection"),
-      sourceCategories: categories,
-    };
+    const [feeds, collections, sourceCategories] = await Promise.all([
+      getProtectedData("my/feeds/list", "feed"),
+      getProtectedData("my/collections/list", "collection"),
+      categories,
+    ]);
 
-    return data;
-  } else {
     return {
+      meta,
       customSidebar: true,
-      feeds: getStandardFeeds(),
-      sourceCategories: categories,
+      feeds,
+      collections,
+      sourceCategories,
+    };
+  } else {
+    const [feeds, sourceCategories] = await Promise.all([
+      getStandardFeeds(),
+      categories,
+    ]);
+
+    return {
+      meta,
+      customSidebar: true,
+      feeds,
+      sourceCategories,
     };
   }
 }) satisfies LayoutLoad;

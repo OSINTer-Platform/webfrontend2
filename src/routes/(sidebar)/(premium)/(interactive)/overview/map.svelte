@@ -4,7 +4,8 @@
 
   import * as d3 from "d3";
   import { afterUpdate, onDestroy, onMount } from "svelte";
-  import { darkMode } from "$state/state";
+  import { page } from "$app/stores";
+  import { listElementCount } from "$state/state";
   import {
     clearAndScale,
     drawArticlePoints,
@@ -22,6 +23,7 @@
     articles as articleStore,
     clusters as clusterStore,
     articleFilter,
+    filteredArticles,
     searchedSelectedArticles,
     toolTips,
     d3Selection,
@@ -32,6 +34,8 @@
   } from "./state";
 
   import { handlePointerModeChange, scalePointerPosition } from "./events";
+
+  $: darkMode = $page.data.settings.darkMode;
 
   const storeListeners: Array<() => void> = [];
 
@@ -159,8 +163,11 @@
     );
   });
 
+  $: listElementCount.set($filteredArticles.length);
+
   onDestroy(() => {
     storeListeners.forEach((unsubscriber) => unsubscriber());
+    listElementCount.set(0);
   });
 
   afterUpdate(() => requestAnimationFrame(drawCanvas));

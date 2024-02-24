@@ -1,7 +1,7 @@
 <script lang="ts">
   import List from "$com/article-list/wrapper.svelte";
 
-  import { feedLocalSearch, showRead } from "$state/state";
+  import { feedLocalSearch, showRead, showHighlights } from "$state/state";
   import { filterArticles } from "$lib/common/filter";
   import { page } from "$app/stores";
 
@@ -19,4 +19,9 @@
   export let emptyMessage: { title: string; description: string } | null = null;
 </script>
 
-<List articles={filteredArticles} tintReadArticles={true} {emptyMessage} />
+<List
+  articles={filteredArticles}
+  tintReadArticles={true}
+  {emptyMessage}
+  showHighlights={$showHighlights}
+/>

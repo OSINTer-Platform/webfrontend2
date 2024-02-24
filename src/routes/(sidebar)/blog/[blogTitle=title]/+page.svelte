@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { config } from "$shared/config";
   import SvelteMarkdown from "svelte-markdown";
   import type { PageData } from "./$types";
   import FullLogo from "$assets/fullLogo.png";
@@ -9,19 +8,6 @@
 </script>
 
 <svelte:head>
-  <title>OSINTer Blog - {data.currentPost.title}</title>
-  <meta property="og:title" content="OSINTer Blog - {data.currentPost.title}" />
-  <meta property="og:description" content={data.currentPost.description} />
-  <meta
-    property="og:image"
-    content={data.currentPost.image ?? config.images.fullLogo}
-  />
-  <meta
-    property="og:url"
-    content="https://osinter.dk/blog/{data.currentPost.id}"
-  />
-
-  <meta property="og:type" content="article" />
   <meta
     property="article:published_time"
     content={data.currentPost.date.toISOString()}

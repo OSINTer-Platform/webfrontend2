@@ -5,16 +5,15 @@
   import Loader from "$com/loader.svelte";
 
   import type { ArticleBase } from "$shared/types/api";
-  import type { Collection } from "$shared/types/userItems";
-  import type { Writable } from "svelte/store";
 
+  import { eclipseConcat } from "$lib/common/strings";
   import { getTimespan } from "$lib/common/math";
   import { PUBLIC_API_BASE } from "$env/static/public";
 
-  export let userCollections: Writable<{ [key: string]: Collection }>;
   export let article: ArticleBase;
   export let articleList: ArticleBase[];
   export let readArticles: string[];
+  export let showHighlights: boolean;
 
   $: read = readArticles.includes(article.id);
   let similarArticles: null | Promise<ArticleBase[]> = null;
@@ -43,7 +42,7 @@
 </script>
 
 <Link
-  articleId={article.id}
+  {article}
   {articleList}
   class="
   flex
@@ -112,7 +111,14 @@
     [&>strong]:text-primary-600
   "
     >
-      <SvelteMarkdown source={article.title} isInline />
+      {#if article.highlights?.title && showHighlights}
+        <SvelteMarkdown
+          source={eclipseConcat(article.highlights.title)}
+          isInline
+        />
+      {:else}
+        {article.title}
+      {/if}
     </h1>
 
     <p
@@ -134,11 +140,18 @@
     [&>strong]:text-primary-400
   "
     >
-      <SvelteMarkdown source={article.description} isInline />
+      {#if article.highlights?.description && showHighlights}
+        <SvelteMarkdown
+          source={eclipseConcat(article.highlights.description)}
+          isInline
+        />
+      {:else}
+        {article.description}
+      {/if}
     </p>
   </div>
 
-  <Icons {article} {userCollections} on:showSimilar={toggleShowSimilar} />
+  <Icons {article} on:showSimilar={toggleShowSimilar} />
 
   <time
     title={article.publish_date}
@@ -157,12 +170,7 @@
         <li class="relative ml-3 md:ml-6 xl:ml-10">
           <div class="absolute w-full h-full bg-primary-600/10" />
 
-          <svelte:self
-            {article}
-            {userCollections}
-            {articleList}
-            {readArticles}
-          />
+          <svelte:self {article} {articleList} {readArticles} />
         </li>
       {/each}
     {/await}

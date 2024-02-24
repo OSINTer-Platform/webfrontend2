@@ -10,7 +10,7 @@
   import type { UserItemSidebarOption } from "$shared/types/internal";
   import type { User } from "$shared/types/userItems";
 
-  import { modalState } from "$shared/state/state";
+  import { modalState } from "$state/modals";
   import { createItem, sanitizeQuery } from "$lib/common/userItems";
   import { goto } from "$app/navigation";
   import { faMagnifyingGlass, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -43,7 +43,7 @@
       return;
     }
 
-    $modalState = {
+    modalState.append({
       modalType: "search",
       modalContent: {
         searchText: "Create feed",
@@ -51,13 +51,13 @@
           await createItem("New Feed", sanitizeQuery(query), "feed", "current");
         },
       },
-    };
+    });
   }
 
   function spawnSearchModal(e: Event) {
     e.preventDefault();
 
-    $modalState = {
+    modalState.append({
       modalType: "search",
       modalContent: {
         query: $page.data?.currentSearch,
@@ -66,7 +66,7 @@
           goto(`/feed/search?${toUrl(q)}`);
         },
       },
-    };
+    });
   }
 
   function hasButton(

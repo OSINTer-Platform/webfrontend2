@@ -18,9 +18,11 @@
 
   let similarArticles: ArticleBase[] = [];
 
+  $: user = $page.data.user;
+
   onMount(async () => {
     if (!browser) return;
-    if (!$page.data.user || $page.data.user.premium < 1) return;
+    if (!$user || $user.premium < 1) return;
 
     const r = await fetch(
       `${PUBLIC_API_BASE}/articles/${encodeURIComponent(article.id)}/similar`

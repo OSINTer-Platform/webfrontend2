@@ -17,6 +17,6 @@ export const load: PageLoad = async ({ fetch }) => {
   }
 
   return {
-    clusters: getClusters(),
+    clusters: await getClusters(),
   };
 };

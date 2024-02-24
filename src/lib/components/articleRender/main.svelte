@@ -1,12 +1,13 @@
 <script lang="ts">
-  import type { Article, ArticleCategories } from "$shared/types/api";
+  import type { FullArticle, ArticleCategories } from "$shared/types/api";
   import type { HeadingList, ParsedEvent } from "$lib/common/ToC";
 
   import { MDtoToC } from "$lib/common/ToC";
 
   import SvelteMarkdown from "svelte-markdown";
+  import CollectionOverlay from "$com/collections/buttonOverlay.svelte";
 
-  export let article: Article;
+  export let article: FullArticle;
   export let articleCategories: ArticleCategories | null = null;
   export let header: Boolean = true;
 
@@ -61,11 +62,20 @@
   {/if}
 {/if}
 
-<img
-  alt="Main Article"
-  src={article.image_url}
-  class="aspect-video w-full object-cover mb-4"
-/>
+<div
+  class="
+  absolute-grid
+  w-full mb-4 aspect-video
+  [&:hover>div]:opacity-100
+"
+>
+  <img
+    alt="Main Article"
+    src={article.image_url}
+    class="h-full w-full object-cover overflow-hidden"
+  />
+  <CollectionOverlay {article} iconClass="text-6xl" overlayClass="top-15" />
+</div>
 
 {#if header}
   <h3 class="text-2xl mb-4 dark:text-white">{article.description}</h3>

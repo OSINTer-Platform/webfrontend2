@@ -2,11 +2,11 @@
   import SvelteMarkdown from "svelte-markdown";
   import SmallLogo from "$assets/smallLogo.jpg";
   import Fa from "svelte-fa";
-  import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+  import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
   import { slide } from "svelte/transition";
 
-  export let title: string;
-  export let description: string;
+  export let title: { text: string; markdown: boolean };
+  export let description: { text: string; markdown: boolean };
 
   export let leftLegend: { text: string; hover: string };
   export let rightLegend: { text: string; hover: string };
@@ -15,9 +15,13 @@
   export let tags: string[] = [];
   export let read: boolean = false;
 
-  export let summary = "";
-
-  let showSummary = false;
+  export let textExpands: {
+    title: string;
+    icon: IconDefinition;
+    content: string;
+    expanded: boolean;
+    markdown: boolean;
+  }[] = [];
 </script>
 
 <article
@@ -38,7 +42,7 @@
     hover:bg-surface-50
     dark:hover:bg-surface-500
 
-    [&:hover>button]:block
+    [&:hover>aside]:flex
 "
 >
   <div
@@ -124,7 +128,11 @@
           [&>strong]:text-primary-600
         "
       >
-        <SvelteMarkdown source={title} isInline />
+        {#if title.markdown}
+          <SvelteMarkdown source={title.text} isInline />
+        {:else}
+          {title.text}
+        {/if}
       </h2>
 
       <p
@@ -136,23 +144,39 @@
           [&>strong]:text-primary-600
         "
       >
-        <SvelteMarkdown source={description} isInline />
+        {#if description.markdown}
+          <SvelteMarkdown source={description.text} isInline />
+        {:else}
+          {description.text}
+        {/if}
       </p>
     </div>
 
-    {#if showSummary && summary.length > 0}
-      <section transition:slide>
-        <hr class="text-surface-400/25 border my-6" />
-        <p
-          class="
-        dark:text-white font-light
-      "
-        >
-          {summary}
-        </p>
-        <hr class="text-surface-400/25 border my-6" />
-      </section>
-    {/if}
+    <section class="">
+      {#each textExpands as { title, content, expanded, markdown } (title)}
+        {#if expanded}
+          <div
+            transition:slide
+            class="py-6 border-surface-400/25 border-b first:border-t first:mt-6 last:mb-6"
+          >
+            <p
+              class="
+              dark:text-white font-light
+              [&>strong]:font-semibold
+              [&>strong]:text-primary-600
+            "
+            >
+              <span class="font-semibold capitalize">{title}: </span>
+              {#if markdown}
+                <SvelteMarkdown source={content} isInline={true} />
+              {:else}
+                {content}
+              {/if}
+            </p>
+          </div>
+        {/if}
+      {/each}
+    </section>
 
     {#if tags.length > 0}
       <footer class="flex flex-wrap gap-2 mt-4">
@@ -181,31 +205,26 @@
     {/if}
   </div>
 
-  {#if summary.length > 0}
-    <button
-      class="
-    absolute
-    right-2 bottom-2
-
-    hidden btn
-
-    w-10 p-3
-    dark:bg-surface-500 dark:hover:bg-primary-400/25
-    drop-shadow-md
-
-    transition-transform
-  "
-      on:click|preventDefault|stopPropagation={() =>
-        (showSummary = !showSummary)}
-    >
-      <Fa
-        icon={faCaretDown}
+  <aside class="absolute right-2 bottom-2 gap-2 hidden">
+    {#each textExpands as { title, icon, expanded }}
+      <button
+        title="Show {title}"
         class="
-        mx-auto
-        transition-transform duration-300
-        {showSummary ? 'rotate-180' : ''}
-    "
-      />
-    </button>
-  {/if}
+          btn w-10 p-3 opacity-85
+          dark:bg-surface-500 dark:hover:bg-primary-400/25
+          drop-shadow-md transition-transform
+        "
+        on:click|preventDefault|stopPropagation={() => (expanded = !expanded)}
+      >
+        <Fa
+          {icon}
+          class="
+          mx-auto text-sm
+          transition-transform duration-300
+          {expanded ? 'text-primary-500' : ''}
+      "
+        />
+      </button>
+    {/each}
+  </aside>
 </article>

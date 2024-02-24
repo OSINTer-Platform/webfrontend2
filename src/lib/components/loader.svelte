@@ -1,6 +1,8 @@
 <script lang="ts">
   let classes: string = "w-40 h-40";
   export { classes as class };
+  export let id = "";
+  export let containerClass = "w-full h-full";
   export let text: string | null = null;
   export let rows: number = 3;
   export let columns: number = 3;
@@ -17,15 +19,14 @@
 </script>
 
 <div
+  {id}
   class="
-	w-full
-	h-full
-
 	flex
 	flex-col
 
 	justify-center
 	items-center
+  {containerClass}
 "
 >
   <div

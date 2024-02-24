@@ -16,4 +16,8 @@
       : data.articles;
 </script>
 
-<List articles={filteredArticles} tintReadArticles={true} />
+<List
+  articles={filteredArticles}
+  tintReadArticles={true}
+  showHighlights={false}
+/>

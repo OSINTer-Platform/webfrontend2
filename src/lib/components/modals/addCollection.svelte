@@ -1,22 +1,14 @@
 <script lang="ts">
   import type { ArticleBase } from "$shared/types/api";
 
-  import { onMount } from "svelte";
   import { page } from "$app/stores";
-  import { modalState } from "$shared/state/state";
 
   import Modal from "./modal.svelte";
-  import Collections from "$com/collections.svelte";
+  import CollectionList from "$com/collections/list.svelte";
   import Search from "$com/utils/inputs/search.svelte";
 
   export let article: ArticleBase;
   let collectionSearch = "";
-
-  onMount(() => {
-    if (Object.keys($page.data.userCollections).length == 0) {
-      $modalState = { modalContent: null, modalType: null };
-    }
-  });
 </script>
 
 <Modal
@@ -26,8 +18,6 @@
     flex flex-col
     overflow-y-auto
 
-    rounded-xl
-    border border-tertiary-500
     bg-surface-100 dark:bg-surface-800
   "
   style="max-height: min(90vh, 40rem)"
@@ -43,7 +33,7 @@
 
   <hr class="border-surface-400 my-4" />
 
-  <Collections
+  <CollectionList
     showStats={true}
     userCollections={$page.data.userCollections}
     articleId={article.id}

@@ -12,6 +12,7 @@
   let password: string = "";
   let repeatPassword: string = "";
   let email: string = "";
+  let signupCode: string = "";
 
   let formError: string | null = null;
   $: {
@@ -39,79 +40,93 @@
 </header>
 
 <form method="post" class="w-full" use:enhance>
-  <div class="input mb-2">
-    <input
-      id="username"
-      name="username"
-      placeholder=" "
-      class="input"
-      type="text"
-      bind:value={username}
-    />
-    <label for="username" class="input">Username</label>
-  </div>
+  <section class="flex flex-col gap-5">
+    <div class="input">
+      <input
+        id="username"
+        name="username"
+        placeholder=" "
+        class="input"
+        type="text"
+        bind:value={username}
+      />
+      <label for="username" class="input">Username</label>
+    </div>
 
-  <div class="input mb-2">
-    <input
-      id="password"
-      name="password"
-      placeholder=" "
-      class="input"
-      type="password"
-      bind:value={password}
-    />
-    <label for="password" class="input">Password</label>
-  </div>
+    <div class="input">
+      <input
+        id="password"
+        name="password"
+        placeholder=" "
+        class="input"
+        type="password"
+        bind:value={password}
+      />
+      <label for="password" class="input">Password</label>
+    </div>
 
-  <div class="input mb-2">
-    <input
-      id="repeat-password"
-      name="repeat-password"
-      placeholder=" "
-      class="input"
-      type="password"
-      bind:value={repeatPassword}
-    />
-    <label for="repeatPassword" class="input">Repeat Password</label>
-  </div>
+    <div class="input">
+      <input
+        id="repeat-password"
+        name="repeat-password"
+        placeholder=" "
+        class="input"
+        type="password"
+        bind:value={repeatPassword}
+      />
+      <label for="repeatPassword" class="input">Repeat Password</label>
+    </div>
+  </section>
 
-  <hr class="text-surface-400/25 border my-6" />
+  <hr class="text-surface-400/25 border my-8" />
 
-  <div class="input mb-2">
-    <input
-      id="email"
-      name="email"
-      placeholder=" "
-      class="input"
-      type="text"
-      bind:value={email}
-    />
-    <label for="email" class="input">Email - (Optional)</label>
+  <section class="flex flex-col gap-5">
+    <div class="input">
+      <input
+        id="email"
+        name="email"
+        placeholder=" "
+        class="input"
+        type="text"
+        bind:value={email}
+      />
+      <label for="email" class="input">Email - (Optional)</label>
 
-    <a
-      href="/blog/why-do-we-keep-emails/"
-      title="Why do we keep emails?"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="
-				absolute
-				right-4
-				top-[1.40rem]
+      <a
+        href="/blog/why-do-we-keep-emails/"
+        title="Why do we keep emails?"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="
+          absolute right-4 top-1/2 -translate-y-1/2
 
-				text-lg
+          text-lg
 
-				transition-colors
-				duration-300
+          transition-colors
+          duration-300
 
-				text-surface-400/50
-				hover:text-primary-600/75
+          text-surface-400/50
+          hover:text-primary-600/75
 
-				link-underline
-			"><Fa icon={faQuestionCircle} class="mb-0.5" /></a
-    >
-  </div>
+          link-underline
+        "><Fa icon={faQuestionCircle} class="mb-0.5" /></a
+      >
+    </div>
 
-  <hr class="text-surface-400/25 border my-6" />
+    <div class="input">
+      <input
+        id="signupCode"
+        name="signupCode"
+        placeholder=" "
+        class="input"
+        type="text"
+        bind:value={signupCode}
+      />
+      <label for="signupCode" class="input">Signup Code - (Optional)</label>
+    </div>
+  </section>
+
+  <hr class="text-surface-400/25 border mt-8 mb-6" />
 
   <button
     type="submit"

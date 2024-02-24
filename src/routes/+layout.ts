@@ -1,14 +1,15 @@
 import { PUBLIC_API_BASE } from "$env/static/public";
-import { updatable } from "$lib/common/customStores";
+import { cookieStore, updatable } from "$lib/common/customStores";
+import { config } from "$shared/config";
+import { writable } from "svelte/store";
 import type { MLAvailability } from "$shared/types/api";
+import type { ArticleListRender } from "$shared/types/internal";
 import type { Collection, User } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
 
-export const load: LayoutLoad = async ({ fetch, url }) => {
-  const pagesWithSidebar = ["/feed", "/article", "/topic", "/dashboard"];
-
+export const load: LayoutLoad = async ({ fetch, data }) => {
   const getUserObject = async (): Promise<User | null> => {
-    const r = await fetch(`${PUBLIC_API_BASE}/auth/status`);
+    const r = await fetch(`${PUBLIC_API_BASE}/my/user/`);
     return r.ok ? r.json() : null;
   };
 
@@ -19,9 +20,9 @@ export const load: LayoutLoad = async ({ fetch, url }) => {
       : { clustering: false, map: false, elser: false, inference: false };
   };
 
-  const user = await getUserObject();
-
-  const updateCollectionList = async (): Promise<{
+  const updateCollectionList = async (
+    user: User | null
+  ): Promise<{
     [key: string]: Collection;
   }> => {
     if (!user) return {};
@@ -38,7 +39,9 @@ export const load: LayoutLoad = async ({ fetch, url }) => {
     );
   };
 
-  const updateAlreadyRead = async (): Promise<Collection | null> => {
+  const updateAlreadyRead = async (
+    user: User | null
+  ): Promise<Collection | null> => {
     if (!user) return null;
 
     const rCollection = await fetch(
@@ -49,13 +52,46 @@ export const load: LayoutLoad = async ({ fetch, url }) => {
     return await rCollection.json();
   };
 
+  const user = await getUserObject();
+  const [mlAvailability, alreadyRead, userCollections] = await Promise.all([
+    getMlAvailability(),
+    updatable(() => updateAlreadyRead(user)),
+    updatable(() => updateCollectionList(user)),
+  ]);
+
+  const dateInAnHour = new Date()
+  dateInAnHour.setHours(dateInAnHour.getHours() + 1);
+
   return {
-    user,
-    mlAvailability: getMlAvailability(),
-
-    alreadyRead: updatable(updateAlreadyRead),
-    userCollections: updatable(updateCollectionList),
-
+    user: writable(user),
+    mlAvailability,
+    alreadyRead,
+    userCollections,
     customSidebar: false,
+    meta: {
+      title: {
+        visual: "OSINTer",
+        meta: "OSINTer - The one-stop shop for cybersecurity news",
+      },
+      description:
+        "Helping companies, organisations and individuals tackle the cyber-threats of tomorrow",
+      image: config.images.fullLogo,
+      type: "website",
+    },
+    settings: {
+      darkMode: cookieStore(
+        "settings-darkMode",
+        data.cookies.darkMode ?? user?.settings.dark_mode ?? true,
+        { expires: dateInAnHour }
+      ),
+      renderExternal: writable(user?.settings.render_external ?? false),
+      listRenderMode: cookieStore<ArticleListRender>(
+        "settings-listRenderMode",
+        data.cookies.listRenderMode ??
+        user?.settings.list_render_mode ??
+        "large",
+        { expires: dateInAnHour }
+      ),
+    },
   };
 };

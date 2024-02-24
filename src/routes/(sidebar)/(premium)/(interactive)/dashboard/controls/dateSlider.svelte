@@ -3,7 +3,7 @@
   import * as d3 from "d3";
 
   const maxDate = new Date().setDate(new Date().getDate() - 1);
-  const minDate = new Date().setMonth(new Date().getMonth() - 3);
+  const minDate = new Date().setFullYear(new Date().getFullYear() - 3);
 
   export let date: Date;
   $: date = new Date(value);
@@ -25,7 +25,7 @@
   $: tooltipX = x(value);
 </script>
 
-<div class="w-2/3 md:w-4/5 flex rounded-full bg-black" bind:clientWidth>
+<div class="grow flex rounded-full bg-black" bind:clientWidth>
   <input
     on:change
     bind:value

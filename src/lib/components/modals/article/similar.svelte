@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Article, ArticleBase } from "$shared/types/api";
+  import type { FullArticle, ArticleBase } from "$shared/types/api";
   import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
   import ModalLink from "$com/modalLink.svelte";
@@ -13,7 +13,7 @@
   } from "@fortawesome/free-solid-svg-icons";
   import { goto } from "$app/navigation";
 
-  export let mainArticle: Article;
+  export let mainArticle: FullArticle;
   export let articles: ArticleBase[];
   let showAll = false;
 
@@ -64,7 +64,7 @@
 >
   {#each articleList as article}
     <ModalLink
-      articleId={article.id}
+      {article}
       articleList={articles}
       class="
       p-4
