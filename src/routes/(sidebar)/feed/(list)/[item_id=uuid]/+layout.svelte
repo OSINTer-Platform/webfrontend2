@@ -29,6 +29,7 @@
     faFileClipboard,
     faTrashCan,
   } from "@fortawesome/free-regular-svg-icons";
+  import { page } from "$app/stores";
 
   export let data: LayoutData;
 
@@ -53,11 +54,18 @@
   $: itemSubscribeable = !itemRemoveable && removeable($user, data.currentItem);
 
   $: modOptions = [
-    {
-      title: "Download",
-      icon: faDownload,
-      route: `${PUBLIC_API_BASE}/user-items/${data.currentItem._id}/export`,
-    },
+    ...($page.data.articles && $page.data.articles.length > 0
+      ? [
+          {
+            title: "Download",
+            icon: faDownload,
+            route: `${PUBLIC_API_BASE}/user-items/${data.currentItem._id}/export`,
+            options: {
+              download: "true",
+            },
+          },
+        ]
+      : []),
     {
       title: `Copy ${data.currentItem.type}`,
       icon: faFileClipboard,
@@ -201,7 +209,6 @@
 >
   <div class="relative" slot="title">
     <h1
-      on:blur={changeTitle}
       on:keydown={keydown}
       on:keyup={keyup}
       class="

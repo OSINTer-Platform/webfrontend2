@@ -18,11 +18,11 @@
 </ListMenu>
 
 <div class="2xl:flex hidden gap-4">
-  {#each modOptions as { title, icon, route, action }}
+  {#each modOptions as { title, icon, route, action, options }}
     {#if route}
-      <a href={route} {title} class={btnClass}><Fa {icon} /></a>
+      <a href={route} {title} class={btnClass} {...options}><Fa {icon} /></a>
     {:else if action}
-      <button on:click={() => action?.()} {title} class={btnClass}
+      <button on:click={() => action?.()} {title} class={btnClass} {...options}
         ><Fa {icon} /></button
       >
     {/if}

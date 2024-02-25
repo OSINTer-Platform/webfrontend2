@@ -20,6 +20,7 @@ export interface HeaderModOptions {
   icon: IconDefinition;
   action?: Function;
   route?: string;
+  options?: { [key: string]: string };
 }
 
 export type NavItem = {

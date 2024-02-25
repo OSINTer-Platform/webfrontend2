@@ -102,6 +102,9 @@
       title: "Download MD",
       icon: faDownload,
       route: `${PUBLIC_API_BASE}/articles/${data.article.id}/export`,
+      options: {
+        download: "true",
+      },
     },
     {
       title: "Close article",

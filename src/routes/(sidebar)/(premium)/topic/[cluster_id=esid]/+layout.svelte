@@ -40,6 +40,9 @@
       route: `${PUBLIC_API_BASE}/ml/cluster/${encodeURIComponent(
         data.cluster.id
       )}/export`,
+      options: {
+        download: "true",
+      },
     },
     {
       title: "Close topic",

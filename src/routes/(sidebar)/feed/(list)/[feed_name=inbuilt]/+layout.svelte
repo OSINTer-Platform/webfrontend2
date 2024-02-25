@@ -6,17 +6,25 @@
 
   import { feedLocalSearch } from "$state/state";
   import { faDownload } from "@fortawesome/free-solid-svg-icons/index";
+  import { page } from "$app/stores";
 
   export let data: LayoutData;
 
   let modOptions: Array<HeaderModOptions>;
 
   $: modOptions = [
-    {
-      title: "Download",
-      icon: faDownload,
-      route: `${data.currentItem.url.origin}${data.currentItem.url.pathname}/export${data.currentItem.url.search}`,
-    },
+    ...($page.data.articles && $page.data.articles.length > 0
+      ? [
+          {
+            title: "Download",
+            icon: faDownload,
+            route: `${data.currentItem.url.origin}${data.currentItem.url.pathname}/export${data.currentItem.url.search}`,
+            options: {
+              download: "true",
+            },
+          },
+        ]
+      : []),
   ];
 </script>
 

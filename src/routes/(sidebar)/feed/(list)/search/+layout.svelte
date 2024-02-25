@@ -9,6 +9,7 @@
   import { feedLocalSearch } from "$state/state";
   import { faDownload, faPlus } from "@fortawesome/free-solid-svg-icons/index";
   import { PUBLIC_API_BASE } from "$env/static/public";
+  import { page } from "$app/stores";
 
   export let data: LayoutData;
   $: user = data.user;
@@ -16,11 +17,18 @@
   let modOptions: Array<HeaderModOptions>;
 
   $: modOptions = [
-    {
-      title: "Download",
-      icon: faDownload,
-      route: `${PUBLIC_API_BASE}/articles/search/export?${data.searchUrl}`,
-    },
+    ...($page.data.articles && $page.data.articles.length > 0
+      ? [
+          {
+            title: "Download",
+            icon: faDownload,
+            route: `${PUBLIC_API_BASE}/articles/search/export?${data.searchUrl}`,
+            options: {
+              download: "true",
+            },
+          },
+        ]
+      : []),
     ...($user
       ? [
           {

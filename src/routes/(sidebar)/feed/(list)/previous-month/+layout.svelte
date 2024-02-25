@@ -19,6 +19,9 @@
       title: "Download",
       icon: faDownload,
       route: `${currentMonth.url.origin}${currentMonth.url.pathname}/export${currentMonth.url.search}`,
+      options: {
+        download: "true",
+      },
     },
   ];
 </script>
