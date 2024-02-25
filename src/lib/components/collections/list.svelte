@@ -73,7 +73,8 @@
           />
           <div class="flex flex-nowrap items-center min-w-0 grow">
             <p class="flex items-center shrink-1 min-w-0">
-              <span class="shrink min-w-0 overflow-hidden text-ellipsis"
+              <span
+                class="shrink min-w-0 overflow-hidden text-ellipsis whitespace-nowrap"
                 >{name}</span
               >
               {#if showStats}
