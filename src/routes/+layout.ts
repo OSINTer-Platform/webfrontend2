@@ -59,7 +59,7 @@ export const load: LayoutLoad = async ({ fetch, data }) => {
     updatable(() => updateCollectionList(user)),
   ]);
 
-  const dateInAnHour = new Date()
+  const dateInAnHour = new Date();
   dateInAnHour.setHours(dateInAnHour.getHours() + 1);
 
   return {
@@ -88,8 +88,8 @@ export const load: LayoutLoad = async ({ fetch, data }) => {
       listRenderMode: cookieStore<ArticleListRender>(
         "settings-listRenderMode",
         data.cookies.listRenderMode ??
-        user?.settings.list_render_mode ??
-        "large",
+          user?.settings.list_render_mode ??
+          "large",
         { expires: dateInAnHour }
       ),
     },
