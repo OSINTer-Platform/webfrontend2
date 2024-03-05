@@ -6,6 +6,7 @@
   export let size: "xs" | "sm" | "base" | "md" | "lg" | "xl" | "2xl" = "base";
   export let name: string = "";
   export let containerClass: string = "";
+  export let bgClass: string = "";
   export let iconClass: string = "";
   export let title: string = "";
   export let value: string = "true";
@@ -47,7 +48,8 @@
       absolute h-[1.125em] w-[1.125em]
       rounded-full shadow-md
 		  duration-300 z-10
-      bg-white
+      bg-white {bgClass}
+      dark:text-black
   "
     >
       {#if icons}
