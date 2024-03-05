@@ -35,7 +35,7 @@
     class="
     hover:text-primary-500
     transition-colors
-    text-white/90 {iconClass}
+    text-black dark:text-white/90 {iconClass}
   "
   />
   <div

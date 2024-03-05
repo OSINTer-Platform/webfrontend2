@@ -80,7 +80,6 @@
 
   w-1/12
   shrink-0
-  dark:text-white
   dark:font-medium
 "
   >
@@ -104,8 +103,6 @@
 
     truncate
     shrink-0
-
-    dark:text-white
 
     [&>strong]:font-semibold
     [&>strong]:text-primary-600
@@ -132,9 +129,7 @@
     md:leading-6
 
     truncate
-    text-tertiary-800
-
-    dark:text-white
+    text-tertiary-800 dark:text-white
 
     [&>strong]:font-semibold
     [&>strong]:text-primary-400
@@ -156,7 +151,7 @@
   <time
     title={article.publish_date}
     class:opacity-60={read}
-    class="text-xs font-extralight shrink-0 dark:text-white sm:dark:font-medium"
+    class="text-xs font-extralight shrink-0 sm:dark:font-medium"
     >{getTimespan(article.publish_date)}</time
   >
 </Link>

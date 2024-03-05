@@ -21,7 +21,7 @@
         class="
           w-full p-4
           border border-primary-500
-          dark:text-white leading-6
+          leading-6
           truncate
 
           hover:bg-primary-400/20

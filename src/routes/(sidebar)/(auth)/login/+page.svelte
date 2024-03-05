@@ -30,7 +30,7 @@
     "Log in down below to continue with your journey into the wonderful world of CTI";
 </script>
 
-<header class="dark:text-white self-stretch">
+<header class="self-stretch">
   <h1 class="text-5xl font-semibold">{title}</h1>
   <p class="font-light">{detail}</p>
 </header>
@@ -62,8 +62,7 @@
 
   <div class="flex justify-between w-full">
     <Switch bind:checked={remember} size="sm" name="remember">
-      <span
-        class="font-light text-sm ml-2 flex items-center leading-4 dark:text-white"
+      <span class="font-light text-sm ml-2 flex items-center leading-4"
         >Remember Me</span
       >
     </Switch>
@@ -105,7 +104,7 @@
   >
 </form>
 
-<p class="font-light block w-fit mt-4 dark:text-white">
+<p class="font-light block w-fit mt-4">
   Not a user yet? <a
     href="/signup"
     class="link-underline text-primary-600 dark:text-primary-400 w-fit inline-block"

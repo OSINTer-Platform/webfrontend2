@@ -145,7 +145,6 @@
               class="
 						font-semibold
 						@:md/half:text-xl
-						dark:text-white
 					"
             >
               {name}

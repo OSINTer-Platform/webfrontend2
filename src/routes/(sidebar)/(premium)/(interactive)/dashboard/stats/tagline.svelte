@@ -46,7 +46,7 @@
 
         {hoverText.length > 0 && hoverText !== keyword
         ? 'text-black/50 dark:text-white/50'
-        : 'dark:text-white'}
+        : ''}
 
         transition-colors
       "
@@ -74,7 +74,7 @@
       placeholder="Add tag"
       class="
         grow h-full w-20
-        bg-transparent text-xs dark:text-white
+        bg-transparent text-xs
         border-0 focus:outline-none focus:border-0
     "
     />
@@ -88,7 +88,7 @@
 
         text-xs
         text-black/50 dark:text-white/50
-        hover-text-white hover:dark:text-white
+        hover-text-white
         transition-colors
       "
       on:click={action}

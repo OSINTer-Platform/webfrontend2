@@ -53,9 +53,7 @@
         p-6
       "
       >
-        <h3
-          class="flex justify-between mb-4 text-xl sm:text-2xl dark:text-white"
-        >
+        <h3 class="flex justify-between mb-4 text-xl sm:text-2xl">
           Related articles:
           <a
             href="/article/{article.id}/similar"
@@ -77,7 +75,7 @@
         icon={faCaretUp}
         class="
         mx-auto
-        text-xl dark:text-white
+        text-xl
         {open ? '' : '-rotate-180'}
         transition-transform
         duration-500

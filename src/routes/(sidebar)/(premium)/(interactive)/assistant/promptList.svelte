@@ -120,9 +120,7 @@
             border border-primary-500
             flex flex-col gap-2
 
-            {role === 'assistant'
-            ? 'dark:text-white'
-            : 'text-xl text-primary-500'}
+            {role === 'assistant' ? '' : 'text-xl text-primary-500'}
             leading-6
           "
         >
@@ -139,7 +137,7 @@
           w-full p-6
           border border-primary-500
 
-          text-xl dark:text-white
+          text-xl
           leading-6
         "
       >

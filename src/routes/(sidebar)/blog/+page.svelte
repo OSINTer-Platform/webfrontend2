@@ -15,10 +15,10 @@
 	sm:px-12
 "
 >
-  <h1 class="md:text-4xl text-3xl font-medium mb-2 dark:text-white">
+  <h1 class="md:text-4xl text-3xl font-medium mb-2">
     The blog for the OSINTer project
   </h1>
-  <p class="md:text-lg font-light dark:text-white">
+  <p class="md:text-lg font-light">
     Keep up with the latest news, releases and improvements for OSINTer,
     delivered straight to you from the OSINTer core developement team.
   </p>
@@ -70,7 +70,7 @@
 				"
           />
           <div class="md:py-4 md:flex flex-col justify-between">
-            <div class="dark:text-white">
+            <div>
               <time class="text-sm font-light">{readableDate}</time>
               <h2 class="md:text-3xl text-2xl font-semibold mt-2">
                 {post.title}
@@ -79,8 +79,7 @@
                 {post.description}
               </p>
             </div>
-            <span
-              class="text-sm font-bold opacity-40 capitalize dark:text-white"
+            <span class="text-sm font-bold opacity-40 capitalize"
               >{post.author}</span
             >
           </div>

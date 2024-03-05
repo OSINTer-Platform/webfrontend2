@@ -31,13 +31,13 @@
 
 {#if header}
   <div
-    class="flex justify-between items-center mb-6 opacity-50 dark:opacity-75 dark:text-white"
+    class="flex justify-between items-center mb-6 opacity-50 dark:opacity-75"
   >
     <time class="block text-sm">{readableDate}</time>
     <span class="text-xs">Read {article.read_times} times</span>
   </div>
 
-  <h1 class="text-5xl font-semibold dark:text-white">{article.title}</h1>
+  <h1 class="text-5xl font-semibold">{article.title}</h1>
   {#if articleCategories}
     <div class="flex gap-4 items-center my-6">
       <img
@@ -45,7 +45,7 @@
         src={articleCategories?.[article.profile]?.image}
         alt="Source logo"
       />
-      <ul class="text-tertiary-900 text-sm font-medium dark:text-white">
+      <ul class="text-tertiary-900 text-sm font-medium">
         <li>
           Written by <span
             class="text-black dark:text-primary-400 dark:font-bold"
@@ -78,7 +78,7 @@
 </div>
 
 {#if header}
-  <h3 class="text-2xl mb-4 dark:text-white">{article.description}</h3>
+  <h3 class="text-2xl mb-4">{article.description}</h3>
 {/if}
 
 <div class="article-content-render text-justify">

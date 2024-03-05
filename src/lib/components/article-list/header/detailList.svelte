@@ -12,7 +12,7 @@
   export let mono = true;
 
   const boxClass =
-    "text-xs py-1 px-2 inline block w-fit bg-primary-500/20 border border-primary-600 rounded-md truncate dark:text-white";
+    "text-xs py-1 px-2 inline block w-fit bg-primary-500/20 border border-primary-600 rounded-md truncate";
 
   $: showAll = Object.fromEntries(
     Object.entries(options)
@@ -33,7 +33,7 @@
       <p
         class="
         border-r border-tertiary-700/30
-        text-xs sm:text-base dark:text-white"
+        text-xs sm:text-base"
       >
         {name}:
       </p>

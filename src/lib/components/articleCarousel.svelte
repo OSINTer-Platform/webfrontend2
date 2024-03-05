@@ -98,10 +98,10 @@
 
         <div class="flex flex-col justify-around px-4">
           <div>
-            <p class="font-light text-xs sm:text-sm text-white">
+            <p class="font-light text-xs sm:text-sm">
               {article.source}
             </p>
-            <h4 class="w-full text-sm sm:text-base font-bold text-white">
+            <h4 class="w-full text-sm sm:text-base font-bold">
               {article.title}
             </h4>
           </div>

@@ -27,8 +27,6 @@
 	border-y
 	border-primary-800
 
-	dark:text-white
-
 	{selected ? '!bg-primary-800 text-white' : ''}
 "
 >

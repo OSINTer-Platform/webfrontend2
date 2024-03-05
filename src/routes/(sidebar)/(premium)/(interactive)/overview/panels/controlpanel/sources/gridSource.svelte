@@ -55,7 +55,7 @@
         class="w-12 aspect-square object-contain overflow-hidden drop-shadow-lg bg-white"
       />
 
-      <span class="font-light text-center text-xs dark:text-white">{name}</span>
+      <span class="font-light text-center text-xs">{name}</span>
     </label>
   {/each}
 </div>

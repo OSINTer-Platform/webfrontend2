@@ -29,14 +29,13 @@
   <h3
     class="
         text-xl font-bold
-        dark:text-white
         cursor-pointer
       "
   >
     Filter sources:
   </h3>
 
-  <p class="text-xl font-light dark:text-white">
+  <p class="text-xl font-light">
     <span
       on:click={() => (showAsGrid = true)}
       on:keydown={() => (showAsGrid = true)}

@@ -55,7 +55,7 @@
   <h2
     class="
     flex justify-between mb-8
-    font-bold text-3xl dark:text-white
+    font-bold text-3xl
   "
   >
     Articles used for answers: <span class="font-light text-2xl"
@@ -87,7 +87,7 @@
       <h2
         class="
           flex justify-between mb-8
-          font-bold text-3xl dark:text-white
+          font-bold text-3xl
         "
       >
         Similar articles: <span class="font-light text-2xl"

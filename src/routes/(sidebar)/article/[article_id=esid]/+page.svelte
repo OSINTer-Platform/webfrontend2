@@ -56,8 +56,6 @@
 			hidden
 			2xl:flex
 			flex-col
-
-			dark:text-white
 		"
     >
       <p

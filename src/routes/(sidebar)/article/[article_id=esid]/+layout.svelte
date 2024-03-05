@@ -141,7 +141,7 @@
 "
 >
   <header class="flex justify-between mb-3">
-    <h1 class="sm:text-5xl text-3xl xl:max-w-5xl dark:text-white">
+    <h1 class="sm:text-5xl text-3xl xl:max-w-5xl">
       {data.article.title}
     </h1>
 
@@ -150,7 +150,7 @@
     </section>
   </header>
 
-  <p class="italic font-light dark:font-medium dark:text-white">
+  <p class="italic font-light dark:font-medium">
     {data.article.description}
   </p>
 

@@ -102,11 +102,17 @@
           hover:dark:border-primary-500/50
 
           {search
-            ? 'text-primary-600 dark:text-primary-500/75 dark:border-primary-500/50 hover:dark:text-primary-500'
-            : 'text-black/30 dark:text-white/25'}
+            ? 'text-primary-600 dark:text-primary-500/75 border-primary-500/50 hover:dark:text-primary-500'
+            : 'text-black/30 border-surface-300 dark:border-white/25 dark:text-white/25'}
          "
         >
-          <Fa class="border-r pr-4" icon={faMagnifyingGlass} />
+          <Fa
+            class="border-r pr-4
+            {search
+              ? 'border-primary-500/50'
+              : 'border-surface-300 dark:border-white/25'}"
+            icon={faMagnifyingGlass}
+          />
           <span class="ml-4 uppercase font-bold">Custom search</span>
         </a>
         {#each options as option}

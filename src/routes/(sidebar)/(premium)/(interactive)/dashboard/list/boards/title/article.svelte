@@ -95,7 +95,7 @@
       <div
         class="
           flex flex-row justify-between
-          font-light text-xs dark:text-white
+          font-light text-xs
           mb-2
         "
       >
@@ -108,7 +108,7 @@
       <div>
         <h2
           class="
-            dark:text-white lg:text-4xl text-3xl
+            lg:text-4xl text-3xl
 
             {read ? 'opacity-75' : 'font-bold'}
             [&>strong]:font-semibold
@@ -134,7 +134,7 @@
       {#if showSummary && article.summary && article.summary.length > 0}
         <section transition:slide>
           <hr class="text-surface-400/25 border my-9" />
-          <p class="dark:text-white font-light">
+          <p class="font-light">
             {article.summary}
           </p>
           <hr class="text-surface-400/25 border my-9" />

@@ -22,12 +22,10 @@
   "
   style="max-height: min(90vh, 40rem)"
 >
-  <h1
-    class="font-bold text-lg sm:text-xl md:text-2xl xl:text-3xl dark:text-white"
-  >
+  <h1 class="font-bold text-lg sm:text-xl md:text-2xl xl:text-3xl">
     Add to collections:
   </h1>
-  <h2 class="font-light text-xs sm:text-base xl:text-lg dark:text-white">
+  <h2 class="font-light text-xs sm:text-base xl:text-lg">
     {article.title}
   </h2>
 

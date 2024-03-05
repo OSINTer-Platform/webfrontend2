@@ -36,7 +36,6 @@
   <h3
     class="
         text-xl font-bold
-        dark:text-white
         cursor-pointer
       "
   >
@@ -44,7 +43,7 @@
   </h3>
 
   <button
-    class="text-xl font-light dark:text-white"
+    class="text-xl font-light"
     on:click={() => {
       selected = [];
       search = "";

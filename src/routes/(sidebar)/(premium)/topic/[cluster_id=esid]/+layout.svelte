@@ -72,7 +72,7 @@
     class="
     text-xs sm:text-sm
     font-light text-justify
-    dark:text-white leading-snug mt-4
+    leading-snug mt-4
   "
   >
     {data.cluster.summary}

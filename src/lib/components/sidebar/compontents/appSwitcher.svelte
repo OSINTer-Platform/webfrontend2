@@ -55,8 +55,6 @@
 						justify-center
 
 						text-center
-						
-						{selected ? 'bg-primary-500 dark:text-white' : ''}
 					"
           >
             <Fa icon={item.icon} class="sm:text-2xl" />

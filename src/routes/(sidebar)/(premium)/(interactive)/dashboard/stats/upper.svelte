@@ -21,7 +21,7 @@
       first:pl-2 last:pr-2
   "
   >
-    <h3 class="font-bold dark:text-white text-2xl mb-3">{title}</h3>
+    <h3 class="font-bold text-2xl mb-3">{title}</h3>
     <ol class="h-full flex flex-col gap-2 overflow-y-auto">
       {#each items as { title, description, score, large, href, action }}
         <li>

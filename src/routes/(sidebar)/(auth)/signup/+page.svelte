@@ -34,7 +34,7 @@
     "Sign up down below to start with your journey into the wonderful world of CTI";
 </script>
 
-<header class="dark:text-white self-stretch">
+<header class="self-stretch">
   <h1 class="text-5xl font-semibold">{title}</h1>
   <p class="font-light">{detail}</p>
 </header>
@@ -158,7 +158,7 @@
   >
 </form>
 
-<p class="font-light block w-fit mt-4 dark:text-white">
+<p class="font-light block w-fit mt-4">
   Already have a user? <a
     href="/login"
     class="link-underline text-primary-600 dark:text-primary-400 w-fit inline-block"

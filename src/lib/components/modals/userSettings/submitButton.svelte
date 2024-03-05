@@ -35,7 +35,7 @@
       "
       {disabled}
     >
-      <Fa icon={faCheck} class="dark:text-white" />
+      <Fa icon={faCheck} />
     </button>
   {:catch e}
     <button
@@ -47,7 +47,7 @@
       "
       {disabled}
     >
-      <Fa icon={faXmark} class="dark:text-white" />
+      <Fa icon={faXmark} />
     </button>
   {/await}
 {:else}

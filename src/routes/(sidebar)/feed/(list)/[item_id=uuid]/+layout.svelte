@@ -213,7 +213,6 @@
       on:keyup={keyup}
       class="
         lg:text-5xl sm:text-4xl text-3xl
-        dark:text-white
         focus:outline-none
 			"
       contenteditable={ownsFeed ? "true" : "false"}
@@ -239,7 +238,7 @@
       content: "";
       @apply block
 			w-full h-px
-			text-black dark:text-white
+			text-black
 
 			scale-x-0 origin-bottom-right
 			transition-transform duration-300

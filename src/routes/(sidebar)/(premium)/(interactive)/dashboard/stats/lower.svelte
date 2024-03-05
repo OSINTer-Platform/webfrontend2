@@ -57,9 +57,7 @@
 
 <section class="flex flex-col py-2 px-6">
   <header class="flex justify-between">
-    <h3 class="font-bold dark:text-white text-2xl mt-1 mb-1">
-      Trends in articles
-    </h3>
+    <h3 class="font-bold text-2xl mt-1 mb-1">Trends in articles</h3>
     <div class="flex gap-2 pb-2">
       {#each trendOptions as { title, icon, words }}
         {@const active = words.join("") === $keywords.join("")}
@@ -81,6 +79,6 @@
 </section>
 
 <section class="flex flex-col py-2 px-6">
-  <h3 class="font-bold dark:text-white text-2xl mb-1">Common article tags</h3>
+  <h3 class="font-bold text-2xl mb-1">Common article tags</h3>
   <Wordcloud />
 </section>

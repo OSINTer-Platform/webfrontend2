@@ -166,7 +166,7 @@
     {width}
     {height}
     viewBox="0 0 {width} {height}"
-    class="absolute dark:text-white"
+    class="absolute"
   >
     <g bind:this={xAxis} transform="translate(0,{height - margins.bottom})" />
     <g bind:this={yAxis} transform="translate({margins.left},0)">
@@ -190,7 +190,7 @@
     height={innerHeight}
     viewBox="0 0 {innerWidth} {innerHeight}"
     style="margin: {margins.top}px {margins.right}px {margins.bottom}px {margins.left}px"
-    class="absolute dark:text-white font-thin"
+    class="absolute font-thin"
   >
     {#if pointer}
       <g

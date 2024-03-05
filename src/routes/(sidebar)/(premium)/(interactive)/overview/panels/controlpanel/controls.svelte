@@ -12,7 +12,6 @@
     class="
         block
         text-xl font-bold
-        dark:text-white
       "
   >
     Size of dots:
@@ -21,7 +20,6 @@
     class="
         block
         text-lg font-light italic
-        dark:text-white
       "
   >
     {$dotSize.toFixed(1)} px
@@ -51,7 +49,6 @@
     class="
         block
         text-xl font-bold
-        dark:text-white
       "
   >
     Size of tooltips:
@@ -60,7 +57,6 @@
     class="
         block
         text-lg font-light italic
-        dark:text-white
       "
   >
     {$toolTipSize.toFixed(1)} px
@@ -91,7 +87,6 @@
     class="
         block
         text-xl font-bold
-        dark:text-white
         cursor-pointer
       "
   >
@@ -121,7 +116,6 @@
       class="
         block
         text-xs font-light italic
-        dark:text-white
         cursor-pointer
       "
     >

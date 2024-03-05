@@ -37,7 +37,6 @@
 	mb-6 lg:mb-8
 	text-3xl lg:text-3xl
 	font-extralight tracking-tight text-center
-	dark:text-white
 "
 >
   Frequently asked questions
@@ -69,9 +68,7 @@
   {#if open}
     <div transition:slide|local>
       <div class="py-5 border-b border-surface-400/20">
-        <p
-          class="mb-2 text-gray-500 dark:text-white font-light [&>a]:underline"
-        >
+        <p class="mb-2 text-gray-500 font-light [&>a]:underline">
           <SvelteMarkdown isInline={true} source={answer} />
         </p>
       </div>

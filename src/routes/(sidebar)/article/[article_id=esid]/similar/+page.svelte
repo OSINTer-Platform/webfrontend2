@@ -22,7 +22,7 @@
         my-3 sm:mb-6 sm:mt-0 pr-2
         flex items-center gap-4 w-fit
         text-base sm:text-xl
-        font-light dark:text-white
+        font-light
         group
       "
     >

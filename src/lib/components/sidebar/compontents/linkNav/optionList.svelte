@@ -86,7 +86,6 @@
 						rounded-md
 						sm:rounded-xl
 
-						dark:text-white
 						sm:dark:font-medium
 
 						{selected ? 'bg-primary-500/25' : 'hover:bg-primary-500/5'}

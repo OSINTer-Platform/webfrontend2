@@ -96,7 +96,7 @@
       <h4
         class="
         tracking-tight leading-tight p-2 h-24
-        font-bold dark:text-white
+        font-bold
       "
       >
         {article.title}

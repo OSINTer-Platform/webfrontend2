@@ -21,7 +21,6 @@
 
 	mb-4
 
-	dark:text-white
 	dark:font-medium
 "
 >

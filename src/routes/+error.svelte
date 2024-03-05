@@ -24,7 +24,7 @@
       <LogoFull class="mb-4 mx-8 sm:mx-0" />
     {/if}
 
-    <h1 class="font-semibold sm:text-2xl md:text-4xl dark:text-white">
+    <h1 class="font-semibold sm:text-2xl md:text-4xl">
       {title}
     </h1>
     {#if Array.isArray(description)}
@@ -50,7 +50,7 @@
 <style lang="postcss">
   p.description {
     @apply font-light mx-6
-    text-sm md:text-lg dark:text-white;
+    text-sm md:text-lg;
   }
 
   section {

@@ -66,7 +66,7 @@
   >
     <section class="flex items-start gap-3">
       <slot name="title">
-        <h1 class="sm:text-5xl text-3xl dark:text-white">{title}</h1>
+        <h1 class="sm:text-5xl text-3xl">{title}</h1>
       </slot>
       {#if badge}
         <span
@@ -97,9 +97,7 @@
     </section>
   </header>
   {#if description}
-    <p
-      class="text-sm sm:text-base italic font-light sm:dark:font-medium dark:text-white"
-    >
+    <p class="text-sm sm:text-base italic font-light sm:dark:font-medium">
       {description}
     </p>
   {/if}

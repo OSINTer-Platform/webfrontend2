@@ -34,16 +34,16 @@
 
 <main class="bg-surface-50 dark:bg-surface-800 h-full flex justify-center">
   <div class="flex flex-col max-w-5xl p-4 sm:p-16 md:p-8 m-auto text-center">
-    <h1 class="font-semibold sm:text-4xl md:text-6xl dark:text-white">
+    <h1 class="font-semibold sm:text-4xl md:text-6xl">
       We are under maintenance
     </h1>
 
-    <p class="mx-6 font-light md:text-xl dark:text-white">
+    <p class="mx-6 font-light md:text-xl">
       OSINTer is currently offline for maintenance purposes
     </p>
 
     {#if data.etc}
-      <p class="mx-6 font-light text-sm md:text-lg dark:text-white">
+      <p class="mx-6 font-light text-sm md:text-lg">
         Expect us to be back {parseDate(data.etc)}
       </p>
     {/if}

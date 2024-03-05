@@ -35,7 +35,7 @@
       {placeholder}
       class="
         grow h-full min-w-0 shrink-1
-        bg-transparent placeholder-tertiary-800 text-xs dark:text-white
+        bg-transparent placeholder-tertiary-800 text-xs
         border-0 focus:outline-none focus:border-0
         {inputClass}
     "

@@ -56,7 +56,7 @@
 
             cursor-pointer rounded-md
 
-            text-left font-light dark:font-normal dark:text-white
+            text-left font-light dark:font-normal
             {showStats ? 'text-sm md:text-base' : 'text-xs md:text-sm'}
 
             hover:bg-primary-500/10

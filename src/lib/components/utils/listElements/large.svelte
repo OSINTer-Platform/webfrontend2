@@ -109,7 +109,6 @@
 
         font-light
         text-xs
-        dark:text-white
 
         mb-1
       "
@@ -121,7 +120,7 @@
     <div>
       <h2
         class="
-          dark:text-white sm:text-2xl text-xl
+          sm:text-2xl text-xl
 
           {read ? 'opacity-75' : 'font-bold'}
           [&>strong]:font-semibold
@@ -161,7 +160,7 @@
           >
             <p
               class="
-              dark:text-white font-light
+              font-light
               [&>strong]:font-semibold
               [&>strong]:text-primary-600
             "

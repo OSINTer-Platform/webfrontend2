@@ -13,7 +13,7 @@
   export let containerClasses: string = "";
 
   const buttonCss =
-    "flex flex-row gap-6 hover:bg-primary-300/25 items-center justify-start rounded-xl w-full pl-4 p-2 sm:p-3 sm:pl-5 text-sm sm:text-base dark:text-white dark:hover:bg-primary-500/40";
+    "flex flex-row gap-6 hover:bg-primary-300/25 items-center justify-start rounded-xl w-full pl-4 p-2 sm:p-3 sm:pl-5 text-sm sm:text-base dark:hover:bg-primary-500/40";
 </script>
 
 <div

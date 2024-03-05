@@ -103,7 +103,7 @@
 >
   {#if incompatibleDevice}
     <div
-      class="h-full mx-auto px-8 xl:max-w-5xl max-w-2xl flex flex-col justify-center items-center text-center dark:text-white"
+      class="h-full mx-auto px-8 xl:max-w-5xl max-w-2xl flex flex-col justify-center items-center text-center"
     >
       <h2
         class="xl:text-5xl md:text-4xl sm:text-3xl text-2xl font-bold md:mb-2"
@@ -136,7 +136,7 @@
       <Map {articles} clusters={data.clusters} />
     {:catch error}
       <div
-        class="h-full mx-auto px-8 xl:max-w-5xl max-w-2xl flex flex-col justify-center items-center text-center dark:text-white"
+        class="h-full mx-auto px-8 xl:max-w-5xl max-w-2xl flex flex-col justify-center items-center text-center"
       >
         <h2
           class="xl:text-5xl md:text-4xl sm:text-3xl text-2xl font-bold md:mb-2"

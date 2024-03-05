@@ -73,14 +73,13 @@
   <div class="flex justify-between items-end mb-4">
     <h1
       class="
-        dark:text-white text-3xl font-semibold
+         text-3xl font-semibold
       "
     >
       Selected:
     </h1>
     <p
       class="
-          dark:text-white
           font-light text-2xl italic
         "
     >
@@ -118,7 +117,6 @@
           articleList={$searchedSelectedArticles}
           class="
               block py-2 truncate
-              dark:text-white
               dark:hover:text-primary-500 hover:text-primary-500
               transition-colors duration-75">{article.title}</ModalLink
         >

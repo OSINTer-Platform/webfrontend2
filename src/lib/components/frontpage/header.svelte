@@ -37,7 +37,7 @@
 				md:text-lg lg:text-base xl:text-xl
 
 				lg:tracking-tighter xl:tracking-tight
-				font-light dark:text-white
+				font-light
 			"
       >
         Experience a new approach to CTI, helping you do more with less.
@@ -54,7 +54,6 @@
         class="
 				ml-12 -mt-4
 				font-light
-				dark:text-white
 			"
       >
         Automating the CTI heavylifting
@@ -108,7 +107,6 @@
 				rounded-lg
 
 				font-light
-				dark:text-white
 			">Read about OSINTer</a
       >
     </div>

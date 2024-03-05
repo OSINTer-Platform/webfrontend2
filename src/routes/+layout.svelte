@@ -61,12 +61,14 @@
 
 <ProgressBar class="text-primary-500" zIndex={100} settleTime={300} />
 
-<div class="h-screen overflow-hidden flex flex-col" class:dark={$darkMode}>
-  <Modals />
-  {#if $page.data.topbar ?? true}
-    <div class="z-40 relative">
-      <TopBar user={$user} />
-    </div>
-  {/if}
-  <slot />
+<div class="h-screen" class:dark={$darkMode}>
+  <div class="w-full h-full overflow-hidden flex flex-col dark:text-white">
+    <Modals />
+    {#if $page.data.topbar ?? true}
+      <div class="z-40 relative">
+        <TopBar user={$user} />
+      </div>
+    {/if}
+    <slot />
+  </div>
 </div>

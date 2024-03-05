@@ -1,4 +1,4 @@
-<header class="dark:text-white self-stretch">
+<header class="self-stretch">
   <h1 class="text-5xl font-semibold mb-6">Please contact your sysadmin</h1>
 
   <hr class="text-surface-400/25 border my-10 w-full" />
@@ -12,7 +12,7 @@
 
 <hr class="text-surface-400/25 border my-10 w-full" />
 
-<p class="font-light block w-fit mt-4 dark:text-white">
+<p class="font-light block w-fit mt-4">
   Want to try again? <a
     href="/login"
     class="link-underline text-primary-600 dark:text-primary-400 w-fit inline-block"

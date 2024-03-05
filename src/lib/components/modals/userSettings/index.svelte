@@ -38,7 +38,7 @@
 >
   <h1
     class="
-    font-bold dark:text-white
+    font-bold
     text-xl sm:text-2xl md:text-3xl lg:text-4xl
     mb-2 md:mb-4 lg:mb-6
   "
@@ -49,7 +49,6 @@
   <main
     class="
     flex flex-col
-    dark:text-white
   "
   >
     <StatsRender user={$user} />

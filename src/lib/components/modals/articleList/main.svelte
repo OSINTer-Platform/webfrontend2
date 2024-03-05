@@ -38,7 +38,7 @@
         transition-all
 
         {listRenderMode === value
-          ? 'dark:text-white bg-primary-600/60 hover:dark:bg-primary-600/70'
+          ? 'bg-primary-600/60 hover:dark:bg-primary-600/70'
           : 'dark:text-primary-600 bg-primary-600/10 hover:bg-primary-400/20 hover:dark:bg-primary-500/20'}
 
         border border-primary-500

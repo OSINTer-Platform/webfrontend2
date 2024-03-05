@@ -72,7 +72,7 @@
   >
     <Fa {icon} class="text-3xl opacity-80 transition-opacity duration-300" />
   </div>
-  <h3 class="font-semibold text-4xl dark:text-white">{title}</h3>
+  <h3 class="font-semibold text-4xl">{title}</h3>
   <p
     class="
     text-sm
@@ -82,7 +82,6 @@
 
     leading-4
     xl:leading-5
-    dark:text-white
     m-2
     sm:m-0
   "

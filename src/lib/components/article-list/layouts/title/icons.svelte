@@ -38,7 +38,7 @@
           class="
           ml-auto my-auto
           text-lg md:text-xl
-          text-black/50 dark:text-white/90
+          text-black/75 dark:text-white/90
           hover:text-primary-500
           transition-colors
         "
