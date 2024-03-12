@@ -72,9 +72,9 @@
       {:then clusters}
         {#if clusters}
           <section transition:slide>
-            <hr class="text-tertiary-800/50 my-12" />
+            <hr class="border-tertiary-800/50 my-12" />
             <TopicChart {clusters} search={$clusterSearch} />
-            <hr class="text-tertiary-800/50 my-12" />
+            <hr class="border-tertiary-800/50 my-12" />
           </section>
         {/if}
       {/await}

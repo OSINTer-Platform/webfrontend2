@@ -31,7 +31,7 @@
     </MajorSection>
 
     <hr
-      class="sm:mb-8 mb-3 mt-3 text-tertiary-500 dark:text-surface-400 @5xl/full:hidden"
+      class="sm:mb-8 mb-3 mt-3 border-tertiary-500 dark:border-surface-400 @5xl/full:hidden"
     />
   </svelte:fragment>
   <svelte:fragment slot="last">
@@ -39,7 +39,7 @@
       <SearchPanel {searchQuery} />
 
       <hr
-        class="sm:mb-8 mb-3 mt-3 text-tertiary-500 dark:text-surface-400 @5xl/full:hidden"
+        class="sm:mb-8 mb-3 mt-3 border-tertiary-500 dark:border-surface-400 @5xl/full:hidden"
       />
 
       <section class="flex gap-4 mx-4">

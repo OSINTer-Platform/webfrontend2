@@ -33,7 +33,7 @@
   {modOptions}
   bind:searchValue={$feedLocalSearch}
 >
-  <hr class="text-tertiary-600/50 my-4" />
+  <hr class="border-tertiary-600/50 my-4" />
 
   <div class="flex flex-wrap">
     {#each data.months as month}
@@ -41,7 +41,7 @@
     {/each}
   </div>
 
-  <hr class="text-tertiary-600/50 mb-4" />
+  <hr class="border-tertiary-600/50 mb-4" />
 </HeaderShell>
 
 <slot />

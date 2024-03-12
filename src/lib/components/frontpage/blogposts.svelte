@@ -37,7 +37,7 @@
         <h4 class="text-xl xl:text-2xl font-bold text-white">
           {title}
         </h4>
-        <hr class="text-white/70 my-2" />
+        <hr class="border-white/70 my-2" />
         <p
           class="text-xs sm:text-lg md:text-base lg:text-lg text-white leading-tight"
         >

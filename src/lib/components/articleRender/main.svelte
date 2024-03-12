@@ -85,7 +85,7 @@
   <SvelteMarkdown source={article.formatted_content} on:parsed={handleParsed} />
 </div>
 
-<hr class="text-tertiary-700/25 mb-8" />
+<hr class="border-tertiary-700/25 mb-8" />
 
 <section class="flex">
   {#each buttonActions as { title, action }}
@@ -116,7 +116,7 @@
   {/each}
 </section>
 
-<hr class="text-tertiary-700/25 my-8" />
+<hr class="border-tertiary-700/25 my-8" />
 
 <style lang="postcss">
 </style>

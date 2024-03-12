@@ -20,7 +20,7 @@
   $: read = readArticles.includes(article.id);
 </script>
 
-<hr class="text-tertiary-500 dark:text-surface-500 my-3" />
+<hr class="border-tertiary-500 dark:text-surface-500 my-3" />
 
 <Link {article} {articleList}>
   <article
@@ -133,11 +133,11 @@
 
       {#if showSummary && article.summary && article.summary.length > 0}
         <section transition:slide>
-          <hr class="text-surface-400/25 border my-9" />
+          <hr class="border-surface-400/25 border my-9" />
           <p class="font-light">
             {article.summary}
           </p>
-          <hr class="text-surface-400/25 border my-9" />
+          <hr class="border-surface-400/25 border my-9" />
         </section>
       {/if}
 

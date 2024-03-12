@@ -105,7 +105,7 @@
   {/each}
 </section>
 
-<hr class="text-tertiary-700/25 mb-8" />
+<hr class="border-tertiary-700/25 mb-8" />
 
 <section class="flex justify-center">
   {#each buttonActions as { icon, description, action }}

@@ -50,7 +50,7 @@
     placeholder={"Ask a new question"}
   />
 
-  <hr class="text-surface-400/25 border my-12" />
+  <hr class="border-surface-400/25 border my-12" />
 
   <h2
     class="
@@ -65,7 +65,7 @@
 
   <ArticleList {articles} />
 
-  <hr class="text-surface-400/25 border my-12" />
+  <hr class="border-surface-400/25 border my-12" />
 
   {#await extraArticles}
     <Loader text="Loading extra articles" />

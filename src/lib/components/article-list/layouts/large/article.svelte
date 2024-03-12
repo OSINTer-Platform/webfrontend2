@@ -64,7 +64,7 @@
   ];
 </script>
 
-<hr class="text-tertiary-500 dark:text-surface-500" />
+<hr class="border-tertiary-500 dark:border-surface-500" />
 
 <Link {article} {articleList}>
   <Large

@@ -56,7 +56,7 @@
               w-full max-w-prose mx-auto
             "
           >
-            <hr class="text-surface-400/25 border my-12" />
+            <hr class="border-surface-400/25 border my-12" />
           </div>
         </svelte:fragment>
 

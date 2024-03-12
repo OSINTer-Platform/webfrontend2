@@ -37,7 +37,7 @@
   }
 </script>
 
-<hr class="text-tertiary-500 dark:text-surface-500" />
+<hr class="border-tertiary-500 dark:border-surface-500" />
 
 <a data-sveltekit-preload-data="off" href={`/topic/${cluster.id}`}>
   <Large

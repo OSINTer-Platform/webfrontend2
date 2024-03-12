@@ -103,7 +103,7 @@
   {/if}
 
   <slot>
-    <hr class="text-tertiary-600/50 my-4" />
+    <hr class="border-tertiary-600/50 my-4" />
   </slot>
 
   <svelte:component

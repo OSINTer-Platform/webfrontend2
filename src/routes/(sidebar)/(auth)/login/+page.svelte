@@ -73,7 +73,7 @@
     >
   </div>
 
-  <hr class="text-surface-400/25 border mb-6 mt-10" />
+  <hr class="border-surface-400/25 border mb-6 mt-10" />
 
   <button
     type="submit"

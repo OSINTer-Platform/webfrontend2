@@ -84,6 +84,6 @@
   {/each}
 </div>
 
-<hr class="my-2 border text-surface-400/50" />
+<hr class="my-2 border-surface-400/50" />
 
 <Search bind:value={search} placeholder="Search for topic" />

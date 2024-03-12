@@ -1,7 +1,7 @@
 <header class="self-stretch">
   <h1 class="text-5xl font-semibold mb-6">Please contact your sysadmin</h1>
 
-  <hr class="text-surface-400/25 border my-10 w-full" />
+  <hr class="border-surface-400/25 border my-10 w-full" />
 
   <p class="font-light text-justify">
     As this instance of OSINTer at this time doesn't support automatic password
@@ -10,7 +10,7 @@
   </p>
 </header>
 
-<hr class="text-surface-400/25 border my-10 w-full" />
+<hr class="border-surface-400/25 border my-10 w-full" />
 
 <p class="font-light block w-fit mt-4">
   Want to try again? <a

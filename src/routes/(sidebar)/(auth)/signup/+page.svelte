@@ -78,7 +78,7 @@
     </div>
   </section>
 
-  <hr class="text-surface-400/25 border my-8" />
+  <hr class="border-surface-400/25 border my-8" />
 
   <section class="flex flex-col gap-5">
     <div class="input">
@@ -126,7 +126,7 @@
     </div>
   </section>
 
-  <hr class="text-surface-400/25 border mt-8 mb-6" />
+  <hr class="border-surface-400/25 border mt-8 mb-6" />
 
   <button
     type="submit"

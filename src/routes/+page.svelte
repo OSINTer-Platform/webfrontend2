@@ -45,12 +45,12 @@
         and stability may vary.
       </div>
 
-      <hr />
+      <hr class="border-surface-200 dark:border-surface-700" />
       -->
 
       <InternalLinks />
 
-      <hr />
+      <hr class="border-surface-200 dark:border-surface-700" />
 
       <Blogposts posts={data.posts} />
     </div>
