@@ -8,3 +8,5 @@ export const eclipseConcat = (s: string[]) => {
 
   return finalString;
 };
+
+export const valEmail = (s: string) => !!s.match("[^@]+@[^@]+\\.[^@]+");
