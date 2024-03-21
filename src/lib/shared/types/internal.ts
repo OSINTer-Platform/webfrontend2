@@ -78,4 +78,11 @@ export type Modal = (
       modalType: "user-settings";
       modalContent: null;
     }
+  | {
+      modalType: "info";
+      modalContent: {
+        title: string;
+        description: string | string[];
+      };
+    }
 ) & { id: string };
