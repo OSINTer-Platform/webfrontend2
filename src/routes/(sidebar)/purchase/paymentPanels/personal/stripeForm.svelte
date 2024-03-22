@@ -26,6 +26,7 @@
 
   $: darkMode = $page.data.settings.darkMode;
   $: user = $page.data.user;
+  $: collectEmail = !($user && $user.payment.stripe_id.length > 0);
 
   async function submit() {
     if (processingPayment || !elements) return;
@@ -33,6 +34,10 @@
 
     processingPayment = true;
     paymentError = undefined;
+
+    const content: { [key: string]: string } = { price_id: personalPrice.id };
+
+    if (collectEmail) content["email"] = email;
 
     const r = await fetch(`${PUBLIC_API_BASE}/my/user/payment/subscription`, {
       method: "POST",
@@ -94,7 +99,7 @@
 </script>
 
 <form on:submit|preventDefault={submit}>
-  {#if !($user && $user.payment.stripe_id.length > 0)}
+  {#if collectEmail}
     <!-- svelte-ignore a11y-label-has-associated-control -->
     <label class="stripe-input relative mb-3 block">
       Email
