@@ -64,6 +64,25 @@
   }
 }
 
+.text-line {
+  @apply flex justify-center items-center;
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    @apply border-b border-surface-300 dark:border-gray-900;
+  }
+
+  &::before {
+    @apply mr-3;
+  }
+
+  &::after {
+    @apply ml-3;
+  }
+}
+
 div.input {
   @apply relative flex justify-center;
 
