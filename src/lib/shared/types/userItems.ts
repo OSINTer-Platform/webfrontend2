@@ -43,4 +43,19 @@ export interface User {
     render_external: boolean;
     list_render_mode: ArticleListRender;
   };
+
+  payment: {
+    stripe_id: string;
+    action: {
+      last_updated: number;
+      required: boolean;
+      payment_intent: string;
+      invoice_url: string;
+    };
+    subscription: {
+      last_updated: number;
+      level: "" | "pro";
+      state: "" | "active" | "past_due" | "closed";
+    };
+  };
 }
