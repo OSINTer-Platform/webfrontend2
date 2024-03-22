@@ -1,15 +1,8 @@
 <script lang="ts">
   import Fa from "svelte-fa";
-  import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+  import type { HeaderModOptions } from "$shared/types/internal";
 
-  export let listOptions: Array<
-    Array<{
-      title: string;
-      icon: IconDefinition;
-      action?: Function;
-      route?: string;
-    }>
-  > = [];
+  export let listOptions: HeaderModOptions[][] = [];
   export let containerClasses: string = "";
 
   const buttonCss =
@@ -45,12 +38,16 @@
           {#each list as option}
             <li class="w-full text-left">
               {#if option.route}
-                <a href={option.route} class={buttonCss}>
+                <a href={option.route} class={buttonCss} {...option.options}>
                   <Fa icon={option.icon} />
                   {option.title}
                 </a>
               {:else if option.action}
-                <button on:click={() => option.action?.()} class={buttonCss}>
+                <button
+                  on:click={() => option.action?.()}
+                  class={buttonCss}
+                  {...option.options}
+                >
                   <Fa icon={option.icon} />
                   {option.title}
                 </button>
