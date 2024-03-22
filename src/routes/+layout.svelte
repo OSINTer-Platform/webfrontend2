@@ -13,20 +13,12 @@
   import { env } from "$env/dynamic/public";
   import { page } from "$app/stores";
   import { afterNavigate } from "$app/navigation";
+  import { onMount } from "svelte";
 
   export let data: LayoutData;
 
   $: darkMode = $page.data.settings.darkMode;
   $: user = data.user;
-
-  if ("PUBLIC_APM_ENV" in env && "PUBLIC_APM_URL" in env) {
-    initApm({
-      serviceName: "OSINTer-webfrontend",
-      serverUrl: env.PUBLIC_APM_URL,
-      serviceVersion: "5.0",
-      environment: env.PUBLIC_APM_ENV,
-    });
-  }
 
   function handleKeypress(e: KeyboardEvent) {
     switch (e.key) {
@@ -41,6 +33,22 @@
 
   afterNavigate(() => {
     modalState.set([]);
+  });
+
+  onMount(() => {
+    if (
+      "PUBLIC_APM_ENV" in env &&
+      "PUBLIC_APM_URL" in env &&
+      env.PUBLIC_APM_ENV.length > 0 &&
+      env.PUBLIC_APM_URL.length > 0
+    ) {
+      initApm({
+        serviceName: "OSINTer-webfrontend",
+        serverUrl: env.PUBLIC_APM_URL,
+        serviceVersion: "5.0",
+        environment: env.PUBLIC_APM_ENV,
+      });
+    }
   });
 </script>
 
