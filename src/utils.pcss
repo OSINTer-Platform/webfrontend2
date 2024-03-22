@@ -248,3 +248,39 @@ div.article-content-render {
     }
   }
 }
+
+label.stripe-input {
+  @apply text-black/70 dark:text-white;
+  div {
+    @apply flex w-full py-2 px-3 rounded-md
+    bg-white dark:bg-gray-900
+    shadow shadow-gray-400/10 dark:shadow-black
+    border border-black/0
+
+    focus-within:border-primary-400
+    focus-within:shadow-[0_0_0_3px_#ff000040]
+
+    dark:focus-within:border-primary-800
+    dark:focus-within:shadow-[0_0_0_3px_#500f0f]
+
+    transition-all;
+
+    &.error {
+      @apply border-2 border-error-500;
+
+      input,
+      textarea {
+        @apply text-error-400;
+      }
+    }
+
+    input,
+    textarea {
+      @apply grow bg-transparent !outline-none
+      placeholder-gray-400 dark:placeholder-gray-200/75;
+    }
+  }
+  p.error {
+    @apply text-error-500 dark:text-error-400;
+  }
+}
