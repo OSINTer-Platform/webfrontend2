@@ -8,13 +8,4 @@
   export let searchQuery: SearchQuery;
 </script>
 
-<form action="/feed/search" method="get" class="h-full">
-  <SearchFields sourceCategories={data.sourceCategories} bind:searchQuery>
-    <svelte:fragment slot="main-button">
-      <button
-        class="grow btn
-			">Search Content</button
-      >
-    </svelte:fragment>
-  </SearchFields>
-</form>
+<SearchFields sourceCategories={data.sourceCategories} bind:searchQuery />

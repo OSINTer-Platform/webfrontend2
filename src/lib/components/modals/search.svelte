@@ -18,17 +18,14 @@
 	@container/full
 "
 >
-  <form action="/feed/search" method="get" class="h-full">
-    <SearchFields bind:searchQuery>
-      <svelte:fragment slot="main-button">
-        <button
-          type={callback ? "button" : null}
-          class="grow btn"
-          on:click={() => {
-            if (callback) callback(searchQuery);
-          }}>{searchText}</button
-        >
-      </svelte:fragment>
-    </SearchFields>
-  </form>
+  <SearchFields
+    bind:searchQuery
+    submitText={searchText}
+    on:submit={(e) => {
+      if (callback) {
+        e.preventDefault();
+        callback(searchQuery);
+      }
+    }}
+  />
 </Modal>

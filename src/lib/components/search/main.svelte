@@ -16,73 +16,82 @@
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { getStandardSearch } from "$shared/config";
   import { createItem, sanitizeQuery } from "$lib/common/userItems";
+  import { toUrl } from "$lib/common/searchQuery";
 
   export let searchQuery: SearchQuery = getStandardSearch();
   export let sourceCategories: ArticleCategories | undefined = undefined;
+  export let submitText: string = "Search content";
+
+  $: queryString = toUrl(searchQuery);
 </script>
 
-<TwoHalfs>
-  <svelte:fragment slot="first">
-    <MajorSection title="Select Sources">
-      <SourceSelect
-        {sourceCategories}
-        bind:selectedSources={searchQuery.sources}
-      />
-    </MajorSection>
-
-    <hr
-      class="sm:mb-8 mb-3 mt-3 border-tertiary-500 dark:border-surface-400 @5xl/full:hidden"
-    />
-  </svelte:fragment>
-  <svelte:fragment slot="last">
-    <MajorSection title="Search Query">
-      <SearchPanel {searchQuery} />
+<form action="/feed/search" method="get" class="h-full" on:submit>
+  <TwoHalfs>
+    <svelte:fragment slot="first">
+      <MajorSection title="Select Sources">
+        <SourceSelect
+          {sourceCategories}
+          bind:selectedSources={searchQuery.sources}
+        />
+      </MajorSection>
 
       <hr
         class="sm:mb-8 mb-3 mt-3 border-tertiary-500 dark:border-surface-400 @5xl/full:hidden"
       />
+    </svelte:fragment>
+    <svelte:fragment slot="last">
+      <MajorSection title="Search Query">
+        <SearchPanel {searchQuery} />
 
-      <section class="flex gap-4 mx-4">
-        <slot name="main-button" />
+        <hr
+          class="sm:mb-8 mb-3 mt-3 border-tertiary-500 dark:border-surface-400 @5xl/full:hidden"
+        />
 
-        <div class="flex shrink-0 w-fit side-buttons">
-          <slot name="side-buttons">
-            <button
-              class="btn"
-              on:click={() => {
-                createItem(
-                  "New feed",
-                  sanitizeQuery(searchQuery),
-                  "feed",
-                  "current"
-                );
-              }}><Fa icon={faPlus} /></button
-            >
+        <section class="flex gap-4 mx-4">
+          <button class="btn grow">{submitText}</button>
 
-            <button
-              class="btn"
-              formaction="{PUBLIC_API_BASE}/articles/search/export"
-            >
-              <Fa icon={faDownload} />
-            </button>
+          <div class="flex shrink-0 w-fit side-buttons">
+            <slot name="side-buttons">
+              <button
+                type="button"
+                class="btn"
+                on:click={() => {
+                  createItem(
+                    "New feed",
+                    sanitizeQuery(searchQuery),
+                    "feed",
+                    "current"
+                  );
+                }}><Fa icon={faPlus} /></button
+              >
 
-            <button
-              type="button"
-              class="btn"
-              on:click={() => (searchQuery = getStandardSearch())}
-            >
-              <Fa icon={faArrowsRotate} />
-            </button>
-          </slot>
-        </div>
-      </section>
-    </MajorSection>
-  </svelte:fragment>
-</TwoHalfs>
+              <a
+                href="{PUBLIC_API_BASE}/articles/search/export?{queryString}"
+                download="true"
+                class="btn"
+              >
+                <Fa icon={faDownload} />
+              </a>
+
+              <button
+                type="button"
+                class="btn"
+                on:click={() => (searchQuery = getStandardSearch())}
+              >
+                <Fa icon={faArrowsRotate} />
+              </button>
+            </slot>
+          </div>
+        </section>
+      </MajorSection>
+    </svelte:fragment>
+  </TwoHalfs>
+</form>
 
 <style lang="postcss">
   section {
-    :global(button) {
+    :global(button),
+    :global(a) {
       @apply border border-tertiary-700
 			h-16 p-2
 			font-light dark:font-bold;
@@ -93,7 +102,8 @@
     }
 
     div.side-buttons {
-      :global(button) {
+      :global(button),
+      :global(a) {
         @apply w-14 sm:w-16 h-16;
       }
     }
