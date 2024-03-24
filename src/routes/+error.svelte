@@ -24,7 +24,7 @@
       <LogoFull class="mb-4 mx-8 sm:mx-0" />
     {/if}
 
-    <h1 class="font-semibold sm:text-2xl md:text-4xl">
+    <h1 class="font-semibold sm:text-2xl md:text-4xl mb-4">
       {title}
     </h1>
     {#if Array.isArray(description)}
