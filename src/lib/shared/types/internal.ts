@@ -85,4 +85,19 @@ export type Modal = (
         description: string | string[];
       };
     }
+  | {
+      modalType: "options";
+      modalContent: {
+        type: "info" | "success" | "warning" | "error";
+        title: string;
+        description: string;
+        options:
+          | {
+              text: string;
+              type: "primary" | "secondary" | "yes" | "no" | "cancel";
+              action: () => void;
+            }[]
+          | (() => void);
+      };
+    }
 ) & { id: string };

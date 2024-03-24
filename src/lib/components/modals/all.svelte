@@ -6,6 +6,7 @@
   import ArticleList from "./articleList/index.svelte";
   import UserSettings from "./userSettings/index.svelte";
   import Info from "./info.svelte";
+  import Options from "./options/index.svelte";
 </script>
 
 {#each $modalState as modal, i (modal.id)}
@@ -33,6 +34,14 @@
     <Info
       title={modal.modalContent.title}
       description={modal.modalContent.description}
+    />
+  {:else if modal.modalType == "options"}
+    <Options
+      title={modal.modalContent.title}
+      description={modal.modalContent.description}
+      options={modal.modalContent.options}
+      type={modal.modalContent.type}
+      modalId={modal.id}
     />
   {/if}
 {/each}
