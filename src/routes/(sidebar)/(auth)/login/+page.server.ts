@@ -52,7 +52,7 @@ export const actions = {
       cookies.set("access_token", `Bearer ${token.token}`, {
         httpOnly: true,
         secure: token.secure,
-        maxAge: token.maxAge,
+        maxAge: remember ? token.max_age : undefined,
 
         priority: "high",
         path: "/",

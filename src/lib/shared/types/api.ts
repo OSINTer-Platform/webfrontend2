@@ -117,7 +117,7 @@ export interface SearchQuery {
 
 export interface AccessTokenWithDetails {
   token: string;
-  maxAge: number;
+  max_age: number;
   secure: boolean;
 }
 
