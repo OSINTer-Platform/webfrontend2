@@ -2,10 +2,24 @@
   type ButtonType = "primary" | "secondary" | "yes" | "no" | "cancel";
 
   export let type: ButtonType;
+  export let action: () => void | boolean | Promise<void> | Promise<boolean>;
+  export let close: () => void;
+
+  let loading = false;
+
+  async function runAndClose() {
+    if (loading) return;
+    loading = true;
+
+    const r = await action();
+    if (r != false) close();
+
+    loading = false;
+  }
 </script>
 
 <button
-  on:click
+  on:click={runAndClose}
   class="
     first:rounded-l-md last:rounded-r-md
     text-sm sm:text-base
