@@ -17,7 +17,7 @@
   type ModalType = "info" | "success" | "warning" | "error";
 
   export let title: string;
-  export let description: string;
+  export let description: string | string[];
   export let type: ModalType;
   export let modalId: string;
 
@@ -35,6 +35,8 @@
     error: faTriangleExclamation,
     success: faCircleCheck,
   };
+
+  const close = () => modalState.remove(modalId);
 </script>
 
 <Modal
@@ -66,16 +68,24 @@
       <div>
         <h1
           class="
-        font-bold
-        text-lg sm:text-xl md:text-2xl xl:text-4xl
-      "
+            font-bold mb-1
+            text-lg sm:text-xl md:text-2xl xl:text-4xl
+          "
         >
           {title}
         </h1>
 
-        <p class="font-light text-sm sm:text-base md:text-xl">
-          <SvelteMarkdown source={description} isInline />
-        </p>
+        {#if Array.isArray(description)}
+          {#each description as desc}
+            <p class="font-light text-sm sm:text-base md:text-lg">
+              <SvelteMarkdown source={desc} isInline />
+            </p>
+          {/each}
+        {:else}
+          <p class="font-light text-sm sm:text-base md:text-lg">
+            <SvelteMarkdown source={description} isInline />
+          </p>
+        {/if}
       </div>
     </section>
 
@@ -84,15 +94,14 @@
     <section class="mt-4 flex gap-2 justify-center">
       {#if Array.isArray(options)}
         {#each options as { type, text, action }}
-          <Button {type} on:click={action}>
+          <Button {type} {action} {close}>
             {text}
           </Button>
         {/each}
       {:else}
-        <Button type="primary" on:click={options}>Yes</Button>
-        <Button type="secondary" on:click={() => modalState.remove(modalId)}>
-          Cancel
-        </Button>
+        {@const action = options}
+        <Button type="primary" {action} {close}>Yes</Button>
+        <Button type="secondary" action={() => true} {close}>Cancel</Button>
       {/if}
     </section>
   </main>

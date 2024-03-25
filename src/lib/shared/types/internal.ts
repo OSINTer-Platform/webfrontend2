@@ -90,14 +90,14 @@ export type Modal = (
       modalContent: {
         type: "info" | "success" | "warning" | "error";
         title: string;
-        description: string;
+        description: string | string[];
         options:
           | {
               text: string;
               type: "primary" | "secondary" | "yes" | "no" | "cancel";
-              action: () => void;
+              action: () => boolean | void | Promise<boolean> | Promise<void>;
             }[]
-          | (() => void);
+          | (() => boolean | void | Promise<boolean> | Promise<void>);
       };
     }
   | {
