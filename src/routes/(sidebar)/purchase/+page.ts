@@ -16,10 +16,10 @@ export const load: PageLoad = async ({ url, parent }) => {
         encodeURIComponent("You need to be logged in to subscribe to OSINTer")
     );
 
-  const prices: Price[] = await fetch(`${PUBLIC_API_BASE}/payment/prices`).then(
-    (r) => r.json()
-  );
-  const price: undefined | Price = prices.find(
+  const prices: { [key: string]: Price } = await fetch(
+    `${PUBLIC_API_BASE}/payment/prices`
+  ).then((r) => r.json());
+  const price: undefined | Price = Object.values(prices).find(
     (price) => price.lookup_key == "pro-month"
   );
 
