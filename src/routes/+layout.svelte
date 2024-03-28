@@ -14,11 +14,13 @@
   import { page } from "$app/stores";
   import { afterNavigate } from "$app/navigation";
   import { onMount } from "svelte";
+  import { spawnActionModal } from "./(sidebar)/purchase/modals";
 
   export let data: LayoutData;
 
   $: darkMode = $page.data.settings.darkMode;
   $: user = data.user;
+  $: remindMePaymentUpdate = data.remindMe.paymentUpdate;
 
   function handleKeypress(e: KeyboardEvent) {
     switch (e.key) {
@@ -33,6 +35,7 @@
 
   afterNavigate(() => {
     modalState.set([]);
+    spawnActionModal($user, remindMePaymentUpdate);
   });
 
   onMount(() => {

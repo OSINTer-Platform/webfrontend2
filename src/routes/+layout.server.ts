@@ -28,6 +28,7 @@ export const load: LayoutServerLoad = async ({ cookies }) => {
 
   return {
     cookies: {
+      paymentUpdate: parseCookie("remindMe-paymentUpdate", true),
       darkMode: parseCookie("settings-darkMode", true),
       listRenderMode: getRenderMode(parseCookie("settings-listRenderMode")),
     },
