@@ -46,9 +46,10 @@ export interface User {
 
   payment: {
     stripe_id: string;
-    action: {
+    invoice: {
       last_updated: number;
-      required: boolean;
+      action_required: boolean;
+      action_type: "" | "authenticate" | "update";
       payment_intent: string;
       invoice_url: string;
     };
