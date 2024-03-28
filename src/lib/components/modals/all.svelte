@@ -8,6 +8,7 @@
   import Info from "./info.svelte";
   import Options from "./options/index.svelte";
   import Survey from "./survey//index.svelte";
+  import CollectPayment from "./collectPayment.svelte";
 </script>
 
 {#each $modalState as modal, i (modal.id)}
@@ -46,5 +47,11 @@
     />
   {:else if modal.modalType == "survey"}
     <Survey modalId={modal.id} version={modal.modalContent.version} />
+  {:else if modal.modalType == "collect-payment"}
+    <CollectPayment
+      clientSecret={modal.modalContent.clientSecret}
+      title={modal.modalContent.title}
+      modalId={modal.id}
+    />
   {/if}
 {/each}

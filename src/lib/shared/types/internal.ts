@@ -47,63 +47,70 @@ export interface UserItemSidebarOption extends SidebarOption {
 
 export type Modal = (
   | {
-      modalType: "search";
-      modalContent: {
-        query?: SearchQuery;
-        searchAction?: (q: SearchQuery) => void;
-        searchText?: string;
-      };
-    }
+    modalType: "search";
+    modalContent: {
+      query?: SearchQuery;
+      searchAction?: (q: SearchQuery) => void;
+      searchText?: string;
+    };
+  }
   | {
-      modalType: "article";
-      modalContent: {
-        article: FullArticle;
-        articleList: Array<{ id: string }>;
-        categories: ArticleCategories;
-      };
-    }
+    modalType: "article";
+    modalContent: {
+      article: FullArticle;
+      articleList: Array<{ id: string }>;
+      categories: ArticleCategories;
+    };
+  }
   | {
-      modalType: "add-collection";
-      modalContent: {
-        article: ArticleBase;
-      };
-    }
+    modalType: "add-collection";
+    modalContent: {
+      article: ArticleBase;
+    };
+  }
   | {
-      modalType: "article-list";
-      modalContent: {
-        articles: ArticleBase[] | Promise<ArticleBase[]>;
-      };
-    }
+    modalType: "article-list";
+    modalContent: {
+      articles: ArticleBase[] | Promise<ArticleBase[]>;
+    };
+  }
   | {
-      modalType: "user-settings";
-      modalContent: null;
-    }
+    modalType: "user-settings";
+    modalContent: null;
+  }
   | {
-      modalType: "info";
-      modalContent: {
-        title: string;
-        description: string | string[];
-      };
-    }
+    modalType: "info";
+    modalContent: {
+      title: string;
+      description: string | string[];
+    };
+  }
   | {
-      modalType: "options";
-      modalContent: {
-        type: "info" | "success" | "warning" | "error";
-        title: string;
-        description: string | string[];
-        options:
-          | {
-              text: string;
-              type: "primary" | "secondary" | "yes" | "no" | "cancel";
-              action: () => boolean | void | Promise<boolean> | Promise<void>;
-            }[]
-          | (() => boolean | void | Promise<boolean> | Promise<void>);
-      };
-    }
+    modalType: "options";
+    modalContent: {
+      type: "info" | "success" | "warning" | "error";
+      title: string;
+      description: string | string[];
+      options:
+      | {
+        text: string;
+        type: "primary" | "secondary" | "yes" | "no" | "cancel";
+        action: () => boolean | void | Promise<boolean> | Promise<void>;
+      }[]
+      | (() => boolean | void | Promise<boolean> | Promise<void>);
+    };
+  }
   | {
-      modalType: "survey";
-      modalContent: {
-        version: number;
-      };
+    modalType: "survey";
+    modalContent: {
+      version: number;
     }
+  }
+  | {
+    modalType: "collect-payment";
+    modalContent: {
+      title?: string;
+      clientSecret?: string;
+    };
+  }
 ) & { id: string };
