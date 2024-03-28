@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+  import Fa from "svelte-fa";
+
   type ButtonType = "primary" | "secondary" | "yes" | "no" | "cancel";
 
   export let type: ButtonType;
@@ -36,5 +39,9 @@
     : ''}
   "
 >
-  <slot />
+  {#if loading}
+    <Fa icon={faSpinner} class="animate-spin mx-auto" />
+  {:else}
+    <slot />
+  {/if}
 </button>
