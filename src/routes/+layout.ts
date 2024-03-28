@@ -86,6 +86,12 @@ export const load: LayoutLoad = async ({ fetch, data }) => {
       image: config.images.fullLogo,
       type: "website",
     },
+    remindMe: {
+      paymentUpdate: cookieStore(
+        "remindMe-paymentUpdate",
+        data.cookies.paymentUpdate ?? 0
+      ),
+    },
     settings: {
       darkMode: cookieStore(
         "settings-darkMode",

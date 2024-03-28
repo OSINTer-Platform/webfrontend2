@@ -34,6 +34,9 @@ declare global {
         image?: string;
         type?: string;
       };
+      remindMe: {
+        paymentUpdate: Writable<number>;
+      };
       settings: {
         darkMode: Writable<boolean>;
         listRenderMode: Writable<ArticleListRender>;

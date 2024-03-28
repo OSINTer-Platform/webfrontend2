@@ -13,6 +13,7 @@
   import { afterNavigate } from "$app/navigation";
   import { onMount } from "svelte";
   import { spawnSurveyRequest } from "$lib/common/modals";
+  import { spawnActionModal } from "./(sidebar)/purchase/modals";
 
   import type { PageData } from "./$types";
 
@@ -20,6 +21,7 @@
 
   $: darkMode = $page.data.settings.darkMode;
   $: user = data.user;
+  $: remindMePaymentUpdate = data.remindMe.paymentUpdate;
 
   function handleKeypress(e: KeyboardEvent) {
     switch (e.key) {
@@ -34,6 +36,7 @@
 
   afterNavigate(({ type }) => {
     if (type !== "enter") modalState.set([]);
+    spawnActionModal($user, remindMePaymentUpdate);
   });
 
   onMount(() => {
