@@ -100,4 +100,11 @@ export type Modal = (
           | (() => boolean | void | Promise<boolean> | Promise<void>);
       };
     }
+  | {
+      modalType: "collect-payment";
+      modalContent: {
+        title?: string;
+        clientSecret?: string;
+      };
+    }
 ) & { id: string };

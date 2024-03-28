@@ -7,6 +7,7 @@
   import UserSettings from "./userSettings/index.svelte";
   import Info from "./info.svelte";
   import Options from "./options/index.svelte";
+  import CollectPayment from "./collectPayment.svelte";
 </script>
 
 {#each $modalState as modal, i (modal.id)}
@@ -41,6 +42,12 @@
       description={modal.modalContent.description}
       options={modal.modalContent.options}
       type={modal.modalContent.type}
+      modalId={modal.id}
+    />
+  {:else if modal.modalType == "collect-payment"}
+    <CollectPayment
+      clientSecret={modal.modalContent.clientSecret}
+      title={modal.modalContent.title}
       modalId={modal.id}
     />
   {/if}
