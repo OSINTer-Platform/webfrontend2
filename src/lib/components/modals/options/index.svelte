@@ -51,7 +51,7 @@
   style="max-height: min(90vh, 40rem)"
 >
   <main class="flex flex-col">
-    <section class="flex grow items-center">
+    <section class="flex grow items-center text-contents">
       <Fa
         icon={modalIcons[type]}
         class="
@@ -106,3 +106,11 @@
     </section>
   </main>
 </Modal>
+
+<style lang="postcss">
+  .text-contents {
+    :global(a) {
+      @apply underline hover:text-primary-500 transition-colors duration-300;
+    }
+  }
+</style>
