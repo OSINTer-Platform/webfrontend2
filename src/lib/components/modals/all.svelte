@@ -9,6 +9,7 @@
   import Options from "./options/index.svelte";
   import Survey from "./survey//index.svelte";
   import CollectPayment from "./collectPayment.svelte";
+  import Processing from "./processing.svelte";
 </script>
 
 {#each $modalState as modal, i (modal.id)}
@@ -51,6 +52,12 @@
     <CollectPayment
       clientSecret={modal.modalContent.clientSecret}
       title={modal.modalContent.title}
+      modalId={modal.id}
+    />
+  {:else if modal.modalType == "processing"}
+    <Processing
+      process={modal.modalContent.process}
+      text={modal.modalContent.text}
       modalId={modal.id}
     />
   {/if}
