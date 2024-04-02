@@ -36,7 +36,6 @@
 
   afterNavigate(({ type }) => {
     if (type !== "enter") modalState.set([]);
-    spawnActionModal($user, remindMePaymentUpdate);
   });
 
   onMount(() => {
@@ -54,10 +53,19 @@
       });
     }
 
-    if ($user && $user.premium > 0 && data.submittedSurveys.length < 1) {
-      if (!window.matchMedia("only screen and (max-width: 40rem)").matches) {
-        spawnSurveyRequest(1);
-      }
+    if (
+      $user &&
+      $user.premium > 0 &&
+      data.submittedSurveys.length < 1 &&
+      !window.matchMedia("only screen and (max-width: 40rem)").matches
+    ) {
+      spawnSurveyRequest(1);
+    } else {
+      spawnActionModal(
+        $user,
+        remindMePaymentUpdate,
+        data.stripe.paymentIntentClientSecret
+      );
     }
   });
 </script>

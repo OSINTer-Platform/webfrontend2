@@ -7,7 +7,7 @@ import type { ArticleListRender } from "$shared/types/internal";
 import type { Collection, User } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
 
-export const load: LayoutLoad = async ({ fetch, data }) => {
+export const load: LayoutLoad = async ({ fetch, data, url }) => {
   const getUserObject = async (): Promise<User | null> => {
     const r = await fetch(`${PUBLIC_API_BASE}/my/user/`);
     return r.ok ? r.json() : null;
@@ -105,6 +105,11 @@ export const load: LayoutLoad = async ({ fetch, data }) => {
           user?.settings.list_render_mode ??
           "large",
         { expires: dateInAnHour }
+      ),
+    },
+    stripe: {
+      paymentIntentClientSecret: url.searchParams.get(
+        "payment_intent_client_secret"
       ),
     },
   };

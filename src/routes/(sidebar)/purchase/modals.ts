@@ -1,11 +1,13 @@
-import { modalState } from "$shared/state/modals";
 import { loadStripe } from "@stripe/stripe-js";
+import { get } from "svelte/store";
+import { goto } from "$app/navigation";
+import { modalState } from "$shared/state/modals";
 import { contactEmail } from "$shared/config";
 import { PUBLIC_API_BASE, PUBLIC_STRIPE_KEY } from "$env/static/public";
 
+import type { PaymentIntent } from "@stripe/stripe-js";
 import type { User } from "$shared/types/userItems";
-import { get, type Writable } from "svelte/store";
-import { goto } from "$app/navigation";
+import type { Writable } from "svelte/store";
 
 async function authenticate(
   stripePromise: ReturnType<typeof loadStripe>,
@@ -86,7 +88,7 @@ async function authenticate(
 
 function spawnChoiceModal(
   title: string,
-  description: string,
+  description: string | string[],
   choiceTitle: string,
   choiceAction: () => void | boolean | Promise<void> | Promise<boolean>,
   remindDateStore: Writable<number>,
@@ -178,9 +180,12 @@ function spawnExpiredModal(username: string) {
 function showUpdateModal(user: User, remindDateStore: Writable<number>) {
   spawnChoiceModal(
     "New credentials required",
-    "We have failed to collect the charge from your payment method of choice for your OSINTer subscription. " +
-      "As such, we require that you provide a new payment method (you can reuse the one you already use if it is valid). " +
-      'Please click "Update" to update your payment method, or get us to remind you in 24 hours',
+    [
+      "We have failed to collect the charge from your payment method of choice for your OSINTer subscription. " +
+        "As such, we require that you provide a new payment method (you can reuse the one you already use if it is valid). " +
+        'Please click "Update" to update your payment method, or get us to remind you in 24 hours',
+      `You can also [contact support](mailto:${contactEmail})`,
+    ],
     "Update",
     () => spawnCollectionModal(),
     remindDateStore,
@@ -208,10 +213,78 @@ function showAuthModal(user: User, remindDateStore: Writable<number>) {
   );
 }
 
+function showPaymentResults(clientSecret: string, username?: string) {
+  const showError = (msg: string, headerline: string) =>
+    modalState.append({
+      modalType: "info",
+      modalContent: {
+        title: "Oops...",
+        description:
+          `${msg}. Please [contact support]` +
+          `(mailto:${contactEmail}?subject=${encodeURIComponent(headerline)})`,
+      },
+    });
+
+  async function checkPaymentStatus() {
+    const stripe = await loadStripe(PUBLIC_STRIPE_KEY);
+    if (!stripe) {
+      showError(
+        "For unknown reasons we failed to load stripe",
+        "Problem when loading stripe"
+      );
+      throw new Error("Failure when loading stripe");
+    }
+
+    let paymentIntent: PaymentIntent;
+    while (true) {
+      const paymentStatus = await stripe.retrievePaymentIntent(clientSecret);
+      if (paymentStatus.error) {
+        showError(
+          "For unknown reasons we couldn't retrieve your payment result",
+          `Problem retriving payment intent - ${username}`
+        );
+        throw new Error("Failure when retrieving payment intent");
+      }
+      if (paymentStatus.paymentIntent.status !== "processing") {
+        paymentIntent = paymentStatus.paymentIntent;
+        break;
+      }
+    }
+
+    if (paymentIntent.status == "succeeded")
+      modalState.append({
+        modalType: "info",
+        modalContent: {
+          title: "Success!",
+          description:
+            "Your payment has been authorized, and your subscription will be kept active. Thank you!",
+        },
+      });
+    else
+      modalState.append({
+        modalType: "info",
+        modalContent: {
+          title: "Failure!",
+          description:
+            "We have unfortunately failed to update your payment details. We will get back to you with another attempt in a few hours",
+        },
+      });
+  }
+
+  modalState.append({
+    modalType: "processing",
+    modalContent: { process: checkPaymentStatus() },
+  });
+}
+
 export function spawnActionModal(
   user: User | null,
-  remindDateStore: Writable<number>
+  remindDateStore: Writable<number>,
+  paymentIntentClientSecret: string | null
 ) {
+  if (paymentIntentClientSecret)
+    showPaymentResults(paymentIntentClientSecret, user?.username);
+
   if (!user) return;
   if (user.payment.subscription.state === "closed")
     return spawnExpiredModal(user.username);

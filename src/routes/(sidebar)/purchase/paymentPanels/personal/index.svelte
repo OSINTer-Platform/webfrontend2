@@ -67,7 +67,7 @@
       });
   }
 
-  $: checkStatus($page.data.paymentIntentClientSecret);
+  $: checkStatus($page.data.stripe.paymentIntentClientSecret);
 
   $: user = $page.data.user;
 </script>

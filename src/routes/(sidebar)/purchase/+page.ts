@@ -5,7 +5,7 @@ import { PUBLIC_API_BASE } from "$env/static/public";
 import { error, redirect } from "@sveltejs/kit";
 import { get } from "svelte/store";
 
-export const load: PageLoad = async ({ url, parent }) => {
+export const load: PageLoad = async ({ parent }) => {
   const { user } = await parent();
   const userContent = get(user);
 
@@ -26,9 +26,6 @@ export const load: PageLoad = async ({ url, parent }) => {
   if (!price) throw error(500, "Error when querying prices");
 
   return {
-    paymentIntentClientSecret: url.searchParams.get(
-      "payment_intent_client_secret"
-    ),
     personalPrice: price,
   };
 };

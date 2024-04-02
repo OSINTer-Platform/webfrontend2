@@ -42,6 +42,9 @@ declare global {
         listRenderMode: Writable<ArticleListRender>;
         renderExternal: Writable<boolean>;
       };
+      stripe: {
+        paymentIntentClientSecret: string | null;
+      };
     }
     // interface Platform {}
   }
