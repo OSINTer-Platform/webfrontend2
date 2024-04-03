@@ -20,6 +20,7 @@
   import { page } from "$app/stores";
   import { enhance } from "$app/forms";
   import { onMount } from "svelte";
+  import { sponsorLink } from "$shared/config";
 
   export let user: User | null;
 
@@ -93,7 +94,7 @@
     {#if showSponser}
       <a
         class="btn py-2 px-6 rounded-xl"
-        href="https://github.com/sponsors/OSINTer-Platform"
+        href={sponsorLink}
         target="_blank"
         rel="noopener noreferrer"
       >

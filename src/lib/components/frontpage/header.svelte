@@ -1,6 +1,10 @@
 <script lang="ts">
   import Cyber from "$assets/Cyber.svelte";
   import LogoFull from "$assets/LogoFull.svelte";
+
+  import { sponsorLink } from "$shared/config";
+  import { faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
+  import Fa from "svelte-fa";
 </script>
 
 <div
@@ -88,7 +92,7 @@
       >
 
       <a
-        href="/blog"
+        href={sponsorLink}
         class="
 				bg-surface-200/75
 				hover:bg-surface-200
@@ -104,11 +108,15 @@
 
 				px-4
 				py-2
+        flex gap-3
 				rounded-lg
 
 				font-light
-			">Read about OSINTer</a
+			"
       >
+        Sponsor us
+        <Fa icon={faHandHoldingDollar} class="mt-1" />
+      </a>
     </div>
   </div>
 

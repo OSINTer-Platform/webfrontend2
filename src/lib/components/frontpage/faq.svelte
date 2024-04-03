@@ -4,7 +4,7 @@
 
   import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
   import { slide } from "svelte/transition";
-  import { contactEmail } from "$shared/config";
+  import { contactEmail, sponsorLink } from "$shared/config";
 
   const faq = [
     {
@@ -26,7 +26,7 @@
     },
     {
       question: "I like the project, can I sponsor it?",
-      answer: `Absolutely! Running this project has so-far been a completely unpaid journey, but that obviously isn't sustainable and therefore we are actively looking for sponsors. If you're considering it, please consider checking out our [github sponsors](https://github.com/sponsors/OSINTer-Platform) or [reach out on mail](mailto:${contactEmail}).`,
+      answer: `Absolutely! Running this project has so-far been a completely unpaid journey, but that obviously isn't sustainable and therefore we are actively looking for sponsors. If you're considering it, please consider checking out our [github sponsors](${sponsorLink}) or [reach out on mail](mailto:${contactEmail}).`,
       open: false,
     },
   ];
