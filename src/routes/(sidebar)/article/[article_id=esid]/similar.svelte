@@ -18,11 +18,11 @@
 
   let similarArticles: ArticleBase[] = [];
 
-  $: user = $page.data.user;
+  $: authorizer = $page.data.authorizeForArea;
 
   onMount(async () => {
     if (!browser) return;
-    if (!$user || $user.premium < 1) return;
+    if ($authorizer("similar")) return;
 
     const r = await fetch(
       `${PUBLIC_API_BASE}/articles/${encodeURIComponent(article.id)}/similar`

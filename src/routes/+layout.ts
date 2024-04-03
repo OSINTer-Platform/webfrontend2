@@ -1,11 +1,12 @@
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { cookieStore, updatable } from "$lib/common/customStores";
 import { config } from "$shared/config";
-import { writable } from "svelte/store";
-import type { MLAvailability, Survey } from "$shared/types/api";
+import { derived, writable } from "svelte/store";
+import type { AuthArea, MLAvailability, Survey } from "$shared/types/api";
 import type { ArticleListRender } from "$shared/types/internal";
 import type { Collection, User } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
+import { error } from "@sveltejs/kit";
 
 export const load: LayoutLoad = async ({ fetch, data, url }) => {
   const getUserObject = async (): Promise<User | null> => {
@@ -17,7 +18,14 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     const r = await fetch(`${PUBLIC_API_BASE}/ml/`);
     return r.ok
       ? r.json()
-      : { clustering: false, map: false, elser: false, inference: false };
+      : { cluster: false, map: false, elser: false, assistant: false };
+  };
+
+  const getAuthAreas = async (): Promise<{ [key: string]: AuthArea[] }> => {
+    const r = await fetch(`${PUBLIC_API_BASE}/auth/allowed-areas`);
+    const json = await r.json();
+    if (r.ok) return json;
+    else throw error(r.status, json.detail);
   };
 
   const getSubmittedSurveys = async (): Promise<Survey[]> => {
@@ -57,21 +65,46 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     return await rCollection.json();
   };
 
-  const user = await getUserObject();
-  const [mlAvailability, submittedSurveys, alreadyRead, userCollections] =
-    await Promise.all([
-      getMlAvailability(),
-      getSubmittedSurveys(),
-      updatable(() => updateAlreadyRead(user)),
-      updatable(() => updateCollectionList(user)),
-    ]);
+  const userContents = await getUserObject();
+  const user = writable(userContents);
+  const [
+    mlAvailability,
+    authAreas,
+    submittedSurveys,
+    alreadyRead,
+    userCollections,
+  ] = await Promise.all([
+    getMlAvailability(),
+    getAuthAreas(),
+    getSubmittedSurveys(),
+    updatable(() => updateAlreadyRead(userContents)),
+    updatable(() => updateCollectionList(userContents)),
+  ]);
+
+  const allowedAreas = derived(user, ($user) => {
+    const areas = Object.entries(authAreas).find(
+      ([level, _]) => level === $user?.payment.subscription.level
+    );
+
+    if (areas) return areas[1];
+    else return [];
+  });
+
+  const authorizeForArea = derived(
+    [user, allowedAreas],
+    ([$user, $allowedAreas]) => {
+      return (area: AuthArea) =>
+        ($user?.premium && $user.premium > 0) || $allowedAreas.includes(area);
+    }
+  );
 
   const dateInAnHour = new Date();
   dateInAnHour.setHours(dateInAnHour.getHours() + 1);
 
   return {
     submittedSurveys,
-    user: writable(user),
+    user,
+    authorizeForArea,
     mlAvailability,
     alreadyRead,
     userCollections,
@@ -95,14 +128,14 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     settings: {
       darkMode: cookieStore(
         "settings-darkMode",
-        data.cookies.darkMode ?? user?.settings.dark_mode ?? true,
+        data.cookies.darkMode ?? userContents?.settings.dark_mode ?? true,
         { expires: dateInAnHour }
       ),
-      renderExternal: writable(user?.settings.render_external ?? false),
+      renderExternal: writable(userContents?.settings.render_external ?? false),
       listRenderMode: cookieStore<ArticleListRender>(
         "settings-listRenderMode",
         data.cookies.listRenderMode ??
-          user?.settings.list_render_mode ??
+          userContents?.settings.list_render_mode ??
           "large",
         { expires: dateInAnHour }
       ),

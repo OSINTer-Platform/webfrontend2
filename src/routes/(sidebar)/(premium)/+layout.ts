@@ -1,22 +1,29 @@
 import { error } from "@sveltejs/kit";
-import type { LayoutLoad } from "./$types";
-import type { MLAvailability } from "$shared/types/api";
 import { get } from "svelte/store";
 
+import type { LayoutLoad } from "./$types";
+import type { AuthArea, MLAvailability } from "$shared/types/api";
+
 export const load: LayoutLoad = async ({ parent, url }) => {
-  const { user, mlAvailability } = await parent();
+  const { user, mlAvailability, authorizeForArea } = await parent();
   const userContent = get(user);
+  const authorizer = get(authorizeForArea);
 
-  type mlTypes = keyof MLAvailability;
+  const routeProtections: {
+    route: string;
+    authArea: AuthArea;
+    dependency?: keyof MLAvailability;
+  }[] = [
+    { route: "/topic", authArea: "cluster", dependency: "cluster" },
+    { route: "/overview", authArea: "map", dependency: "map" },
+    { route: "/assistant", authArea: "assistant", dependency: "assistant" },
+    { route: "/dashboard", authArea: "dashboard" },
+  ];
 
-  const depends: { [key: string]: mlTypes } = {
-    "/topic": "clustering",
-    "/overview": "map",
-    "/assistant": "inference",
-  };
+  routeProtections.forEach(({ route, authArea, dependency }) => {
+    if (!url.pathname.startsWith(route)) return;
 
-  for (const [route, dependency] of Object.entries(depends)) {
-    if (url.pathname.startsWith(route) && !mlAvailability[dependency])
+    if (dependency && !mlAvailability[dependency])
       throw error(421, {
         message: "",
         title: "Requested functionality isn't available",
@@ -26,22 +33,22 @@ export const load: LayoutLoad = async ({ parent, url }) => {
           "Contact us below",
         ],
       });
-  }
 
-  if (!userContent || !(userContent.premium > 0))
-    throw error(403, {
-      message: "",
-      title: `This page is reserved${
-        userContent
-          ? " for beta-testers and B2B partners."
-          : ", and you are not logged in."
-      }`,
-      description: [
-        "We are at OSINTer currently beta-testing new features",
-        "Do you want early access?",
-        userContent ? "Contact us below" : "Log in below",
-      ],
-      logo: false,
-      actions: userContent ? undefined : [{ title: "Login", href: "/login" }],
-    });
+    if (!authorizer(authArea))
+      throw error(403, {
+        message: "",
+        title: `This page is reserved${
+          userContent
+            ? " for beta-testers and B2B partners."
+            : ", and you are not logged in."
+        }`,
+        description: [
+          "We are at OSINTer currently beta-testing new features",
+          "Do you want early access?",
+          userContent ? "Contact us below" : "Log in below",
+        ],
+        logo: false,
+        actions: userContent ? undefined : [{ title: "Login", href: "/login" }],
+      });
+  });
 };

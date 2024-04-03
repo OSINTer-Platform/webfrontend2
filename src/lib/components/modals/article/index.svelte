@@ -21,10 +21,10 @@
   export let articleList: Array<{ id: string }>;
   export let topModal: boolean;
 
-  $: user = $page.data.user;
-  $: premium = $user && $user.premium > 0;
+  $: authorizer = $page.data.authorizeForArea;
+
   let similarArticles: Promise<ArticleBase[]> | null;
-  $: similarArticles = premium ? getSimilar(article.id) : null;
+  $: similarArticles = $authorizer("similar") ? getSimilar(article.id) : null;
 
   let switchDirection: "left" | "right" = "left";
   let blockSwitching: boolean = false;

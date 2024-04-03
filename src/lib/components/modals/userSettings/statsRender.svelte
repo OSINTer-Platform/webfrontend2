@@ -20,9 +20,11 @@
       </span>
     </li>
     <li>
-      Premium access:
+      Subscription:
       <span class="capitalize font-bold">
-        {user.premium > 0}
+        {user.payment.subscription.level.length > 0
+          ? user.payment.subscription.level
+          : "None"}
       </span>
     </li>
     <li>

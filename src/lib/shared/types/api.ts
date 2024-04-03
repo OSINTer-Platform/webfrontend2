@@ -135,10 +135,10 @@ export interface MLAssistantChat {
 }
 
 export interface MLAvailability {
-  clustering: boolean;
+  cluster: boolean;
   map: boolean;
   elser: boolean;
-  inference: boolean;
+  assistant: boolean;
 }
 
 export interface Survey {
@@ -149,3 +149,11 @@ export interface Survey {
   }[];
   version: number;
 }
+
+export type AuthArea =
+  | "assistant"
+  | "cluster"
+  | "dashboard"
+  | "map"
+  | "similar"
+  | "summary";
