@@ -10,7 +10,17 @@
 
   let scrollY = 0;
 
+  let mouse: null | { x: number; y: number } = null;
+
+  function scroll(e: any) {
+    scrollY = e.target.scrollTop;
+  }
 </script>
+
+<svelte:window
+  on:mousemove={(e) => (mouse = { x: e.x, y: e.y })}
+  on:mouseleave={() => (mouse = null)}
+/>
 
 <aside
   class="
@@ -33,10 +43,10 @@
 		w-full
 
 		bg-surface-300
-		dark:bg-surface-700
+		dark:bg-black
 	"
   >
-    <Header />
+    <Header {mouse} />
   </header>
   <section class="bg-surface-100 dark:bg-surface-900">
     <div class="container p-4 sm:p-8 lg:p-12 xl:py-20">

@@ -127,7 +127,7 @@
     </section>
 
     <section class="flex items-center md:gap-3 gap-2">
-      {#if user}
+      {#if $user}
         <form method="POST" action="/logout" use:enhance>
           <button title="Logout" type="submit" class="btn p-2 rounded-full">
             <Fa icon={faArrowRightFromBracket} class="text-xl" />
