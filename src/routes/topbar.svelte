@@ -12,7 +12,6 @@
   import { navItems } from "$shared/nav";
   import { sideOpen } from "$state/state";
 
-  import type { User } from "$shared/types/userItems";
   import type { NavItem } from "$shared/types/internal";
   import LogoFull from "$assets/LogoFull.svelte";
   import ListMenu from "$com/listMenu.svelte";
@@ -22,10 +21,10 @@
   import { onMount } from "svelte";
   import { sponsorLink } from "$shared/config";
 
-  export let user: User | null;
-
   let socials: Array<NavItem>;
   let showSponser = false;
+
+  $: user = $page.data.user;
 
   $: socials = [
     {
@@ -43,22 +42,9 @@
 
 <header
   class="
-	w-full
-
-	flex
-	flex-row
-	justify-between
-	items-center
-
-	bg-surface-100
-	dark:bg-surface-800
-
-	dark:border-b
-	dark:border-surface-300
-
-	shadow-lg
-
-	p-4
+  w-full
+  p-4 flex flex-row
+  justify-between items-center
 "
 >
   <div class="flex items-center gap-2">
@@ -86,10 +72,10 @@
   <section
     class="
     flex
-		flex-row
+    flex-row
 
-		md:gap-8 gap-2
-	"
+    md:gap-8 gap-2
+  "
   >
     {#if showSponser}
       <a

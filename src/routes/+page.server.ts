@@ -5,5 +5,6 @@ export const load: Omit<PageServerLoad, ""> = () => {
   return {
     posts: sortPosts(Object.values(getPosts())).slice(0, 4),
     burgerMenu: false,
+    topbar: false,
   };
 };

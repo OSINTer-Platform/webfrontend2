@@ -1,6 +1,4 @@
 <script lang="ts">
-  import type { LayoutData } from "./$types";
-
   import "../app.css";
 
   import TopBar from "./topbar.svelte";
@@ -15,10 +13,7 @@
   import { afterNavigate } from "$app/navigation";
   import { onMount } from "svelte";
 
-  export let data: LayoutData;
-
   $: darkMode = $page.data.settings.darkMode;
-  $: user = data.user;
 
   function handleKeypress(e: KeyboardEvent) {
     switch (e.key) {
@@ -73,8 +68,15 @@
   <div class="w-full h-full overflow-hidden flex flex-col dark:text-white">
     <Modals />
     {#if $page.data.topbar ?? true}
-      <div class="z-40 relative">
-        <TopBar user={$user} />
+      <div
+        class="
+        z-40 relative
+        bg-surface-100 dark:bg-surface-800
+        dark:border-b dark:border-surface-300
+        shadow-lg
+      "
+      >
+        <TopBar />
       </div>
     {/if}
     <slot />

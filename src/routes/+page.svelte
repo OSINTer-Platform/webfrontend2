@@ -6,9 +6,28 @@
   import Blogposts from "$com/frontpage/blogposts.svelte";
   import Faq from "$com/frontpage/faq.svelte";
   import Header from "$com/frontpage/header.svelte";
+  import Topbar from "./topbar.svelte";
+
+  let scrollY = 0;
+
 </script>
 
-<div class="overflow-y-auto">
+<aside
+  class="
+  z-40 absolute w-full
+  {scrollY > 0
+    ? 'backdrop-blur-xl bg-white/50 dark:bg-black/50'
+    : 'backdrop-filter-none dark:bg-black/20'}
+  transition-colors duration-200
+  shadow-lg
+"
+>
+  <div class="max-w-7xl mx-auto py-2">
+    <Topbar />
+  </div>
+</aside>
+
+<div class="overflow-y-auto" on:scroll={scroll}>
   <header
     class="
 		w-full
