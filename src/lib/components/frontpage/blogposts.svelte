@@ -61,6 +61,7 @@
 
       <img
         src={image ?? FullLogo}
+        loading="lazy"
         alt="Blog post"
         class="blur-sm transition-[filter] duration-300"
       />
