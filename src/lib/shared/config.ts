@@ -31,7 +31,7 @@ const timeAgo: { [interval in Intervals]: Date } = {
 
 const timeUrl = (interval: Intervals) => {
   const params = new URLSearchParams({
-    limit: "0",
+    limit: "10000",
     sort_by: "publish_date",
     sort_order: "desc",
     complete: "false",

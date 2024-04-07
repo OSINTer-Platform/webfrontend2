@@ -6,7 +6,7 @@ import type { LayoutLoad } from "./$types";
 export const load = (async () => {
   const getApiSearchUrl = (firstDate: Date, lastDate: Date) => {
     const params = new URLSearchParams({
-      limit: "0",
+      limit: "10000",
       sort_by: "publish_date",
       sort_order: "desc",
       complete: "false",
