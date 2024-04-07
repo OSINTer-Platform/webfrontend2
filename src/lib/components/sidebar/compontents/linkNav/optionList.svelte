@@ -62,7 +62,6 @@
   <nav class="mb-6" transition:slide|local>
     <ul class="">
       {#each options.list as { href, label, badge }}
-        {@const selected = $page.url.pathname == href}
         <li class="px-2">
           <a
             {href}
@@ -88,7 +87,9 @@
 
 						sm:dark:font-medium
 
-						{selected ? 'bg-primary-500/25' : 'hover:bg-primary-500/5'}
+						{$page.url.pathname.startsWith(href)
+              ? 'bg-primary-500/25'
+              : 'hover:bg-primary-500/5'}
 					"
           >
             {label}
