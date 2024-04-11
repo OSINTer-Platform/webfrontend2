@@ -1,7 +1,6 @@
 <script lang="ts">
   import Fa from "svelte-fa";
   import {
-    faArrowRightFromBracket,
     faArrowRightToBracket,
     faBars,
     faCaretDown,
@@ -17,9 +16,10 @@
   import ListMenu from "$com/listMenu.svelte";
   import LightSwitch from "$com/lightSwitch.svelte";
   import { page } from "$app/stores";
-  import { enhance } from "$app/forms";
   import { onMount } from "svelte";
   import { sponsorLink } from "$shared/config";
+  import { faUser } from "@fortawesome/free-regular-svg-icons";
+  import { modalState } from "$shared/state/modals";
 
   let socials: Array<NavItem>;
   let showSponser = false;
@@ -128,11 +128,17 @@
 
     <section class="flex items-center md:gap-3 gap-2">
       {#if $user}
-        <form method="POST" action="/logout" use:enhance>
-          <button title="Logout" type="submit" class="btn p-2 rounded-full">
-            <Fa icon={faArrowRightFromBracket} class="text-xl" />
-          </button>
-        </form>
+        <button
+          on:click={() =>
+            modalState.append({
+              modalType: "user-settings",
+              modalContent: null,
+            })}
+          title="User settings"
+          class="btn p-2 rounded-full"
+        >
+          <Fa icon={faUser} class="text-xl" />
+        </button>
       {:else}
         <a
           data-sveltekit-preload-data="tap"
