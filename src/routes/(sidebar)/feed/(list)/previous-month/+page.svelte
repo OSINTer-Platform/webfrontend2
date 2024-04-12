@@ -1,10 +1,12 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import ListShell from "../listShell.svelte";
 
+  import FilterShell from "$com/article-list/filter.svelte";
+  import Loader from "$com/loader.svelte";
+
+  import { feedLocalSearch } from "$shared/state/state";
   import { onMount } from "svelte";
   import { browser } from "$app/environment";
-  import Loader from "$com/loader.svelte";
 
   export let data: PageData;
   const articles = data.articles;
@@ -23,5 +25,5 @@
 {#await $articles}
   <Loader text={`Loading articles for ${data.monthLookup[$month].name}`} />
 {:then articles}
-  <ListShell {articles} />
+  <FilterShell {articles} search={$feedLocalSearch} />
 {/await}

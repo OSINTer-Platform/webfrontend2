@@ -1,20 +1,16 @@
 <script lang="ts">
   import type { PageData } from "./$types";
 
-  import List from "$com/article-list/wrapper.svelte";
+  import FilterShell from "$com/article-list/filter.svelte";
   import Fa from "svelte-fa";
 
   import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+  import { similarSearch } from "$shared/state/storedArticles";
 
   export let data: PageData;
 </script>
 
-<List
-  articles={data.similarArticles}
-  class="relative"
-  tintReadArticles={true}
-  showHighlights={false}
->
+<FilterShell articles={data.articles} search={$similarSearch}>
   <svelte:fragment slot="top">
     <a
       href="/article/{data.article.id}"
@@ -36,4 +32,4 @@
       >
     </a>
   </svelte:fragment>
-</List>
+</FilterShell>

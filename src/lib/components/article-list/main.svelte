@@ -12,12 +12,11 @@
 
   import { page } from "$app/stores";
   import { onDestroy } from "svelte";
-  import { listElementCount } from "$shared/state/state";
+  import { listElementCount, showHighlights } from "$shared/state/state";
 
   export let articles: ArticleBase[] = [];
   export let layout: ArticleListRender = "large";
   export let tintReadArticles: boolean;
-  export let showHighlights: boolean;
   export let listLenLimit = 200;
 
   let chunksVisible = 1;
@@ -52,7 +51,7 @@
       this={layouts[layout].article}
       {article}
       {readArticles}
-      {showHighlights}
+      showHighlights={$showHighlights}
       articleList={articles}
     />
   {/each}

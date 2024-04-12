@@ -5,6 +5,7 @@ import { derived, writable, type Writable, type Readable } from "svelte/store";
 import type { FullArticle } from "../types/api";
 
 export const localSearch = writable("");
+export const similarSearch = writable("");
 export const showSimilar = writable(true);
 
 export const fullArticles: Writable<{ [key: string]: FullArticle }> = persisted(

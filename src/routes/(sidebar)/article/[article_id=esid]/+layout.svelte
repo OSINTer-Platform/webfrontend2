@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ModList from "$com/article-list/header/modList.svelte";
+  import Header from "$com/article-list/header/shell.svelte";
   import DetailList from "$com/article-list/header/detailList.svelte";
 
   import type { ArticleTags } from "$shared/types/api";
@@ -18,11 +18,12 @@
     faXmark,
   } from "@fortawesome/free-solid-svg-icons/index";
 
-  import { fullArticles } from "$state/storedArticles";
+  import { fullArticles, similarSearch } from "$state/storedArticles";
   import { goto } from "$app/navigation";
 
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { modalState } from "$shared/state/modals";
+  import { page } from "$app/stores";
 
   export let data: LayoutData;
 
@@ -128,32 +129,14 @@
   />
 </svelte:head>
 
-<aside
-  class="
-	bg-surface-200
-	dark:bg-surface-900
-
-	border-b border-surface-300 dark:border-surface-400
-
-	p-6
-	sm:p-12
-	!pb-4
-"
+<Header
+  title={data.article.title}
+  description={data.article.description}
+  {modOptions}
+  searchAble={$page.url.pathname.includes("similar")}
+  searchSubmitable={false}
+  bind:searchValue={$similarSearch}
 >
-  <header class="flex justify-between mb-3">
-    <h1 class="sm:text-5xl text-3xl xl:max-w-5xl">
-      {data.article.title}
-    </h1>
-
-    <section class="flex items-start shrink-0">
-      <ModList {modOptions} />
-    </section>
-  </header>
-
-  <p class="italic font-light dark:font-medium">
-    {data.article.description}
-  </p>
-
   <hr class="my-4 border-tertiary-700/50" />
   {#each overviews as overview}
     <DetailList options={overview} mono={false} />
@@ -164,6 +147,6 @@
     <DetailList options={tags} mono={true} />
     <hr class="my-4 border-tertiary-700/50" />
   {/if}
-</aside>
+</Header>
 
 <slot />

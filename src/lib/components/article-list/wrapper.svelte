@@ -7,7 +7,6 @@
   let classes: string = "";
   export { classes as class };
   export let tintReadArticles: boolean;
-  export let showHighlights: boolean;
   export let listLenLimit = 100;
 
   $: articleListRender = $page.data.settings.listRenderMode;
@@ -41,7 +40,6 @@
     <List
       {articles}
       layout={$articleListRender}
-      {showHighlights}
       {tintReadArticles}
       {listLenLimit}
     />
