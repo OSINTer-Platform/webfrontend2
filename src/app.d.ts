@@ -2,7 +2,7 @@
 
 import type { User } from "$shared/types/userItems";
 import type { Updatable } from "$lib/common/customStores";
-import type { MLAvailability } from "$shared/types/api";
+import type { ArticleBase, MLAvailability } from "$shared/types/api";
 import type { Collection } from "$shared/types/userItems";
 import type { Writable } from "svelte/store";
 import type { ArticleListRender } from "$shared/types/internal";
@@ -46,6 +46,7 @@ declare global {
       stripe: {
         paymentIntentClientSecret: string | null;
       };
+      articles?: ArticleBase[];
     }
     // interface Platform {}
   }

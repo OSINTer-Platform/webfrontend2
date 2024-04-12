@@ -25,5 +25,5 @@ export const load: PageLoad = async ({ params, fetch }) => {
     }
   }
 
-  return { similarArticles: await fetchSimilarArticles() };
+  return { articles: await fetchSimilarArticles() };
 };
