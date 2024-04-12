@@ -35,7 +35,10 @@
   export let title: string;
   export let badge: string = "";
   export let description: string = "";
+
   export let searchAble = true;
+  export let searchSubmitable = true;
+
   export let contentType = "articles";
   export let articles: ArticleBase[] | undefined = undefined;
 
@@ -146,13 +149,15 @@
     <hr class="border-tertiary-600/50 my-4" />
   </slot>
 
-  <svelte:component
-    this={searchAble ? ArticleSearch : Search}
-    bind:value={searchValue}
-    placeholder={"Filter displayed articles"}
-    containerClass={"w-full my-6"}
-    infoText={`${$listElementCount} ${contentType}`}
-  />
+  {#if searchAble}
+    <svelte:component
+      this={searchSubmitable ? ArticleSearch : Search}
+      bind:value={searchValue}
+      placeholder={"Filter displayed articles"}
+      containerClass={"w-full my-6"}
+      infoText={`${$listElementCount} ${contentType}`}
+    />
+  {/if}
 
   {#if tabs}
     <Tabs bind:selected={$tabStore} options={tabs.options}>

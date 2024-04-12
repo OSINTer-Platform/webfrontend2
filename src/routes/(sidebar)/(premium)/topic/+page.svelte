@@ -60,7 +60,7 @@
   <HeaderShell
     title={"Topics in OSINTer"}
     description={"Clusters of different articles from OSINTer - each presenting a different topic"}
-    searchAble={false}
+    searchSubmitable={false}
     {modOptions}
     bind:searchValue={$clusterSearch}
     tabs={null}

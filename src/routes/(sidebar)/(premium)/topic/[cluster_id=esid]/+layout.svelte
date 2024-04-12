@@ -64,7 +64,7 @@
 <HeaderShell
   title={data.cluster.title}
   description={data.cluster.description}
-  searchAble={false}
+  searchSubmitable={false}
   {modOptions}
   bind:searchValue={$articleSearch}
 >
