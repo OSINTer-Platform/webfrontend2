@@ -132,7 +132,7 @@
       </div>
 
       {#if showSummary && article.summary && article.summary.length > 0}
-        <section transition:slide>
+        <section transition:slide|local>
           <hr class="border-surface-400/25 border my-9" />
           <p class="font-light">
             {article.summary}

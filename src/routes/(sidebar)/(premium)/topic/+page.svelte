@@ -71,7 +71,7 @@
         <Loader text="Loading data for graph" />
       {:then clusters}
         {#if clusters}
-          <section transition:slide>
+          <section transition:slide|local>
             <hr class="border-tertiary-800/50 my-12" />
             <TopicChart {clusters} search={$clusterSearch} />
             <hr class="border-tertiary-800/50 my-12" />
