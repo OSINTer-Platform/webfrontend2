@@ -79,3 +79,6 @@ export const hasHighlights = (articles: ArticleBase[] | undefined) => {
 
   return false;
 };
+
+export const hasSummary = (articles: ArticleBase[] | undefined) =>
+  articles?.some((a) => a.summary && a.summary.length > 0) ?? false;

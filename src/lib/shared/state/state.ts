@@ -12,5 +12,7 @@ export const sideMenuOpen: Writable<{ [key: string]: Boolean }> = persisted(
 export const feedLocalSearch = writable("");
 export const showRead = writable(true);
 export const showHighlights = writable(true);
+export const expandHighlights = writable(false);
+export const expandSummary = writable(false);
 
 export const listElementCount = writable(0);

@@ -12,22 +12,34 @@
   } from "$shared/types/internal";
   import type { Writable } from "svelte/store";
 
-  import { hasHighlights } from "$lib/common/filter";
-  import { showRead, showHighlights, listElementCount } from "$state/state";
+  import { hasHighlights, hasSummary } from "$lib/common/filter";
+  import {
+    showRead,
+    showHighlights,
+    listElementCount,
+    expandSummary,
+    expandHighlights,
+  } from "$state/state";
   import { page } from "$app/stores";
   import {
     faEye,
     faEyeSlash,
     faHeading,
     faHighlighter,
+    faRectangleList,
   } from "@fortawesome/free-solid-svg-icons";
   import { ListRenderModes } from "$shared/config";
+  import Fa from "svelte-fa";
+  import type { ArticleBase } from "$shared/types/api";
 
   export let title: string;
   export let badge: string = "";
   export let description: string = "";
   export let searchAble = true;
   export let contentType = "articles";
+  export let articles: ArticleBase[] | undefined = undefined;
+
+  export let showReadFilter = true;
 
   export let tabs: null | {
     store: Writable<string>;
@@ -43,7 +55,35 @@
 
   export let modOptions: Array<HeaderModOptions> = [];
 
-  $: articleWithHighlight = hasHighlights($page.data.articles);
+  $: articleWithHighlight = hasHighlights(articles ?? $page.data.articles);
+  $: articleWithSummary = hasSummary(articles ?? $page.data.articles);
+
+  $: expanderButtons = [
+    ...(articleWithHighlight
+      ? [
+          {
+            icon: faHighlighter,
+            title: "highlights",
+            expand: !$expandHighlights,
+            externalStore: expandHighlights,
+          },
+        ]
+      : []),
+    ...(articleWithSummary
+      ? [
+          {
+            icon: faRectangleList,
+            title: "summary",
+            expand: !$expandSummary,
+            externalStore: expandSummary,
+          },
+        ]
+      : []),
+  ];
+
+  $: readFilterAvailable = $user && showReadFilter;
+  $: showFilterOptions = readFilterAvailable || articleWithHighlight;
+  $: showExpandOptions = expanderButtons.length > 0;
 </script>
 
 <aside
@@ -117,36 +157,57 @@
   {#if tabs}
     <Tabs bind:selected={$tabStore} options={tabs.options}>
       <svelte:fragment slot="end">
-        {#if $page.url.pathname.startsWith("/feed") && ($user || articleWithHighlight)}
-          <div
-            class="
-            ml-auto flex gap-2
-            self-center
-          "
-          >
-            {#if $user}
-              <Switch
-                title="{$showRead
-                  ? 'Show'
-                  : 'Hide'} articles which have been read already"
-                name="show-read"
-                bind:checked={$showRead}
-                icons={{ on: faEye, off: faEyeSlash }}
-              />
+        {#if showFilterOptions || showExpandOptions}
+          <section class="ml-auto py-2 flex">
+            {#if showExpandOptions}
+              <div class="flex gap-2">
+                {#each expanderButtons as { icon, title, expand, externalStore }}
+                  <button
+                    class="
+                      btn px-2
+                      shadow-black/25 dark:shadow-black shadow-sm
+                      {expand ? '' : '!text-primary-500'}
+                    "
+                    title="{expand ? 'Show' : 'Hide'} all {title}"
+                    on:click={() => {
+                      externalStore.set(expand);
+                    }}
+                  >
+                    <Fa {icon} />
+                  </button>
+                {/each}
+              </div>
             {/if}
+            {#if showFilterOptions && showExpandOptions}
+              <div class="my-1 mx-2 border border-surface-400/50" />
+            {/if}
+            {#if showFilterOptions}
+              <div class="flex gap-2">
+                {#if readFilterAvailable}
+                  <Switch
+                    title="{$showRead
+                      ? 'Show'
+                      : 'Hide'} articles which have been read already"
+                    name="show-read"
+                    bind:checked={$showRead}
+                    icons={{ on: faEye, off: faEyeSlash }}
+                  />
+                {/if}
 
-            {#if articleWithHighlight}
-              <Switch
-                title={showHighlights
-                  ? "Show article search highlights"
-                  : "Show article title"}
-                name="show-higlights"
-                bind:checked={$showHighlights}
-                icons={{ on: faHighlighter, off: faHeading }}
-                iconClass="text-xs"
-              />
+                {#if articleWithHighlight}
+                  <Switch
+                    title={showHighlights
+                      ? "Show article search highlights"
+                      : "Show article title"}
+                    name="show-higlights"
+                    bind:checked={$showHighlights}
+                    icons={{ on: faHighlighter, off: faHeading }}
+                    iconClass="text-xs"
+                  />
+                {/if}
+              </div>
             {/if}
-          </div>
+          </section>
         {/if}
       </svelte:fragment>
     </Tabs>

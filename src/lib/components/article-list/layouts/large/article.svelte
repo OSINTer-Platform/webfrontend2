@@ -1,6 +1,7 @@
 <script lang="ts">
   import { getTimespan } from "$lib/common/math";
   import { eclipseConcat } from "$lib/common/strings";
+  import { expandHighlights, expandSummary } from "$shared/state/state";
 
   import type { ArticleBase } from "$shared/types/api";
   import {
@@ -45,7 +46,7 @@
             title: "highlights",
             icon: faHighlighter,
             content: eclipseConcat(article.highlights.content),
-            expanded: false,
+            expanded: $expandHighlights,
             markdown: true,
           },
         ]
@@ -56,7 +57,7 @@
             title: "summary",
             icon: faRectangleList,
             content: article.summary,
-            expanded: false,
+            expanded: $expandSummary,
             markdown: false,
           },
         ]
