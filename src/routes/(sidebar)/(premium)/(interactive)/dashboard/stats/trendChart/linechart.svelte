@@ -34,7 +34,9 @@
     points: getTrendPoints(trend.trend, xDomain),
   }));
 
-  function showListModal(e: CustomEvent<{ id: string }>) {
+  function showListModal(e: CustomEvent<{ id: string } | undefined>) {
+    if (!e.detail?.id) return;
+
     modalState.append({
       modalType: "article-list",
       modalContent: {

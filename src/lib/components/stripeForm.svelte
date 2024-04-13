@@ -90,9 +90,7 @@
       </div>
 
       {#if emailError}
-        <p class="error" transition:slide|local>
-          Your email address is invalid
-        </p>
+        <p class="error" transition:slide>Your email address is invalid</p>
       {/if}
     </label>
   {/if}

@@ -66,7 +66,7 @@
   </button>
 
   {#if open}
-    <div transition:slide|local>
+    <div transition:slide>
       <div class="py-5 border-b border-surface-400/20">
         <p class="mb-2 text-gray-500 font-light [&>a]:underline">
           <SvelteMarkdown isInline={true} source={answer} />

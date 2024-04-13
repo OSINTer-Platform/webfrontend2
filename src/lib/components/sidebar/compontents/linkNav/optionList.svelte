@@ -59,7 +59,7 @@
 
 <!-- Navigation List -->
 {#if !options.title || open}
-  <nav class="mb-6" transition:slide|local>
+  <nav class="mb-6" transition:slide>
     <ul class="">
       {#each options.list as { href, label, badge }}
         <li class="px-2">

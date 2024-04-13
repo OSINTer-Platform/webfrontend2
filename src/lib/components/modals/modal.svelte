@@ -13,7 +13,7 @@
 <div
   on:click={resetModal}
   on:keydown={resetModal}
-  transition:fade={{ duration: 200 }}
+  transition:fade|global={{ duration: 200 }}
   class="
     z-50 absolute
     h-screen w-screen
@@ -24,8 +24,8 @@
   <div
     on:click|stopPropagation
     on:keydown|stopPropagation
-    in:fly={{ y: 50 }}
-    out:fly={{ y: 50 }}
+    in:fly|global={{ y: 50 }}
+    out:fly|global={{ y: 50 }}
     class="
       overflow-auto
       cursor-auto

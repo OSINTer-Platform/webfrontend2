@@ -21,7 +21,7 @@
   export let containerClass = "";
   export let yAxisText = "";
 
-  const dispatch = createEventDispatcher<{ click: Line }>();
+  const dispatch = createEventDispatcher<{ click: Line | undefined }>();
 
   let svg: SVGElement;
   let tipSvg: SVGElement; // Used for displaying tooltips

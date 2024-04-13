@@ -42,7 +42,7 @@
   <aside class="relative mb-8 sm:mb-0">
     {#if open}
       <main
-        transition:slide|local
+        transition:slide
         class="
         bg-surface-200
         dark:bg-surface-900

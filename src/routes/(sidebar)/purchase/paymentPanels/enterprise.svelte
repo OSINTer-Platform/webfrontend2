@@ -114,7 +114,7 @@
       </div>
 
       {#if errors.name}
-        <p class="error" transition:slide|local>{errors.name}</p>
+        <p class="error" transition:slide>{errors.name}</p>
       {/if}
     </label>
 
@@ -130,7 +130,7 @@
       </div>
 
       {#if errors.email}
-        <p class="error" transition:slide|local>{errors.email}</p>
+        <p class="error" transition:slide>{errors.email}</p>
       {/if}
     </label>
 

@@ -117,12 +117,12 @@
           py-8 px-16 mx-auto max-w-[100ch]
           bg-surface-100 dark:bg-surface-800
       "
-        in:fly|local={{
+        in:fly={{
           duration: blockSwitching ? 400 : 0,
           easing: quintInOut,
           x: switchDirection === "right" ? 200 : -200,
         }}
-        out:fly|local={{
+        out:fly={{
           duration: blockSwitching ? 200 : 0,
           easing: quintInOut,
           x: switchDirection === "left" ? 200 : -200,

@@ -48,7 +48,7 @@
   containerClass="w-full h-[30rem] "
   yAxisText="↑ Documents per cluster"
   on:click={(e) => {
-    if (e) {
+    if (e && e.detail?.id) {
       goto(`/topic/${encodeURIComponent(e.detail.id)}`);
     }
   }}

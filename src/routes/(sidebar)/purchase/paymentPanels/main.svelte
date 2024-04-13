@@ -22,8 +22,8 @@
   export let stripe: null | Promise<null | Stripe>;
   export let personalPrice: Price;
 
-  const paymentTypes = ["personal", "enterprise"] as const;
-  type PaymentType = (typeof paymentTypes)[number];
+  type PaymentType = "personal" | "enterprise";
+  const paymentTypes: PaymentType[] = ["personal", "enterprise"] as const;
 
   let selectedType: PaymentType = "personal";
 
@@ -149,7 +149,7 @@
           border border-gray-700/75
           items-center text-center
         "
-        transition:fade|local
+        transition:fade
       >
         <p class="text-xl font-light italic">"{visibleTestimonial.content}"</p>
         <a

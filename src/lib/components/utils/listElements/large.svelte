@@ -155,7 +155,7 @@
       {#each textExpands as { title, content, expanded, markdown } (title)}
         {#if expanded}
           <div
-            transition:slide|local
+            transition:slide
             class="py-6 border-surface-400/25 border-b first:border-t first:mt-6 last:mb-6"
           >
             <p
