@@ -65,6 +65,8 @@
 </script>
 
 <section
+  role="spinbutton"
+  tabindex="0"
   on:mousedown={mousedown}
   on:mousemove={mousemove}
   on:mouseleave={mousestop}

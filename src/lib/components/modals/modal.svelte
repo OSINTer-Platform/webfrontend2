@@ -11,6 +11,7 @@
 </script>
 
 <div
+  role="presentation"
   on:click={resetModal}
   on:keydown={resetModal}
   transition:fade|global={{ duration: 200 }}
@@ -22,6 +23,7 @@
   "
 >
   <div
+    role="presentation"
     on:click|stopPropagation
     on:keydown|stopPropagation
     in:fly|global={{ y: 50 }}

@@ -15,6 +15,7 @@
 </script>
 
 <div
+  role="feed"
   on:mouseenter
   on:mouseleave
   bind:this={articleListContainer}

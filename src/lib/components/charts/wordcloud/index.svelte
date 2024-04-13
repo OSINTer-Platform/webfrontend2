@@ -116,6 +116,8 @@
           }}
         >
           <text
+            role="tab"
+            tabindex="0"
             on:mouseenter={() => (hoverText = word.text)}
             on:mouseleave={() => (hoverText = "")}
             style="

@@ -18,6 +18,7 @@
 
 {#if (article.similar && article.similar.length > 0) || collectionCount > 0}
   <aside
+    role="presentation"
     on:click|preventDefault|stopPropagation
     on:keydown|preventDefault|stopPropagation
     class="

@@ -22,6 +22,7 @@
   <slot name="nav" />
 </span>
 <div
+  role="presentation"
   on:click={() => ($sideOpen = !$sideOpen)}
   on:keyup={() => ($sideOpen = !$sideOpen)}
   class="
@@ -45,6 +46,8 @@
 "
 >
   <div
+    role="menubar"
+    tabindex="0"
     on:click|stopPropagation
     on:keyup|stopPropagation
     class="

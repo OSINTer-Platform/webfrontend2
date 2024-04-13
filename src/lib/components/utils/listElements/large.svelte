@@ -46,6 +46,7 @@
 "
 >
   <div
+    role="presentation"
     on:click|preventDefault|stopPropagation
     on:keydown|preventDefault|stopPropagation
     class="

@@ -44,7 +44,8 @@
       [&:hover>button]:block
   "
   >
-    <div
+    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+    <figure
       on:click|preventDefault|stopPropagation
       on:keydown|preventDefault|stopPropagation
       class="
@@ -89,7 +90,7 @@
       />
 
       <CollectionOverlay {article} overlayClass="top-12" iconClass="text-5xl" />
-    </div>
+    </figure>
 
     <div class="flex flex-col justify-center">
       <div

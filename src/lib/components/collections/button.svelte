@@ -39,6 +39,7 @@
   "
   />
   <div
+    role="presentation"
     on:keydown|stopPropagation|preventDefault
     on:click|stopPropagation|preventDefault
     on:mousedown|stopPropagation|preventDefault

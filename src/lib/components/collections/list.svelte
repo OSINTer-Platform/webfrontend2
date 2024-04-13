@@ -45,6 +45,7 @@
         .toLowerCase()
         .includes(collectionSearch.toLowerCase())}
       <li class="w-full">
+        <!-- svelte-ignore a11y-no-noninteractive-element-interactions permalink -->
         <label
           id={_id}
           on:click|stopPropagation|preventDefault={handleCheckbox}
