@@ -1,2 +1,0 @@
-Style tables in article render
-Fix re-navigation when downloading
