@@ -10,7 +10,7 @@ export const load: PageLoad = async ({ parent }) => {
   const userContent = get(user);
 
   if (!userContent)
-    throw redirect(
+    redirect(
       303,
       "/login?msg=" +
         encodeURIComponent("You need to be logged in to subscribe to OSINTer")
@@ -23,7 +23,7 @@ export const load: PageLoad = async ({ parent }) => {
     (price) => price.lookup_key == "pro-month"
   );
 
-  if (!price) throw error(500, "Error when querying prices");
+  if (!price) error(500, "Error when querying prices");
 
   return {
     personalPrice: price,

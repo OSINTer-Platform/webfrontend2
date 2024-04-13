@@ -21,7 +21,7 @@ export const load: LayoutLoad = async ({ params, fetch }) => {
 
       return cluster;
     } else {
-      throw error(r.status, "Error when fetching details for cluster");
+      error(r.status, "Error when fetching details for cluster");
     }
   }
 

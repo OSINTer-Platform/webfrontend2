@@ -21,13 +21,13 @@ export const load = (async ({ params, fetch }) => {
 
     if (!r.ok) {
       if (r.status === 404) {
-        throw error(
+        error(
           r.status,
           "The requested article unfortuantely wasn't found found"
         );
       }
 
-      throw error(r.status, "Error when fetching article content.");
+      error(r.status, "Error when fetching article content.");
     }
 
     const article = await r.json();

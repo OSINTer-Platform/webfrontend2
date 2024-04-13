@@ -25,7 +25,7 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     const r = await fetch(`${PUBLIC_API_BASE}/auth/allowed-areas`);
     const json = await r.json();
     if (r.ok) return json;
-    else throw error(r.status, json.detail);
+    else error(r.status, json.detail);
   };
 
   const getSubmittedSurveys = async (): Promise<Survey[]> => {

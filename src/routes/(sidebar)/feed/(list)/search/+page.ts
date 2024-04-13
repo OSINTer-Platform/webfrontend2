@@ -12,7 +12,7 @@ export const load = (async ({ fetch, parent }) => {
     if (r.ok) {
       return await r.json();
     } else {
-      throw error(r.status, "Error when fetching articles based on search.");
+      error(r.status, "Error when fetching articles based on search.");
     }
   };
 

@@ -24,7 +24,7 @@ export const load: LayoutLoad = async ({ parent, url }) => {
     if (!url.pathname.startsWith(route)) return;
 
     if (dependency && !mlAvailability[dependency])
-      throw error(421, {
+      error(421, {
         message: "",
         title: "Requested functionality isn't available",
         description: [
@@ -35,7 +35,7 @@ export const load: LayoutLoad = async ({ parent, url }) => {
       });
 
     if (!authorizer(authArea))
-      throw error(403, {
+      error(403, {
         message: "",
         title: `This page is reserved${
           userContent

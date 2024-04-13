@@ -11,16 +11,16 @@ export const load: PageLoad = async ({ params, fetch }) => {
 
     if (r.ok) {
       const articles = await r.json();
-      if (articles.length < 1) throw error(404, "No similar articles found");
+      if (articles.length < 1) error(404, "No similar articles found");
       return articles;
     } else {
       if (r.status === 404) {
-        throw error(
+        error(
           r.status,
           "The requested article unfortuantely wasn't found found"
         );
       } else {
-        throw error(r.status, "Error when fetching article content.");
+        error(r.status, "Error when fetching article content.");
       }
     }
   }

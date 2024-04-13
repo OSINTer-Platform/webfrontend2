@@ -12,7 +12,7 @@ export const load: PageLoad = async ({ fetch }) => {
     if (r.ok) {
       return await r.json();
     } else {
-      throw error(r.status, "Error when fetching cluster list");
+      error(r.status, "Error when fetching cluster list");
     }
   }
 

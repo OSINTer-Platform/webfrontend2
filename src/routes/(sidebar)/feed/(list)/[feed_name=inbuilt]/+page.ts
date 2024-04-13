@@ -10,7 +10,7 @@ export const load = (async ({ params, fetch }) => {
     if (r.ok) {
       return await r.json();
     } else {
-      throw error(r.status, "Error when fetching articles from builtin feed.");
+      error(r.status, "Error when fetching articles from builtin feed.");
     }
   };
 
