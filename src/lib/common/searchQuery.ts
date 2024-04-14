@@ -1,11 +1,17 @@
-import type { SearchQuery, SortBy, SortOrder } from "$shared/types/api";
+import type {
+  ArticleSearchQuery,
+  ArticleSortBy,
+  SortOrder,
+} from "$shared/types/api";
 
-export function fromUrl(params: URLSearchParams): SearchQuery {
+export function articleSearchQueryFromUrl(
+  params: URLSearchParams
+): ArticleSearchQuery {
   const limit = params.get("limit");
   return {
     limit: limit ? parseInt(limit) : 200,
 
-    sort_by: (params.get("sort_by") as SortBy) || undefined,
+    sort_by: (params.get("sort_by") as ArticleSortBy) || undefined,
     sort_order: (params.get("sort_order") as SortOrder) || undefined,
 
     search_term: params.get("search_term") || undefined,
@@ -20,7 +26,7 @@ export function fromUrl(params: URLSearchParams): SearchQuery {
   };
 }
 
-export function toUrl(q: SearchQuery): string {
+export function toUrl(q: ArticleSearchQuery): string {
   const urlElements: string[] = [];
 
   function append(k: string | number | boolean, v: string | number | boolean) {

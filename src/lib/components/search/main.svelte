@@ -11,14 +11,17 @@
     faPlus,
   } from "@fortawesome/free-solid-svg-icons";
 
-  import type { ArticleCategories, SearchQuery } from "$shared/types/api";
+  import type {
+    ArticleCategories,
+    ArticleSearchQuery,
+  } from "$shared/types/api";
 
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { getStandardSearch } from "$shared/config";
   import { createItem, sanitizeQuery } from "$lib/common/userItems";
   import { toUrl } from "$lib/common/searchQuery";
 
-  export let searchQuery: SearchQuery = getStandardSearch();
+  export let searchQuery: ArticleSearchQuery = getStandardSearch();
   export let sourceCategories: ArticleCategories | undefined = undefined;
   export let submitText: string = "Search content";
 

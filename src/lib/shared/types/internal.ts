@@ -3,7 +3,7 @@ import type {
   ArticleBase,
   FullArticle,
   ArticleCategories,
-  SearchQuery,
+  ArticleSearchQuery,
 } from "./api";
 
 export type ArticleListRender = "large" | "title";
@@ -49,8 +49,8 @@ export type Modal = (
   | {
       modalType: "search";
       modalContent: {
-        query?: SearchQuery;
-        searchAction?: (q: SearchQuery) => void;
+        query?: ArticleSearchQuery;
+        searchAction?: (q: ArticleSearchQuery) => void;
         searchText?: string;
       };
     }

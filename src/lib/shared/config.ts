@@ -1,4 +1,4 @@
-import type { SearchQuery } from "./types/api";
+import type { ArticleSearchQuery } from "./types/api";
 import type { ArticleListRender, Inbuilt } from "./types/internal";
 import { PUBLIC_API_BASE } from "$env/static/public";
 
@@ -62,7 +62,7 @@ export const inbuiltFeeds: { [key: string]: Inbuilt } = {
   },
 };
 
-export const getStandardSearch = (): SearchQuery => ({
+export const getStandardSearch = (): ArticleSearchQuery => ({
   limit: 200,
 
   sort_by: "publish_date",

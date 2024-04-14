@@ -2,7 +2,7 @@ import type {
   Article,
   ArticleBase,
   FullArticle,
-  SearchQuery,
+  ArticleSearchQuery,
 } from "$shared/types/api";
 
 import { client, extractDocHits } from "./common";
@@ -29,7 +29,7 @@ const BaseArticleFields: NonEmptyArray<keyof ArticleBase> = [
 ];
 
 function createRequest(
-  query: SearchQuery,
+  query: ArticleSearchQuery,
   options: {
     include_fields?: NonEmptyArray<string>;
     search_after?: NonEmptyArray<unknown>;
@@ -62,7 +62,7 @@ function createRequest(
 }
 
 export const getFullArticles = (
-  query: SearchQuery,
+  query: ArticleSearchQuery,
   options?: { filters?: Array<{ [key: string]: any }> }
 ): Promise<FullArticle[]> =>
   searchArticles(query, {
@@ -71,7 +71,7 @@ export const getFullArticles = (
   });
 
 export const getBaseArticles = (
-  query: SearchQuery,
+  query: ArticleSearchQuery,
   options?: { filters?: Array<{ [key: string]: any }> }
 ): Promise<ArticleBase[]> => {
   return searchArticles(query, {
@@ -81,7 +81,7 @@ export const getBaseArticles = (
 };
 
 export async function searchArticles<K extends keyof FullArticle>(
-  query: SearchQuery,
+  query: ArticleSearchQuery,
   options: {
     include_fields: NonEmptyArray<K>;
     search_after?: NonEmptyArray<unknown>;
@@ -97,7 +97,7 @@ export async function searchArticles<K extends keyof FullArticle>(
 }
 
 async function largeSearch<K extends keyof FullArticle>(
-  query: SearchQuery,
+  query: ArticleSearchQuery,
   options: {
     include_fields: NonEmptyArray<K>;
     filters?: Array<{ [key: string]: any }>;

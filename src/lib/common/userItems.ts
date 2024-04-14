@@ -1,9 +1,9 @@
 import { goto } from "$app/navigation";
 import { PUBLIC_API_BASE } from "$env/static/public";
-import type { SearchQuery } from "$shared/types/api";
+import type { ArticleSearchQuery } from "$shared/types/api";
 import type { Collection, Feed, ItemBase, User } from "$shared/types/userItems";
 
-export const sanitizeQuery = (query: SearchQuery) => {
+export const sanitizeQuery = (query: ArticleSearchQuery) => {
   const keys = [
     "sort_by",
     "sort_order",
@@ -31,7 +31,7 @@ type NavDest = "none" | "current" | "new";
 
 export function createItem(
   feedName: string,
-  contents: SearchQuery,
+  contents: ArticleSearchQuery,
   type: "feed",
   navigate?: NavDest,
   subscribe?: boolean
@@ -46,7 +46,7 @@ export function createItem(
 
 export async function createItem(
   feedName: string,
-  contents: SearchQuery | string[],
+  contents: ArticleSearchQuery | string[],
   type: "feed" | "collection",
   navigate: NavDest = "none",
   subscribe: boolean = true
@@ -81,7 +81,7 @@ export async function createItem(
 
 export function updateItem(
   itemId: string,
-  contents: SearchQuery,
+  contents: ArticleSearchQuery,
   type: "feed",
   navigate?: NavDest
 ): Promise<Feed | undefined>;
@@ -94,7 +94,7 @@ export function updateItem(
 
 export async function updateItem(
   itemId: string,
-  contents: SearchQuery | string[],
+  contents: ArticleSearchQuery | string[],
   type: "feed" | "collection",
   navigate: NavDest = "none"
 ): Promise<Feed | Collection | undefined> {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ArticleBase, SearchQuery } from "$shared/types/api";
+  import type { ArticleBase, ArticleSearchQuery } from "$shared/types/api";
 
   import Searchbar from "./searchbar.svelte";
   import ArticleList from "./articleList.svelte";
@@ -20,7 +20,7 @@
   );
 
   async function queryExtraArticles() {
-    const q: SearchQuery = {
+    const q: ArticleSearchQuery = {
       limit: 20,
       sort_order: "desc",
       semantic_search: previousSearch,

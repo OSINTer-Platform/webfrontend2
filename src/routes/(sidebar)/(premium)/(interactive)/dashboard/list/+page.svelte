@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ArticleBase, SearchQuery } from "$shared/types/api";
+  import type { ArticleBase, ArticleSearchQuery } from "$shared/types/api";
   import type { PageData } from "./$types";
 
   import Loader from "$com/loader.svelte";
@@ -22,7 +22,7 @@
   async function fetchArticles(
     firstDate: Date | undefined = undefined
   ): Promise<ArticleBase[]> {
-    const q: SearchQuery = {
+    const q: ArticleSearchQuery = {
       sort_by: "publish_date",
       sort_order: "desc",
       limit: 10000,

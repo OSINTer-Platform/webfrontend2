@@ -1,9 +1,12 @@
 <script lang="ts">
-  import type { ArticleCategories, SearchQuery } from "$shared/types/api";
+  import type {
+    ArticleCategories,
+    ArticleSearchQuery,
+  } from "$shared/types/api";
 
   import ListRender from "$com/article-list/header/detailList.svelte";
 
-  export let currentItem: SearchQuery;
+  export let currentItem: ArticleSearchQuery;
   export let categories: ArticleCategories;
   const dateFormatter = (date: string) => new Date(date).toLocaleDateString();
 

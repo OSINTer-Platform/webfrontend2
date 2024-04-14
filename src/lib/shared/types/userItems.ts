@@ -1,4 +1,4 @@
-import type { SearchQuery } from "./api";
+import type { ArticleSearchQuery } from "./api";
 import type { ArticleListRender } from "./internal";
 
 export interface ItemBase {
@@ -14,7 +14,7 @@ export interface Collection extends ItemBase {
   ids: string[];
 }
 
-export interface Feed extends ItemBase, SearchQuery {
+export interface Feed extends ItemBase, ArticleSearchQuery {
   type: "feed";
 }
 

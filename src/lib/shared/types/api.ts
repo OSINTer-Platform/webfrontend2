@@ -88,7 +88,7 @@ export interface ArticleCategories {
   };
 }
 
-export type SortBy =
+export type ArticleSortBy =
   | ""
   | "publish_date"
   | "read_times"
@@ -97,10 +97,10 @@ export type SortBy =
   | "inserted_at";
 export type SortOrder = "desc" | "asc";
 
-export interface SearchQuery {
+export interface ArticleSearchQuery {
   limit: number;
 
-  sort_by?: SortBy | undefined;
+  sort_by?: ArticleSortBy | undefined;
   sort_order?: SortOrder | undefined;
 
   search_term?: string | undefined;

@@ -6,7 +6,7 @@
   import LinkNavOptions from "./compontents/linkNav/optionList.svelte";
   import SidebarShell from "./compontents/shell.svelte";
 
-  import type { SearchQuery } from "$shared/types/api";
+  import type { ArticleSearchQuery } from "$shared/types/api";
   import type { UserItemSidebarOption } from "$shared/types/internal";
   import type { User } from "$shared/types/userItems";
 
@@ -47,7 +47,7 @@
       modalType: "search",
       modalContent: {
         searchText: "Create feed",
-        searchAction: async (query: SearchQuery) => {
+        searchAction: async (query: ArticleSearchQuery) => {
           await createItem("New Feed", sanitizeQuery(query), "feed", "current");
         },
       },

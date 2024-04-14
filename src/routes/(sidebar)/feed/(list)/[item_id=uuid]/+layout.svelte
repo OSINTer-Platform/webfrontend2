@@ -16,7 +16,7 @@
   } from "@fortawesome/free-solid-svg-icons/index";
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { goto, invalidateAll } from "$app/navigation";
-  import type { SearchQuery } from "$shared/types/api";
+  import type { ArticleSearchQuery } from "$shared/types/api";
   import {
     changeName,
     updateItem,
@@ -109,7 +109,7 @@
                 modalType: "search",
                 modalContent: {
                   searchText: "Update feed",
-                  searchAction: async (query: SearchQuery) => {
+                  searchAction: async (query: ArticleSearchQuery) => {
                     await updateItem(
                       data.currentItem._id,
                       sanitizeQuery(query),
