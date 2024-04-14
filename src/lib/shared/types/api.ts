@@ -115,6 +115,30 @@ export interface ArticleSearchQuery {
   cluster_id?: string;
 }
 
+export type CVESortBy =
+  | "document_count"
+  | "cve"
+  | "publish_date"
+  | "modified_date";
+export type CVEDateField = "publish_date" | "modified_date";
+
+export interface CVESEarchQuery {
+  limit: number;
+
+  sort_by?: CVESortBy;
+  sort_order?: SortOrder;
+
+  search_term?: string;
+  cves?: string[];
+  ids?: string[];
+
+  first_date?: string;
+  last_date?: string;
+  date_field?: CVEDateField;
+
+  highlight?: boolean;
+}
+
 export interface AccessTokenWithDetails {
   token: string;
   max_age: number;

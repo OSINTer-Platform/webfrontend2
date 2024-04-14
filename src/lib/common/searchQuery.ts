@@ -1,6 +1,9 @@
 import type {
   ArticleSearchQuery,
   ArticleSortBy,
+  CVEDateField,
+  CVESEarchQuery,
+  CVESortBy,
   SortOrder,
 } from "$shared/types/api";
 
@@ -26,7 +29,27 @@ export function articleSearchQueryFromUrl(
   };
 }
 
-export function toUrl(q: ArticleSearchQuery): string {
+export function CVESearchQueryFromUrl(params: URLSearchParams): CVESEarchQuery {
+  const limit = params.get("limit");
+  return {
+    limit: limit ? parseInt(limit) : 200,
+
+    sort_by: (params.get("sort_by") as CVESortBy) || undefined,
+    sort_order: (params.get("sort_order") as SortOrder) || undefined,
+
+    search_term: params.get("search_term") || undefined,
+    highlight: Boolean(params.get("highlight")),
+
+    first_date: params.get("first_date") || undefined,
+    last_date: params.get("last_date") || undefined,
+    date_field: (params.get("date_field") as CVEDateField) || undefined,
+
+    cves: params.getAll("sources"),
+    ids: params.getAll("ids"),
+  };
+}
+
+export function toUrl(q: ArticleSearchQuery | CVESEarchQuery): string {
   const urlElements: string[] = [];
 
   function append(k: string | number | boolean, v: string | number | boolean) {
