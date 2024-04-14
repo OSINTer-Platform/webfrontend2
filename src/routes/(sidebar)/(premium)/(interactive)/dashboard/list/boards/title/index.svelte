@@ -28,5 +28,7 @@
 >
   {#each articles as article (article.id)}
     <Article {article} {readArticles} articleList={articles} />
+
+    <hr class="border border-surface-400/25 my-3" />
   {/each}
 </div>

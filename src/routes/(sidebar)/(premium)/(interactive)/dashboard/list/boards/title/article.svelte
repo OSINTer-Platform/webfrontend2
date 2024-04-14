@@ -5,7 +5,7 @@
   import SvelteMarkdown from "svelte-markdown";
   import Fa from "svelte-fa";
 
-  import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+  import { faRectangleList } from "@fortawesome/free-solid-svg-icons";
   import { getTimespan } from "$lib/common/math";
   import { slide } from "svelte/transition";
 
@@ -19,8 +19,6 @@
 
   $: read = readArticles.includes(article.id);
 </script>
-
-<hr class="border-tertiary-500 dark:text-surface-500 my-3" />
 
 <Link {article} {articleList}>
   <article
@@ -187,7 +185,7 @@
           (showSummary = !showSummary)}
       >
         <Fa
-          icon={faCaretDown}
+          icon={faRectangleList}
           class="
           mx-auto
           transition-transform duration-300
