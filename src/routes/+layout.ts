@@ -1,5 +1,5 @@
 import { PUBLIC_API_BASE } from "$env/static/public";
-import { cookieStore, updatable } from "$lib/common/customStores";
+import { cookieStore, backgroundUpdatable } from "$lib/common/customStores";
 import { config } from "$shared/config";
 import { derived, writable } from "svelte/store";
 import type { AuthArea, MLAvailability, Survey } from "$shared/types/api";
@@ -77,8 +77,8 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     getMlAvailability(),
     getAuthAreas(),
     getSubmittedSurveys(),
-    updatable(() => updateAlreadyRead(userContents)),
-    updatable(() => updateCollectionList(userContents)),
+    backgroundUpdatable(() => updateAlreadyRead(userContents)),
+    backgroundUpdatable(() => updateCollectionList(userContents)),
   ]);
 
   const allowedAreas = derived(user, ($user) => {

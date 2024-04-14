@@ -7,8 +7,12 @@ export interface ListStore<T> extends Writable<T[]> {
   prepend: (el: T) => void;
 }
 
-export interface Updatable<T> extends Writable<T> {
-  autoUpdate: () => void;
+export interface Updatable<R, T = void> extends Writable<Promise<R>> {
+  autoUpdate: (arg?: T) => Promise<R>;
+}
+
+export interface BackgroundUpdatable<R, T = void> extends Writable<R> {
+  autoUpdate: (arg?: T) => Promise<R>;
 }
 
 export function listStore<T>(initialVal: T[]): ListStore<T> {
@@ -36,15 +40,38 @@ export function listStore<T>(initialVal: T[]): ListStore<T> {
   };
 }
 
-export async function updatable<T>(
-  updateFn: () => Promise<T>
-): Promise<Updatable<T>> {
-  const initialVal = await updateFn();
+export function updatable<T, R>(
+  updateFn: (arg?: T) => Promise<R>,
+  initialArg?: T
+): Updatable<R, T> {
+  const initialVal = updateFn(initialArg);
   const { subscribe, set, update } = writable(initialVal);
 
-  const autoUpdate = async () => {
-    const updateVal = await updateFn();
+  const autoUpdate = (arg?: T) => {
+    const updatePromise = updateFn(arg);
+    set(updatePromise);
+    return updatePromise;
+  };
+
+  return {
+    subscribe,
+    set,
+    update,
+    autoUpdate,
+  };
+}
+
+export async function backgroundUpdatable<T, R>(
+  updateFn: (arg?: T) => Promise<R>,
+  initialArg?: T
+): Promise<BackgroundUpdatable<R, T>> {
+  const initialVal = await updateFn(initialArg);
+  const { subscribe, set, update } = writable(initialVal);
+
+  const autoUpdate = async (arg?: T) => {
+    const updateVal = await updateFn(arg);
     set(updateVal);
+    return updateVal;
   };
 
   return {
