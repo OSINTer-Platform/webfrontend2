@@ -157,3 +157,94 @@ export type AuthArea =
   | "map"
   | "similar"
   | "summary";
+
+export type CVEReference = {
+  url: string;
+  source: string;
+  tags: string[];
+};
+
+export type CVSS3Data = {
+  version: "3.0" | "3.1";
+  vector_string: string;
+  attack_vector: "NETWORK" | "ADJACENT_NETWORK" | "LOCAL" | "PHYSICAL";
+  attack_complexity: "LOW" | "HIGH";
+  privileges_required: "NONE" | "LOW" | "HIGH";
+  user_interaction: "NONE" | "REQUIRED";
+  scope: "UNCHANGED" | "CHANGED";
+  confidentiality_impact: "NONE" | "LOW" | "HIGH";
+  integrity_impact: "NONE" | "LOW" | "HIGH";
+  availability_impact: "NONE" | "LOW" | "HIGH";
+  base_score: number;
+  base_severity: "NONE" | "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+};
+
+export type CVSS3 = {
+  source: string;
+  exploitability_score: number;
+  impact_score: number;
+  cvss_data: CVSS3Data;
+};
+
+export type CVSS2Data = {
+  version: "2.0";
+  vector_string: string;
+  access_vector: "NETWORK" | "ADJACENT_NETWORK" | "LOCAL";
+  access_complexity: "LOW" | "MEDIUM" | "HIGH";
+  authentication: "MULTIPLE" | "SINGLE" | "NONE";
+  confidentiality_impact: "NONE" | "PARTIAL" | "COMPLETE";
+  integrity_impact: "NONE" | "PARTIAL" | "COMPLETE";
+  availability_impact: "NONE" | "PARTIAL" | "COMPLETE";
+  base_score: number;
+};
+
+export type CVSS2 = {
+  source: string;
+  base_severity: "LOW" | "MEDIUM" | "HIGH";
+  exploitability_score: number;
+  impact_score: number;
+  ac_insuf_info: boolean;
+  obtain_all_privilege: boolean;
+  obtain_user_privilege: boolean;
+  obtain_other_privilege: boolean;
+  user_interaction_required?: boolean;
+  cvss_data: CVSS2Data;
+};
+
+export interface CVEBase {
+  cve: string;
+  document_count: number;
+
+  title: string;
+  description: string;
+  keywords: string[];
+
+  highlights?: {
+    title?: string[];
+    description?: string[];
+    summary?: string[];
+  };
+
+  publish_date: string;
+  modified_date: string;
+
+  weaknesses: string[];
+
+  status:
+    | "Awaiting Analysis"
+    | "Received"
+    | "Analyzed"
+    | "Rejected"
+    | "Modified"
+    | "Undergoing Analysis";
+
+  cvss3?: CVSS3;
+  cvss2?: CVSS2;
+
+  references: CVEReference[];
+}
+
+export interface FullCVE extends CVEBase {
+  documents: string[];
+  dating: string[];
+}
