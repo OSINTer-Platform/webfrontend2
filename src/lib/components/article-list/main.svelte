@@ -11,7 +11,7 @@
   import Loader from "./loader.svelte";
 
   import { page } from "$app/stores";
-  import { onDestroy } from "svelte";
+  import { onDestroy, type ComponentType, SvelteComponent } from "svelte";
   import { listElementCount, showHighlights } from "$shared/state/state";
 
   export let articles: ArticleBase[] = [];
@@ -22,7 +22,17 @@
   let chunksVisible = 1;
 
   const layouts: {
-    [articleListRender in ArticleListRender]: { shell: any; article: any };
+    [articleListRender in ArticleListRender]: {
+      shell: ComponentType<SvelteComponent>;
+      article: ComponentType<
+        SvelteComponent<{
+          article: ArticleBase;
+          articleList: ArticleBase[];
+          readArticles: string[];
+          showHighlights: boolean;
+        }>
+      >;
+    };
   } = {
     large: { shell: LargeShell, article: LargeArticle },
     title: { shell: TitleShell, article: TitleArticle },
