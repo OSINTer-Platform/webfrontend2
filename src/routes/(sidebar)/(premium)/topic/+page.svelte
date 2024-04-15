@@ -77,14 +77,5 @@
     {/if}
   </HeaderShell>
 
-  <main
-    class="
-    flex flex-col
-    p-4 sm:p-12
-    bg-surface-100 dark:bg-surface-900
-  "
-  >
   <ClusterList clusters={filteredClusters} />
-  </main>
-  ======= >>>>>>> 9341d1e (fixup! Create general element list component)
 </div>

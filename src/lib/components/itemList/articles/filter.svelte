@@ -1,5 +1,5 @@
 <script lang="ts">
-  import List from "./wrapper.svelte";
+  import List from "./main.svelte";
 
   import { showRead } from "$state/state";
   import { filterArticles } from "$lib/common/filter";
@@ -30,10 +30,14 @@
   articles={filteredArticles}
   {tintReadArticles}
   {emptyMessage}
-  class={classes}
+  containerClass={classes}
   {listLenLimit}
 >
   <svelte:fragment slot="top">
     <slot name="top" />
+  </svelte:fragment>
+
+  <svelte:fragment slot="bottom">
+    <slot name="bottom" />
   </svelte:fragment>
 </List>

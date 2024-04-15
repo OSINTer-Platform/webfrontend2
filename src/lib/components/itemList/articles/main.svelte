@@ -9,6 +9,7 @@
   import TitleArticle from "./layouts/title/article.svelte";
 
   import Loader from "../loader.svelte";
+  import Wrapper from "../wrapper.svelte";
 
   import { page } from "$app/stores";
   import { onDestroy, type ComponentType, SvelteComponent } from "svelte";
@@ -18,6 +19,8 @@
   export let layout: ArticleListRender = "large";
   export let tintReadArticles: boolean;
   export let listLenLimit = 100;
+  export let emptyMessage: { title: string; description: string } | null = null;
+  export let containerClass: string = "";
 
   let chunksVisible = 1;
 
@@ -55,17 +58,21 @@
   onDestroy(() => listElementCount.set(0));
 </script>
 
-<svelte:component this={layouts[layout].shell}>
-  {#each limitedArticles as article (article.id)}
-    <svelte:component
-      this={layouts[layout].article}
-      {article}
-      {readArticles}
-      showHighlights={$showHighlights}
-      articleList={articles}
-    />
-  {/each}
-  {#if showLoader}
-    <Loader bind:chunksVisible />
-  {/if}
-</svelte:component>
+<Wrapper empty={articles.length < 1} {emptyMessage} class={containerClass}>
+  <slot name="top" />
+  <svelte:component this={layouts[layout].shell}>
+    {#each limitedArticles as article (article.id)}
+      <svelte:component
+        this={layouts[layout].article}
+        {article}
+        {readArticles}
+        showHighlights={$showHighlights}
+        articleList={articles}
+      />
+    {/each}
+    {#if showLoader}
+      <Loader bind:chunksVisible />
+    {/if}
+  </svelte:component>
+  <slot name="bottom" />
+</Wrapper>

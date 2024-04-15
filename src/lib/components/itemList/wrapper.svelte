@@ -1,16 +1,4 @@
 <script lang="ts">
-  import { page } from "$app/stores";
-  import type { ArticleBase } from "$shared/types/api";
-  import List from "./main.svelte";
-
-  export let articles: ArticleBase[];
-  let classes: string = "";
-  export { classes as class };
-  export let tintReadArticles: boolean;
-  export let listLenLimit = 100;
-
-  $: articleListRender = $page.data.settings.listRenderMode;
-
   let defaultMessage: {
     title: string;
     description: string;
@@ -21,29 +9,22 @@
   };
 
   export let emptyMessage: typeof defaultMessage | null = null;
+  export let empty: boolean;
+
+  let classes: string = "";
+  export { classes as class };
 </script>
 
 <div
   class="
-	bg-surface-100
-	dark:bg-surface-900
-
 	grow
-
-	p-4
-	sm:p-12
+	p-4 sm:p-12
+	bg-surface-100 dark:bg-surface-900
   {classes}
 "
 >
-  {#if articles.length > 0}
-    <slot name="top" />
-    <List
-      {articles}
-      layout={$articleListRender}
-      {tintReadArticles}
-      {listLenLimit}
-    />
-    <slot name="bottom" />
+  {#if !empty}
+    <slot />
   {:else}
     <div
       class="h-full mx-auto px-8 max-w-2xl flex flex-col justify-center text-center"
