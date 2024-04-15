@@ -1,14 +1,14 @@
 <script lang="ts">
   import Fa from "svelte-fa";
-  import Large from "$com/utils/listElements/large.svelte";
+  import ListElement from "$com/utils/listElement.svelte";
 
   import { faStar } from "@fortawesome/free-regular-svg-icons";
   import { createItem } from "$lib/common/userItems";
+  import { page } from "$app/stores";
+  import { faRectangleList } from "@fortawesome/free-solid-svg-icons";
 
   import type { Cluster, ClusterBase } from "$shared/types/api";
   import { PUBLIC_API_BASE } from "$env/static/public";
-  import { page } from "$app/stores";
-  import { faRectangleList } from "@fortawesome/free-solid-svg-icons";
 
   export let cluster: ClusterBase;
 
@@ -37,10 +37,8 @@
   }
 </script>
 
-<hr class="border-tertiary-500 dark:border-surface-500" />
-
 <a data-sveltekit-preload-data="off" href={`/topic/${cluster.id}`}>
-  <Large
+  <ListElement
     title={{ text: cluster.title, markdown: false }}
     description={{ text: cluster.description, markdown: false }}
     leftLegend={{ text: `Nr ${cluster.nr}`, hover: "" }}
@@ -59,7 +57,7 @@
       },
     ]}
   >
-    <svelte:fragment slot="icons">
+    <svelte:fragment slot="large-icons">
       {#if $user}
         <div
           class="
@@ -90,5 +88,23 @@
         </div>
       {/if}
     </svelte:fragment>
-  </Large>
+    <svelte:fragment slot="title-icons">
+      <button
+        on:click={createCollection}
+        class="btn px-2"
+        title="Create collection from cluster"
+      >
+        <Fa
+          icon={faStar}
+          class="
+          ml-auto my-auto
+          text-lg md:text-xl
+          text-black/75 dark:text-white/90
+          hover:text-primary-500
+          transition-colors
+        "
+        />
+      </button>
+    </svelte:fragment>
+  </ListElement>
 </a>

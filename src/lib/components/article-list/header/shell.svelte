@@ -153,7 +153,7 @@
     <svelte:component
       this={searchSubmitable ? ArticleSearch : Search}
       bind:value={searchValue}
-      placeholder={"Filter displayed articles"}
+      placeholder={`Filter displayed ${contentType}`}
       containerClass={"w-full my-6"}
       infoText={`${$listElementCount} ${contentType}`}
     />

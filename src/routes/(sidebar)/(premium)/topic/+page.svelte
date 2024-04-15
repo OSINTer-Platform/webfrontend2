@@ -63,7 +63,6 @@
     searchSubmitable={false}
     {modOptions}
     bind:searchValue={$clusterSearch}
-    tabs={null}
     contentType="topics"
   >
     {#if showClusterGraph}
@@ -78,13 +77,16 @@
           </section>
         {/if}
       {/await}
+    {:else}
+      <hr class="border-tertiary-600/50 my-4" />
     {/if}
   </HeaderShell>
 
   <main
     class="
-    flex flex-col gap-8
+    flex flex-col
     p-4 sm:p-12
+    bg-surface-100 dark:bg-surface-900
   "
   >
     {#each filteredClusters as cluster}
