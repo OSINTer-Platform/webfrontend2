@@ -81,7 +81,7 @@
     {textExpands}
     {read}
   >
-    <svelte:fragment slot="actions">
+    <svelte:fragment slot="icons">
       <CollectionOverlay {article} />
     </svelte:fragment>
   </Large>

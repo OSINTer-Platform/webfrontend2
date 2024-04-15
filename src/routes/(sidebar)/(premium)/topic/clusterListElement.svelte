@@ -59,7 +59,7 @@
       },
     ]}
   >
-    <svelte:fragment slot="actions">
+    <svelte:fragment slot="icons">
       {#if $user}
         <div
           class="

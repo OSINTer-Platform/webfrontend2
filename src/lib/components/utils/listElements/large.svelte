@@ -91,7 +91,7 @@
     "
     />
 
-    <slot name="actions" />
+    <slot name="icons" />
   </div>
 
   <div
@@ -115,7 +115,7 @@
       "
     >
       <p title={leftLegend.hover}>{leftLegend.text}</p>
-      <time title={rightLegend.hover}>{rightLegend.text}</time>
+      <p title={rightLegend.hover}>{rightLegend.text}</p>
     </div>
 
     <div>
