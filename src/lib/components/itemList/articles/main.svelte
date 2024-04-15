@@ -17,7 +17,7 @@
   export let articles: ArticleBase[] = [];
   export let layout: ArticleListRender = "large";
   export let tintReadArticles: boolean;
-  export let listLenLimit = 200;
+  export let listLenLimit = 100;
 
   let chunksVisible = 1;
 

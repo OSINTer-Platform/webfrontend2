@@ -1,6 +1,6 @@
 <script lang="ts">
   import HeaderShell from "$com/itemList/header/shell.svelte";
-  import ClusterListElement from "./clusterListElement.svelte";
+  import ClusterList from "./clusterList.svelte";
   import TopicChart from "./chart.svelte";
   import Loader from "$com/loader.svelte";
 
@@ -10,11 +10,10 @@
 
   import { faArrowTrendUp } from "@fortawesome/free-solid-svg-icons";
   import { writable } from "svelte/store";
-  import { onDestroy, onMount } from "svelte";
+  import { onMount } from "svelte";
   import { searchInCluster } from "$lib/common/filter";
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { slide } from "svelte/transition";
-  import { listElementCount } from "$shared/state/state";
 
   export let data: PageData;
 
@@ -28,8 +27,6 @@
       (c) => $clusterSearch.length < 1 || searchInCluster(c, $clusterSearch)
     );
 
-  $: listElementCount.set(filteredClusters.length);
-
   const modOptions: HeaderModOptions[] = [
     {
       title: "Show cluster development",
@@ -39,8 +36,6 @@
       },
     },
   ];
-
-  onDestroy(() => listElementCount.set(0));
 
   onMount(() => {
     fullClusters = fetch(`${PUBLIC_API_BASE}/ml/clusters?complete=true`).then(
@@ -89,8 +84,7 @@
     bg-surface-100 dark:bg-surface-900
   "
   >
-    {#each filteredClusters as cluster}
-      <ClusterListElement {cluster} />
-    {/each}
+  <ClusterList clusters={filteredClusters} />
   </main>
+  ======= >>>>>>> 9341d1e (fixup! Create general element list component)
 </div>
