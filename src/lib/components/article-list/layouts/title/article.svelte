@@ -1,8 +1,8 @@
 <script lang="ts">
-  import SvelteMarkdown from "svelte-markdown";
   import Link from "../../../modalLink.svelte";
   import Icons from "./icons.svelte";
   import Loader from "$com/loader.svelte";
+  import Title from "$com/utils/listElements/title.svelte";
 
   import type { ArticleBase } from "$shared/types/api";
 
@@ -15,7 +15,18 @@
   export let readArticles: string[];
   export let showHighlights: boolean;
 
+  $: title =
+    article.highlights?.title && showHighlights
+      ? { text: eclipseConcat(article.highlights.title), markdown: true }
+      : { text: article.title, markdown: false };
+
+  $: description =
+    article.highlights?.description && showHighlights
+      ? { text: eclipseConcat(article.highlights.description), markdown: true }
+      : { text: article.description, markdown: false };
+
   $: read = readArticles.includes(article.id);
+
   let similarArticles: null | Promise<ArticleBase[]> = null;
   let showSimilar = false;
 
@@ -41,119 +52,22 @@
   }
 </script>
 
-<Link
-  {article}
-  {articleList}
-  class="
-  flex
-  items-center
-  gap-4
-
-  md:p-2
-  p-1
-
-  border-y
-  border-tertiary-500
-  dark:border-surface-400
-
-  [&+a]:border-t-0
-
-  hover:bg-surface-50
-  dark:hover:bg-surface-500
-
-  [&:hover>aside]:flex
-  relative
-"
-  title={article.tags.automatic.map((tag) => tag.toUpperCase()).join(" | ")}
->
-  <p
-    class="
-  hidden
-  lg:hidden
-
-  xl:block
-  md:block
-
-  truncate
-  text-xs
-  font-light
-
-  w-1/12
-  shrink-0
-  dark:font-medium
-"
+<Link {article} {articleList}>
+  <Title
+    {title}
+    {description}
+    leftLegend={{ hover: article.profile, text: article.source }}
+    rightLegend={{
+      hover: article.publish_date,
+      text: getTimespan(article.publish_date),
+    }}
+    {read}
+    tags={article.tags.automatic.map((t) => t.toLowerCase())}
   >
-    {article.source}
-  </p>
-  <div
-    class="
-  flex
-  flex-row
-  gap-2
-
-  shrink
-  grow
-  overflow-hidden
-"
-  >
-    <h1
-      class="
-    text-sm md:text-base
-    {read ? 'opacity-60' : 'font-semibold'}
-
-    truncate
-    shrink-0
-
-    [&>strong]:font-semibold
-    [&>strong]:text-primary-600
-  "
-    >
-      {#if article.highlights?.title && showHighlights}
-        <SvelteMarkdown
-          source={eclipseConcat(article.highlights.title)}
-          isInline
-        />
-      {:else}
-        {article.title}
-      {/if}
-    </h1>
-
-    <p
-      class="
-
-    {read ? 'opacity-60 font-light' : ''}
-    text-xs
-    leading-5
-
-    md:text-sm
-    md:leading-6
-
-    truncate
-    text-tertiary-800 dark:text-white
-
-    [&>strong]:font-semibold
-    [&>strong]:text-primary-400
-  "
-    >
-      {#if article.highlights?.description && showHighlights}
-        <SvelteMarkdown
-          source={eclipseConcat(article.highlights.description)}
-          isInline
-        />
-      {:else}
-        {article.description}
-      {/if}
-    </p>
-  </div>
-
-  <Icons {article} on:showSimilar={toggleShowSimilar} />
-
-  <time
-    title={article.publish_date}
-    class:opacity-60={read}
-    class="text-xs font-extralight shrink-0 sm:dark:font-medium"
-    >{getTimespan(article.publish_date)}</time
-  >
+    <svelte:fragment slot="icons">
+      <Icons {article} on:showSimilar={toggleShowSimilar} />
+    </svelte:fragment>
+  </Title>
 </Link>
 
 {#if showSimilar && similarArticles}
