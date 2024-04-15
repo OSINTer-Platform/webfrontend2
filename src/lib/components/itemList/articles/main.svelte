@@ -8,7 +8,7 @@
   import TitleShell from "./layouts/title/shell.svelte";
   import TitleArticle from "./layouts/title/article.svelte";
 
-  import Loader from "./loader.svelte";
+  import Loader from "../loader.svelte";
 
   import { page } from "$app/stores";
   import { onDestroy, type ComponentType, SvelteComponent } from "svelte";

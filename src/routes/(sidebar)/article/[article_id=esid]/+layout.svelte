@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Header from "$com/article-list/header/shell.svelte";
-  import DetailList from "$com/article-list/header/detailList.svelte";
+  import Header from "$com/itemList/header/shell.svelte";
+  import DetailList from "$com/itemList/header/detailList.svelte";
 
   import type { ArticleTags } from "$shared/types/api";
   import type { HeaderModOptions } from "$shared/types/internal";

@@ -2,7 +2,7 @@
   import type { LayoutData } from "./$types";
   import type { HeaderModOptions } from "$shared/types/internal";
 
-  import HeaderShell from "$com/article-list/header/shell.svelte";
+  import HeaderShell from "$com/itemList/header/shell.svelte";
   import MonthTab from "./monthTab.svelte";
 
   import { feedLocalSearch } from "$state/state";

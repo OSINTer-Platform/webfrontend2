@@ -11,7 +11,7 @@
   export let leftLegend: { text: string; hover: string };
   export let rightLegend: { text: string; hover: string };
 
-  export let imageUrl: string | null = null;
+  export let imageUrl: string | undefined = undefined;
   export let tags: string[] = [];
   export let read: boolean = false;
 

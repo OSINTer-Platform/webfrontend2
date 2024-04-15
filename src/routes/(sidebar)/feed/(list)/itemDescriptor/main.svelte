@@ -2,7 +2,7 @@
   import type { ItemBase, Feed, Collection } from "$shared/types/userItems";
   import type { ArticleCategories } from "$shared/types/api";
 
-  import ListRender from "$com/article-list/header/detailList.svelte";
+  import ListRender from "$com/itemList/header/detailList.svelte";
   import FeedRender from "./feed.svelte";
   import CollectionRender from "./collection.svelte";
 

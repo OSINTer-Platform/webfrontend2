@@ -4,7 +4,7 @@
     ArticleSearchQuery,
   } from "$shared/types/api";
 
-  import ListRender from "$com/article-list/header/detailList.svelte";
+  import ListRender from "$com/itemList/header/detailList.svelte";
 
   export let currentItem: ArticleSearchQuery;
   export let categories: ArticleCategories;

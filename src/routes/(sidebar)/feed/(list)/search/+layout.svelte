@@ -3,7 +3,7 @@
   import type { HeaderModOptions } from "$shared/types/internal";
 
   import FeedRender from "../itemDescriptor/feed.svelte";
-  import HeaderShell from "$com/article-list/header/shell.svelte";
+  import HeaderShell from "$com/itemList/header/shell.svelte";
 
   import { createItem } from "$lib/common/userItems";
   import { feedLocalSearch } from "$state/state";

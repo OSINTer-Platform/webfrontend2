@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { HeaderModOptions } from "$shared/types/internal";
 
-  import HeaderShell from "$com/article-list/header/shell.svelte";
-  import List from "$com/article-list/wrapper.svelte";
+  import HeaderShell from "$com/itemList/header/shell.svelte";
+  import List from "$com/itemList/articles/wrapper.svelte";
 
   import {
     filteredArticles,

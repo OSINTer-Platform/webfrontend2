@@ -1,5 +1,5 @@
 <script lang="ts">
-  import HeaderShell from "$com/article-list/header/shell.svelte";
+  import HeaderShell from "$com/itemList/header/shell.svelte";
   import ClusterListElement from "./clusterListElement.svelte";
   import TopicChart from "./chart.svelte";
   import Loader from "$com/loader.svelte";

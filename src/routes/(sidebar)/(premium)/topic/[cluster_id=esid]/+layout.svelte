@@ -2,8 +2,8 @@
   import type { HeaderModOptions } from "$shared/types/internal";
   import type { LayoutData } from "./$types";
 
-  import DetailList from "$com/article-list/header/detailList.svelte";
-  import HeaderShell from "$com/article-list/header/shell.svelte";
+  import DetailList from "$com/itemList/header/detailList.svelte";
+  import HeaderShell from "$com/itemList/header/shell.svelte";
 
   import { faDownload, faXmark } from "@fortawesome/free-solid-svg-icons";
   import { goto } from "$app/navigation";

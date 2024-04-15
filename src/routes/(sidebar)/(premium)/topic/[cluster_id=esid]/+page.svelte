@@ -1,5 +1,5 @@
 <script lang="ts">
-  import FilterShell from "$com/article-list/filter.svelte";
+  import FilterShell from "$com/itemList/articles/filter.svelte";
 
   import type { PageData } from "./$types";
 

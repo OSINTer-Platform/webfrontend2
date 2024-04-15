@@ -3,8 +3,8 @@
 
   import { page } from "$app/stores";
 
-  import Large from "./listElements/large.svelte";
-  import Title from "./listElements/title.svelte";
+  import Large from "./large.svelte";
+  import Title from "./title.svelte";
 
   export let title: { text: string; markdown: boolean };
   export let description: { text: string; markdown: boolean };
@@ -15,7 +15,7 @@
   export let tags: string[] = [];
   export let read: boolean = false;
 
-  export let imageUrl: string | null = null;
+  export let imageUrl: string | undefined = undefined;
 
   export let textExpands: {
     title: string;

@@ -10,7 +10,7 @@
     type IconDefinition,
   } from "@fortawesome/free-solid-svg-icons";
 
-  import Large from "$com/utils/listElements/large.svelte";
+  import Large from "$com/itemList/generic/layouts/large.svelte";
   import CollectionOverlay from "$com/collections/buttonOverlay.svelte";
   import Link from "$com/modalLink.svelte";
 

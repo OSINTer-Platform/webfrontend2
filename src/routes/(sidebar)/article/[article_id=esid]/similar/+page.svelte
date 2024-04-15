@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from "./$types";
 
-  import FilterShell from "$com/article-list/filter.svelte";
+  import FilterShell from "$com/itemList/articles/filter.svelte";
   import Fa from "svelte-fa";
 
   import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";

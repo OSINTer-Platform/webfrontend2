@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ArticleBase } from "$shared/types/api";
-  import Filter from "$com/article-list/filter.svelte";
+  import Filter from "$com/itemList/articles/filter.svelte";
 
   export let articles: ArticleBase[];
   export let search: string;

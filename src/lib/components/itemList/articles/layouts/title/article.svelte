@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Link from "../../../modalLink.svelte";
+  import Link from "$com/modalLink.svelte";
   import Icons from "./icons.svelte";
   import Loader from "$com/loader.svelte";
-  import Title from "$com/utils/listElements/title.svelte";
+  import Title from "$com/itemList/generic/layouts/title.svelte";
 
   import type { ArticleBase } from "$shared/types/api";
 

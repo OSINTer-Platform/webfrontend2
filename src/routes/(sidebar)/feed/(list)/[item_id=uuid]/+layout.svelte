@@ -3,7 +3,7 @@
   import type { HeaderModOptions } from "$shared/types/internal";
 
   import ItemDescriptor from "../itemDescriptor/main.svelte";
-  import HeaderShell from "$com/article-list/header/shell.svelte";
+  import HeaderShell from "$com/itemList/header/shell.svelte";
 
   import { feedLocalSearch } from "$state/state";
   import { modalState } from "$state/modals";
