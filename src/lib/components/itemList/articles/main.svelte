@@ -16,7 +16,7 @@
   import { listElementCount, showHighlights } from "$shared/state/state";
 
   export let articles: ArticleBase[] = [];
-  export let layout: ArticleListRender = "large";
+  export let layout: ArticleListRender | undefined = undefined;
   export let tintReadArticles: boolean;
   export let listLenLimit = 100;
   export let emptyMessage: { title: string; description: string } | null = null;
@@ -55,15 +55,18 @@
 
   $: listElementCount.set(articles.length);
 
+  $: renderSetting = $page.data.settings.listRenderMode;
+  $: renderLayout = layout ?? $renderSetting;
+
   onDestroy(() => listElementCount.set(0));
 </script>
 
 <Wrapper empty={articles.length < 1} {emptyMessage} class={containerClass}>
   <slot name="top" />
-  <svelte:component this={layouts[layout].shell}>
+  <svelte:component this={layouts[renderLayout].shell}>
     {#each limitedArticles as article (article.id)}
       <svelte:component
-        this={layouts[layout].article}
+        this={layouts[renderLayout].article}
         {article}
         {readArticles}
         showHighlights={$showHighlights}
