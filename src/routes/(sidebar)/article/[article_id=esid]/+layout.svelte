@@ -29,43 +29,58 @@
 
   function getTags(tags: ArticleTags) {
     const extractedTags: {
-      [key: string]: string[] | { content: string; href: string }[];
-    } = {};
+      title: string;
+      content: string[] | { content: string; href: string }[];
+      mono: boolean;
+    }[] = [];
 
     if (tags.automatic.length > 1) {
-      extractedTags["Automatic Tags"] = tags.automatic.map((tag) => ({
-        content: tag,
-        href: `/feed/search?sort_by=publish_date&search_term=${encodeURIComponent(
-          tag
-        )}`,
-      }));
+      extractedTags.push({
+        title: "Automatic Tags",
+        mono: false,
+        content: tags.automatic.map((tag) => ({
+          content: tag,
+          href: `/feed/search?sort_by=publish_date&search_term=${encodeURIComponent(
+            tag
+          )}`,
+        })),
+      });
     }
 
     if (tags.interesting.length > 0) {
       for (const { name, values } of tags.interesting) {
-        extractedTags[name.toUpperCase()] = values;
+        extractedTags.push({
+          title: name.toUpperCase(),
+          content: values,
+          mono: true,
+        });
       }
     }
 
     return extractedTags;
   }
 
-  $: overviews = [
-    {
-      Sources: [
-        `Medium: ${data.article.source}`,
-        `Author: ${data.article.author ?? data.article.source}`,
-      ],
-    },
-    {
-      Dates: [
-        `Published: ${data.article.publish_date}`,
-        `Scraped: ${data.article.inserted_at}`,
-      ],
-    },
+  $: articleDetails = [
+    [
+      {
+        title: "Sources",
+        content: [
+          `Medium: ${data.article.source}`,
+          `Author: ${data.article.author ?? data.article.source}`,
+        ],
+        mono: false,
+      },
+      {
+        title: "Sources",
+        content: [
+          `Published: ${data.article.publish_date}`,
+          `Scraped: ${data.article.inserted_at}`,
+        ],
+        mono: false,
+      },
+    ],
+    getTags(data.article.tags),
   ];
-
-  $: tags = getTags(data.article.tags);
 
   let modOptions: Array<HeaderModOptions>;
 
@@ -137,16 +152,7 @@
   searchSubmitable={false}
   bind:searchValue={$similarSearch}
 >
-  <hr class="my-4 border-tertiary-700/50" />
-  {#each overviews as overview}
-    <DetailList options={overview} mono={false} />
-    <hr class="my-4 border-tertiary-700/50" />
-  {/each}
-
-  {#if Object.values(tags).length > 0}
-    <DetailList options={tags} mono={true} />
-    <hr class="my-4 border-tertiary-700/50" />
-  {/if}
+  <DetailList detailBatches={articleDetails} />
 </Header>
 
 <slot />

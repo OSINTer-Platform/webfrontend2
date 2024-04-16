@@ -3,10 +3,11 @@
     ArticleCategories,
     ArticleSearchQuery,
   } from "$shared/types/api";
+  import type { Feed } from "$shared/types/userItems";
 
   import ListRender from "$com/itemList/header/detailList.svelte";
 
-  export let currentItem: ArticleSearchQuery;
+  export let currentItem: Feed | ArticleSearchQuery;
   export let categories: ArticleCategories;
   const dateFormatter = (date: string) => new Date(date).toLocaleDateString();
 
@@ -29,33 +30,32 @@
   };
 
   $: paramStrings = Object.entries(params)
-    .filter(([k, v]) => v)
+    .filter(([_, v]) => v)
     .map(([k, v]) => `${k}: ${v}`);
-
-  $: feedSearch = currentItem.search_term
-    ? `"${currentItem.search_term}"`
-    : null;
 
   $: sources =
     currentItem.sources && currentItem.sources.length > 0
       ? currentItem.sources.map((v) => categories[v]?.name ?? v)
       : null;
+
+  $: feedDetails = [
+    "_id" in currentItem
+      ? [
+          { title: "ID", content: currentItem._id, mono: true },
+          { title: "Owner", content: currentItem.owner, mono: true },
+        ]
+      : [],
+    [
+      { title: "Search Term", content: currentItem.search_term, mono: false },
+      {
+        title: "Semantic Search",
+        content: currentItem.semantic_search,
+        mono: false,
+      },
+    ],
+    [{ title: "Sources", content: sources, mono: false }],
+    [{ title: "Search Params", content: paramStrings, mono: false }],
+  ];
 </script>
 
-{#if feedSearch || currentItem.semantic_search}
-  <ListRender
-    options={{
-      "Search Term": feedSearch,
-      "Semantic Search": currentItem.semantic_search,
-    }}
-    mono={false}
-  />
-  <hr class="my-4 border-tertiary-700/50" />
-{/if}
-
-{#if sources}
-  <ListRender options={{ Sources: sources }} mono={false} />
-  <hr class="my-4 border-tertiary-700/50" />
-{/if}
-
-<ListRender options={{ "Search Params": paramStrings }} mono={false} />
+<ListRender detailBatches={feedDetails} />

@@ -104,9 +104,7 @@
 	!pb-0
 "
 >
-  <header
-    class="flex justify-between {description ? 'sm:mb-2' : 'sm:mb-10 mb-4'}"
-  >
+  <header class="flex justify-between sm:mb-4">
     <section class="flex items-start gap-3">
       <slot name="title">
         <h1 class="sm:text-5xl text-3xl">{title}</h1>
