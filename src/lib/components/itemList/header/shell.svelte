@@ -1,8 +1,7 @@
 <script lang="ts">
   import Search from "$inputs/search.svelte";
   import ArticleSearch from "$inputs/articleSearch.svelte";
-  import Switch from "$inputs/switch.svelte";
-
+  import ArticleFilters from "./articleFilters.svelte";
   import Tabs from "$com/tabs.svelte";
   import ModList from "./modList.svelte";
 
@@ -11,26 +10,11 @@
     HeaderModOptions,
   } from "$shared/types/internal";
   import type { Writable } from "svelte/store";
-
-  import { hasHighlights, hasSummary } from "$lib/common/filter";
-  import {
-    showRead,
-    showHighlights,
-    listElementCount,
-    expandSummary,
-    expandHighlights,
-  } from "$state/state";
-  import { page } from "$app/stores";
-  import {
-    faEye,
-    faEyeSlash,
-    faHeading,
-    faHighlighter,
-    faRectangleList,
-  } from "@fortawesome/free-solid-svg-icons";
-  import { ListRenderModes } from "$shared/config";
-  import Fa from "svelte-fa";
   import type { ArticleBase } from "$shared/types/api";
+
+  import { listElementCount } from "$state/state";
+  import { page } from "$app/stores";
+  import { ListRenderModes } from "$shared/config";
 
   export let title: string;
   export let badge: string = "";
@@ -40,8 +24,8 @@
   export let searchSubmitable = true;
 
   export let contentType = "articles";
-  export let articles: ArticleBase[] | undefined = undefined;
 
+  export let articles: ArticleBase[] | undefined = undefined;
   export let showReadFilter = true;
 
   export let tabs: null | {
@@ -52,41 +36,13 @@
     options: ListRenderModes,
   };
   $: tabStore = tabs?.store ?? $page.data.settings.listRenderMode;
-  $: user = $page.data.user;
+
+  $: pageArticles = $page.data.articles;
+  $: pageLoadingArticles = $page.data.loadingArticles;
 
   export let searchValue: string = "";
 
   export let modOptions: Array<HeaderModOptions> = [];
-
-  $: articleWithHighlight = hasHighlights(articles ?? $page.data.articles);
-  $: articleWithSummary = hasSummary(articles ?? $page.data.articles);
-
-  $: expanderButtons = [
-    ...(articleWithHighlight
-      ? [
-          {
-            icon: faHighlighter,
-            title: "highlights",
-            expand: !$expandHighlights,
-            externalStore: expandHighlights,
-          },
-        ]
-      : []),
-    ...(articleWithSummary
-      ? [
-          {
-            icon: faRectangleList,
-            title: "summary",
-            expand: !$expandSummary,
-            externalStore: expandSummary,
-          },
-        ]
-      : []),
-  ];
-
-  $: readFilterAvailable = $user && showReadFilter;
-  $: showFilterOptions = readFilterAvailable || articleWithHighlight;
-  $: showExpandOptions = expanderButtons.length > 0;
 </script>
 
 <aside
@@ -160,57 +116,16 @@
   {#if tabs}
     <Tabs bind:selected={$tabStore} options={tabs.options}>
       <svelte:fragment slot="end">
-        {#if showFilterOptions || showExpandOptions}
-          <section class="ml-auto py-2 flex">
-            {#if showExpandOptions}
-              <div class="flex gap-2">
-                {#each expanderButtons as { icon, title, expand, externalStore }}
-                  <button
-                    class="
-                      btn px-2
-                      shadow-black/25 dark:shadow-black shadow-sm
-                      {expand ? '' : '!text-primary-500'}
-                    "
-                    title="{expand ? 'Show' : 'Hide'} all {title}"
-                    on:click={() => {
-                      externalStore.set(expand);
-                    }}
-                  >
-                    <Fa {icon} />
-                  </button>
-                {/each}
-              </div>
+        {#if articles}
+          <ArticleFilters {articles} {showReadFilter} />
+        {:else if pageArticles}
+          <ArticleFilters articles={pageArticles} {showReadFilter} />
+        {:else if pageLoadingArticles}
+          {#await $pageLoadingArticles then articles}
+            {#if articles}
+              <ArticleFilters {articles} {showReadFilter} />
             {/if}
-            {#if showFilterOptions && showExpandOptions}
-              <div class="my-1 mx-2 border border-surface-400/50" />
-            {/if}
-            {#if showFilterOptions}
-              <div class="flex gap-2">
-                {#if readFilterAvailable}
-                  <Switch
-                    title="{$showRead
-                      ? 'Show'
-                      : 'Hide'} articles which have been read already"
-                    name="show-read"
-                    bind:checked={$showRead}
-                    icons={{ on: faEye, off: faEyeSlash }}
-                  />
-                {/if}
-
-                {#if articleWithHighlight}
-                  <Switch
-                    title={showHighlights
-                      ? "Show article search highlights"
-                      : "Show article title"}
-                    name="show-higlights"
-                    bind:checked={$showHighlights}
-                    icons={{ on: faHighlighter, off: faHeading }}
-                    iconClass="text-xs"
-                  />
-                {/if}
-              </div>
-            {/if}
-          </section>
+          {/await}
         {/if}
       </svelte:fragment>
     </Tabs>
