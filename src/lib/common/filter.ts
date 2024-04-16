@@ -69,6 +69,17 @@ export const searchInCluster = (
   );
 };
 
+export const searchInCVE = (
+  cve: { title: string; description: string },
+  keyword: string
+) => {
+  keyword = keyword.toLowerCase();
+  const search = (content: string) =>
+    content.toLowerCase().indexOf(keyword) != -1;
+
+  return search(cve.title) || search(cve.description);
+};
+
 export const hasHighlights = (articles: ArticleBase[] | undefined) => {
   if (Array.isArray(articles)) {
     return articles.some(
