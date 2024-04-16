@@ -8,6 +8,7 @@
   import { readCVEs } from "$shared/state/cves";
   import { derived, writable, type Readable } from "svelte/store";
   import { searchInCVE } from "$lib/common/filter";
+  import { afterNavigate } from "$app/navigation";
 
   const sidebarSearch = writable("");
   const filteredReadCVEs: Readable<ClusterBase[]> = derived(
@@ -27,6 +28,12 @@
       label: cve.title,
     })),
   };
+
+  let listContainer: HTMLElement;
+
+  afterNavigate(() => {
+    listContainer.scrollTop = 0;
+  });
 </script>
 
 <Sidebar options={[option]}>
@@ -40,6 +47,7 @@
 </Sidebar>
 
 <main
+  bind:this={listContainer}
   class="
 		flex flex-col grow items-stretch
 		overflow-y-auto overflow-x-hidden scroll-smooth
