@@ -236,6 +236,8 @@ export type CVSS2 = {
 };
 
 export interface CVEBase {
+  id: string;
+
   cve: string;
   document_count: number;
 
