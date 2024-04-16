@@ -22,7 +22,7 @@
 
   onMount(async () => {
     if (!browser) return;
-    if ($authorizer("similar")) return;
+    if (!$authorizer("similar")) return;
 
     const r = await fetch(
       `${PUBLIC_API_BASE}/articles/${encodeURIComponent(article.id)}/similar`
