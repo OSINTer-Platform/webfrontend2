@@ -11,6 +11,7 @@ import {
   faArrowTrendUp,
   faChartSimple,
   faHandHoldingDollar,
+  faBug,
 } from "@fortawesome/free-solid-svg-icons/index";
 import { sponsorLink } from "./config";
 
@@ -58,6 +59,13 @@ export const navItems: {
       description: "Create your own search-query to gain specific insights",
       route: "/search",
       icon: faMagnifyingGlass,
+    },
+    {
+      title: "CVEs",
+      description:
+        "Keep up to date on the most recent CVE's represented in OSINTer",
+      route: "/cve",
+      icon: faBug,
     },
   ],
   ml: [
