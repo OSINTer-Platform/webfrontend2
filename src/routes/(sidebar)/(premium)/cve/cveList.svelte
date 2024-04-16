@@ -34,7 +34,7 @@
 
   const createListItem = (cve: CVEBase) => ({
     id: cve.id,
-    href: `/cves/${cve.cve}`,
+    href: `/cve/${cve.cve}`,
 
     title: { text: cve.title, markdown: false },
     description: { text: cve.description, markdown: false },
