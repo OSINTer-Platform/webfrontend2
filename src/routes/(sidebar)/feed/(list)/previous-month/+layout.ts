@@ -1,9 +1,20 @@
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { getMonths } from "$lib/common/math";
-import { writable } from "svelte/store";
+import { derived, writable } from "svelte/store";
 import type { LayoutLoad } from "./$types";
+import type { ArticleBase } from "$shared/types/api";
 
 export const load = (async () => {
+  const getArticles = async (url: URL): Promise<ArticleBase[]> => {
+    const r = await fetch(url);
+    if (r.ok) {
+      return await r.json();
+    } else {
+      console.error(`Error when fetching articles from url "${url}"`);
+      return [];
+    }
+  };
+
   const getApiSearchUrl = (firstDate: Date, lastDate: Date) => {
     const params = new URLSearchParams({
       limit: "10000",
@@ -24,17 +35,16 @@ export const load = (async () => {
     url: getApiSearchUrl(firstDate, lastDate),
   }));
 
-  const monthLookup = months.reduce(
-    (lookupTable: { [key: string]: any }, month) => (
-      (lookupTable[month.id] = month), lookupTable
-    ),
-    {}
+  const selectedMonth = writable(months[0]);
+
+  const articles = derived(selectedMonth, ($currentMonth) =>
+    getArticles($currentMonth.url)
   );
 
   return {
     months,
-    monthLookup,
-    currentMonth: writable(months[0].id),
+    selectedMonth: selectedMonth,
+    loadingArticles: articles,
     meta: {
       title: "Previous months | OSINTer",
       description:

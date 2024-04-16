@@ -6,6 +6,7 @@ import type { ArticleBase, MLAvailability } from "$shared/types/api";
 import type { Collection } from "$shared/types/userItems";
 import type { Writable } from "svelte/store";
 import type { ArticleListRender } from "$shared/types/internal";
+import type { Readable } from "svelte/motion";
 
 // for information about these interfaces
 declare global {
@@ -47,6 +48,7 @@ declare global {
         paymentIntentClientSecret: string | null;
       };
       articles?: ArticleBase[];
+      loadingArticles?: Readable<Promise<ArticleBase[]>>;
     }
     // interface Platform {}
   }

@@ -9,8 +9,7 @@
   import { faDownload } from "@fortawesome/free-solid-svg-icons/index";
 
   export let data: LayoutData;
-  const currentMonthId = data.currentMonth;
-  $: currentMonth = data.monthLookup[$currentMonthId];
+  $: selectedMonth = data.selectedMonth;
 
   let modOptions: Array<HeaderModOptions>;
 
@@ -18,7 +17,7 @@
     {
       title: "Download",
       icon: faDownload,
-      route: `${currentMonth.url.origin}${currentMonth.url.pathname}/export${currentMonth.url.search}`,
+      route: `${$selectedMonth.url.origin}${$selectedMonth.url.pathname}/export${$selectedMonth.url.search}`,
       options: {
         download: "true",
       },
@@ -37,7 +36,7 @@
 
   <div class="flex flex-wrap">
     {#each data.months as month}
-      <MonthTab {month} currentMonth={currentMonthId} />
+      <MonthTab {month} {selectedMonth} />
     {/each}
   </div>
 
