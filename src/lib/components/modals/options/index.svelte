@@ -40,7 +40,7 @@
 <Modal
   class="
     p-6
-    w-[30rem] md:w-[40rem] max-w-[90vw]
+    w-[30rem] md:w-[50rem] max-w-[90vw]
     flex flex-col
     overflow-y-auto
 
