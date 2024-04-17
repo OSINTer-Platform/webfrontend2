@@ -100,4 +100,10 @@ export type Modal = (
           | (() => void);
       };
     }
+  | {
+      modalType: "survey";
+      modalContent: {
+        version: number;
+      };
+    }
 ) & { id: string };

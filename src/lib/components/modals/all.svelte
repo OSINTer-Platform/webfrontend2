@@ -7,6 +7,7 @@
   import UserSettings from "./userSettings/index.svelte";
   import Info from "./info.svelte";
   import Options from "./options/index.svelte";
+  import Survey from "./survey//index.svelte";
 </script>
 
 {#each $modalState as modal, i (modal.id)}
@@ -43,5 +44,7 @@
       type={modal.modalContent.type}
       modalId={modal.id}
     />
+  {:else if modal.modalType == "survey"}
+    <Survey modalId={modal.id} version={modal.modalContent.version} />
   {/if}
 {/each}

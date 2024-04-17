@@ -140,3 +140,12 @@ export interface MLAvailability {
   elser: boolean;
   inference: boolean;
 }
+
+export interface Survey {
+  contents: {
+    title: string;
+    rating: number;
+    feedback: string;
+  }[];
+  version: number;
+}
