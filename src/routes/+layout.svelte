@@ -12,8 +12,14 @@
   import { page } from "$app/stores";
   import { afterNavigate } from "$app/navigation";
   import { onMount } from "svelte";
+  import { spawnSurveyRequest } from "$lib/common/modals";
+
+  import type { PageData } from "./$types";
+
+  export let data: PageData;
 
   $: darkMode = $page.data.settings.darkMode;
+  $: user = data.user;
 
   function handleKeypress(e: KeyboardEvent) {
     switch (e.key) {
@@ -26,8 +32,8 @@
     }
   }
 
-  afterNavigate(() => {
-    modalState.set([]);
+  afterNavigate(({ type }) => {
+    if (type !== "enter") modalState.set([]);
   });
 
   onMount(() => {
@@ -43,6 +49,12 @@
         serviceVersion: "5.0",
         environment: env.PUBLIC_APM_ENV,
       });
+    }
+
+    if ($user && $user.premium > 0 && data.submittedSurveys.length < 1) {
+      if (!window.matchMedia("only screen and (max-width: 40rem)").matches) {
+        spawnSurveyRequest(1);
+      }
     }
   });
 </script>

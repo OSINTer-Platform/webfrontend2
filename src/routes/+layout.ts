@@ -2,7 +2,7 @@ import { PUBLIC_API_BASE } from "$env/static/public";
 import { cookieStore, updatable } from "$lib/common/customStores";
 import { config } from "$shared/config";
 import { writable } from "svelte/store";
-import type { MLAvailability } from "$shared/types/api";
+import type { MLAvailability, Survey } from "$shared/types/api";
 import type { ArticleListRender } from "$shared/types/internal";
 import type { Collection, User } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
@@ -18,6 +18,11 @@ export const load: LayoutLoad = async ({ fetch, data }) => {
     return r.ok
       ? r.json()
       : { clustering: false, map: false, elser: false, inference: false };
+  };
+
+  const getSubmittedSurveys = async (): Promise<Survey[]> => {
+    const r = await fetch(`${PUBLIC_API_BASE}/surveys/?version=1`);
+    return r.ok ? await r.json() : [];
   };
 
   const updateCollectionList = async (
@@ -53,16 +58,19 @@ export const load: LayoutLoad = async ({ fetch, data }) => {
   };
 
   const user = await getUserObject();
-  const [mlAvailability, alreadyRead, userCollections] = await Promise.all([
-    getMlAvailability(),
-    updatable(() => updateAlreadyRead(user)),
-    updatable(() => updateCollectionList(user)),
-  ]);
+  const [mlAvailability, submittedSurveys, alreadyRead, userCollections] =
+    await Promise.all([
+      getMlAvailability(),
+      getSubmittedSurveys(),
+      updatable(() => updateAlreadyRead(user)),
+      updatable(() => updateCollectionList(user)),
+    ]);
 
   const dateInAnHour = new Date();
   dateInAnHour.setHours(dateInAnHour.getHours() + 1);
 
   return {
+    submittedSurveys,
     user: writable(user),
     mlAvailability,
     alreadyRead,
