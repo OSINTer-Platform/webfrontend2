@@ -16,7 +16,7 @@
   on:keydown={resetModal}
   transition:fade|global={{ duration: 200 }}
   class="
-    z-50 absolute
+    z-40 absolute
     h-screen w-screen
     flex flex-col items-center justify-center
     bg-black/60

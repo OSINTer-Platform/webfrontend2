@@ -24,7 +24,7 @@
 
 <aside
   class="
-  z-40 absolute w-full
+  z-30 absolute w-full
   {scrollY > 0
     ? 'backdrop-blur-xl bg-white/50 dark:bg-black/50'
     : 'backdrop-filter-none dark:bg-black/20'}

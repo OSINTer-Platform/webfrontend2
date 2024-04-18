@@ -16,3 +16,10 @@ export const expandHighlights = writable(false);
 export const expandSummary = writable(false);
 
 export const listElementCount = writable(0);
+
+export const tooltip = writable<null | {
+  padding?: number;
+  text: string | { title: string; description: string };
+  x: number;
+  y: number;
+}>(null);

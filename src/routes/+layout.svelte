@@ -3,6 +3,7 @@
 
   import TopBar from "./topbar.svelte";
   import Modals from "$com/modals/all.svelte";
+  import Tooltip from "$com/tooltip.svelte";
   import { ProgressBar } from "@prgm/sveltekit-progress-bar";
 
   import { modalState } from "$state/modals";
@@ -89,11 +90,12 @@
 
 <div class="h-screen" class:dark={$darkMode}>
   <div class="w-full h-full overflow-hidden flex flex-col dark:text-white">
+    <Tooltip />
     <Modals />
     {#if $page.data.topbar ?? true}
       <div
         class="
-        z-40 relative
+        z-30 relative
         bg-surface-100 dark:bg-surface-800
         dark:border-b dark:border-surface-300
         shadow-lg

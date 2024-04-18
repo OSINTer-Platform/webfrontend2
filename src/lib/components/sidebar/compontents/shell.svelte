@@ -31,7 +31,7 @@
 
 	flex
 	absolute
-	z-40
+	z-30
 
 	bottom-0
 	top-0
