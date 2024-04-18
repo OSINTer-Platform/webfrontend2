@@ -22,7 +22,13 @@ export const load: LayoutLoad = async ({ fetch, params }) => {
     }
   }
 
+  const cve = await getCVE();
+
   return {
-    cve: await getCVE(),
+    meta: {
+      title: `${cve.cve} | OSINTer`,
+      description: cve.title,
+    },
+    cve,
   };
 };
