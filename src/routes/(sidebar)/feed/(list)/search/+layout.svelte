@@ -49,12 +49,10 @@
   {modOptions}
   bind:searchValue={$feedLocalSearch}
 >
-  <hr class="my-4 border-tertiary-700/50" />
   <FeedRender
     currentItem={data.currentSearch}
     categories={data.sourceCategories}
   />
-  <hr class="my-4 border-tertiary-700/50" />
 </HeaderShell>
 
 <slot />
