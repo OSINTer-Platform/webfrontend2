@@ -169,25 +169,48 @@ div.article-content-render {
   p,
   a,
   li {
-    @apply text-sm sm:text-base font-light sm:dark:font-medium;
+    @apply text-sm sm:text-base;
   }
 
   h1 {
-    @apply text-4xl;
+    @apply text-4xl font-bold;
+    span,
+    p,
+    a {
+      @apply text-4xl font-bold;
+    }
   }
 
   h2 {
-    @apply text-3xl font-normal;
+    @apply text-3xl font-bold;
+
+    span,
+    p,
+    a {
+      @apply text-3xl font-bold;
+    }
   }
 
   h3 {
-    @apply text-2xl font-light;
+    @apply text-2xl font-normal;
+
+    span,
+    p,
+    a {
+      @apply text-2xl font-normal;
+    }
   }
 
   h4,
   h5,
   h6 {
-    @apply text-xl font-thin;
+    @apply text-xl font-normal;
+
+    span,
+    p,
+    a {
+      @apply text-xl font-normal;
+    }
   }
 
   a {
