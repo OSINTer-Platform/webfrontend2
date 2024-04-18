@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Header from "$com/itemList/header/shell.svelte";
+  import HeaderShell from "$com/itemList/header/shell.svelte";
   import DetailList from "$com/itemList/header/detailList.svelte";
 
   import type { ArticleTags } from "$shared/types/api";
@@ -144,15 +144,16 @@
   />
 </svelte:head>
 
-<Header
+<HeaderShell
   title={data.article.title}
   description={data.article.description}
   {modOptions}
   searchAble={$page.url.pathname.includes("similar")}
   searchSubmitable={false}
+  tabs={null}
   bind:searchValue={$similarSearch}
 >
   <DetailList detailBatches={articleDetails} />
-</Header>
+</HeaderShell>
 
 <slot />
