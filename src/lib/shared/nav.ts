@@ -55,12 +55,6 @@ export const navItems: {
       icon: faNewspaper,
     },
     {
-      title: "Search",
-      description: "Create your own search-query to gain specific insights",
-      route: "/search",
-      icon: faMagnifyingGlass,
-    },
-    {
       title: "CVEs",
       description:
         "Keep up to date on the most recent CVE's represented in OSINTer",
