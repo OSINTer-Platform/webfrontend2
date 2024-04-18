@@ -9,12 +9,12 @@ export const sortPosts = (posts: Post[]): Post[] =>
 export const getPosts = (): { [key: string]: Post } =>
   Object.fromEntries(
     Object.entries(
-      import.meta.glob("$lib/blog/posts/*.md", { eager: true, as: "raw" })
+      import.meta.glob("$lib/blog/posts/*.md", { eager: true, query: "?raw" })
     ).map(([filepath, rawPost]) => {
       const filename = filepath.split("/").at(-1) as string;
       const fileid = filename.split(".")[0]; // FileID is filename without file-extension
 
-      const matterPost = matter(rawPost);
+      const matterPost = matter((rawPost as any).default);
 
       const post: Post = {
         id: fileid,
