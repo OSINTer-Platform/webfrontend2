@@ -54,7 +54,14 @@
     });
   }
 
-  function spawnSearchModal(e: Event) {
+  function spawnSearchModal(e: MouseEvent) {
+    const small = window.matchMedia(
+      "only screen and (max-width: 60rem)"
+    ).matches;
+    if (small || e.ctrlKey) {
+      return;
+    }
+
     e.preventDefault();
 
     modalState.append({
