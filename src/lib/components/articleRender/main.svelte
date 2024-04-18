@@ -1,11 +1,9 @@
 <script lang="ts">
-  import type { FullArticle, ArticleCategories } from "$shared/types/api";
-  import type { HeadingList, ParsedEvent } from "$lib/common/ToC";
-
-  import { MDtoToC } from "$lib/common/ToC";
-
-  import SvelteMarkdown from "svelte-markdown";
   import CollectionOverlay from "$com/collections/buttonOverlay.svelte";
+  import Content from "./content.svelte";
+
+  import type { FullArticle, ArticleCategories } from "$shared/types/api";
+  import type { HeadingList } from "$lib/common/ToC";
 
   export let article: FullArticle;
   export let articleCategories: ArticleCategories | null = null;
@@ -21,10 +19,6 @@
       action: () => window.open(article.url, "_blank"),
     },
   ];
-
-  function handleParsed(e: ParsedEvent) {
-    headings = MDtoToC(e);
-  }
 
   $: readableDate = new Date(article.publish_date).toLocaleString();
 </script>
@@ -81,9 +75,9 @@
   <h3 class="text-2xl mb-4">{article.description}</h3>
 {/if}
 
-<div class="article-content-render text-justify">
-  <SvelteMarkdown source={article.formatted_content} on:parsed={handleParsed} />
-</div>
+{#key article}
+  <Content bind:headings {article} />
+{/key}
 
 <hr class="border-tertiary-700/25 mb-8" />
 
