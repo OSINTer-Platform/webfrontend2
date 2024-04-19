@@ -28,7 +28,7 @@
   $: queryString = toUrl(searchQuery);
 </script>
 
-<form action="/feed/search" method="get" class="h-full" on:submit>
+<form action="/news/search" method="get" class="h-full" on:submit>
   <TwoHalfs>
     <svelte:fragment slot="first">
       <MajorSection title="Select Sources">

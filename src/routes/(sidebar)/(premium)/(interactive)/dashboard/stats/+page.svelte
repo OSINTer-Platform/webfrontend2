@@ -37,7 +37,7 @@
       description: getDescription(bucket),
       score: scale(getScore(bucket)),
       large: false,
-      href: `/feed/search?sort_by=publish_date&highlight=true&search_term=${encodeURIComponent(
+      href: `/news/search?sort_by=publish_date&highlight=true&search_term=${encodeURIComponent(
         `"${bucket.key}"`
       )}`,
       action: () => {

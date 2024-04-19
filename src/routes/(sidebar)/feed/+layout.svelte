@@ -11,7 +11,7 @@
   export let data: LayoutData;
 
   let search: boolean;
-  $: search = $page.url.pathname.startsWith("/feed/search");
+  $: search = $page.url.pathname.startsWith("/news/search");
 
   $: user = data.user;
 

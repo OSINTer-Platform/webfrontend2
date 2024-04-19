@@ -183,7 +183,7 @@
         {#each tags as tag}
           <a
             on:click|stopPropagation
-            href="/feed/search?sort_by=publish_date&search_term={encodeURIComponent(
+            href="/news/search?sort_by=publish_date&search_term={encodeURIComponent(
               tag
             )}"
             class="

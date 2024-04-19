@@ -40,7 +40,7 @@
         mono: false,
         content: tags.automatic.map((tag) => ({
           content: tag,
-          href: `/feed/search?sort_by=publish_date&search_term=${encodeURIComponent(
+          href: `/news/search?sort_by=publish_date&search_term=${encodeURIComponent(
             tag
           )}`,
         })),

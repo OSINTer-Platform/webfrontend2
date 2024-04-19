@@ -70,7 +70,7 @@
         query: $page.data?.currentSearch,
         searchText: "Search articles",
         searchAction: (q) => {
-          goto(`/feed/search?${toUrl(q)}`);
+          goto(`/news/search?${toUrl(q)}`);
         },
       },
     });
