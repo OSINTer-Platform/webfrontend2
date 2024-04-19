@@ -4,15 +4,16 @@ import {
   faHome,
   faBullhorn,
   faRss,
+  faList,
   faNewspaper,
-  faMagnifyingGlass,
   faSitemap,
   faQuestion,
   faArrowTrendUp,
   faChartSimple,
   faHandHoldingDollar,
   faBug,
-} from "@fortawesome/free-solid-svg-icons/index";
+} from "@fortawesome/free-solid-svg-icons";
+
 import { sponsorLink } from "./config";
 
 export const navItems: {
@@ -43,10 +44,16 @@ export const navItems: {
   ],
   lists: [
     {
-      title: "Feeds",
-      description: "Access one of the feeds integrated in OSINTer",
-      route: "/feed",
+      title: "News",
+      description: "Get the latest news from the cybersecurity sphere",
+      route: "/news",
       icon: faRss,
+    },
+    {
+      title: "Feeds",
+      description: "Access one of your feeds in OSINTer",
+      route: "/feed",
+      icon: faList,
     },
     {
       title: "Articles",

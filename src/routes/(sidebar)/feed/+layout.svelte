@@ -1,23 +1,53 @@
 <script lang="ts">
   import type { LayoutData } from "./$types";
-  import type { Collection, Feed } from "$shared/types/userItems";
 
-  import Sidebar from "./sidebar.svelte";
+  import { beforeNavigate } from "$app/navigation";
+  import { navigating } from "$app/stores";
   import { page } from "$app/stores";
 
+  import Loader from "$com/loader.svelte";
+  import Sidebar from "./sidebar.svelte";
+
   export let data: LayoutData;
-
-  let feeds: Array<Feed>;
-  $: feeds = data.feeds ? Object.values(data.feeds) : [];
-
-  let collections: Array<Collection>;
-  $: collections = data.collections ? Object.values(data.collections) : [];
 
   let search: boolean;
   $: search = $page.url.pathname.startsWith("/feed/search");
 
   $: user = data.user;
+
+  let showLoader = false;
+
+  beforeNavigate(() => {
+    showLoader = false;
+
+    setTimeout(() => (showLoader = true), 250);
+  });
 </script>
 
-<Sidebar {feeds} {collections} user={$user} {search} />
-<slot />
+<Sidebar
+  user={$user}
+  {search}
+  feeds={Object.values(data.feeds)}
+  collections={Object.values(data.collections)}
+/>
+
+<main
+  class="
+	flex
+	flex-col
+	grow
+
+	items-stretch
+	overflow-y-auto
+	overflow-x-hidden
+
+	bg-surface-50
+	dark:bg-surface-800
+"
+>
+  {#if $navigating && showLoader}
+    <Loader text="Loading feed" />
+  {:else}
+    <slot />
+  {/if}
+</main>

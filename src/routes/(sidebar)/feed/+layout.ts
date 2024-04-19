@@ -7,68 +7,59 @@ import { error } from "@sveltejs/kit";
 import { get } from "svelte/store";
 
 export const load = (async ({ parent, fetch }) => {
-  const fetchCategories = async (): Promise<ArticleCategories> => {
-    const r = await fetch(`${PUBLIC_API_BASE}/articles/categories`);
+  const throwAuthError = () =>
+    error(401, {
+      message: "",
+      title: "You have to be logged in to access your feeds",
+      description: [
+        "Custom feeds and collections are only available to users who are signed in",
+        "Do you want to try it out?",
+        "Log in below",
+      ],
+      logo: false,
+      actions: [{ title: "Login", href: "/login" }],
+    });
 
-    if (r.ok) {
-      return await r.json();
-    } else {
-      error(r.status, "Error when fetching categories for articles.");
-    }
-  };
-
-  const getStandardFeeds = async (): Promise<{ [key: string]: Feed }> => {
-    const r = await fetch(`${PUBLIC_API_BASE}/user-items/standard/feeds`);
-
-    if (r.ok) {
-      return await r.json();
-    } else {
-      error(r.status, "Error when fetching the standard feeds.");
-    }
-  };
-
-  async function getProtectedData(
+  async function fetchUserDate<T>(
     url: string,
-    type: "feed"
-  ): Promise<{ [key: string]: Feed }>;
-  async function getProtectedData(
-    url: string,
-    type: "collection"
-  ): Promise<{ [key: string]: Collection }>;
-  async function getProtectedData(
-    url: string,
-    type: "feed" | "collection"
-  ): Promise<{ [key: string]: Feed } | { [key: string]: Collection }> {
-    const r = await fetch(`${PUBLIC_API_BASE}/${url}`);
+    type: string
+  ): Promise<T | null> {
+    const r = await fetch(`${PUBLIC_API_BASE}${url}`);
 
-    if (r.ok) {
-      return await r.json();
-    } else if (r.status === 401) {
-      error(
-        401,
-        `Authentication error when fetching ${type}s. Try refreshing the page, and contact system administrator if error persist`
-      );
-    } else {
-      throw (r.status, `Error when fetching ${type}s.`);
-    }
+    if (r.ok) return await r.json();
+    else if (r.status === 401 || r.status === 403) return null;
+    else error(r.status, `Error when fetching ${type}`);
   }
 
-  const categories = fetchCategories();
   const meta = {
     title: "Your Feeds | OSINTer",
     description:
       "Curious on the newest happenings in the cybersecurity sphere? Well, look no further...",
   };
 
+  const [feedsPromise, collectionsPromise, sourceCategoriesPromise] = [
+    fetchUserDate<{ [key: string]: Feed }>("/my/feeds/list", "your feeds"),
+    fetchUserDate<{ [key: string]: Collection }>(
+      "/my/collections/list",
+      "your collections"
+    ),
+    fetchUserDate<ArticleCategories>(
+      "/articles/categories",
+      "categories for articles"
+    ),
+  ];
+
   const parentData = await parent();
   const user = get(parentData.user);
 
   if (user) {
     const [feeds, collections, sourceCategories] = await Promise.all([
-      getProtectedData("my/feeds/list", "feed"),
-      getProtectedData("my/collections/list", "collection"),
-      categories,
+      feedsPromise,
+      collectionsPromise,
+      sourceCategoriesPromise,
     ]);
+
+    if (!feeds || !collections || !sourceCategories) return throwAuthError();
 
     return {
       meta,
@@ -77,17 +68,5 @@ export const load = (async ({ parent, fetch }) => {
       collections,
       sourceCategories,
     };
-  } else {
-    const [feeds, sourceCategories] = await Promise.all([
-      getStandardFeeds(),
-      categories,
-    ]);
-
-    return {
-      meta,
-      customSidebar: true,
-      feeds,
-      sourceCategories,
-    };
-  }
+  } else throwAuthError();
 }) satisfies LayoutLoad;

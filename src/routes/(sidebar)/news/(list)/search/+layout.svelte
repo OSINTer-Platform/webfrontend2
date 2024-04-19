@@ -2,7 +2,7 @@
   import type { LayoutData } from "./$types";
   import type { HeaderModOptions } from "$shared/types/internal";
 
-  import FeedRender from "../itemDescriptor/feed.svelte";
+  import FeedRender from "$com/itemDescriptor/feed.svelte";
   import HeaderShell from "$com/itemList/header/shell.svelte";
 
   import { createItem } from "$lib/common/userItems";
