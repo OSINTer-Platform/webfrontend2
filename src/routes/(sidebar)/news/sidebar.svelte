@@ -12,8 +12,10 @@
   export let search: boolean;
 
   let timeOptions: SidebarOption;
+  let readOptions: SidebarOption;
+
   $: timeOptions = {
-    id: "inbuilts",
+    id: "time-inbuilts",
     title: "Time controls",
     list: [
       ...inbuiltFeeds
@@ -24,6 +26,12 @@
         })),
       { href: `/news/previous-month`, label: "Previous months" },
     ],
+  };
+
+  $: readOptions = {
+    id: "read-inbuilts",
+    title: "Read articles",
+    list: [{ href: "/news/commonly-read", label: "Commonly Read" }],
   };
 </script>
 
@@ -36,6 +44,7 @@
     <LinkNavShell>
       <SearchButton highlight={search} />
       <LinkNavOption options={timeOptions} />
+      <LinkNavOption options={readOptions} />
     </LinkNavShell>
   </svelte:fragment>
 </SidebarShell>
