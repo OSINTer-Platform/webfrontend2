@@ -5,13 +5,13 @@
   import LinkNavOption from "$com/sidebar/compontents/linkNav/optionList.svelte";
   import SearchButton from "$com/sidebar/compontents/userItems/searchButton.svelte";
 
-  import type { UserItemSidebarOption } from "$shared/types/internal";
-
   import { inbuiltFeeds } from "$shared/config";
+
+  import type { SidebarOption } from "$shared/types/internal";
 
   export let search: boolean;
 
-  let timeOptions: UserItemSidebarOption;
+  let timeOptions: SidebarOption;
   $: timeOptions = {
     id: "inbuilts",
     title: "Time controls",

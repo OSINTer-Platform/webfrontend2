@@ -42,10 +42,6 @@ export type SidebarOption = {
   }>;
 };
 
-export interface UserItemSidebarOption extends SidebarOption {
-  id: "inbuilts" | "feeds" | "collections" | "clusters";
-}
-
 export type Modal = (
   | {
       modalType: "search";

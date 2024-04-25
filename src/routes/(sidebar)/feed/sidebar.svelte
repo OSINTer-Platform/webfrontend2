@@ -6,7 +6,7 @@
   import SearchButton from "$com/sidebar/compontents/userItems/searchButton.svelte";
 
   import type { ItemBase, User } from "$shared/types/userItems";
-  import type { UserItemSidebarOption } from "$shared/types/internal";
+  import type { SidebarOption } from "$shared/types/internal";
   import type { ArticleSearchQuery } from "$shared/types/api";
 
   import { goto } from "$app/navigation";
@@ -26,8 +26,8 @@
     }));
   }
 
-  let feedOptions: UserItemSidebarOption;
-  let collectionOptions: UserItemSidebarOption;
+  let feedOptions: SidebarOption;
+  let collectionOptions: SidebarOption;
   $: feedOptions = {
     id: "feeds",
     title: "Your feeds",
