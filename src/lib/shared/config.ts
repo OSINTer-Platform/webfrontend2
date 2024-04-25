@@ -1,5 +1,5 @@
 import type { ArticleSearchQuery } from "./types/api";
-import type { ArticleListRender, Inbuilt } from "./types/internal";
+import type { ArticleListRender, InbuiltFeed } from "./types/internal";
 import { PUBLIC_API_BASE } from "$env/static/public";
 
 export const contactEmail = "contact@osinter.dk";
@@ -41,26 +41,29 @@ const timeUrl = (interval: Intervals) => {
   return new URL(`${PUBLIC_API_BASE}/articles/search?${params.toString()}`);
 };
 
-export const inbuiltFeeds: { [key: string]: Inbuilt } = {
-  day: {
+export const inbuiltFeeds: InbuiltFeed[] = [
+  {
     id: "day",
     title: "Todays news",
     desc: "All the news available from the last 24 hours",
     url: timeUrl("day"),
+    type: "timecontrol",
   },
-  week: {
+  {
     id: "week",
     title: "Last 7 days",
     desc: "All the news available from the last 7 days",
     url: timeUrl("week"),
+    type: "timecontrol",
   },
-  month: {
+  {
     id: "month",
     title: "Last 30 days",
     desc: "All the news available from the last 30 days",
     url: timeUrl("month"),
+    type: "timecontrol",
   },
-};
+];
 
 export const getStandardSearch = (): ArticleSearchQuery => ({
   limit: 200,

@@ -16,10 +16,12 @@
     id: "inbuilts",
     title: "Time controls",
     list: [
-      ...Object.values(inbuiltFeeds).map(({ title, id }) => ({
-        href: `/news/${id}`,
-        label: title,
-      })),
+      ...inbuiltFeeds
+        .filter(({ type }) => type === "timecontrol")
+        .map(({ title, id }) => ({
+          href: `/news/${id}`,
+          label: title,
+        })),
       { href: `/news/previous-month`, label: "Previous months" },
     ],
   };

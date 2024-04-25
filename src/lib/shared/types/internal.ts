@@ -8,11 +8,12 @@ import type {
 
 export type ArticleListRender = "large" | "title";
 
-export interface Inbuilt {
+export interface InbuiltFeed {
   id: string;
   title: string;
   desc: string;
   url: URL;
+  type: "timecontrol" | "other";
 }
 
 export interface HeaderModOptions {
