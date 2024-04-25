@@ -3,15 +3,11 @@
 
   import { beforeNavigate } from "$app/navigation";
   import { navigating } from "$app/stores";
-  import { page } from "$app/stores";
 
   import Loader from "$com/loader.svelte";
   import Sidebar from "./sidebar.svelte";
 
   export let data: LayoutData;
-
-  let search: boolean;
-  $: search = $page.url.pathname.startsWith("/news/search");
 
   $: user = data.user;
 
@@ -26,7 +22,6 @@
 
 <Sidebar
   user={$user}
-  {search}
   feeds={Object.values(data.feeds)}
   collections={Object.values(data.collections)}
 />

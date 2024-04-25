@@ -1,13 +1,21 @@
 <script lang="ts">
-  import LinkList from "$com/sidebar/userItemsList.svelte";
+  import SidebarShell from "$com/sidebar/compontents/shell.svelte";
+  import AppSwitcher from "$com/sidebar/compontents/appSwitcher.svelte";
+  import LinkNavShell from "$com/sidebar/compontents/linkNav/shell.svelte";
+  import ItemsSection from "$com/sidebar/compontents/userItems/itemsSection.svelte";
+  import SearchButton from "$com/sidebar/compontents/userItems/searchButton.svelte";
 
   import type { ItemBase, User } from "$shared/types/userItems";
   import type { UserItemSidebarOption } from "$shared/types/internal";
+  import type { ArticleSearchQuery } from "$shared/types/api";
+
+  import { goto } from "$app/navigation";
+  import { modalState } from "$shared/state/modals";
+  import { createItem, sanitizeQuery } from "$lib/common/userItems";
 
   export let feeds: ItemBase[];
   export let collections: ItemBase[];
   export let user: User | null;
-  export let search: boolean;
 
   function convertToOption(
     items: Array<ItemBase>
@@ -18,19 +26,61 @@
     }));
   }
 
-  let options: Array<UserItemSidebarOption>;
-  $: options = [
-    {
-      id: "feeds",
-      title: "Your feeds",
-      list: convertToOption(feeds),
-    },
-    {
-      id: "collections",
-      title: "Your collections",
-      list: convertToOption(collections),
-    },
-  ];
+  let feedOptions: UserItemSidebarOption;
+  let collectionOptions: UserItemSidebarOption;
+  $: feedOptions = {
+    id: "feeds",
+    title: "Your feeds",
+    list: convertToOption(feeds),
+  };
+
+  $: collectionOptions = {
+    id: "collections",
+    title: "Your collections",
+    list: convertToOption(collections),
+  };
+
+  function initiateFeedCreation() {
+    if (!user) {
+      goto(
+        `/login?msg=${encodeURIComponent(
+          "Login down below for the ability to create new feeds"
+        )}`
+      );
+      return;
+    }
+
+    modalState.append({
+      modalType: "search",
+      modalContent: {
+        searchText: "Create feed",
+        searchAction: async (query: ArticleSearchQuery) => {
+          await createItem("New Feed", sanitizeQuery(query), "feed", "current");
+        },
+      },
+    });
+  }
+
+  const createCollection = () =>
+    createItem("New Collection", [], "collection", "current");
 </script>
 
-<LinkList {options} {user} {search} />
+<SidebarShell>
+  <svelte:fragment slot="nav">
+    <AppSwitcher />
+  </svelte:fragment>
+
+  <svelte:fragment slot="content">
+    <LinkNavShell>
+      <SearchButton highlight={false} />
+      <ItemsSection
+        options={feedOptions}
+        additionButton={{ text: "Create feed", create: initiateFeedCreation }}
+      />
+      <ItemsSection
+        options={collectionOptions}
+        additionButton={{ text: "Create collection", create: createCollection }}
+      />
+    </LinkNavShell>
+  </svelte:fragment>
+</SidebarShell>
