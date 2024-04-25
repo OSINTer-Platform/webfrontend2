@@ -28,7 +28,7 @@
 <HeaderShell
   title={"Previous month"}
   badge={"Inbuilt feed"}
-  description={`All the new available from the month of`}
+  description={`All the new available from the month of ${$selectedMonth.name}`}
   {modOptions}
   bind:searchValue={$feedLocalSearch}
 >
