@@ -1,5 +1,6 @@
 <script lang="ts">
   import Button from "./button.svelte";
+  import TimeSlider from "$com/utils/inputs/time/doubleSlider.svelte";
 
   type Range = {
     id: string;
@@ -21,27 +22,41 @@
   ];
 </script>
 
-<div class="flex gap-4">
-  {#each defaultRanges as { id, title, days } (id)}
+<aside>
+  <section class="flex gap-4 flex-wrap mb-4">
+    {#each defaultRanges as { id, title, days } (id)}
+      <Button
+        selected={selected === id}
+        on:click={() => {
+          lastDate = null;
+          firstDate = new Date(new Date().getTime() - daySeconds * days);
+          selected = id;
+        }}
+      >
+        {title}
+      </Button>
+    {/each}
     <Button
-      selected={selected === id}
+      selected={selected === "all"}
       on:click={() => {
         lastDate = null;
-        firstDate = new Date(new Date().getTime() - daySeconds * days);
-        selected = id;
+        firstDate = null;
+        selected = "all";
       }}
     >
-      {title}
+      All time
     </Button>
-  {/each}
-  <Button
-    selected={selected === "all"}
-    on:click={() => {
-      lastDate = null;
-      firstDate = null;
-      selected = "all";
-    }}
-  >
-    All time
-  </Button>
-</div>
+    <Button
+      selected={selected === "custom"}
+      on:click={() => {
+        selected = "custom";
+      }}
+    >
+      Custom range
+    </Button>
+  </section>
+
+  {#if selected === "custom"}
+    <TimeSlider bind:firstDate bind:lastDate />
+  {/if}
+</aside>
