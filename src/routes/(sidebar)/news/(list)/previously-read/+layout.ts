@@ -4,9 +4,8 @@ import { queryArticlesById } from "$lib/common/queryArticles";
 
 export const load: LayoutLoad = async ({ parent, fetch }) => {
   const { readArticles } = await parent();
-  const loadingArticles = derived(
-    readArticles,
-    ($readArticles) => queryArticlesById($readArticles.slice(0, 50), true, 10000, fetch)
+  const loadingArticles = derived(readArticles, ($readArticles) =>
+    queryArticlesById($readArticles.slice(0, 1000), true, 10000, fetch)
   );
   return {
     loadingArticles,

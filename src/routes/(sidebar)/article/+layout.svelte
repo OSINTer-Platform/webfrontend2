@@ -38,7 +38,7 @@
 
   onMount(() => {
     return readArticles.subscribe(
-      (ids) => (articles = queryArticlesById(ids.slice(0, 50), true))
+      (ids) => (articles = queryArticlesById(ids.slice(0, 200), true))
     );
   });
 </script>
