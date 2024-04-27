@@ -9,9 +9,8 @@
 
   import { feedLocalSearch } from "$state/state";
   import { searchInArticle } from "$lib/common/filter";
-  import { toUrl } from "$lib/common/searchQuery";
+  import { queryArticlesById } from "$lib/common/queryArticles";
   import { page } from "$app/stores";
-  import { PUBLIC_API_BASE } from "$env/static/public";
 
   import type { ArticleBase } from "$shared/types/api";
   import { onMount } from "svelte";
@@ -21,13 +20,6 @@
   $: readArticles = $page.data.readArticles;
 
   let articles: Promise<ArticleBase[]> = Promise.resolve([]);
-
-  async function queryArticles(ids: string[]) {
-    const r = await fetch(
-      `${PUBLIC_API_BASE}/articles/search?${toUrl({ limit: 50, ids: ids })}`
-    );
-    return r.ok ? await r.json() : [];
-  }
 
   function generateOption(
     articles: ArticleBase[],
@@ -45,7 +37,9 @@
   }
 
   onMount(() => {
-    return readArticles.subscribe((ids) => (articles = queryArticles(ids)));
+    return readArticles.subscribe(
+      (ids) => (articles = queryArticlesById(ids.slice(0, 50), true))
+    );
   });
 </script>
 

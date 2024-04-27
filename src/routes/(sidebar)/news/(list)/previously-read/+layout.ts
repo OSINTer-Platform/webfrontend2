@@ -1,22 +1,12 @@
-import { derived } from "svelte/store";
 import type { LayoutLoad } from "./$types";
-import { PUBLIC_API_BASE } from "$env/static/public";
-import { toUrl } from "$lib/common/searchQuery";
-import type { ArticleBase } from "$shared/types/api";
+import { derived } from "svelte/store";
+import { queryArticlesById } from "$lib/common/queryArticles";
 
 export const load: LayoutLoad = async ({ parent, fetch }) => {
   const { readArticles } = await parent();
   const loadingArticles = derived(
     readArticles,
-    async ($readArticles): Promise<ArticleBase[]> => {
-      const r = await fetch(
-        `${PUBLIC_API_BASE}/articles/search?${toUrl({
-          limit: 50,
-          ids: $readArticles,
-        })}`
-      );
-      return r.ok ? await r.json() : [];
-    }
+    ($readArticles) => queryArticlesById($readArticles.slice(0, 50), true, 10000, fetch)
   );
   return {
     loadingArticles,
