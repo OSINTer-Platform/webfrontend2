@@ -1,5 +1,4 @@
 import { modalState } from "$state/modals";
-import { fullArticles } from "$state/storedArticles";
 
 import { page } from "$app/stores";
 import { get } from "svelte/store";
@@ -32,11 +31,6 @@ export async function spawnArticleModal(
     goto(`/article/${id}`);
     return false;
   }
-
-  fullArticles.update((list) => {
-    list[id] = article;
-    return list;
-  });
 
   modalState.append({
     modalType: "article",

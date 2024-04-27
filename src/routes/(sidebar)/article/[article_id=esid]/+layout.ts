@@ -1,20 +1,11 @@
 import type { LayoutLoad } from "./$types";
-
 import type { FullArticle } from "$shared/types/api";
 
-import { get } from "svelte/store";
-import { fullArticles } from "$state/storedArticles";
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { error } from "@sveltejs/kit";
 
 export const load = (async ({ params, fetch }) => {
-  const fullArticleList = get(fullArticles);
-
-  const fetchContent = async (): Promise<FullArticle> => {
-    if (params.article_id in fullArticleList) {
-      return fullArticleList[params.article_id];
-    }
-
+  const fetchArticle = async (): Promise<FullArticle> => {
     const r = await fetch(
       `${PUBLIC_API_BASE}/articles/${params.article_id}/content`
     );
@@ -30,17 +21,10 @@ export const load = (async ({ params, fetch }) => {
       error(r.status, "Error when fetching article content.");
     }
 
-    const article = await r.json();
-
-    fullArticles.update((list) => {
-      list[params.article_id] = article;
-      return list;
-    });
-
-    return article;
+    return await r.json();
   };
 
-  const article = await fetchContent();
+  const article = await fetchArticle();
 
   return {
     article,

@@ -18,7 +18,7 @@
     faXmark,
   } from "@fortawesome/free-solid-svg-icons/index";
 
-  import { fullArticles, similarSearch } from "$state/storedArticles";
+  import { similarSearch } from "$state/storedArticles";
   import { goto } from "$app/navigation";
 
   import { PUBLIC_API_BASE } from "$env/static/public";
@@ -126,11 +126,7 @@
       title: "Close article",
       icon: faXmark,
       action: () => {
-        fullArticles.update((content) => {
-          delete content[data.article.id];
-          return content;
-        });
-        goto("/article");
+        goto("/news/previously-read");
       },
     },
   ];
