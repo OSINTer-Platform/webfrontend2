@@ -7,6 +7,8 @@
   import { feedLocalSearch } from "$state/state";
   import { faStar, faTrashCan } from "@fortawesome/free-regular-svg-icons";
   import { createItem } from "$lib/common/userItems";
+  import { modalState } from "$shared/state/modals";
+  import { PUBLIC_API_BASE } from "$env/static/public";
 
   export let data: LayoutData;
 
@@ -35,7 +37,31 @@
     {
       title: "Clear stored",
       icon: faTrashCan,
-      action: () => readArticles.set([]),
+      action: () => {
+        if ($user) {
+          modalState.append({
+            modalType: "options",
+            modalContent: {
+              type: "error",
+              title: "Are you sure you want to clear previously read?",
+              description:
+                "This will completly clear you history of all articles you have ever read on OSINTer, meaning they will no longer appear under Previously Read and no longer greyed out",
+              options: async () => {
+                const r = await fetch(`${PUBLIC_API_BASE}/my/user/clear-read`, {
+                  method: "POST",
+                });
+
+                if (r.ok) {
+                  readArticles.set([]);
+                  return true;
+                } else return false;
+              },
+            },
+          });
+        } else {
+          readArticles.set([]);
+        }
+      },
     },
   ];
 </script>
