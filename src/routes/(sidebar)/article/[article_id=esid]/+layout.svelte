@@ -130,6 +130,11 @@
       },
     },
   ];
+
+  const updateReadArticles = (id: string) =>
+    data.readArticles.update((ids) => [id, ...ids]);
+
+  $: updateReadArticles(data.article.id);
 </script>
 
 <svelte:head>
