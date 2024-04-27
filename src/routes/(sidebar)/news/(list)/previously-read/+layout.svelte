@@ -38,15 +38,15 @@
       title: "Clear stored",
       icon: faTrashCan,
       action: () => {
-        if ($user) {
-          modalState.append({
-            modalType: "options",
-            modalContent: {
-              type: "error",
-              title: "Are you sure you want to clear previously read?",
-              description:
-                "This will completly clear you history of all articles you have ever read on OSINTer, meaning they will no longer appear under Previously Read and no longer greyed out",
-              options: async () => {
+        modalState.append({
+          modalType: "options",
+          modalContent: {
+            type: "error",
+            title: "Are you sure you want to clear previously read?",
+            description:
+              "This will completly clear you history of all articles you have ever read on OSINTer, meaning they will no longer appear under Previously Read and no longer greyed out",
+            options: async () => {
+              if ($user) {
                 const r = await fetch(`${PUBLIC_API_BASE}/my/user/clear-read`, {
                   method: "POST",
                 });
@@ -55,12 +55,13 @@
                   readArticles.set([]);
                   return true;
                 } else return false;
-              },
+              } else {
+                readArticles.set([]);
+                return true;
+              }
             },
-          });
-        } else {
-          readArticles.set([]);
-        }
+          },
+        });
       },
     },
   ];
