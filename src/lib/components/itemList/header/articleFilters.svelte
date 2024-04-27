@@ -15,14 +15,11 @@
     expandSummary,
     expandHighlights,
   } from "$state/state";
-  import { page } from "$app/stores";
   import Fa from "svelte-fa";
   import Switch from "$com/utils/inputs/switch.svelte";
 
   export let articles: ArticleBase[];
   export let showReadFilter: boolean;
-
-  $: user = $page.data.user;
 
   $: articleWithHighlight = hasHighlights(articles);
   $: articleWithSummary = hasSummary(articles);
@@ -50,8 +47,7 @@
       : []),
   ];
 
-  $: readFilterAvailable = $user && showReadFilter;
-  $: showFilterOptions = readFilterAvailable || articleWithHighlight;
+  $: showFilterOptions = showReadFilter || articleWithHighlight;
   $: showExpandOptions = expanderButtons.length > 0;
 </script>
 
@@ -81,7 +77,7 @@
     {/if}
     {#if showFilterOptions}
       <div class="flex gap-2">
-        {#if readFilterAvailable}
+        {#if showReadFilter}
           <Switch
             title="{$showRead
               ? 'Show'
