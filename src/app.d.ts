@@ -28,7 +28,7 @@ declare global {
       user: Writable<User | null>;
       authorizeForArea: Readable<(area: AuthArea) => boolean>;
       customSidebar: boolean;
-      readArticles: ListStore<string> | undefined;
+      readArticles: Writable<string[]>;
       userCollections: BackgroundUpdatable<{ [key: string]: Collection }>;
       meta: {
         title?: string | { visual: string; meta: string };

@@ -11,6 +11,7 @@ import type { ArticleListRender } from "$shared/types/internal";
 import type { Collection, User } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
 import { error } from "@sveltejs/kit";
+import { persisted } from "svelte-persisted-store";
 
 export const load: LayoutLoad = async ({ fetch, data, url }) => {
   const getUserObject = async (): Promise<User | null> => {
@@ -92,8 +93,8 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     authorizeForArea,
     mlAvailability,
     readArticles: userContents
-      ? listStore(userContents.read_articles)
-      : undefined,
+      ? writable(userContents.read_articles)
+      : persisted<string[]>("readArticles", []),
     userCollections,
     customSidebar: false,
     meta: {
