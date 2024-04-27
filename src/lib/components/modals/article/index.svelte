@@ -65,7 +65,7 @@
 
     if (!newArticle) return;
 
-    $page.data.readArticles.update((ids) => [...ids, newArticleId]);
+    $page.data.readArticles.update((ids) => [newArticleId, ...ids]);
 
     modalState.update((modals) => {
       const topModal = modals.pop();
