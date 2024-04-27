@@ -78,6 +78,7 @@
   {description}
   {modOptions}
   bind:searchValue={$feedLocalSearch}
+  showReadFilter={false}
 />
 
 <slot />
