@@ -1,7 +1,13 @@
 <script lang="ts">
+  import type { ArticleSearchQuery } from "$shared/types/api";
   import type { Writable } from "svelte/store";
-  export let selectedMonth: Writable<{ name: string; id: string; url: URL }>;
-  export let month: { name: string; id: string; url: URL };
+
+  export let selectedMonth: Writable<{
+    name: string;
+    id: string;
+    query: ArticleSearchQuery;
+  }>;
+  export let month: { name: string; id: string; query: ArticleSearchQuery };
 
   $: monthName = month.name.split(" ")[0];
   $: year = month.name.split(" ")[1];

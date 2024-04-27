@@ -29,38 +29,33 @@ const timeAgo: { [interval in Intervals]: Date } = {
   month: new Date(new Date().getTime() - daySeconds * 30),
 };
 
-const timeUrl = (interval: Intervals) => {
-  const params = new URLSearchParams({
-    limit: "10000",
-    sort_by: "publish_date",
-    sort_order: "desc",
-    complete: "false",
-    first_date: timeAgo[interval].toISOString(),
-  });
-
-  return new URL(`${PUBLIC_API_BASE}/articles/search?${params.toString()}`);
-};
+const timeQuery = (interval: Intervals): ArticleSearchQuery => ({
+  limit: 10000,
+  sort_by: "publish_date",
+  sort_order: "desc",
+  first_date: timeAgo[interval].toISOString(),
+});
 
 export const inbuiltFeeds: InbuiltFeed[] = [
   {
     id: "day",
     title: "Todays news",
     desc: "All the news available from the last 24 hours",
-    url: timeUrl("day"),
+    query: timeQuery("day"),
     type: "timecontrol",
   },
   {
     id: "week",
     title: "Last 7 days",
     desc: "All the news available from the last 7 days",
-    url: timeUrl("week"),
+    query: timeQuery("week"),
     type: "timecontrol",
   },
   {
     id: "month",
     title: "Last 30 days",
     desc: "All the news available from the last 30 days",
-    url: timeUrl("month"),
+    query: timeQuery("month"),
     type: "timecontrol",
   },
 ];

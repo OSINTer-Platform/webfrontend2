@@ -2,43 +2,49 @@ import { PUBLIC_API_BASE } from "$env/static/public";
 import { getMonths } from "$lib/common/math";
 import { derived, writable } from "svelte/store";
 import type { LayoutLoad } from "./$types";
-import type { ArticleBase } from "$shared/types/api";
+import type { ArticleBase, ArticleSearchQuery } from "$shared/types/api";
 
 export const load = (async () => {
-  const getArticles = async (url: URL): Promise<ArticleBase[]> => {
-    const r = await fetch(url);
+  const getArticles = async (
+    query: ArticleSearchQuery
+  ): Promise<ArticleBase[]> => {
+    const r = await fetch(`${PUBLIC_API_BASE}/articles/search`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(query),
+    });
     if (r.ok) {
       return await r.json();
     } else {
-      console.error(`Error when fetching articles from url "${url}"`);
+      console.error(`Error when fetching articles with query "${query}"`);
       return [];
     }
   };
 
-  const getApiSearchUrl = (firstDate: Date, lastDate: Date) => {
-    const params = new URLSearchParams({
-      limit: "10000",
-      sort_by: "publish_date",
-      sort_order: "desc",
-      complete: "false",
-      first_date: firstDate.toISOString(),
-      last_date: lastDate.toISOString(),
-    });
-
-    return new URL(`${PUBLIC_API_BASE}/articles/search?${params.toString()}`);
-  };
+  const getApiSearchQuery = (
+    firstDate: Date,
+    lastDate: Date
+  ): ArticleSearchQuery => ({
+    limit: 10000,
+    sort_by: "publish_date",
+    sort_order: "desc",
+    first_date: firstDate.toISOString(),
+    last_date: lastDate.toISOString(),
+  });
 
   const readableMonths = getMonths(new Date(2022, 1));
   const months = readableMonths.map(({ name, firstDate, lastDate }) => ({
     name: name,
     id: firstDate.toLocaleString("default", { dateStyle: "short" }),
-    url: getApiSearchUrl(firstDate, lastDate),
+    query: getApiSearchQuery(firstDate, lastDate),
   }));
 
   const selectedMonth = writable(months[0]);
 
   const articles = derived(selectedMonth, ($currentMonth) =>
-    getArticles($currentMonth.url)
+    getArticles($currentMonth.query)
   );
 
   return {

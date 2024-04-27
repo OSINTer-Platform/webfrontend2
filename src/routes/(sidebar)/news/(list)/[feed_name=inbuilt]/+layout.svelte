@@ -7,6 +7,8 @@
   import { feedLocalSearch } from "$state/state";
   import { faDownload } from "@fortawesome/free-solid-svg-icons/index";
   import { page } from "$app/stores";
+  import { PUBLIC_API_BASE } from "$env/static/public";
+  import { toUrl } from "$lib/common/searchQuery";
 
   export let data: LayoutData;
 
@@ -18,7 +20,9 @@
           {
             title: "Download",
             icon: faDownload,
-            route: `${data.currentItem.url.origin}${data.currentItem.url.pathname}/export${data.currentItem.url.search}`,
+            route: `${PUBLIC_API_BASE}/articles/search/export?complete=false&${toUrl(
+              data.currentItem.query
+            )}`,
             options: {
               download: "true",
             },

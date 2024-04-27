@@ -29,7 +29,13 @@
       first_date: (firstDate ?? data.startDate).toISOString(),
     };
 
-    const r = await fetch(`${PUBLIC_API_BASE}/articles/search?${toUrl(q)}`);
+    const r = await fetch(`${PUBLIC_API_BASE}/articles/search?complete=false`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(q),
+    });
 
     if (r.ok) {
       return await r.json();

@@ -1,6 +1,5 @@
 import { PUBLIC_API_BASE } from "$env/static/public";
 import type { ArticleBase } from "$shared/types/api";
-import { toUrl } from "./searchQuery";
 
 export async function queryArticlesById(
   ids: string[],
@@ -10,10 +9,17 @@ export async function queryArticlesById(
 ): Promise<ArticleBase[]> {
   async function query() {
     const r = await fetchFn(
-      `${PUBLIC_API_BASE}/articles/search?${toUrl({
-        limit,
-        ids,
-      })}`
+      `${PUBLIC_API_BASE}/articles/search?complete=false`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          limit,
+          ids,
+        }),
+      }
     );
     return r.ok ? await r.json() : [];
   }

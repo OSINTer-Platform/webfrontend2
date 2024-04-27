@@ -1,6 +1,5 @@
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { derived, writable, type Writable } from "svelte/store";
-import { toUrl } from "$lib/common/searchQuery";
 
 import type { LayoutLoad } from "./$types";
 import type { ArticleBase, ArticleSearchQuery } from "$shared/types/api";
@@ -9,12 +8,19 @@ export const load = (async () => {
   const getArticles = async (
     searchQuery: ArticleSearchQuery
   ): Promise<ArticleBase[]> => {
-    const url = `${PUBLIC_API_BASE}/articles/search?${toUrl(searchQuery)}`;
-    const r = await fetch(url);
+    const r = await fetch(`${PUBLIC_API_BASE}/articles/search?complete=false`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(searchQuery),
+    });
     if (r.ok) {
       return await r.json();
     } else {
-      console.error(`Error when fetching articles from url "${url}"`);
+      console.error(
+        `Error when fetching articles from with query "${searchQuery}"`
+      );
       return [];
     }
   };

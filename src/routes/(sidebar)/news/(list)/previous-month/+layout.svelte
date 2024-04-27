@@ -7,6 +7,8 @@
 
   import { feedLocalSearch } from "$state/state";
   import { faDownload } from "@fortawesome/free-solid-svg-icons/index";
+  import { PUBLIC_API_BASE } from "$env/static/public";
+  import { toUrl } from "$lib/common/searchQuery";
 
   export let data: LayoutData;
   $: selectedMonth = data.selectedMonth;
@@ -17,7 +19,9 @@
     {
       title: "Download",
       icon: faDownload,
-      route: `${$selectedMonth.url.origin}${$selectedMonth.url.pathname}/export${$selectedMonth.url.search}`,
+      route: `${PUBLIC_API_BASE}/articles/search/export?${toUrl(
+        $selectedMonth.query
+      )}`,
       options: {
         download: "true",
       },

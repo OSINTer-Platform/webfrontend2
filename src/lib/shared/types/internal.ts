@@ -12,7 +12,7 @@ export interface InbuiltFeed {
   id: string;
   title: string;
   desc: string;
-  url: URL;
+  query: ArticleSearchQuery;
   type: "timecontrol" | "other";
 }
 

@@ -7,7 +7,6 @@
 
   import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-  import { toUrl } from "$lib/common/searchQuery";
   import { PUBLIC_API_BASE } from "$env/static/public";
   import Loader from "$com/loader.svelte";
 
@@ -26,7 +25,13 @@
       semantic_search: previousSearch,
     };
 
-    const r = await fetch(`${PUBLIC_API_BASE}/articles/search?${toUrl(q)}`);
+    const r = await fetch(`${PUBLIC_API_BASE}/articles/search?complete=false`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(q),
+    });
 
     if (r.ok) {
       return await r.json();

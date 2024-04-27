@@ -10,6 +10,7 @@
   import { faDownload, faPlus } from "@fortawesome/free-solid-svg-icons/index";
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { page } from "$app/stores";
+  import { toUrl } from "$lib/common/searchQuery";
 
   export let data: LayoutData;
   $: user = data.user;
@@ -22,7 +23,9 @@
           {
             title: "Download",
             icon: faDownload,
-            route: `${PUBLIC_API_BASE}/articles/search/export?${data.searchUrl}`,
+            route: `${PUBLIC_API_BASE}/articles/search/export?${toUrl(
+              data.currentSearch
+            )}`,
             options: {
               download: "true",
             },
