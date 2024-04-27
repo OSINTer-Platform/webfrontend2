@@ -8,10 +8,7 @@
   export let articleListContainer: HTMLDivElement | null;
   export let articles: ArticleBase[];
 
-  $: alreadyRead = $page.data.alreadyRead;
-
-  let readArticles: string[];
-  $: readArticles = $alreadyRead ? $alreadyRead.ids : [];
+  $: readArticles = $page.data.readArticles;
 </script>
 
 <div
@@ -27,7 +24,11 @@
     "
 >
   {#each articles as article (article.id)}
-    <Article {article} {readArticles} articleList={articles} />
+    <Article
+      {article}
+      readArticles={$readArticles ?? []}
+      articleList={articles}
+    />
 
     <hr class="border border-surface-400/25 my-3" />
   {/each}

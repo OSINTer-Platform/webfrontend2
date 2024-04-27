@@ -30,10 +30,9 @@ export interface User {
   active: boolean;
   premium: number;
 
-  already_read: string;
-
   feed_ids: string[];
   collection_ids: string[];
+  read_articles: string[];
 
   feeds: Feed[];
   collections: Collection[];

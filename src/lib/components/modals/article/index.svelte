@@ -54,7 +54,7 @@
       switchDirection = "right";
     }
 
-    if (!newArticleId) return;
+    if (!newArticleId || !topModal) return;
 
     const newArticle: FullArticle | null = await fetch(
       `${PUBLIC_API_BASE}/articles/${newArticleId}/content`
@@ -63,7 +63,9 @@
       return r.json();
     });
 
-    if (!newArticle || !topModal) return;
+    if (!newArticle) return;
+
+    $page.data.readArticles?.append(newArticleId);
 
     modalState.update((modals) => {
       const topModal = modals.pop();
@@ -75,9 +77,6 @@
 
       return [...modals, topModal];
     });
-
-    $page.data.userCollections.autoUpdate();
-    $page.data.alreadyRead.autoUpdate();
 
     await new Promise((r) => setTimeout(r, 400)); // Wait for transitions
   }

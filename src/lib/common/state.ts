@@ -26,6 +26,8 @@ export async function spawnArticleModal(
     fetchAndConvert(`${PUBLIC_API_BASE}/articles/categories`),
   ]);
 
+  if (article) get(page).data.readArticles?.append(id);
+
   if (!article || !articleCategories) {
     goto(`/article/${id}`);
     return false;
@@ -40,13 +42,6 @@ export async function spawnArticleModal(
     modalType: "article",
     modalContent: { article, articleList, categories: articleCategories },
   });
-
-  const pageData = get(page).data;
-
-  await Promise.all([
-    pageData.userCollections.autoUpdate(),
-    pageData.alreadyRead.autoUpdate(),
-  ]);
 
   return true;
 }

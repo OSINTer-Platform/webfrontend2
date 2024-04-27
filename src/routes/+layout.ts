@@ -1,5 +1,9 @@
 import { PUBLIC_API_BASE } from "$env/static/public";
-import { cookieStore, backgroundUpdatable } from "$lib/common/customStores";
+import {
+  cookieStore,
+  backgroundUpdatable,
+  listStore,
+} from "$lib/common/customStores";
 import { config } from "$shared/config";
 import { derived, writable } from "svelte/store";
 import type { AuthArea, MLAvailability, Survey } from "$shared/types/api";
@@ -52,34 +56,15 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     );
   };
 
-  const updateAlreadyRead = async (
-    user: User | null
-  ): Promise<Collection | null> => {
-    if (!user) return null;
-
-    const rCollection = await fetch(
-      `${PUBLIC_API_BASE}/user-items/${user.already_read}/content`
-    );
-    if (!rCollection.ok) return null;
-
-    return await rCollection.json();
-  };
-
   const userContents = await getUserObject();
   const user = writable(userContents);
-  const [
-    mlAvailability,
-    authAreas,
-    submittedSurveys,
-    alreadyRead,
-    userCollections,
-  ] = await Promise.all([
-    getMlAvailability(),
-    getAuthAreas(),
-    getSubmittedSurveys(),
-    backgroundUpdatable(() => updateAlreadyRead(userContents)),
-    backgroundUpdatable(() => updateCollectionList(userContents)),
-  ]);
+  const [mlAvailability, authAreas, submittedSurveys, userCollections] =
+    await Promise.all([
+      getMlAvailability(),
+      getAuthAreas(),
+      getSubmittedSurveys(),
+      backgroundUpdatable(() => updateCollectionList(userContents)),
+    ]);
 
   const allowedAreas = derived(user, ($user) => {
     const areas = Object.entries(authAreas).find(
@@ -106,7 +91,9 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     user,
     authorizeForArea,
     mlAvailability,
-    alreadyRead,
+    readArticles: userContents
+      ? listStore(userContents.read_articles)
+      : undefined,
     userCollections,
     customSidebar: false,
     meta: {

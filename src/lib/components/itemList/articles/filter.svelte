@@ -15,13 +15,13 @@
   export let tintReadArticles: boolean = true;
   export let listLenLimit = 100;
 
-  $: alreadyReadCollection = $page.data.alreadyRead;
-  $: alreadyRead = filterArticles(articles, "", $alreadyReadCollection?.ids);
+  $: readArticleIDs = $page.data.readArticles;
+  $: readArticles = filterArticles(articles, "", $readArticleIDs);
 
   $: filteredArticles =
-    $showRead && alreadyReadCollection
+    $showRead || !readArticleIDs
       ? filterArticles(articles, search)
-      : filterArticles(alreadyRead, search);
+      : filterArticles(readArticles, search);
 
   export let emptyMessage: { title: string; description: string } | null = null;
 </script>

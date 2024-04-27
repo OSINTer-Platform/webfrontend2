@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
   import type { User } from "$shared/types/userItems";
 
-  $: alreadyRead = $page.data.alreadyRead;
+  $: readArticles = $page.data.readArticles;
   export let user: User | null;
 </script>
 
@@ -33,7 +33,7 @@
       <span class="font-bold">{user.collection_ids.length}</span> collections
     </li>
     <li>
-      <span class="font-bold">{$alreadyRead?.ids.length ?? 0}</span>
+      <span class="font-bold">{$readArticles?.length ?? 0}</span>
       already read articles
     </li>
   </ul>

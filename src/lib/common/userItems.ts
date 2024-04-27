@@ -1,7 +1,7 @@
 import { goto } from "$app/navigation";
 import { PUBLIC_API_BASE } from "$env/static/public";
 import type { ArticleSearchQuery } from "$shared/types/api";
-import type { Collection, Feed, ItemBase, User } from "$shared/types/userItems";
+import type { Collection, Feed, ItemBase } from "$shared/types/userItems";
 
 export const sanitizeQuery = (query: ArticleSearchQuery) => {
   const keys = [
@@ -18,13 +18,6 @@ export const sanitizeQuery = (query: ArticleSearchQuery) => {
   }
 
   return query;
-};
-
-export const removeable = (user: User | null, item: ItemBase) => {
-  if (!user) return false;
-  if (user.already_read == item._id) return false;
-
-  return true;
 };
 
 type NavDest = "none" | "current" | "new";

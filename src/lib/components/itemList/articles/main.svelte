@@ -41,10 +41,11 @@
     title: { shell: TitleShell, article: TitleArticle },
   };
 
-  $: alreadyRead = $page.data.alreadyRead;
+  $: readArticleStore = $page.data.readArticles;
 
   let readArticles: string[];
-  $: readArticles = $alreadyRead && tintReadArticles ? $alreadyRead.ids : [];
+  $: readArticles =
+    $readArticleStore && tintReadArticles ? $readArticleStore : [];
 
   $: limitedArticles =
     listLenLimit > 0

@@ -20,7 +20,6 @@
   import {
     changeName,
     updateItem,
-    removeable,
     sanitizeQuery,
     createItem,
   } from "$lib/common/userItems";
@@ -48,10 +47,9 @@
   $: itemRemoveable =
     $user &&
     ($user.feed_ids.includes(data.currentItem._id) ||
-      $user.collection_ids.includes(data.currentItem._id)) &&
-    removeable($user, data.currentItem);
+      $user.collection_ids.includes(data.currentItem._id));
 
-  $: itemSubscribeable = !itemRemoveable && removeable($user, data.currentItem);
+  $: itemSubscribeable = !itemRemoveable;
 
   $: modOptions = [
     ...($page.data.articles && $page.data.articles.length > 0
@@ -144,9 +142,7 @@
             },
           },
         ]
-      : []),
-    ...(itemSubscribeable
-      ? [
+      : [
           {
             title: `Sub to ${data.currentItem.type}`,
             icon: faPlus,
@@ -169,8 +165,7 @@
               }
             },
           },
-        ]
-      : []),
+        ]),
   ];
 
   let ownsFeed: boolean;
