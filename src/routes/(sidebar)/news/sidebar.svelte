@@ -31,7 +31,10 @@
   $: readOptions = {
     id: "read-inbuilts",
     title: "Read articles",
-    list: [{ href: "/news/commonly-read", label: "Commonly Read" }],
+    list: [
+      { href: "/news/commonly-read", label: "Commonly Read" },
+      { href: "/news/previously-read", label: "Previously Read" },
+    ],
   };
 </script>
 

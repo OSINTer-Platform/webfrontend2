@@ -4,23 +4,26 @@
 
   import type { SidebarOption } from "$shared/types/internal";
 
-  import { filteredArticles } from "$state/storedArticles";
-  import { localSearch } from "$state/storedArticles";
+  import { fullArticles } from "$state/storedArticles";
+  import { feedLocalSearch } from "$state/state";
+  import { searchInArticle } from "$lib/common/filter";
 
   let option: SidebarOption;
   $: option = {
     id: "articles",
-    list: $filteredArticles.map((article) => ({
-      href: `/article/${article.id}`,
-      label: article.title,
-    })),
+    list: Object.values($fullArticles)
+      .filter((a) => searchInArticle(a, $feedLocalSearch))
+      .map((article) => ({
+        href: `/article/${article.id}`,
+        label: article.title,
+      })),
   };
 </script>
 
 <Sidebar options={[option]}>
   <svelte:fragment slot="top">
     <Search
-      bind:value={$localSearch}
+      bind:value={$feedLocalSearch}
       placeholder={"Filter saved articles"}
       containerClass={"m-4"}
     />

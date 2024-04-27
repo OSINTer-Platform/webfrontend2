@@ -5,7 +5,6 @@ import {
   faBullhorn,
   faRss,
   faList,
-  faNewspaper,
   faSitemap,
   faQuestion,
   faArrowTrendUp,
@@ -54,12 +53,6 @@ export const navItems: {
       description: "Access one of your feeds in OSINTer",
       route: "/feed",
       icon: faList,
-    },
-    {
-      title: "Articles",
-      description: "Browse the articles you have previously viewed on OSINTer",
-      route: "/article",
-      icon: faNewspaper,
     },
     {
       title: "CVEs",

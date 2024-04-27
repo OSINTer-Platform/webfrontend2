@@ -23,9 +23,5 @@ export const load: LayoutLoad = async ({ parent }) => {
     });
   return {
     customSidebar: true,
-    meta: {
-      title: "Article list | OSINTer",
-      description: "List of the articles you have recently viewed in OSINTer",
-    },
   };
 };
