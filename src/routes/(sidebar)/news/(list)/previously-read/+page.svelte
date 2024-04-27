@@ -9,6 +9,7 @@
   export let data: PageData;
 
   $: loadingArticles = data.loadingArticles;
+  $: user = data.user;
 </script>
 
 {#await $loadingArticles}
@@ -20,8 +21,9 @@
     tintReadArticles={false}
     emptyMessage={{
       title: "Well, no previously viewed articles",
-      description:
-        "Navigate to the time controls in the left sidebar to start exploring the articles, and the ones you read on this devices will appear here",
+      description: `Navigate to the time controls in the left sidebar to start exploring the articles, and the ones you read on this ${
+        $user ? "user" : "device"
+      } will appear here`,
     }}
   />
 {/await}
