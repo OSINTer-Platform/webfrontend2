@@ -7,7 +7,7 @@ export const load: LayoutLoad = async ({ parent }) => {
   const user = get(parentData.user);
 
   if (!user)
-    throw error(401, {
+    error(401, {
       message: "",
       title: "You have to be logged in to access this article",
       description: [
