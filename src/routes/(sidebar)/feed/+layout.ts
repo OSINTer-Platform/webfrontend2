@@ -14,10 +14,13 @@ export const load = (async ({ parent, fetch }) => {
       description: [
         "Custom feeds and collections are only available to users who are signed in",
         "Do you want to try it out?",
-        "Log in below",
+        "Log in or sign-up below",
       ],
       logo: false,
-      actions: [{ title: "Login", href: "/login" }],
+      actions: [
+        { title: "Login", href: "/login" },
+        { title: "Sign-up", href: "/signup" },
+      ],
     });
 
   async function fetchUserDate<T>(
