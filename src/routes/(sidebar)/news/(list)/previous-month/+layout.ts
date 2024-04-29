@@ -1,28 +1,10 @@
-import { PUBLIC_API_BASE } from "$env/static/public";
 import { getMonths } from "$lib/common/math";
 import { derived, writable } from "svelte/store";
+import { queryArticles } from "$lib/common/queryArticles";
 import type { LayoutLoad } from "./$types";
-import type { ArticleBase, ArticleSearchQuery } from "$shared/types/api";
+import type { ArticleSearchQuery } from "$shared/types/api";
 
-export const load = (async () => {
-  const getArticles = async (
-    query: ArticleSearchQuery
-  ): Promise<ArticleBase[]> => {
-    const r = await fetch(`${PUBLIC_API_BASE}/articles/search`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(query),
-    });
-    if (r.ok) {
-      return await r.json();
-    } else {
-      console.error(`Error when fetching articles with query "${query}"`);
-      return [];
-    }
-  };
-
+export const load = (async ({ fetch }) => {
   const getApiSearchQuery = (
     firstDate: Date,
     lastDate: Date
@@ -44,7 +26,9 @@ export const load = (async () => {
   const selectedMonth = writable(months[0]);
 
   const articles = derived(selectedMonth, ($currentMonth) =>
-    getArticles($currentMonth.query)
+    queryArticles($currentMonth.query, false, fetch).then(
+      ({ articles }) => articles ?? []
+    )
   );
 
   return {

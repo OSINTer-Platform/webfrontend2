@@ -3,12 +3,11 @@
 
   import Searchbar from "./searchbar.svelte";
   import ArticleList from "./articleList.svelte";
+  import Loader from "$com/loader.svelte";
   import Fa from "svelte-fa";
 
   import { faPlus } from "@fortawesome/free-solid-svg-icons";
-
-  import { PUBLIC_API_BASE } from "$env/static/public";
-  import Loader from "$com/loader.svelte";
+  import { queryArticles } from "$lib/common/queryArticles";
 
   export let previousSearch: string;
   export let newSearch: string = "";
@@ -25,19 +24,7 @@
       semantic_search: previousSearch,
     };
 
-    const r = await fetch(`${PUBLIC_API_BASE}/articles/search?complete=false`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(q),
-    });
-
-    if (r.ok) {
-      return await r.json();
-    } else {
-      return null;
-    }
+    return await queryArticles(q).then(({ articles }) => articles);
   }
 </script>
 

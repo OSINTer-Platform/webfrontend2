@@ -6,10 +6,9 @@
   import Controls from "./controls/index.svelte";
   import ArticleList from "./articleList.svelte";
 
-  import { PUBLIC_API_BASE } from "$env/static/public";
   import { onMount } from "svelte";
-  import { toUrl } from "$lib/common/searchQuery";
   import { browser } from "$app/environment";
+  import { queryArticles } from "$lib/common/queryArticles";
 
   export let data: PageData;
 
@@ -29,19 +28,9 @@
       first_date: (firstDate ?? data.startDate).toISOString(),
     };
 
-    const r = await fetch(`${PUBLIC_API_BASE}/articles/search?complete=false`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(q),
-    });
-
-    if (r.ok) {
-      return await r.json();
-    } else {
-      throw Error;
-    }
+    const articleQuery = await queryArticles(q);
+    if (!articleQuery.articles) throw Error;
+    else return articleQuery.articles;
   }
 
   onMount(async () => {

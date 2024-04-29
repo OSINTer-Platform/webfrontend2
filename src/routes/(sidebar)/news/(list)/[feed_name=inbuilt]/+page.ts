@@ -3,7 +3,7 @@ import type { ArticleBase } from "$shared/types/api";
 
 import { inbuiltFeeds } from "$shared/config";
 import { error } from "@sveltejs/kit";
-import { PUBLIC_API_BASE } from "$env/static/public";
+import { queryArticles } from "$lib/common/queryArticles";
 
 export const load = (async ({ params, fetch }) => {
   const fetchArticles = async (): Promise<ArticleBase[]> => {
@@ -12,16 +12,13 @@ export const load = (async ({ params, fetch }) => {
     );
     if (!feed) return error(404, "Page was not found");
 
-    const r = await fetch(`${PUBLIC_API_BASE}/articles/search?complete=false`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(feed.query),
-    });
-    return r.ok
-      ? await r.json()
-      : error(r.status, "Error when fetching articles from builtin feed.");
+    const articleQuery = await queryArticles(feed.query, false, fetch);
+    return articleQuery.articles
+      ? articleQuery.articles
+      : error(
+          articleQuery.response.status,
+          "Error when fetching articles from builtin feed."
+        );
   };
 
   return {

@@ -1,5 +1,5 @@
 import { PUBLIC_API_BASE } from "$env/static/public";
-import type { ArticleBase } from "$shared/types/api";
+import type { ArticleBase, ArticleSearchQuery } from "$shared/types/api";
 
 export async function queryArticlesById(
   ids: string[],
@@ -7,26 +7,13 @@ export async function queryArticlesById(
   limit: number = 10000,
   fetchFn = fetch
 ): Promise<ArticleBase[]> {
-  async function query() {
-    const r = await fetchFn(
-      `${PUBLIC_API_BASE}/articles/search?complete=false`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          limit,
-          ids,
-        }),
-      }
-    );
-    return r.ok ? await r.json() : [];
-  }
-
   if (ids.length < 1) return [];
 
-  const articles: ArticleBase[] = await query();
+  const articles: ArticleBase[] = await queryArticles(
+    { limit, ids },
+    false,
+    fetchFn
+  ).then(({ articles }) => articles ?? []);
 
   if (sort)
     articles.sort(function (a, b) {
@@ -34,4 +21,24 @@ export async function queryArticlesById(
     });
 
   return articles;
+}
+
+export async function queryArticles(
+  query: ArticleSearchQuery,
+  complete = false,
+  fetchFn = fetch
+): Promise<{ articles: ArticleBase[] | null; response: Response }> {
+  const r = await fetchFn(
+    `${PUBLIC_API_BASE}/articles/search?complete=${encodeURIComponent(
+      complete
+    )}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(query),
+    }
+  );
+  return { articles: r.ok ? await r.json() : null, response: r };
 }

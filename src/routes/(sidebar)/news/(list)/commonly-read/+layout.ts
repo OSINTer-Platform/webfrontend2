@@ -1,30 +1,10 @@
-import { PUBLIC_API_BASE } from "$env/static/public";
 import { derived, writable, type Writable } from "svelte/store";
 
 import type { LayoutLoad } from "./$types";
-import type { ArticleBase, ArticleSearchQuery } from "$shared/types/api";
+import type { ArticleSearchQuery } from "$shared/types/api";
+import { queryArticles } from "$lib/common/queryArticles";
 
-export const load = (async () => {
-  const getArticles = async (
-    searchQuery: ArticleSearchQuery
-  ): Promise<ArticleBase[]> => {
-    const r = await fetch(`${PUBLIC_API_BASE}/articles/search?complete=false`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(searchQuery),
-    });
-    if (r.ok) {
-      return await r.json();
-    } else {
-      console.error(
-        `Error when fetching articles from with query "${searchQuery}"`
-      );
-      return [];
-    }
-  };
-
+export const load = (async ({ fetch }) => {
   const firstDate: Writable<Date | null> = writable(null);
   const lastDate: Writable<Date | null> = writable(null);
 
@@ -45,7 +25,9 @@ export const load = (async () => {
   );
 
   const articles = derived(searchQuery, ($searchQuery) =>
-    getArticles($searchQuery)
+    queryArticles($searchQuery, false, fetch).then(
+      ({ articles }) => articles ?? []
+    )
   );
 
   return {
