@@ -68,3 +68,8 @@ export function toUrl(q: ArticleSearchQuery | CVESEarchQuery): string {
 
   return urlElements.join("&");
 }
+
+// Filter empty arrays as backend will assume that explicitly set empty array means that the search should match nothing
+export function cleanQuery<T extends ArticleSearchQuery | CVESEarchQuery>(q: T): T {
+  return Object.fromEntries(Object.entries(q).filter(([_, v]) => !Array.isArray(v) || v.length > 0)) as T
+}
