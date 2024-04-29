@@ -2,7 +2,7 @@ import type { CVEBase } from "$shared/types/api";
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { tooltip } from "$shared/state/state";
 
-export const CVERegex = /([cC][vV][eE])-([0-9]{4}-[0-9]{4,9})/;
+export const CVERegex = /[cC][vV][eE]-[0-9]{4}-[0-9]{4,9}/;
 
 const cachedCVEs: { [key: string]: CVEBase } = {};
 
@@ -59,7 +59,10 @@ export async function mountCVEPreview() {
 
   if (!anchors) return;
 
-  const cves = Array.from(anchors).map((el) => el.text);
+  const cveAnchors = Array.from(anchors).filter((el) => el.text.match(CVERegex))
+  if (cveAnchors.length < 1) return
+
+  const cves = cveAnchors.map((el) => el.text);
   const cveDetails = await getCVEDetails(cves);
   cveDetails.forEach((cve) => {
     cachedCVEs[cve.cve] = cve;
