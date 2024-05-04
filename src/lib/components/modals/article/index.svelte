@@ -28,6 +28,7 @@
 
   let switchDirection: "left" | "right" = "left";
   let blockSwitching: boolean = false;
+  let transitioning = false;
 
   async function getSimilar(articleID: string) {
     const r = await fetch(
@@ -77,8 +78,6 @@
 
       return [...modals, topModal];
     });
-
-    await new Promise((r) => setTimeout(r, 400)); // Wait for transitions
   }
 
   const buttonActions = [
@@ -97,7 +96,7 @@
 
 <svelte:window
   on:keydown={async (e) => {
-    if (!blockSwitching && topModal) {
+    if (!blockSwitching && !transitioning && topModal) {
       blockSwitching = true;
       await handleKeypress(e);
       blockSwitching = false;
@@ -110,14 +109,17 @@
   class="w-[80vw] h-[90vh] bg-surface-200 dark:bg-surface-700"
 >
   {#key article}
-    <main class="w-full h-full overflow-y-auto">
+    <main class="w-full h-full overflow-y-auto overflow-x-hidden">
       <article
         class="
           py-8 px-16 mx-auto max-w-[100ch]
           bg-surface-100 dark:bg-surface-800
       "
+        on:outrostart={() => (transitioning = true)}
+        on:introend={() => (transitioning = false)}
         in:fly={{
-          duration: blockSwitching ? 400 : 0,
+          delay: 100,
+          duration: blockSwitching ? 200 : 0,
           easing: quintInOut,
           x: switchDirection === "right" ? 200 : -200,
         }}
