@@ -18,7 +18,7 @@
   searchSubmitable={false}
   showReadFilter={false}
   bind:searchValue={$cveSearch}
-  contentType="topics"
+  contentType="cves"
 />
 
 {#await $cves}
