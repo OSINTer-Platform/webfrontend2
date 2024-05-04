@@ -17,7 +17,7 @@ export async function queryArticlesById(
   ).then(({ articles }) => articles ?? []);
 
   if (sort)
-    articles.sort(function(a, b) {
+    articles.sort(function (a, b) {
       return ids.indexOf(a.id) - ids.indexOf(b.id);
     });
 
