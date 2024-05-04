@@ -2,7 +2,7 @@ import type { CVEBase } from "$shared/types/api";
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { tooltip } from "$shared/state/state";
 
-export const CVERegex = /[cC][vV][eE]-[0-9]{4}-[0-9]{4,9}/;
+export const CVERegex = /^[cC][vV][eE]-[0-9]{4}-[0-9]{4,9}$/;
 
 const cachedCVEs: { [key: string]: CVEBase } = {};
 
@@ -41,7 +41,7 @@ function pointerMove(e: PointerEvent) {
 
 const pointerOut = () => tooltip.set(null);
 
-export async function mountCVEPreview() {
+export async function mountCVEPreview(containerSelector: string) {
   const getCVEDetails = async (cves: string[]): Promise<CVEBase[]> => {
     const r = await fetch(`${PUBLIC_API_BASE}/cves/search?complete=false`, {
       method: "POST",
@@ -54,13 +54,15 @@ export async function mountCVEPreview() {
     return r.ok ? await r.json() : [];
   };
   const anchors = document
-    .querySelector(".article-content-render")
+    .querySelector(containerSelector)
     ?.querySelectorAll("a");
 
   if (!anchors) return;
 
-  const cveAnchors = Array.from(anchors).filter((el) => el.text.match(CVERegex))
-  if (cveAnchors.length < 1) return
+  const cveAnchors = Array.from(anchors).filter((el) =>
+    el.text.match(CVERegex)
+  );
+  if (cveAnchors.length < 1) return;
 
   const cves = cveAnchors.map((el) => el.text);
   const cveDetails = await getCVEDetails(cves);
@@ -68,9 +70,7 @@ export async function mountCVEPreview() {
     cachedCVEs[cve.cve] = cve;
   });
 
-  anchors.forEach((anchor) => {
-    if (!anchor.text.match(CVERegex)) return;
-
+  cveAnchors.forEach((anchor) => {
     anchor.setAttribute("target", "_blank");
     anchor.setAttribute("rel", "noopener noreferrer");
     anchor.setAttribute("data-sveltekit-preload-data", "tap");

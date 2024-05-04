@@ -11,22 +11,24 @@
   export let article: FullArticle;
   export let headings: HeadingList = [];
 
+  $: containerId = `article-content-${article.id}`;
+
   function handleParsed(e: ParsedEvent) {
     headings = MDtoToC(e);
-    mountCVEPreview();
+    mountCVEPreview(`#${containerId}`);
   }
 
   function preParse(text: string) {
     return text.replaceAll(
-      /(\s)[cC][vV][eE]-([0-9]{4}-[0-9]{4,9})([\s.,\?!])/g,
-      "$1[CVE-$2](/cve/CVE-$2)$3"
+      /[cC][vV][eE]-([0-9]{4}-[0-9]{4,9})/g,
+      "[CVE-$1](/cve/CVE-$1)"
     );
   }
 
   onDestroy(cleanUp);
 </script>
 
-<div class="article-content-render text-justify">
+<div id={containerId} class="article-content-render text-justify">
   <SvelteMarkdown
     source={preParse(article.formatted_content)}
     on:parsed={handleParsed}
