@@ -1,6 +1,7 @@
 import { PUBLIC_API_BASE } from "$env/static/public";
 import type { ArticleBase, ArticleSearchQuery } from "$shared/types/api";
 import { cleanQuery } from "./searchQuery";
+import { sortDocumentsById } from "./sort";
 
 export async function queryArticlesById(
   ids: string[],
@@ -10,17 +11,11 @@ export async function queryArticlesById(
 ): Promise<ArticleBase[]> {
   if (ids.length < 1) return [];
 
-  const articles: ArticleBase[] = await queryArticles(
-    { limit, ids },
-    false,
-    fetchFn
-  ).then(({ articles }) => articles ?? []);
+  const articles = await queryArticles({ limit, ids }, false, fetchFn).then(
+    ({ articles }) => articles ?? []
+  );
 
-  if (sort)
-    articles.sort(function (a, b) {
-      return ids.indexOf(a.id) - ids.indexOf(b.id);
-    });
-
+  if (sort) return sortDocumentsById(ids, articles, (a) => a.id);
   return articles;
 }
 
