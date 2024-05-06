@@ -36,7 +36,11 @@
       markdown: boolean;
     }[];
 
-    actions?: { action: (id: string) => void; icon: IconDefinition }[];
+    actions?: {
+      action: (id: string) => void;
+      icon: IconDefinition;
+      title: string;
+    }[];
   }[];
 
   let chunksVisible = 1;
@@ -80,8 +84,8 @@
             >
               <button
                 class="pb-2"
-                on:click={() => actions?.[0].action(id)}
-                title="Create collection from cluster"
+                on:click={() => actions[0].action(id)}
+                title={actions[0].title}
               >
                 <Fa
                   icon={actions[0].icon}
@@ -98,12 +102,8 @@
 
         <svelte:fragment slot="title-icons">
           {#if actions}
-            {#each actions as { action, icon }}
-              <button
-                on:click={() => action(id)}
-                class="btn px-2"
-                title="Create collection from cluster"
-              >
+            {#each actions as { action, icon, title }}
+              <button on:click={() => action(id)} class="btn px-2" {title}>
                 <Fa
                   {icon}
                   class="

@@ -41,7 +41,13 @@
     tags: cve.keywords,
     read: false,
 
-    actions: [{ action: createCollection, icon: faStar }],
+    actions: [
+      {
+        action: createCollection,
+        icon: faStar,
+        title: "Create collection from CVE",
+      },
+    ],
   });
 
   $: filteredCVEs =
