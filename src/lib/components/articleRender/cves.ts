@@ -1,6 +1,7 @@
 import type { CVEBase } from "$shared/types/api";
 import { PUBLIC_API_BASE } from "$env/static/public";
 import { tooltip } from "$shared/state/state";
+import { queryCVEs } from "$lib/common/queryArticles";
 
 export const CVERegex = /^[cC][vV][eE]-[0-9]{4}-[0-9]{4,9}$/;
 
@@ -42,17 +43,6 @@ function pointerMove(e: PointerEvent) {
 const pointerOut = () => tooltip.set(null);
 
 export async function mountCVEPreview(containerSelector: string) {
-  const getCVEDetails = async (cves: string[]): Promise<CVEBase[]> => {
-    const r = await fetch(`${PUBLIC_API_BASE}/cves/search?complete=false`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ cves }),
-    });
-
-    return r.ok ? await r.json() : [];
-  };
   const anchors = document
     .querySelector(containerSelector)
     ?.querySelectorAll("a");
@@ -65,7 +55,9 @@ export async function mountCVEPreview(containerSelector: string) {
   if (cveAnchors.length < 1) return;
 
   const cves = cveAnchors.map((el) => el.text);
-  const cveDetails = await getCVEDetails(cves);
+  const cveDetails = await queryCVEs({ limit: 10000, cves: cves }).then(
+    ({ documents }) => documents ?? []
+  );
   cveDetails.forEach((cve) => {
     cachedCVEs[cve.cve] = cve;
   });

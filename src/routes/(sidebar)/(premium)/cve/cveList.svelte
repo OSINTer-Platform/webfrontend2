@@ -3,31 +3,24 @@
 
   import type { CVEBase, FullCVE } from "$shared/types/api";
 
-  import { PUBLIC_API_BASE } from "$env/static/public";
   import { createItem } from "$lib/common/userItems";
   import { faStar } from "@fortawesome/free-regular-svg-icons";
   import { searchInCVE } from "$lib/common/filter";
+  import { queryCVEsById } from "$lib/common/queryArticles";
 
   export let cves: CVEBase[];
   export let search: string;
 
   async function createCollection(id: string) {
-    const r = await fetch(`${PUBLIC_API_BASE}/cves/search`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({ ids: [id] }),
-    });
-
-    if (!r.ok) {
+    const cves = await queryCVEsById([id], false, true, 1);
+    if (cves.length < 1) {
       console.error(
         "Error when attempting to query full CVE for collection creation"
       );
       return;
     }
 
-    const fullCVE: FullCVE = await r.json();
+    const fullCVE: FullCVE = cves[0];
 
     createItem(fullCVE.title, fullCVE.documents, "collection", "current");
   }

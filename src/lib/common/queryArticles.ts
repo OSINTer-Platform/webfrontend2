@@ -2,7 +2,10 @@ import { PUBLIC_API_BASE } from "$env/static/public";
 import type {
   ArticleBase,
   ArticleSearchQuery,
+  CVEBase,
+  CVESEarchQuery,
   FullArticle,
+  FullCVE,
 } from "$shared/types/api";
 import { cleanQuery } from "./searchQuery";
 import { sortDocumentsById } from "./sort";
@@ -36,7 +39,37 @@ export function queryArticlesById(
     "/articles/search",
     fetchFn
   );
+}
 
+export function queryCVEsById(
+  ids: string[],
+  sort: boolean,
+  complete?: false,
+  limit?: number,
+  fetchFn?: typeof fetch
+): Promise<CVEBase[]>;
+export function queryCVEsById(
+  ids: string[],
+  sort: boolean,
+  complete?: true,
+  limit?: number,
+  fetchFn?: typeof fetch
+): Promise<FullCVE[]>;
+export function queryCVEsById(
+  ids: string[],
+  sort: boolean,
+  complete = false,
+  limit: number = 10000,
+  fetchFn = fetch
+): Promise<CVEBase[] | FullCVE[]> {
+  return queryDocumentsById(
+    ids,
+    sort,
+    limit,
+    complete,
+    "/cves/search",
+    fetchFn
+  );
 }
 
 export function queryArticles(
@@ -58,6 +91,24 @@ export function queryArticles(
   response: Response;
 }> {
   return queryDocuments(query, "/articles/search", complete, fetchFn);
+}
+
+export function queryCVEs(
+  query: CVESEarchQuery,
+  complete?: false,
+  fetchFn?: typeof fetch
+): Promise<{ documents: CVEBase[] | null; response: Response }>;
+export function queryCVEs(
+  query: CVESEarchQuery,
+  complete?: true,
+  fetchFn?: typeof fetch
+): Promise<{ documents: FullCVE[] | null; response: Response }>;
+export function queryCVEs(
+  query: CVESEarchQuery,
+  complete = false,
+  fetchFn = fetch
+): Promise<{ documents: CVEBase[] | FullCVE[] | null; response: Response }> {
+  return queryDocuments(cleanQuery(query), "/cves/search", complete, fetchFn);
 }
 
 async function queryDocumentsById(
