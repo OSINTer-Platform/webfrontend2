@@ -1,5 +1,14 @@
 import { browser } from "$app/environment";
-import { get, writable, type Updater, type Writable } from "svelte/store";
+import type { ArticleBase, CVEBase } from "$shared/types/api";
+import type { Readable } from "svelte/motion";
+import {
+  derived,
+  get,
+  writable,
+  type Updater,
+  type Writable,
+} from "svelte/store";
+import { sortDocumentsById } from "./sort";
 
 export interface ListStore<T> extends Writable<T[]> {
   remove: () => T | undefined;
@@ -228,3 +237,33 @@ export function cookieStore<T>(
     update: update,
   };
 }
+
+export function documentCache<DocumentType extends ArticleBase | CVEBase>(
+  searchFn: (ids: string[], sort: boolean) => Promise<DocumentType[]>,
+  ids: Readable<string[]>
+): Readable<Promise<DocumentType[]>> {
+  return derived(
+    ids,
+    ($ids, _, update) => {
+      update(async (existingDocsPromise) => {
+        const existingDocs = await existingDocsPromise;
+        const filteredDocs = existingDocs.filter((doc) =>
+          $ids.includes(doc.id)
+        );
+
+        const docIds = filteredDocs.map((doc) => doc.id);
+
+        const newIds = $ids.filter((id) => !docIds.includes(id));
+        const newDocs = newIds.length > 0 ? await searchFn(newIds, false) : [];
+
+        return sortDocumentsById(
+          $ids,
+          [...newDocs, ...filteredDocs],
+          (doc) => doc.id
+        );
+      });
+    },
+    Promise.resolve([] as DocumentType[])
+  );
+}
+
