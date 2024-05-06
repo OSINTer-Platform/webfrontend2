@@ -233,7 +233,6 @@
       content: "";
       @apply block
 			w-full h-px
-			text-black
 
 			scale-x-0 origin-bottom-right
 			transition-transform duration-300
