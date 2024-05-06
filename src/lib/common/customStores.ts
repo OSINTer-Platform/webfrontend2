@@ -24,8 +24,16 @@ export interface BackgroundUpdatable<R, T = void> extends Writable<R> {
   autoUpdate: (arg?: T) => Promise<R>;
 }
 
-export function listStore<T>(initialVal: T[]): ListStore<T> {
-  const { subscribe, set, update } = writable(initialVal);
+export interface SetLike<T> extends Writable<T[]> {
+  remove: () => T | undefined;
+  append: (el: T, moveIfPresent?: boolean) => void;
+  prepend: (el: T, moveIfPresent?: boolean) => void;
+}
+
+export function listStore<T>(initialVal: T[] | Writable<T[]>): ListStore<T> {
+  const { subscribe, set, update } = Array.isArray(initialVal)
+    ? writable(initialVal)
+    : initialVal;
 
   const remove = () => {
     let el: T | undefined;
@@ -267,3 +275,33 @@ export function documentCache<DocumentType extends ArticleBase | CVEBase>(
   );
 }
 
+export function setLike<T>(initialVal: T[] | Writable<T[]>): SetLike<T> {
+  const internal = listStore(initialVal);
+
+  const prepend = (el: T, moveIfPresent = true) =>
+    internal.update((list) => {
+      const includes = list.includes(el);
+      if (includes && moveIfPresent)
+        return [el, ...list.filter((v) => v !== el)];
+      else if (!includes) return [el, ...list];
+      else return list;
+    });
+
+  const append = (el: T, moveIfPresent = true) =>
+    internal.update((list) => {
+      const includes = list.includes(el);
+      if (includes && moveIfPresent)
+        return [...list.filter((v) => v !== el), el];
+      else if (!includes) return [...list, el];
+      else return list;
+    });
+
+  return {
+    subscribe: internal.subscribe,
+    set: internal.set,
+    update: internal.update,
+    remove: internal.remove,
+    append,
+    prepend,
+  };
+}
