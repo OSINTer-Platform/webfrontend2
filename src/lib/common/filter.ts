@@ -52,6 +52,8 @@ export const searchInArticle = (
     return true;
   if ("author" in article && article.author && search(article.author))
     return true;
+
+  return false;
 };
 
 export const searchInCluster = (
