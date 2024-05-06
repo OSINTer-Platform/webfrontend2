@@ -3,6 +3,8 @@ import {
   cookieStore,
   backgroundUpdatable,
   listStore,
+  documentCache,
+  setLike,
 } from "$lib/common/customStores";
 import { config } from "$shared/config";
 import { derived, writable } from "svelte/store";
@@ -12,6 +14,7 @@ import type { Collection, User } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
 import { error } from "@sveltejs/kit";
 import { persisted } from "svelte-persisted-store";
+import { queryArticlesById } from "$lib/common/queryArticles";
 
 export const load: LayoutLoad = async ({ fetch, data, url }) => {
   const getUserObject = async (): Promise<User | null> => {
@@ -87,14 +90,17 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
   const dateInAnHour = new Date();
   dateInAnHour.setHours(dateInAnHour.getHours() + 1);
 
+  const readArticleIds = userContents
+    ? writable(userContents.read_articles)
+    : persisted<string[]>("readArticleIds", []);
+
   return {
     submittedSurveys,
     user,
+    readArticleIds: setLike(readArticleIds),
+    readArticles: documentCache(queryArticlesById, readArticleIds),
     authorizeForArea,
     mlAvailability,
-    readArticles: userContents
-      ? writable(userContents.read_articles)
-      : persisted<string[]>("readArticles", []),
     userCollections,
     customSidebar: false,
     meta: {

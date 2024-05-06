@@ -9,17 +9,13 @@
 
   import { feedLocalSearch } from "$state/state";
   import { searchInArticle } from "$lib/common/filter";
-  import { queryArticlesById } from "$lib/common/queryArticles";
   import { page } from "$app/stores";
 
   import type { ArticleBase } from "$shared/types/api";
-  import { onMount } from "svelte";
   import Loader from "$com/loader.svelte";
   import Search from "$com/utils/inputs/search.svelte";
 
   $: readArticles = $page.data.readArticles;
-
-  let articles: Promise<ArticleBase[]> = Promise.resolve([]);
 
   function generateOption(
     articles: ArticleBase[],
@@ -35,12 +31,6 @@
         })),
     };
   }
-
-  onMount(() => {
-    return readArticles.subscribe(
-      (ids) => (articles = queryArticlesById(ids.slice(0, 200), true))
-    );
-  });
 </script>
 
 <SidebarShell>
@@ -50,7 +40,7 @@
 
   <svelte:fragment slot="content">
     <LinkNavShell>
-      {#await articles}
+      {#await $readArticles}
         <Loader text="Loading previous articles" />
       {:then articles}
         <Search

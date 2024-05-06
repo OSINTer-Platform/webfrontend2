@@ -25,7 +25,7 @@ export async function spawnArticleModal(
     fetchAndConvert(`${PUBLIC_API_BASE}/articles/categories`),
   ]);
 
-  if (article) get(page).data.readArticles.update((ids) => [id, ...ids]);
+  if (article) get(page).data.readArticleIds.prepend(article.id, true);
 
   if (!article || !articleCategories) {
     goto(`/article/${id}`);

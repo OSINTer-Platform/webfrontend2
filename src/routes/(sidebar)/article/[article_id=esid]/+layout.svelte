@@ -132,7 +132,7 @@
   ];
 
   const updateReadArticles = (id: string) =>
-    data.readArticles.update((ids) => [id, ...ids]);
+    data.readArticleIds.prepend(id, true);
 
   $: updateReadArticles(data.article.id);
 </script>

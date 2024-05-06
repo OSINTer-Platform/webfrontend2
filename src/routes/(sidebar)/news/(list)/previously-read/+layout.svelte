@@ -15,7 +15,7 @@
   let modOptions: Array<HeaderModOptions>;
 
   $: user = data.user;
-  $: readArticles = data.readArticles;
+  $: readArticleIds = data.readArticleIds;
 
   $: modOptions = [
     ...($user
@@ -26,7 +26,7 @@
             action: () =>
               createItem(
                 "Previously read articles",
-                $readArticles,
+                $readArticleIds,
                 "collection",
                 "current",
                 true
@@ -52,11 +52,11 @@
                 });
 
                 if (r.ok) {
-                  readArticles.set([]);
+                  readArticleIds.set([]);
                   return true;
                 } else return false;
               } else {
-                readArticles.set([]);
+                readArticleIds.set([]);
                 return true;
               }
             },

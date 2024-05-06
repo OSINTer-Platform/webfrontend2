@@ -8,11 +8,11 @@
 
   export let data: PageData;
 
-  $: loadingArticles = data.loadingArticles;
+  $: readArticles = data.readArticles;
   $: user = data.user;
 </script>
 
-{#await $loadingArticles}
+{#await $readArticles}
   <Loader text="Loading articles..." />
 {:then articles}
   <FilterShell

@@ -15,11 +15,11 @@
   export let tintReadArticles: boolean = true;
   export let listLenLimit = 100;
 
-  $: readArticleIDs = $page.data.readArticles;
-  $: readArticles = filterArticles(articles, "", $readArticleIDs);
+  $: readArticleIds = $page.data.readArticleIds;
+  $: readArticles = filterArticles(articles, "", $readArticleIds);
 
   $: filteredArticles =
-    $showRead || !readArticleIDs
+    $showRead || !readArticleIds
       ? filterArticles(articles, search)
       : filterArticles(readArticles, search);
 

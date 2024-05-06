@@ -1,7 +1,7 @@
 // See https://kit.svelte.dev/docs/types#app
 
 import type { User } from "$shared/types/userItems";
-import type { BackgroundUpdatable, ListStore } from "$lib/common/customStores";
+import type { BackgroundUpdatable, SetLike } from "$lib/common/customStores";
 import type { ArticleBase, MLAvailability } from "$shared/types/api";
 import type { Collection } from "$shared/types/userItems";
 import type { Writable } from "svelte/store";
@@ -28,7 +28,8 @@ declare global {
       user: Writable<User | null>;
       authorizeForArea: Readable<(area: AuthArea) => boolean>;
       customSidebar: boolean;
-      readArticles: Writable<string[]>;
+      readArticleIds: SetLike<string>;
+      readArticles: Readable<Promise<ArticleBase[]>>;
       userCollections: BackgroundUpdatable<{ [key: string]: Collection }>;
       meta: {
         title?: string | { visual: string; meta: string };
