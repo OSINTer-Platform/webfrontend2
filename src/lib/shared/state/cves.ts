@@ -1,12 +1,13 @@
-import type { Cluster } from "$shared/types/api";
-import { writable, type Writable } from "svelte/store";
+import { writable } from "svelte/store";
 
 import { persisted } from "svelte-persisted-store";
+import { documentCache, setLike } from "$lib/common/customStores";
+import { queryCVEsById } from "$lib/common/queryArticles";
 
-export const readCVEs: Writable<{ [key: string]: Cluster }> = persisted(
-  "readCVEs",
-  {},
-  { storage: "session" }
+export const readCVEIds = setLike(persisted("readCVEIds", [] as string[]));
+export const readCVEs = documentCache(
+  (ids: string[], sort: boolean) => queryCVEsById(ids, sort, true),
+  readCVEIds
 );
 
 export const cveSearch = writable("");

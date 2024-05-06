@@ -1,33 +1,9 @@
 <script lang="ts">
   import Sidebar from "$com/sidebar/linkList.svelte";
-  import Search from "$inputs/search.svelte";
 
-  import type { SidebarOption } from "$shared/types/internal";
-  import type { ClusterBase } from "$shared/types/api";
-
-  import {} from "$shared/state/cves";
-  import { derived, writable, type Readable } from "svelte/store";
+  import { readCVEs } from "$shared/state/cves";
   import { searchInCVE } from "$lib/common/filter";
   import { afterNavigate } from "$app/navigation";
-
-  const sidebarSearch = writable("");
-  const filteredReadCVEs: Readable<ClusterBase[]> = derived(
-    [readCVEs, sidebarSearch],
-    ([$readCVEs, $sidebarSearch]) => {
-      return Object.values($readCVEs).filter((c) =>
-        searchInCVE(c, $sidebarSearch)
-      );
-    }
-  );
-
-  let option: SidebarOption;
-  $: option = {
-    id: "cves",
-    list: $filteredReadCVEs.map((cve) => ({
-      href: `/cve/${cve.id}`,
-      label: cve.title,
-    })),
-  };
 
   let listContainer: HTMLElement;
 
@@ -36,15 +12,15 @@
   });
 </script>
 
-<Sidebar options={[option]}>
-  <svelte:fragment slot="top">
-    <Search
-      bind:value={$sidebarSearch}
-      placeholder={"Filter viewed CVEs"}
-      containerClass={"m-4"}
-    />
-  </svelte:fragment>
-</Sidebar>
+<Sidebar
+  docs={$readCVEs}
+  generateOptionLink={(cve) => ({
+    href: `/cve/${cve.cve}`,
+    label: cve.title,
+  })}
+  searchFilter={(cve, search) => searchInCVE(cve, search)}
+  type="CVE"
+/>
 
 <main
   bind:this={listContainer}

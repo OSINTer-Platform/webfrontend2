@@ -12,7 +12,7 @@
     faXmark,
   } from "@fortawesome/free-solid-svg-icons";
   import { goto } from "$app/navigation";
-  import { articleSearch, showCVEDetails } from "$state/cves";
+  import { articleSearch, readCVEIds, showCVEDetails } from "$state/cves";
   import { createItem } from "$lib/common/userItems";
   import { faStar } from "@fortawesome/free-regular-svg-icons";
   import { processCvss2, processCvss3 } from "./cvss";
@@ -98,6 +98,10 @@
 
   $: cvss3Details = data.cve.cvss3 ? processCvss3(data.cve.cvss3) : undefined;
   $: cvss2Details = data.cve.cvss2 ? processCvss2(data.cve.cvss2) : undefined;
+
+  const updateReadCVEs = (id: string) => readCVEIds.prepend(id, true);
+
+  $: updateReadCVEs(data.cve.id);
 </script>
 
 <HeaderShell
