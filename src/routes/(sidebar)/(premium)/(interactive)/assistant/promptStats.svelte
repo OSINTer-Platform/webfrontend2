@@ -24,7 +24,7 @@
       semantic_search: previousSearch,
     };
 
-    return await queryArticles(q).then(({ articles }) => articles);
+    return await queryArticles(q).then(({ documents }) => documents);
   }
 </script>
 

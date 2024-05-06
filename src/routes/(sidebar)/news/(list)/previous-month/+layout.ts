@@ -27,7 +27,7 @@ export const load = (async ({ fetch }) => {
 
   const articles = derived(selectedMonth, ($currentMonth) =>
     queryArticles($currentMonth.query, false, fetch).then(
-      ({ articles }) => articles ?? []
+      ({ documents }) => documents ?? []
     )
   );
 

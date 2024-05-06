@@ -26,7 +26,7 @@ export const load = (async ({ fetch }) => {
 
   const articles = derived(searchQuery, ($searchQuery) =>
     queryArticles($searchQuery, false, fetch).then(
-      ({ articles }) => articles ?? []
+      ({ documents }) => documents ?? []
     )
   );
 

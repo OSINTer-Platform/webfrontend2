@@ -29,8 +29,8 @@
     };
 
     const articleQuery = await queryArticles(q);
-    if (!articleQuery.articles) throw Error;
-    else return articleQuery.articles;
+    if (!articleQuery.documents) throw Error;
+    else return articleQuery.documents;
   }
 
   onMount(async () => {

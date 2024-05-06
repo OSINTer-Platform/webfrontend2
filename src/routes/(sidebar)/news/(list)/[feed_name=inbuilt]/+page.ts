@@ -13,8 +13,8 @@ export const load = (async ({ params, fetch }) => {
     if (!feed) return error(404, "Page was not found");
 
     const articleQuery = await queryArticles(feed.query, false, fetch);
-    return articleQuery.articles
-      ? articleQuery.articles
+    return articleQuery.documents
+      ? articleQuery.documents
       : error(
           articleQuery.response.status,
           "Error when fetching articles from builtin feed."

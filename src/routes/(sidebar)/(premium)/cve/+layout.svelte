@@ -5,7 +5,7 @@
   import type { SidebarOption } from "$shared/types/internal";
   import type { ClusterBase } from "$shared/types/api";
 
-  import { readCVEs } from "$shared/state/cves";
+  import {} from "$shared/state/cves";
   import { derived, writable, type Readable } from "svelte/store";
   import { searchInCVE } from "$lib/common/filter";
   import { afterNavigate } from "$app/navigation";

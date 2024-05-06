@@ -94,11 +94,17 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     ? writable(userContents.read_articles)
     : persisted<string[]>("readArticleIds", []);
 
+  const readArticles = documentCache(
+    (ids: string[], sort: boolean) =>
+      queryArticlesById(ids, sort, false, 10000, fetch),
+    readArticleIds
+  );
+
   return {
     submittedSurveys,
     user,
     readArticleIds: setLike(readArticleIds),
-    readArticles: documentCache(queryArticlesById, readArticleIds),
+    readArticles,
     authorizeForArea,
     mlAvailability,
     userCollections,
