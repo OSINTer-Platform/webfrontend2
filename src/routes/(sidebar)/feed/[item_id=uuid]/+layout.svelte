@@ -4,6 +4,7 @@
 
   import ItemDescriptor from "$com/itemDescriptor/main.svelte";
   import HeaderShell from "$com/itemList/header/shell.svelte";
+  import Editable from "$com/utils/inputs/editable.svelte";
 
   import { feedLocalSearch } from "$state/state";
   import { modalState } from "$state/modals";
@@ -48,8 +49,6 @@
     $user &&
     ($user.feed_ids.includes(data.currentItem._id) ||
       $user.collection_ids.includes(data.currentItem._id));
-
-  $: itemSubscribeable = !itemRemoveable;
 
   $: modOptions = [
     ...($page.data.articles && $page.data.articles.length > 0
@@ -172,28 +171,6 @@
   let title: string = data.currentItem.name;
 
   $: ownsFeed = data.currentItem.owner === $user?._id;
-
-  const setTitle = (newVal: string) => (title = newVal);
-
-  $: setTitle(data.currentItem.name);
-
-  const changeTitle = async () => {
-    if (title !== data.currentItem.name) {
-      title = title.trim();
-      await changeName(data.currentItem, title, "current");
-    }
-  };
-
-  function keydown(e: any) {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      changeTitle();
-    }
-  }
-
-  function keyup(e: any) {
-    title = e.target.textContent;
-  }
 </script>
 
 <HeaderShell
@@ -202,23 +179,20 @@
   {modOptions}
   bind:searchValue={$feedLocalSearch}
 >
-  <div class="relative" slot="title">
-    <h1
-      on:keydown={keydown}
-      on:keyup={keyup}
-      class="
-        lg:text-5xl sm:text-4xl text-3xl
-        focus:outline-none
-			"
-      contenteditable={ownsFeed ? "true" : "false"}
-      autocorrect="off"
-      autocapitalize="off"
-      spellcheck="false"
-      data-gramm="false"
-    >
-      {title}
-    </h1>
-  </div>
+  <svelte:fragment slot="title">
+    {#if ownsFeed}
+      <Editable
+        on:commit={(e) => changeName(data.currentItem, e.detail, "current")}
+        tag="h1"
+        class="lg:text-5xl sm:text-4xl text-3xl"
+        content={title}
+      />
+    {:else}
+      <h1 class="lg:text-5xl sm:text-4xl text-3xl">
+        {title}
+      </h1>
+    {/if}
+  </svelte:fragment>
   <ItemDescriptor
     currentItem={data.currentItem}
     categories={data.sourceCategories}
@@ -226,22 +200,3 @@
 </HeaderShell>
 
 <slot />
-
-<style lang="postcss">
-  h1 {
-    &:after {
-      content: "";
-      @apply block
-			w-full h-px
-
-			scale-x-0 origin-bottom-right
-			transition-transform duration-300
-			bg-current;
-    }
-
-    &[contenteditable="true"] {
-      @apply hover:after:scale-x-100 hover:after:origin-bottom-left
-				focus:after:scale-x-100 focus:after:origin-bottom-left;
-    }
-  }
-</style>
