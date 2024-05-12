@@ -20,7 +20,8 @@ export const sanitizeQuery = (query: ArticleSearchQuery) => {
   return query;
 };
 
-type NavDest = "none" | "current" | "new";
+type NavDest = "none" | "invalidate" | "current" | "new";
+
 async function nav(
   dest: NavDest,
   id: string,
@@ -28,6 +29,7 @@ async function nav(
 ) {
   if (dest === "current") await goto(genUrl(id), { invalidateAll: true });
   else if (dest === "new") window.open(genUrl(id), "_blank");
+  else if (dest === "invalidate") await invalidateAll();
 }
 
 export function createItem(
