@@ -29,7 +29,9 @@
         class="w-4 checkbox"
       />
 
-      <span class="font-normal text-sm text-black/60">{name}</span>
+      <span class="font-normal text-sm text-black/60 dark:text-white/60">
+        {name}
+      </span>
     </label>
   {/each}
 </div>
