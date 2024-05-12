@@ -170,7 +170,7 @@
       <Editable
         on:commit={(e) => changeName(data.currentItem, e.detail, "current")}
         tag="h1"
-        class="lg:text-5xl sm:text-4xl text-3xl"
+        class="lg:text-5xl sm:text-4xl text-3xl link-underline"
         content={title}
       />
     {:else}

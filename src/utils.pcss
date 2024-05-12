@@ -59,7 +59,9 @@
 		bg-current;
   }
 
-  &:hover:after {
+  &:hover:after,
+  &:focus:after,
+  &:focus-within:after {
     @apply scale-x-100 origin-bottom-left;
   }
 }

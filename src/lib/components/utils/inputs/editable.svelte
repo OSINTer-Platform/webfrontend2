@@ -87,17 +87,7 @@
   on:blur={commit}
   on:paste={paste}
   {id}
-  class="
-    {classes}
-    focus:outline-none
-    after:block after:w-full after:h-px
-    after:scale-x-0 after:origin-bottom-right
-    after:transition-transform after:duration-300
-    after:bg-current
-
-    hover:after:scale-x-100 hover:after:origin-bottom-left
-    focus:after:scale-x-100 focus:after:origin-bottom-left
-  "
+  class="{classes} focus:outline-none"
   contenteditable="true"
   autocorrect="off"
   autocapitalize="off"
