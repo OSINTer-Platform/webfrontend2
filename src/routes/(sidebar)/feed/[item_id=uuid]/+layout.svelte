@@ -23,6 +23,7 @@
     updateItem,
     sanitizeQuery,
     createItem,
+    modifySubscription,
   } from "$lib/common/userItems";
   import type { Collection, Feed } from "$shared/types/userItems";
   import {
@@ -129,16 +130,8 @@
           {
             title: `Remove ${data.currentItem.type}`,
             icon: faXmark,
-            action: async () => {
-              const r = await fetch(
-                `${PUBLIC_API_BASE}/my/${data.currentItem.type}s/subscription/${data.currentItem._id}`,
-                { method: "DELETE" }
-              );
-
-              if (r.ok) {
-                goto("/feed", { invalidateAll: true });
-              }
-            },
+            action: async () =>
+              modifySubscription(data.currentItem, false, "current"),
           },
         ]
       : [
@@ -154,14 +147,7 @@
                 );
                 return;
               }
-              const r = await fetch(
-                `${PUBLIC_API_BASE}/my/${data.currentItem.type}s/subscription/${data.currentItem._id}`,
-                { method: "PUT" }
-              );
-
-              if (r.ok) {
-                invalidateAll();
-              }
+              await modifySubscription(data.currentItem, true, "invalidate");
             },
           },
         ]),

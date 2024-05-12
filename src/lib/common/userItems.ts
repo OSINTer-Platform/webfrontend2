@@ -140,3 +140,21 @@ export const changeName = async (
     return false;
   }
 };
+
+export const modifySubscription = async (
+  item: ItemBase,
+  subscribe: boolean,
+  navigate: NavDest = "none"
+): Promise<boolean> => {
+  const r = await fetch(
+    `${PUBLIC_API_BASE}/my/${item.type}s/subscription/${item._id}`,
+    { method: subscribe ? "PUT" : "DELETE" }
+  );
+
+  if (r.ok) {
+    await nav(navigate, item._id, (id: string) =>
+      subscribe ? `/feed/${id}` : "/feed"
+    );
+    return true;
+  } else return false;
+};
