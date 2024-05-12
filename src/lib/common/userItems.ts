@@ -1,4 +1,4 @@
-import { goto } from "$app/navigation";
+import { goto, invalidateAll } from "$app/navigation";
 import { PUBLIC_API_BASE } from "$env/static/public";
 import type { ArticleSearchQuery } from "$shared/types/api";
 import type { Collection, Feed, ItemBase } from "$shared/types/userItems";
@@ -21,6 +21,14 @@ export const sanitizeQuery = (query: ArticleSearchQuery) => {
 };
 
 type NavDest = "none" | "current" | "new";
+async function nav(
+  dest: NavDest,
+  id: string,
+  genUrl = (id: string) => `/feed/${id}`
+) {
+  if (dest === "current") await goto(genUrl(id), { invalidateAll: true });
+  else if (dest === "new") window.open(genUrl(id), "_blank");
+}
 
 export function createItem(
   feedName: string,
@@ -59,11 +67,7 @@ export async function createItem(
 
   if (r.ok) {
     const item: Feed | Collection = await r.json();
-
-    if (navigate === "current")
-      await goto(`/feed/${item._id}`, { invalidateAll: true });
-    else if (navigate === "new") window.open(`/feed/${item._id}`, "_blank");
-
+    await nav(navigate, item._id);
     return item;
   } else {
     console.error(
@@ -101,11 +105,7 @@ export async function updateItem(
 
   if (r.ok) {
     const item: Feed | Collection = await r.json();
-
-    if (navigate === "current")
-      await goto(`/feed/${itemId}`, { invalidateAll: true });
-    else if (navigate === "new") window.open(`/feed/${itemId}`, "_blank");
-
+    await nav(navigate, item._id);
     return item;
   } else {
     console.error(
@@ -129,9 +129,7 @@ export const changeName = async (
   );
 
   if (r.ok) {
-    if (navigate === "current")
-      await goto(`/feed/${item._id}`, { invalidateAll: true });
-    else if (navigate === "new") window.open(`/feed/${item._id}`, "_blank");
+    await nav(navigate, item._id);
     return true;
   } else {
     console.error(
