@@ -86,6 +86,8 @@
   on:keydown={keydown}
   on:blur={commit}
   on:paste={paste}
+  on:drop|preventDefault
+  on:click
   {id}
   class="{classes} focus:outline-none"
   contenteditable="true"
@@ -93,6 +95,7 @@
   autocapitalize="off"
   spellcheck="false"
   data-gramm="false"
+  draggable="false"
 >
   {content}
 </svelte:element>
