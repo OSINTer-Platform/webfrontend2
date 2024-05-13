@@ -10,6 +10,7 @@
   import { sideMenuOpen } from "$state/state";
 
   export let options: SidebarOption;
+  export let preload: false | "tap" | "hover" = "tap";
 
   $: open = $sideMenuOpen[options.id] ?? true;
 </script>
@@ -64,6 +65,8 @@
       {#each options.list as { href, label, badge }}
         <li class="px-2">
           <a
+            data-sveltekit-preload-data={preload}
+            data-sveltekit-preload-code={preload}
             {href}
             class="
 						px-2
