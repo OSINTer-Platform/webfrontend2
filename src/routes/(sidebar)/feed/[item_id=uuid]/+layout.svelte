@@ -147,7 +147,7 @@
                 );
                 return;
               }
-              await modifySubscription(data.currentItem, true, "invalidate");
+              await modifySubscription(data.currentItem, true, "invalidateAll");
             },
           },
         ]),

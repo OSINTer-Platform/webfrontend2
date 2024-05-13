@@ -1,4 +1,4 @@
-import { goto, invalidateAll } from "$app/navigation";
+import { goto, invalidate, invalidateAll } from "$app/navigation";
 import { PUBLIC_API_BASE } from "$env/static/public";
 import type { ArticleSearchQuery } from "$shared/types/api";
 import type { Collection, Feed, ItemBase } from "$shared/types/userItems";
@@ -20,7 +20,12 @@ export const sanitizeQuery = (query: ArticleSearchQuery) => {
   return query;
 };
 
-type NavDest = "none" | "invalidate" | "current" | "new";
+type NavDest =
+  | "none"
+  | "invalidateAll"
+  | `invalidate:${string}`
+  | "current"
+  | "new";
 
 async function nav(
   dest: NavDest,
@@ -29,7 +34,9 @@ async function nav(
 ) {
   if (dest === "current") await goto(genUrl(id), { invalidateAll: true });
   else if (dest === "new") window.open(genUrl(id), "_blank");
-  else if (dest === "invalidate") await invalidateAll();
+  else if (dest === "invalidateAll") await invalidateAll();
+  else if (dest.startsWith("invalidate:"))
+    await invalidate(dest.split(":").slice(1).join(":"));
 }
 
 export function createItem(
