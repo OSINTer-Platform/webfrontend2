@@ -65,14 +65,19 @@
         ]
       : []),
     {
-      title: `Copy ${data.currentItem.type}`,
+      title: `Copy of "${data.currentItem.name}"`,
       icon: faFileClipboard,
       action: async () => {
         if (isFeed(data.currentItem)) {
-          await createItem("Copied Feed", data.currentItem, "feed", "current");
+          await createItem(
+            `Copy of "${data.currentItem.name}"`,
+            data.currentItem,
+            "feed",
+            "current"
+          );
         } else if (isCollection(data.currentItem)) {
           await createItem(
-            "Copied Collection",
+            `Copy of "${data.currentItem.name}"`,
             data.currentItem.ids,
             "collection",
             "current"

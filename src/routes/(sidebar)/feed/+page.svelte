@@ -49,7 +49,12 @@
         icon: faFileClipboard,
         requireOwn: false,
         action: () =>
-          createItem("Copied feed", feed, "feed", "invalidate:page:feedRoot"),
+          createItem(
+            `Copy of "${feed.name}"`,
+            feed,
+            "feed",
+            "invalidate:page:feedRoot"
+          ),
       },
       {
         title: "Modify feed",
@@ -115,7 +120,7 @@
         requireOwn: false,
         action: () =>
           createItem(
-            `Copy of ${collection.name}`,
+            `Copy of "${collection.name}"`,
             collection.ids,
             "collection",
             "invalidate:page:feedRoot"
