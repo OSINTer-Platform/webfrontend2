@@ -30,8 +30,10 @@
     {
       title: "Source-code",
       route: "https://github.com/OSINTer-Platform",
-      blank: true,
       icon: faGithub,
+      options: {
+        target: "_blank",
+      },
     },
   ];
 
@@ -117,9 +119,9 @@
           class="btn p-2 rounded-full"
           title={social.title}
           href={social.route}
-          target={social.blank ? "_blank" : ""}
           rel="noreferrer noopener"
           data-sveltekit-preload-data="tap"
+          {...social.options}
         >
           <Fa icon={social.icon} class="text-xl" />
         </a>

@@ -42,6 +42,7 @@
           $page.url.pathname == item.route}
         <li>
           <a
+            {...item.options}
             href={item.route}
             class:bg-primary-500={selected}
             class:btn={!selected}

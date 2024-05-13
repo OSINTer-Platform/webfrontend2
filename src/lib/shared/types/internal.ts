@@ -27,9 +27,9 @@ export interface HeaderModOptions {
 export type NavItem = {
   title: string;
   description?: string;
-  blank?: boolean;
   route: string;
   icon: IconDefinition;
+  options?: { [key: string]: string };
 };
 
 export type SidebarOption = {
