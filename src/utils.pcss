@@ -33,19 +33,35 @@
 .checkbox {
   @apply aspect-square
 
-  bg-transparent
-  checked:bg-primary-500/50
-  focus:bg-transparent
-  checked:focus:bg-primary-500/50
-
-  focus:ring-0
-  focus:shadow-none
-  focus:ring-offset-0
-
-  rounded-sm
+  text-transparent bg-current rounded-sm
+  transition-colors
 
   cursor-pointer
   form-checkbox;
+
+  &:focus {
+    @apply bg-current;
+  }
+
+  &:hover {
+    @apply bg-current;
+  }
+
+  &:checked {
+    @apply bg-primary-500/50;
+
+    &:focus {
+      @apply bg-primary-500/50;
+    }
+
+    &:hover {
+      @apply bg-primary-500/60;
+    }
+  }
+
+  &:focus {
+    @apply ring-0 shadow-none ring-offset-0;
+  }
 }
 
 .link-underline {
