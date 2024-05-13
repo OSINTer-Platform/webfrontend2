@@ -117,4 +117,14 @@ export type Modal = (
         text?: string;
       };
     }
+  | {
+      modalType: "actions";
+      modalContent: {
+        options: {
+          action: () => boolean | void | Promise<boolean> | Promise<void>;
+          text: string;
+          icon?: IconDefinition;
+        }[];
+      };
+    }
 ) & { id: string };

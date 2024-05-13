@@ -10,6 +10,7 @@
   import Survey from "./survey//index.svelte";
   import CollectPayment from "./collectPayment.svelte";
   import Processing from "./processing.svelte";
+  import Actions from "./actions.svelte";
 </script>
 
 {#each $modalState as modal, i (modal.id)}
@@ -60,5 +61,7 @@
       text={modal.modalContent.text}
       modalId={modal.id}
     />
+  {:else if modal.modalType == "actions"}
+    <Actions options={modal.modalContent.options} modalId={modal.id} />
   {/if}
 {/each}
