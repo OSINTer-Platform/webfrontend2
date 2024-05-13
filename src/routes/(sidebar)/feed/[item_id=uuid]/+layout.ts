@@ -2,6 +2,7 @@ import { PUBLIC_API_BASE } from "$env/static/public";
 import type { Collection, Feed } from "$shared/types/userItems";
 import { error } from "@sveltejs/kit";
 import type { LayoutLoad } from "./$types";
+import type { ArticleCategories } from "$shared/types/api";
 
 export const load = (async ({ params, fetch }) => {
   const fetchItem = async (): Promise<Feed | Collection> => {
@@ -16,9 +17,20 @@ export const load = (async ({ params, fetch }) => {
     }
   };
 
-  const currentItem = await fetchItem();
+  const fetchCategories = async (): Promise<ArticleCategories> => {
+    const r = await fetch(`${PUBLIC_API_BASE}/articles/categories`);
+    return r.ok
+      ? await r.json()
+      : error(r.status, "Error when fetching article categories.");
+  };
+
+  const [currentItem, sourceCategories] = await Promise.all([
+    fetchItem(),
+    fetchCategories(),
+  ]);
 
   return {
+    sourceCategories,
     currentItem,
     meta: {
       title: `${currentItem.name} | OSINTer`,
