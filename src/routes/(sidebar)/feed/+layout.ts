@@ -22,7 +22,7 @@ export const load = (async ({ parent, fetch }) => {
       ],
     });
 
-  async function fetchUserDate<T>(
+  async function fetchUserData<T>(
     url: string,
     type: string
   ): Promise<T | null> {
@@ -40,8 +40,8 @@ export const load = (async ({ parent, fetch }) => {
   };
 
   const [feedsPromise, collectionsPromise] = [
-    fetchUserDate<{ [key: string]: Feed }>("/my/feeds/list", "your feeds"),
-    fetchUserDate<{ [key: string]: Collection }>(
+    fetchUserData<{ [key: string]: Feed }>("/my/feeds/list", "your feeds"),
+    fetchUserData<{ [key: string]: Collection }>(
       "/my/collections/list",
       "your collections"
     ),
