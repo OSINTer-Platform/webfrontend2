@@ -28,16 +28,11 @@
 
 <main
   class="
-	flex
-	flex-col
 	grow
+  flex flex-col items-stretch
+  overflow-y-auto overflow-x-hidden
 
-	items-stretch
-	overflow-y-auto
-	overflow-x-hidden
-
-	bg-surface-50
-	dark:bg-surface-800
+	bg-surface-50 dark:bg-surface-800
 "
 >
   {#if $navigating && showLoader}
