@@ -1,5 +1,4 @@
 import type { CVEBase } from "$shared/types/api";
-import { PUBLIC_API_BASE } from "$env/static/public";
 import { tooltip } from "$shared/state/state";
 import { queryCVEs } from "$lib/common/queryArticles";
 
@@ -63,6 +62,14 @@ export async function mountCVEPreview(containerSelector: string) {
   });
 
   cveAnchors.forEach((anchor) => {
+    if (!(anchor.text in cachedCVEs) && anchor.title === "OSINTer-CVE") {
+      const textEl = document.createElement("p");
+      textEl.innerHTML = anchor.innerHTML;
+      textEl.style.display = "inline";
+      anchor.parentNode?.replaceChild(textEl, anchor);
+      return;
+    }
+
     anchor.setAttribute("target", "_blank");
     anchor.setAttribute("rel", "noopener noreferrer");
     anchor.setAttribute("data-sveltekit-preload-data", "tap");
