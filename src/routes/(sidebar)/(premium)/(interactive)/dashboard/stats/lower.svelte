@@ -80,5 +80,5 @@
 
 <section class="flex flex-col py-2 px-6">
   <h3 class="font-bold text-2xl mb-1">Common article tags</h3>
-  <Wordcloud />
+  <Wordcloud {startDate} />
 </section>

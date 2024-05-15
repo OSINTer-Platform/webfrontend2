@@ -21,6 +21,7 @@ export interface SignificantTermAgg {
 }
 
 export async function getTags(
+  startDate: Date,
   selectedTags: string[],
   metricCount: number = 50
 ): Promise<{ tags: TermAgg; hitCount: number }> {
@@ -28,6 +29,7 @@ export async function getTags(
 
   request.addParameter("limit", 0);
   request.addParameter("track_total", true);
+  request.addParameter("first_date", startDate.toISOString());
   request.addParameter("aggregations", {
     tags: {
       terms: {

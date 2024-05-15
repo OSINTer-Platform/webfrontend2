@@ -16,12 +16,15 @@
   let hoverText = "";
   let totalHits = 0;
 
+  export let startDate: Date;
+
   const queryTags = (
+    startDate: Date,
     selected: string[],
     mounted: boolean
   ): ReturnType<typeof getTags> =>
     mounted
-      ? getTags(selected, 50)
+      ? getTags(startDate, selected, 50)
       : Promise.resolve({
           tags: {
             doc_count_error_upper_bound: 0,
@@ -31,7 +34,7 @@
           hitCount: 0,
         });
 
-  $: tags = queryTags($selectedTags, mounted).then((response) => {
+  $: tags = queryTags(startDate, $selectedTags, mounted).then((response) => {
     totalHits = response.hitCount;
     return response;
   });
