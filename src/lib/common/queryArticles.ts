@@ -90,7 +90,12 @@ export function queryArticles(
   documents: ArticleBase[] | FullArticle[] | null;
   response: Response;
 }> {
-  return queryDocuments(query, "/articles/search", complete, fetchFn);
+  return queryDocuments(
+    cleanQuery(query),
+    "/articles/search",
+    complete,
+    fetchFn
+  );
 }
 
 export function queryCVEs(
@@ -148,5 +153,6 @@ async function queryDocuments(
       body: JSON.stringify(query),
     }
   );
+
   return { documents: r.ok ? await r.json() : null, response: r };
 }
