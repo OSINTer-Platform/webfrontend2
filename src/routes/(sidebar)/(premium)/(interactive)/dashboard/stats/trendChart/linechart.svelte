@@ -11,12 +11,13 @@
 
   export let trends: Trend[];
   export let startDate: Date;
+  export let endDate: Date;
   export let keywords: Writable<string[]>;
 
   let hoverText = "";
 
   let xDomain: [number, number];
-  $: xDomain = [startDate.getTime(), new Date().getTime()];
+  $: xDomain = [startDate.getTime(), endDate.getTime()];
 
   $: customXAxisScale = d3.scaleTime().domain(xDomain);
 

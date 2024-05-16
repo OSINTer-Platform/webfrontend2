@@ -6,7 +6,7 @@ import { PUBLIC_API_BASE } from "$env/static/public";
 import { error } from "@sveltejs/kit";
 
 export const load: PageLoad = async ({ parent, fetch }) => {
-  const { startDate } = await parent();
+  const { startDate, endDate } = await parent();
 
   async function getClusters(): Promise<ClusterBase[]> {
     const r = await fetch(`${PUBLIC_API_BASE}/ml/clusters?complete=false`);
@@ -19,7 +19,7 @@ export const load: PageLoad = async ({ parent, fetch }) => {
   }
 
   const [metrics, clusters] = await Promise.all([
-    getDashboardMetrics(startDate, new Date()),
+    getDashboardMetrics(startDate, endDate),
     getClusters(),
   ]);
 

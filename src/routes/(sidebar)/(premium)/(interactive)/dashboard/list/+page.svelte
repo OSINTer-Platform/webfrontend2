@@ -19,13 +19,15 @@
   let scrollSpeed = 1;
 
   async function fetchArticles(
-    firstDate: Date | undefined = undefined
+    firstDate: Date | undefined = undefined,
+    lastDate: Date | undefined = undefined
   ): Promise<ArticleBase[]> {
     const q: ArticleSearchQuery = {
       sort_by: "publish_date",
       sort_order: "desc",
       limit: 10000,
       first_date: (firstDate ?? data.startDate).toISOString(),
+      last_date: (lastDate ?? data.endDate).toISOString(),
     };
 
     const articleQuery = await queryArticles(q);
@@ -49,8 +51,9 @@
     <Controls
       bind:scrollSpeed
       startDate={data.startDate}
+      endDate={data.endDate}
       on:date={(e) => {
-        articleQuery = fetchArticles(e.detail.date);
+        articleQuery = fetchArticles(e.detail.startDate, e.detail.endDate);
       }}
     />
   {:catch}

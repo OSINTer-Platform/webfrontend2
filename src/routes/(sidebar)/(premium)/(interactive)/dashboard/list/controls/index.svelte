@@ -3,9 +3,11 @@
   import SpeedSlider from "./speedSlider.svelte";
 
   export let startDate: Date;
+  export let endDate: Date;
+
   export let scrollSpeed: number;
 </script>
 
-<ControlShell {startDate} on:date>
+<ControlShell {startDate} {endDate} on:date>
   <SpeedSlider bind:value={scrollSpeed} />
 </ControlShell>

@@ -152,11 +152,12 @@
   >
     <Lower
       startDate={data.startDate}
+      endDate={data.endDate}
       significantTags={data.metrics.limited.new_tags}
       cves={data.metrics.limited.cves}
       globalTags={data.metrics.global.tags}
     />
   </section>
 
-  <Controls startDate={data.startDate} />
+  <Controls startDate={data.startDate} endDate={data.endDate} />
 </main>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import DateSlider from "./dateSlider.svelte";
+  import DoubleSlider from "$com/utils/inputs/time/doubleSlider.svelte";
   import LogoIcon from "$assets/LogoIcon.svelte";
   import Navigator from "./navigator.svelte";
 
@@ -8,15 +8,19 @@
   import { createEventDispatcher } from "svelte";
 
   export let startDate: Date;
+  export let endDate: Date;
 
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher<{
+    date: { startDate: Date; endDate: Date };
+  }>();
 
   function changeDate() {
     const url = new URL($page.url);
     url.searchParams.set("startDate", startDate.toISOString());
+    url.searchParams.set("endDate", endDate.toISOString());
     goto(url, { replaceState: true });
 
-    dispatch("date", { date: startDate });
+    dispatch("date", { startDate: startDate, endDate: endDate });
   }
 </script>
 
@@ -55,7 +59,21 @@
   </div>
   <div class="shrink grow flex gap-1 sm:gap-4">
     <slot />
-    <DateSlider on:change={changeDate} bind:date={startDate} />
+    <div
+      class="grow flex bg-black justify-center items-center px-4 rounded-full"
+    >
+      <DoubleSlider
+        on:change={changeDate}
+        bind:firstDate={startDate}
+        bind:lastDate={endDate}
+        config={{
+          hoverTitles: true,
+          rounded: true,
+          backgroundColor: "bg-primary-900/75",
+          foregroundColor: "bg-primary-500",
+        }}
+      />
+    </div>
   </div>
   <Navigator />
 </aside>
