@@ -65,6 +65,10 @@
   function sync() {
     externalFirstDate = firstDate;
     externalLastDate = lastDate;
+    dispatch("change", {
+      firstDate: externalFirstDate,
+      lastDate: externalLastDate,
+    });
   }
 
   export {
