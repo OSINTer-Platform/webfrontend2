@@ -3,12 +3,12 @@
 
   import type { SidebarOption } from "$shared/types/internal";
 
-  import AppSwitcher from "./compontents/appSwitcher.svelte";
+  import AppSwitcher from "./components/appSwitcher.svelte";
 
-  import LinkNavShell from "./compontents/linkNav/shell.svelte";
-  import LinkNavOptions from "./compontents/linkNav/optionList.svelte";
+  import LinkNavShell from "./components/linkNav/shell.svelte";
+  import LinkNavOptions from "./components/linkNav/optionList.svelte";
 
-  import SidebarShell from "./compontents//shell.svelte";
+  import SidebarShell from "./components//shell.svelte";
 
   import Loader from "$com/loader.svelte";
   import Search from "$com/utils/inputs/search.svelte";

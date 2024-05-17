@@ -1,9 +1,9 @@
 <script lang="ts">
-  import SidebarShell from "$com/sidebar/compontents/shell.svelte";
-  import AppSwitcher from "$com/sidebar/compontents/appSwitcher.svelte";
-  import LinkNavShell from "$com/sidebar/compontents/linkNav/shell.svelte";
-  import LinkNavOption from "$com/sidebar/compontents/linkNav/optionList.svelte";
-  import SearchButton from "$com/sidebar/compontents/userItems/searchButton.svelte";
+  import SidebarShell from "$com/sidebar/components/shell.svelte";
+  import AppSwitcher from "$com/sidebar/components/appSwitcher.svelte";
+  import LinkNavShell from "$com/sidebar/components/linkNav/shell.svelte";
+  import LinkNavOption from "$com/sidebar/components/linkNav/optionList.svelte";
+  import SearchButton from "$com/sidebar/components/userItems/searchButton.svelte";
 
   import { inbuiltFeeds } from "$shared/config";
 
