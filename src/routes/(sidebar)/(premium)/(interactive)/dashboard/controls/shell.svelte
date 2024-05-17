@@ -6,6 +6,8 @@
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { createEventDispatcher } from "svelte";
+  import { firstDate } from "$shared/config";
+  import { slide } from "svelte/transition";
 
   export let startDate: Date;
   export let endDate: Date;
@@ -22,6 +24,28 @@
 
     dispatch("date", { startDate: startDate, endDate: endDate });
   }
+
+  const genPastDate = (days: number) =>
+    new Date(new Date().setDate(new Date().getDate() - days));
+
+  const dateRanges: {
+    title: string;
+    text: string;
+    minDate: Date;
+  }[] = [
+    { title: "All time", text: "all", minDate: firstDate },
+    { title: "Last year", text: "year", minDate: genPastDate(365) },
+    { title: "Last 6 months", text: "6 months", minDate: genPastDate(6 * 30) },
+    { title: "Last 3 months", text: "3 months", minDate: genPastDate(3 * 30) },
+  ];
+
+  let selectedDateRange: {
+    title: string;
+    text: string;
+    minDate: Date;
+  } = dateRanges[3];
+
+  let hoveringRanges = false;
 </script>
 
 <aside
@@ -60,10 +84,42 @@
   <div class="shrink grow flex gap-1 sm:gap-4">
     <slot />
     <div
+      on:pointerenter={() => (hoveringRanges = true)}
+      on:pointerleave={() => (hoveringRanges = false)}
+      class="
+      px-2 grow shrink max-w-max
+      flex justify-center items-center
+      bg-black rounded-full
+    "
+    >
+      {#each dateRanges as dateRange}
+        {@const selected = selectedDateRange.text === dateRange.text}
+        {#if hoveringRanges || selected}
+          <button
+            transition:slide={{ axis: "x" }}
+            title={dateRange.title}
+            on:click={() => (selectedDateRange = dateRange)}
+            class="
+              btn py-1 px-2
+              border border-primary-500 border-r-0
+              first:rounded-l-full last:rounded-r-full last:border-r
+              text-sm uppercase font-bold whitespace-nowrap
+              {selected
+              ? 'bg-primary-900/50'
+              : '!text-primary-500 bg-primary-500/10'}
+            "
+          >
+            {dateRange.text}
+          </button>
+        {/if}
+      {/each}
+    </div>
+    <div
       class="grow flex bg-black justify-center items-center px-4 rounded-full"
     >
       <DoubleSlider
         on:change={changeDate}
+        minDate={selectedDateRange.minDate}
         bind:firstDate={startDate}
         bind:lastDate={endDate}
         config={{
