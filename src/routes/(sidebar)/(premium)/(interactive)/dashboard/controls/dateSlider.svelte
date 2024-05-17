@@ -1,9 +1,10 @@
 <script lang="ts">
   import { getTimespan } from "$lib/common/math";
+  import { firstDate } from "$shared/config";
   import * as d3 from "d3";
 
   const maxDate = new Date().setDate(new Date().getDate() - 1);
-  const minDate = new Date().setFullYear(new Date().getFullYear() - 3);
+  const minDate = firstDate.valueOf();
 
   export let date: Date;
   $: date = new Date(value);

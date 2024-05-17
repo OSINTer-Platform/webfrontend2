@@ -1,6 +1,7 @@
 <script lang="ts">
   import * as d3 from "d3";
   import { onMount, createEventDispatcher } from "svelte";
+  import { firstDate as globalFirstDate } from "$shared/config";
 
   export let config:
     | {
@@ -15,9 +16,7 @@
     change: { firstDate: Date; lastDate: Date };
   }>();
 
-  export let minDate = new Date(
-    new Date().setFullYear(new Date().getFullYear() - 3)
-  );
+  export let minDate = globalFirstDate;
   export let maxDate = new Date();
 
   $: x = d3.scaleTime().domain([minDate, maxDate]).range([0, containerWidth]);

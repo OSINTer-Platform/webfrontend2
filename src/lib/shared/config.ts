@@ -15,6 +15,10 @@ export const config: {
   },
 };
 
+export const firstDate = new Date(
+  new Date().setFullYear(new Date().getFullYear() - 3)
+);
+
 export const ListRenderModes: { name: string; value: ArticleListRender }[] = [
   { name: "Large", value: "large" },
   { name: "Title-view", value: "title" },
