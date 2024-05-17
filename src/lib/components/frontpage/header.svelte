@@ -106,7 +106,7 @@
       "
       >
         <a
-          href="/feed"
+          href="/news"
           class="
           bg-primary-700
           hover:bg-primary-600
