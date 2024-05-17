@@ -15,14 +15,18 @@
     change: { firstDate: Date; lastDate: Date };
   }>();
 
-  const maxDate = new Date().setDate(new Date().getDate() - 1);
-  const minDate = new Date().setFullYear(new Date().getFullYear() - 3);
+  export let minDate = new Date(
+    new Date().setFullYear(new Date().getFullYear() - 3)
+  );
+  export let maxDate = new Date();
+
+  $: x = d3.scaleTime().domain([minDate, maxDate]).range([0, containerWidth]);
 
   let externalFirstDate: Date | null;
   let externalLastDate: Date | null;
 
-  let firstValue: number = minDate;
-  let lastValue: number = maxDate;
+  let firstValue: number = externalFirstDate?.valueOf() ?? minDate.valueOf();
+  let lastValue: number = externalLastDate?.valueOf() ?? maxDate.valueOf();
 
   $: firstValue =
     firstValue > lastValue - 1000 * 60 * 60 * 24
@@ -45,8 +49,6 @@
 
   let containerWidth: number = 0;
 
-  $: x = d3.scaleTime().domain([minDate, maxDate]).range([0, containerWidth]);
-
   $: firstX = x(firstValue);
   $: lastX = x(lastValue);
 
@@ -68,20 +70,38 @@
   let lastMiddleDragX: number | null = null;
 
   onMount(() => {
-    console.log(externalFirstDate, externalLastDate);
-    if (externalFirstDate && externalFirstDate.getTime() > minDate)
+    if (externalFirstDate && externalFirstDate > minDate)
       firstValue = externalFirstDate.getTime();
-    if (externalLastDate && externalLastDate.getTime() > maxDate)
+    if (externalLastDate && externalLastDate > maxDate)
       lastValue = externalLastDate.getTime();
   });
 
+  function clampValues(minValue: number, maxValue: number) {
+    const clamp = (val: number) => Math.min(Math.max(val, minValue), maxValue);
+
+    lastValue = clamp(lastValue);
+    firstValue = clamp(firstValue);
+
+    // Done to ensure svelte reactivety gets time to work
+    setTimeout(() => sync(), 0);
+  }
+
   function sync() {
+    let changed = false;
+    if (
+      externalFirstDate?.valueOf() !== firstDate.valueOf() ||
+      externalLastDate?.valueOf() !== lastDate.valueOf()
+    )
+      changed = true;
+
     externalFirstDate = firstDate;
     externalLastDate = lastDate;
-    dispatch("change", {
-      firstDate: externalFirstDate,
-      lastDate: externalLastDate,
-    });
+
+    if (changed)
+      dispatch("change", {
+        firstDate: externalFirstDate,
+        lastDate: externalLastDate,
+      });
   }
 
   export {
@@ -90,6 +110,9 @@
     firstDate as internalFirstDate,
     lastDate as internalLastDate,
   };
+
+  // Done to ensure svelte reactivety gets time to work
+  $: setTimeout(() => clampValues(minDate.valueOf(), maxDate.valueOf()), 0);
 </script>
 
 <div
@@ -173,17 +196,20 @@
         lastMiddleDragX = null;
       }}
       class="
-        absolute -translate-x-2 h-full cursor-col-resize rounded-full
+        absolute h-full cursor-col-resize rounded-full
         {config?.foregroundColor ?? 'bg-primary-600 '}
       "
-      style="left: {firstX}px; right: max({containerWidth - lastX}px, 0px);"
+      style="
+        left: max({firstX}px, 0px);
+        right: max({containerWidth - lastX}px, 0px);
+        "
     />
     <input
       on:change={() => sync()}
       bind:value={firstValue}
       type="range"
-      min={minDate}
-      max={maxDate}
+      min={minDate.valueOf()}
+      max={maxDate.valueOf()}
       step={1000 * 60 * 60 * 24}
       class="w-full absolute -translate-y-1/2 top-1/2"
       style="--rounded: {config?.rounded ? '9999' : '0'}px"
@@ -192,8 +218,8 @@
       on:change={() => sync()}
       bind:value={lastValue}
       type="range"
-      min={minDate}
-      max={maxDate}
+      min={minDate.valueOf()}
+      max={maxDate.valueOf()}
       step={1000 * 60 * 60 * 24}
       class="w-full absolute -translate-y-1/2 top-1/2"
       style="--rounded: {config?.rounded ? '9999' : '0'}px"
