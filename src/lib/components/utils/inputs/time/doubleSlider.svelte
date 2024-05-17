@@ -253,10 +253,21 @@
       background: none;
     }
 
-    &::-webkit-slider-thumb,
     &::-moz-range-thumb {
       background: white;
       border: none;
+      pointer-events: auto;
+      cursor: pointer;
+      border-radius: var(--rounded);
+    }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+
+      height: 1rem;
+      width: 1rem;
+      background: white;
+
       pointer-events: auto;
       cursor: pointer;
       border-radius: var(--rounded);
