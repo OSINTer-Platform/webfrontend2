@@ -8,6 +8,7 @@
   export let tag: string;
   export let content: string;
   export let id: string = uuid();
+  export let el: HTMLElement | undefined = undefined;
 
   const dispatch = createEventDispatcher<{ commit: string }>();
   let previouslyCommitted = content;
@@ -82,6 +83,7 @@
 
 <svelte:element
   this={tag}
+  bind:this={el}
   role="heading"
   on:keydown={keydown}
   on:blur={commit}

@@ -4,7 +4,8 @@
 
   import ItemDescriptor from "$com/itemDescriptor/main.svelte";
   import HeaderShell from "$com/itemList/header/shell.svelte";
-  import Editable from "$com/utils/inputs/editable.svelte";
+  import Editable from "$com/utils/inputs/editable/editable.svelte";
+  import EditableWrapper from "$com/utils/inputs/editable/wrapper.svelte";
 
   import { feedLocalSearch } from "$state/state";
   import { modalState } from "$state/modals";
@@ -172,12 +173,14 @@
 >
   <svelte:fragment slot="title">
     {#if ownsFeed}
-      <Editable
-        on:commit={(e) => changeName(data.currentItem, e.detail, "current")}
-        tag="h1"
-        class="lg:text-5xl sm:text-4xl text-3xl link-underline"
-        content={title}
-      />
+      <EditableWrapper class="flex gap-4 items-center">
+        <Editable
+          tag="h1"
+          content={title}
+          class="lg:text-5xl sm:text-4xl text-3xl"
+          on:commit={(e) => changeName(data.currentItem, e.detail, "current")}
+        />
+      </EditableWrapper>
     {:else}
       <h1 class="lg:text-5xl sm:text-4xl text-3xl">
         {title}

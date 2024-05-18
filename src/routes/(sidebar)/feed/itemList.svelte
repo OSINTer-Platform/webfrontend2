@@ -1,7 +1,8 @@
 <script lang="ts">
   import { modalState } from "$shared/state/modals";
 
-  import Editable from "$com/utils/inputs/editable.svelte";
+  import Editable from "$com/utils/inputs/editable/editable.svelte";
+  import EditableWrapper from "$com/utils/inputs/editable/wrapper.svelte";
   import Fa from "svelte-fa";
 
   import {
@@ -120,7 +121,7 @@
             transition-all duration-300
           "
         >
-          <div class="flex flex-col justify-center min-w-0">
+          <div class="flex flex-col justify-center min-w-0 mr-4">
             {#if titleEdit}
               <h3
                 class="
@@ -131,15 +132,14 @@
               >
                 {title}
               </h3>
-              <div class="hidden sm:block link-underline max-w-max">
+              <EditableWrapper class="hidden sm:flex items-center gap-2">
                 <Editable
                   tag="h3"
                   content={title}
                   class="text-xl sm:text-2xl font-bold max-w-max truncate"
                   on:commit={(e) => titleEdit(e.detail)}
-                  on:click={(e) => e.preventDefault()}
                 />
-              </div>
+              </EditableWrapper>
             {:else}
               <h3 class="text-xl sm:text-2xl font-bold truncate">{title}</h3>
             {/if}
