@@ -159,5 +159,9 @@
     />
   </section>
 
-  <Controls startDate={data.startDate} endDate={data.endDate} />
+  <Controls
+    startDate={data.startDate}
+    endDate={data.endDate}
+    extraElCount={0}
+  />
 </main>
