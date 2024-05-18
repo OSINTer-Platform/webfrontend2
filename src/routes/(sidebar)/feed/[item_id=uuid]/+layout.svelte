@@ -66,7 +66,7 @@
         ]
       : []),
     {
-      title: `Copy of "${data.currentItem.name}"`,
+      title: `Copy ${data.currentItem.type}`,
       icon: faFileClipboard,
       action: async () => {
         if (isFeed(data.currentItem)) {
