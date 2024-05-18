@@ -57,7 +57,7 @@
           Related articles:
           <a
             href="/article/{article.id}/similar"
-            class="italic text-sm sm:text-base link-underline"
+            class="italic text-sm sm:text-base link-underline h-min"
             >See all {similarArticles.length}</a
           >
         </h3>

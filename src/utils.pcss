@@ -65,9 +65,12 @@
 }
 
 .link-underline {
+  @apply relative;
+
   &:after {
     content: "";
     @apply block
+    absolute bottom-0
 		w-full h-px
 
 		scale-x-0 origin-bottom-right
