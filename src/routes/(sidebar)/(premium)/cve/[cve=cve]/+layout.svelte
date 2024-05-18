@@ -93,6 +93,7 @@
         ],
         mono: false,
       },
+      { title: "Keywords", content: data.cve.keywords, mono: true },
     ],
   ];
 
