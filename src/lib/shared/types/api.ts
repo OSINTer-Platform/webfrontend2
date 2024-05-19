@@ -137,6 +137,7 @@ export interface CVESEarchQuery {
   date_field?: CVEDateField;
 
   highlight?: boolean;
+  min_doc_count?: number;
 }
 
 export interface AccessTokenWithDetails {
