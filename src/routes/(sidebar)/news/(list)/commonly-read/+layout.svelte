@@ -39,6 +39,7 @@
 >
   <hr class="border-tertiary-600/50 my-4" />
   <Timerange
+    name="search-timerange"
     bind:firstDate={$firstDate}
     bind:lastDate={$lastDate}
     selected="all"
