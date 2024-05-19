@@ -11,20 +11,25 @@
   const btnClass = "btn p-2 text-lg aspect-square w-8";
 </script>
 
-<ListMenu listOptions={[modOptions]}>
-  <button class="{btnClass} 2xl:hidden block">
-    <Fa icon={faBars} />
-  </button>
-</ListMenu>
+{#if modOptions.length > 0}
+  <ListMenu listOptions={[modOptions]}>
+    <button class="{btnClass} 2xl:hidden block">
+      <Fa icon={faBars} />
+    </button>
+  </ListMenu>
 
-<div class="2xl:flex hidden gap-4">
-  {#each modOptions as { title, icon, route, action, options }}
-    {#if route}
-      <a href={route} {title} class={btnClass} {...options}><Fa {icon} /></a>
-    {:else if action}
-      <button on:click={() => action?.()} {title} class={btnClass} {...options}
-        ><Fa {icon} /></button
-      >
-    {/if}
-  {/each}
-</div>
+  <div class="2xl:flex hidden gap-4">
+    {#each modOptions as { title, icon, route, action, options }}
+      {#if route}
+        <a href={route} {title} class={btnClass} {...options}><Fa {icon} /></a>
+      {:else if action}
+        <button
+          on:click={() => action?.()}
+          {title}
+          class={btnClass}
+          {...options}><Fa {icon} /></button
+        >
+      {/if}
+    {/each}
+  </div>
+{/if}
