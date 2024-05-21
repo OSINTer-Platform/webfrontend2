@@ -18,6 +18,7 @@
   import { processCvss2, processCvss3 } from "./cvss";
   import { slide } from "svelte/transition";
   import { PUBLIC_API_BASE } from "$env/static/public";
+  import { createSearchFromTag } from "$lib/common/searchQuery";
 
   export let data: LayoutData;
   $: user = data.user;
@@ -93,7 +94,14 @@
         ],
         mono: false,
       },
-      { title: "Keywords", content: data.cve.keywords, mono: true },
+      {
+        title: "Keywords",
+        content: data.cve.keywords.map((w) => ({
+          content: w,
+          href: createSearchFromTag(w),
+        })),
+        mono: true,
+      },
     ],
   ];
 
