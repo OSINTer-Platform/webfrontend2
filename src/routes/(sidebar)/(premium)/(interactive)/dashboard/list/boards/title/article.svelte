@@ -144,7 +144,6 @@
         <footer class="flex flex-wrap gap-3 mt-6">
           {#each article.tags.automatic as tag}
             <a
-              on:click|stopPropagation
               href="/news/search?sort_by=publish_date&search_term={encodeURIComponent(
                 tag
               )}"
