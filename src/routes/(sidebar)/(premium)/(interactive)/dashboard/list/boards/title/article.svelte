@@ -8,6 +8,7 @@
   import { faRectangleList } from "@fortawesome/free-solid-svg-icons";
   import { getTimespan } from "$lib/common/math";
   import { slide } from "svelte/transition";
+  import { createSearchFromTag } from "$lib/common/searchQuery";
 
   import type { ArticleBase } from "$shared/types/api";
 
@@ -144,9 +145,7 @@
         <footer class="flex flex-wrap gap-3 mt-6">
           {#each article.tags.automatic as tag}
             <a
-              href="/news/search?sort_by=publish_date&search_term={encodeURIComponent(
-                tag
-              )}"
+              href={createSearchFromTag(tag)}
               class="
                 py-1 px-4 rounded-full
                 shrink-0

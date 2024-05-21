@@ -4,6 +4,7 @@
   import Fa from "svelte-fa";
   import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
   import { slide } from "svelte/transition";
+  import { createSearchFromTag } from "$lib/common/searchQuery";
 
   export let title: { text: string; markdown: boolean };
   export let description: { text: string; markdown: boolean };
@@ -182,9 +183,7 @@
       <footer class="flex flex-wrap gap-2 mt-4">
         {#each tags as tag}
           <a
-            href="/news/search?sort_by=publish_date&search_term={encodeURIComponent(
-              tag
-            )}"
+            href={createSearchFromTag(tag)}
             class="
               py-1 px-3 rounded-full
               shrink-0

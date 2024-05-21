@@ -24,6 +24,7 @@
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { modalState } from "$shared/state/modals";
   import { page } from "$app/stores";
+  import { createSearchFromTag } from "$lib/common/searchQuery";
 
   export let data: LayoutData;
 
@@ -40,9 +41,7 @@
         mono: false,
         content: tags.automatic.map((tag) => ({
           content: tag,
-          href: `/news/search?sort_by=publish_date&search_term=${encodeURIComponent(
-            tag
-          )}`,
+          href: createSearchFromTag(tag),
         })),
       });
     }

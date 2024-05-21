@@ -15,6 +15,7 @@
   import { getBaseArticles } from "$lib/common/elasticsearch/search";
   import { spawnArticleModal } from "$lib/common/state";
   import { page } from "$app/stores";
+  import { createSearchFromTag } from "$lib/common/searchQuery";
 
   $: renderExternal = $page.data.settings.renderExternal;
 
@@ -37,9 +38,7 @@
       description: getDescription(bucket),
       score: scale(getScore(bucket)),
       large: false,
-      href: `/news/search?sort_by=publish_date&highlight=true&search_term=${encodeURIComponent(
-        `"${bucket.key}"`
-      )}`,
+      href: createSearchFromTag(bucket.key),
       action: () => {
         modalState.append({
           modalType: "article-list",

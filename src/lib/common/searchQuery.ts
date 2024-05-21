@@ -77,3 +77,8 @@ export function cleanQuery<T extends ArticleSearchQuery | CVESEarchQuery>(
     Object.entries(q).filter(([_, v]) => !Array.isArray(v) || v.length > 0)
   ) as T;
 }
+
+export const createSearchFromTag = (tag: string, highlight = true) =>
+  `/news/search?sort_by=publish_date&highlight=${highlight}&search_term=${encodeURIComponent(
+    tag
+  )}`;
