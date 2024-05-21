@@ -15,6 +15,7 @@
   import { onMount } from "svelte";
   import { spawnSurveyRequest } from "$lib/common/modals";
   import { spawnActionModal } from "./(sidebar)/purchase/modals";
+  import { config } from "$shared/config";
 
   import type { PageData } from "./$types";
 
@@ -80,8 +81,11 @@
     <meta property="og:title" content={$page.data.meta.title.meta} />
   {/if}
   <meta property="og:description" content={$page.data.meta.description} />
-  <meta property="og:image" content={$page.data.meta.image} />
-  <meta property="og:type" content={$page.data.meta.type} />
+  <meta
+    property="og:image"
+    content={$page.data.meta.image ?? config.images.fullLogo}
+  />
+  <meta property="og:type" content={$page.data.meta.type ?? "website"} />
 </svelte:head>
 
 <svelte:window on:keydown|capture={(e) => handleKeypress(e)} />

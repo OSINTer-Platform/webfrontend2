@@ -116,8 +116,6 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
       },
       description:
         "Helping companies, organisations and individuals tackle the cyber-threats of tomorrow",
-      image: config.images.fullLogo,
-      type: "website",
     },
     remindMe: {
       paymentUpdate: cookieStore(
