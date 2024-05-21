@@ -132,11 +132,14 @@
               >
                 {title}
               </h3>
-              <EditableWrapper class="hidden sm:flex items-center gap-2">
+              <EditableWrapper
+                class="hidden sm:flex items-center gap-2"
+                on:click={(e) => e.preventDefault()}
+              >
                 <Editable
                   tag="h3"
                   content={title}
-                  class="text-xl sm:text-2xl font-bold max-w-max truncate"
+                  class="text-xl sm:text-2xl font-bold max-w-max truncate link-underline "
                   on:commit={(e) => titleEdit(e.detail)}
                 />
               </EditableWrapper>

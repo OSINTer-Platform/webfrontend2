@@ -13,7 +13,13 @@
   tabindex="0"
   role="textbox"
   on:click={focusEditable}
-  class="link-underline cursor-text {classes}"
+  on:click
+  class="
+    [&:hover>*]:after:scale-x-100
+    [&:hover>*]:after:origin-bottom-left
+    cursor-text
+    {classes}
+  "
 >
   <slot />
 
