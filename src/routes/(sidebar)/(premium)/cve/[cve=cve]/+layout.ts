@@ -26,8 +26,8 @@ export const load: LayoutLoad = async ({ fetch, params }) => {
 
   return {
     meta: {
-      title: `${cve.cve} | OSINTer`,
-      description: cve.title,
+      title: `${cve.cve}: ${cve.title} | OSINTer`,
+      description: cve.description,
     },
     cve,
   };
