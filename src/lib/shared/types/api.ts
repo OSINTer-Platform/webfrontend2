@@ -181,7 +181,8 @@ export type AuthArea =
   | "dashboard"
   | "map"
   | "similar"
-  | "summary";
+  | "summary"
+  | "cve";
 
 export type CVEReference = {
   url: string;

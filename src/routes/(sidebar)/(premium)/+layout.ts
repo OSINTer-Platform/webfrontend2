@@ -18,6 +18,7 @@ export const load: LayoutLoad = async ({ parent, url }) => {
     { route: "/overview", authArea: "map", dependency: "map" },
     { route: "/assistant", authArea: "assistant", dependency: "assistant" },
     { route: "/dashboard", authArea: "dashboard" },
+    { route: "/cve", authArea: "cve" },
   ];
 
   routeProtections.forEach(({ route, authArea, dependency }) => {
