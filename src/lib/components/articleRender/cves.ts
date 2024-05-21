@@ -1,24 +1,11 @@
-import type { CVEBase } from "$shared/types/api";
 import { tooltip } from "$shared/state/state";
-import { queryCVEs } from "$lib/common/queryArticles";
+import { PUBLIC_API_BASE } from "$env/static/public";
 
 export const CVERegex = /^[cC][vV][eE]-[0-9]{4}-[0-9]{4,9}$/;
 
-const cachedCVEs: { [key: string]: CVEBase } = {};
+type CVEOverview = { cve: string; title: string; details: string };
 
-function summarizeCVE(cve: CVEBase) {
-  if (cve.cvss3)
-    return {
-      title: cve.title,
-      description: `Base: ${cve.cvss3.cvss_data.base_score} | Exploitability: ${cve.cvss3.exploitability_score} | Impact: ${cve.cvss3.impact_score} | Articles: ${cve.document_count}`,
-    };
-  else if (cve.cvss2)
-    return {
-      title: cve.title,
-      description: `Base: ${cve.cvss2.cvss_data.base_score} | Exploitability: ${cve.cvss2.exploitability_score} | Impact: ${cve.cvss2.impact_score} | Articles: ${cve.document_count}`,
-    };
-  else return cve.title;
-}
+const cachedCVEs: { [key: string]: CVEOverview } = {};
 
 function pointerIn(e: PointerEvent) {
   const cveId = (e.target as HTMLAnchorElement).text;
@@ -27,7 +14,14 @@ function pointerIn(e: PointerEvent) {
 
   const cve = cachedCVEs[cveId];
 
-  tooltip.set({ text: summarizeCVE(cve), x: e.x, y: e.y });
+  tooltip.set({
+    text:
+      cve.details.length > 0
+        ? { title: cve.title, description: cve.details }
+        : cve.title,
+    x: e.x,
+    y: e.y,
+  });
 }
 
 function pointerMove(e: PointerEvent) {
@@ -40,6 +34,20 @@ function pointerMove(e: PointerEvent) {
 }
 
 const pointerOut = () => tooltip.set(null);
+
+async function cacheCves(cveIds: string[]) {
+  async function query(ids: string[]): Promise<CVEOverview[]> {
+    const url = new URL(`${PUBLIC_API_BASE}/cves/overview`);
+    ids.forEach((id) => url.searchParams.append("cves", id));
+    const r = await fetch(url);
+    return r.ok ? await r.json() : [];
+  }
+
+  const newCveIds = cveIds.filter((id) => !(id in cachedCVEs));
+  const newCves = await query(newCveIds);
+
+  newCves.forEach((cve) => (cachedCVEs[cve.cve] = cve));
+}
 
 export async function mountCVEPreview(containerSelector: string) {
   const anchors = document
@@ -54,12 +62,7 @@ export async function mountCVEPreview(containerSelector: string) {
   if (cveAnchors.length < 1) return;
 
   const cves = cveAnchors.map((el) => el.text);
-  const cveDetails = await queryCVEs({ limit: 10000, cves: cves }).then(
-    ({ documents }) => documents ?? []
-  );
-  cveDetails.forEach((cve) => {
-    cachedCVEs[cve.cve] = cve;
-  });
+  await cacheCves(cves);
 
   cveAnchors.forEach((anchor) => {
     if (!(anchor.text in cachedCVEs) && anchor.title === "OSINTer-CVE") {
