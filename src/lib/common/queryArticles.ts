@@ -4,6 +4,8 @@ import type {
   ArticleSearchQuery,
   CVEBase,
   CVESEarchQuery,
+  Cluster,
+  ClusterBase,
   FullArticle,
   FullCVE,
 } from "$shared/types/api";
@@ -68,6 +70,37 @@ export function queryCVEsById(
     limit,
     complete,
     "/cves/search",
+    fetchFn
+  );
+}
+
+export function queryClustersById(
+  ids: string[],
+  sort: boolean,
+  complete?: false,
+  limit?: number,
+  fetchFn?: typeof fetch
+): Promise<ClusterBase[]>;
+export function queryClustersById(
+  ids: string[],
+  sort: boolean,
+  complete?: true,
+  limit?: number,
+  fetchFn?: typeof fetch
+): Promise<Cluster[]>;
+export function queryClustersById(
+  ids: string[],
+  sort: boolean,
+  complete = false,
+  limit: number = 10000,
+  fetchFn = fetch
+): Promise<ClusterBase[] | Cluster[]> {
+  return queryDocumentsById(
+    ids,
+    sort,
+    limit,
+    complete,
+    "/ml/clusters/search",
     fetchFn
   );
 }
