@@ -32,16 +32,20 @@
     );
   }
 
-  function handleDelayedInput(
+  function handleDelayedInput<T>(
     e: any,
     key: keyof RequiredCVESEarchQuery,
-    converter: (val: any) => any
+    converter: (val: string) => T,
+    beforeSuccess: ((newVal: T) => void) | undefined = undefined
   ) {
     clearTimeout(timeouts[key]);
     timeouts[key] = setTimeout(() => {
-      if ($cveQuery[key] != e.target.value)
+      if ($cveQuery[key] != e.target.value) {
+        const newVal = converter(e.target.value);
+        beforeSuccess?.(newVal);
         // @ts-ignore
-        $cveQuery[key] = converter(e.target.value);
+        $cveQuery[key] = newVal;
+      }
     }, 500);
   }
 
@@ -59,6 +63,7 @@
     { text: "Document count", value: "document_count" },
     { text: "Publish date", value: "publish_date" },
     { text: "Modified date", value: "modified_date" },
+    { text: "Search", value: "" },
   ];
 </script>
 
@@ -113,7 +118,17 @@
         class="input"
         type="text"
         value={$cveQuery.search_term ?? ""}
-        on:input={(e) => handleDelayedInput(e, "search_term", (val) => val)}
+        on:input={(e) => {
+          if ($cveQuery.sort_by !== "") $cveQuery.sort_by = "";
+          handleDelayedInput(
+            e,
+            "search_term",
+            (val) => val,
+            (val) => {
+              if (val.length < 1) $cveQuery.sort_by = "document_count";
+            }
+          );
+        }}
       />
       <label for="search_term" class="input">Search Term</label>
 

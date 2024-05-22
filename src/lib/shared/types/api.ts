@@ -119,7 +119,8 @@ export type CVESortBy =
   | "document_count"
   | "cve"
   | "publish_date"
-  | "modified_date";
+  | "modified_date"
+  | "";
 export type CVEDateField = "publish_date" | "modified_date";
 
 export interface CVESEarchQuery {
