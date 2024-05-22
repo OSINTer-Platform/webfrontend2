@@ -108,7 +108,7 @@
       this={searchSubmitable ? ArticleSearch : Search}
       bind:value={searchValue}
       placeholder={`Filter displayed ${contentType}`}
-      containerClass={"w-full my-6"}
+      containerClass={"w-full my-6 truncate"}
       infoText={`${$listElementCount} ${contentType}`}
     />
   {/if}
