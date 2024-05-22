@@ -114,7 +114,7 @@
 </script>
 
 <HeaderShell
-  title={data.cve.title}
+  title={`${data.cve.cve}: ${data.cve.title}`}
   searchSubmitable={false}
   {modOptions}
   bind:searchValue={$articleSearch}
