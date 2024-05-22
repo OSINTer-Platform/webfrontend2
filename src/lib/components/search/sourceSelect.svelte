@@ -31,15 +31,15 @@
 <div
   class="
 	flex
-	p-4
+	px-4 pt-2 @sm/half:p-4
 	gap-4
 "
 >
   <Search
     bind:value={sourceSearch}
-    placeholder={"Filter sources..."}
-    inputClass={"w-26"}
-    containerClass="grow"
+    placeholder="Filter sources..."
+    inputClass="w-26"
+    containerClass="grow @sm/half:flex hidden"
     infoText={`${
       sourceCategories ? Object.keys(sourceCategories).length : 0
     } sources`}
@@ -78,7 +78,7 @@
 <ul
   class="
 	space-y-2
-	p-4
+	@sm/half:p-4
 	overflow-x-hidden
 	overflow-auto
 "
@@ -105,7 +105,7 @@
           class="
               flex
               items-center
-              gap-2
+              @sm/half:gap-2
 
               cursor-pointer
 
@@ -168,6 +168,7 @@
 					rounded-full
 
 					{selected ? 'bg-primary-500' : 'border border-tertiary-500'}
+          hidden @sm/half:hidden
 				"
           >
             <Fa

@@ -13,7 +13,7 @@
 
 <Modal
   class="
-	w-[80vw] h-[90vh]
+	max-w-[90rem] w-[95vw] h-[90vh]
 	bg-surface-100 dark:bg-surface-800
 	@container/full
 "
