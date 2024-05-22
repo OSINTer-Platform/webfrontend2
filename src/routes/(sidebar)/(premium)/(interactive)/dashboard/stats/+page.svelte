@@ -4,7 +4,7 @@
     SignificantTermAgg,
     TermAgg,
   } from "$lib/common/elasticsearch/aggregations";
-  import type { ClusterBase } from "$shared/types/api";
+  import type { CVEBase, ClusterBase } from "$shared/types/api";
 
   import * as d3 from "d3";
 
@@ -21,7 +21,16 @@
 
   export let data: PageData;
 
-  const convertTermAggs = (agg: TermAgg | SignificantTermAgg) => {
+  type Item = {
+    title: string;
+    description: string;
+    score: number;
+    large: boolean;
+    href: string;
+    action: () => void;
+  };
+
+  const convertTermAggs = (agg: TermAgg | SignificantTermAgg): Item[] => {
     const getScore = (bucket: { score?: number; doc_count: number }) =>
       bucket.score ?? bucket.doc_count;
 
@@ -56,13 +65,16 @@
     }));
   };
 
-  const convertClusters = (
-    items: { title: string; description: string; score: number }[]
-  ) =>
-    items
+  async function convertClusters(
+    items: { title: string; description: string; score: number }[],
+    clusterPromise: Promise<ClusterBase[]>
+  ) {
+    const clusters = await clusterPromise;
+
+    return items
       .map((item): [typeof item, ClusterBase | undefined] => [
         item,
-        data.clusters.find((c) => c.id == item.title),
+        clusters.find((c) => c.id == item.title),
       ])
       .map(([{ title, description, score }, cluster]) => ({
         large: true,
@@ -84,6 +96,25 @@
         description,
         score,
       }));
+  }
+
+  async function convertCves(items: Item[], cvePromise: Promise<CVEBase[]>) {
+    const cves = await cvePromise;
+
+    return items
+      .map((item): [typeof item, CVEBase | undefined] => [
+        item,
+        cves.find((c) => c.cve == item.title),
+      ])
+      .map(([{ title, description, score, href, action }, cve]) => ({
+        large: true,
+        title: cve?.title ?? title,
+        description: title + " | " + description,
+        score,
+        href,
+        action,
+      }));
+  }
 
   const convertArticles = (
     articles: { title: string; id: string; read_times: number; url: string }[],
@@ -111,11 +142,14 @@
     },
     {
       title: "Common CVE's",
-      items: convertTermAggs(data.metrics.limited.cves),
+      items: convertCves(convertTermAggs(data.metrics.limited.cves), data.cves),
     },
     {
       title: "Emerging topics",
-      items: convertClusters(convertTermAggs(data.metrics.limited.clusters)),
+      items: convertClusters(
+        convertTermAggs(data.metrics.limited.clusters),
+        data.clusters
+      ),
     },
     {
       title: "Most Read Articles",
