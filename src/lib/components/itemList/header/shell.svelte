@@ -43,6 +43,8 @@
   export let searchValue: string = "";
 
   export let modOptions: Array<HeaderModOptions> = [];
+  $: modOptions = modOptions ?? [];
+  // See https://github.com/sveltejs/svelte/issues/11647
 </script>
 
 <aside

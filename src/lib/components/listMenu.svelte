@@ -5,6 +5,9 @@
   export let listOptions: HeaderModOptions[][] = [];
   export let containerClasses: string = "";
 
+  $: listOptions = listOptions ?? [];
+  // See https://github.com/sveltejs/svelte/issues/11647
+
   const buttonCss =
     "flex flex-row gap-6 hover:bg-primary-300/25 items-center justify-start rounded-xl w-full pl-4 p-2 sm:p-3 sm:pl-5 text-sm sm:text-base dark:hover:bg-primary-500/40";
 </script>

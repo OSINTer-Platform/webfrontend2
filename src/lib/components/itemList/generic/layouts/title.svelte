@@ -9,6 +9,9 @@
 
   export let tags: string[] = [];
   export let read: boolean = false;
+
+  $: tags = tags ?? [];
+  // See https://github.com/sveltejs/svelte/issues/11647
 </script>
 
 <article

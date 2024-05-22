@@ -10,6 +10,9 @@
   export let header: Boolean = true;
 
   export let headings: HeadingList = [];
+  $: headings = headings ?? [];
+  // See https://github.com/sveltejs/svelte/issues/11647
+
   export let buttonActions: Array<{
     title: string;
     action: () => void;

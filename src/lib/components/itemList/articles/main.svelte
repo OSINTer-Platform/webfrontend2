@@ -16,6 +16,9 @@
   import { listElementCount, showHighlights } from "$shared/state/state";
 
   export let articles: ArticleBase[] = [];
+  $: articles = articles ?? [];
+  // See https://github.com/sveltejs/svelte/issues/11647
+
   export let layout: ArticleListRender | undefined = undefined;
   export let tintReadArticles: boolean;
   export let listLenLimit = 100;

@@ -26,6 +26,10 @@
   }[] = [];
 
   $: renderMode = $page.data.settings.listRenderMode;
+
+  $: textExpands = textExpands ?? [];
+  $: tags = tags ?? [];
+  // See https://github.com/sveltejs/svelte/issues/11647
 </script>
 
 {#if $renderMode === "large"}

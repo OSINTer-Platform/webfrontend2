@@ -12,6 +12,9 @@
 
   export let article: FullArticle;
   export let headings: HeadingList = [];
+  $: headings = headings ?? [];
+  // See https://github.com/sveltejs/svelte/issues/11647
+
   let tokens: marked.Token[];
   $: tokens = convertToToken(article.formatted_content);
 
