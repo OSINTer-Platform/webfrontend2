@@ -23,8 +23,12 @@
 </span>
 <div
   role="presentation"
-  on:click={() => ($sideOpen = !$sideOpen)}
-  on:keyup={() => ($sideOpen = !$sideOpen)}
+  on:click={(e) => {
+    if (e.target === e.currentTarget) $sideOpen = !$sideOpen;
+  }}
+  on:keyup={(e) => {
+    if (e.target === e.currentTarget) $sideOpen = !$sideOpen;
+  }}
   class="
 	{$sideOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}
 	xl:hidden
@@ -48,8 +52,6 @@
   <div
     role="menubar"
     tabindex="0"
-    on:click|stopPropagation
-    on:keyup|stopPropagation
     class="
 		{$sideOpen ? 'max-w-full' : 'max-w-0'}
 

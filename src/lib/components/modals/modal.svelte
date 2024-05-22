@@ -7,7 +7,15 @@
   export let style = "";
   export let border = true;
 
-  const resetModal = () => modalState.remove();
+  const resetModal = (
+    e:
+      | MouseEvent
+      | (KeyboardEvent & {
+          currentTarget: EventTarget & HTMLDivElement;
+        })
+  ) => {
+    if (e.target === e.currentTarget) modalState.remove();
+  };
 </script>
 
 <div
@@ -24,8 +32,6 @@
 >
   <div
     role="presentation"
-    on:click|stopPropagation
-    on:keydown|stopPropagation
     in:fly|global={{ y: 50 }}
     out:fly|global={{ y: 50 }}
     class="
