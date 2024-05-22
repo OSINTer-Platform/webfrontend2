@@ -1,5 +1,6 @@
 import { error } from "@sveltejs/kit";
 import { get } from "svelte/store";
+import { contactEmail } from "$shared/config";
 
 import type { LayoutLoad } from "./$types";
 import type { AuthArea, MLAvailability } from "$shared/types/api";
@@ -36,20 +37,37 @@ export const load: LayoutLoad = async ({ parent, url }) => {
       });
 
     if (!authorizer(authArea))
-      error(403, {
-        message: "",
-        title: `This page is reserved${
-          userContent
-            ? " for beta-testers and B2B partners."
-            : ", and you are not logged in."
-        }`,
-        description: [
-          "We are at OSINTer currently beta-testing new features",
-          "Do you want early access?",
-          userContent ? "Contact us below" : "Log in below",
-        ],
-        logo: false,
-        actions: userContent ? undefined : [{ title: "Login", href: "/login" }],
-      });
+      if (userContent)
+        error(403, {
+          message: "",
+          title:
+            "This page is reserved for OSINTer PRO users, and you're not subscribed",
+          description: [
+            "Some of the services from OSINTer are restricted to our paying (or selfhosting) users",
+            "As such, you have to be subscribed to a OSINTer PRO plan to access the following page",
+            "Signup for OSINTer PRO below, or contact us if you believe this is an error",
+          ],
+          logo: false,
+          actions: [
+            { title: "Subscribe", href: "/purchase" },
+            { title: "Contact Us", href: `mailto:${contactEmail}` },
+          ],
+        });
+      else
+        error(403, {
+          message: "",
+          title:
+            "This page is reserved for OSINTer PRO users, and you're not logged in",
+          description: [
+            "Some of the services from OSINTer are restricted to our paying (or selfhosting) users",
+            "As such, you have to be logged in with a OSINTer PRO user to be able to access the following page",
+            "Do you already have a user? Login below.",
+          ],
+          logo: false,
+          actions: [
+            { title: "Login", href: "/login" },
+            { title: "Go to news", href: "/news" },
+          ],
+        });
   });
 };

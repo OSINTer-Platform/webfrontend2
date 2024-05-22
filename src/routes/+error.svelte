@@ -19,12 +19,14 @@
 </script>
 
 <main class="bg-surface-50 dark:bg-surface-800 h-full flex justify-center">
-  <div class="flex flex-col max-w-3xl p-4 sm:p-16 md:p-8 m-auto text-center">
+  <div class="flex flex-col max-w-5xl p-4 sm:p-16 md:p-8 m-auto text-center">
     {#if logo}
       <LogoFull class="mb-4 mx-8 sm:mx-0" />
     {/if}
 
-    <h1 class="font-semibold sm:text-2xl md:text-4xl mb-4">
+    <h1
+      class="block max-w-3xl font-semibold sm:text-2xl md:text-4xl mb-4 mx-auto"
+    >
       {title}
     </h1>
     {#if Array.isArray(description)}
@@ -56,7 +58,7 @@
   section {
     @apply flex gap-4;
     * {
-      @apply p-4 sm:p-7 grow
+      @apply p-4 sm:p-7 grow basis-0
       font-bold text-primary-500
       border border-primary-500;
     }
