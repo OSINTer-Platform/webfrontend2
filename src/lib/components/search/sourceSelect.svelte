@@ -18,15 +18,6 @@
     selectedSources.length == Object.keys(sourceCategories).length;
   $: noneSelected = selectedSources.length == 0;
 
-  $: searchedSources =
-    sourceSearch.length > 0 && sourceCategories
-      ? Object.fromEntries(
-          Object.entries(sourceCategories).filter(([name, _]) =>
-            name.toLowerCase().includes(sourceSearch)
-          )
-        )
-      : sourceCategories;
-
   onMount(async () => {
     if (!sourceCategories) {
       const r = await fetch(`${PUBLIC_API_BASE}/articles/categories`);
@@ -50,7 +41,7 @@
     inputClass={"w-26"}
     containerClass="grow"
     infoText={`${
-      searchedSources ? Object.keys(searchedSources).length : 0
+      sourceCategories ? Object.keys(sourceCategories).length : 0
     } sources`}
   />
 
@@ -92,11 +83,14 @@
 	overflow-auto
 "
 >
-  {#if searchedSources !== undefined}
-    {#each Object.entries(searchedSources) as [profileName, { name, image, url }]}
+  {#if sourceCategories !== undefined}
+    {#each Object.entries(sourceCategories) as [profileName, { name, image, url }]}
       {@const selected = selectedSources.includes(profileName)}
 
-      <li>
+      <li
+        class:hidden={sourceSearch.length > 0 &&
+          !name.toLowerCase().includes(sourceSearch)}
+      >
         <input
           bind:group={selectedSources}
           type="checkbox"
