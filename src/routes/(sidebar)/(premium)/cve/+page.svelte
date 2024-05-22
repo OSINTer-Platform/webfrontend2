@@ -109,8 +109,8 @@
 
   <h3 class="mb-4 sm:font-bold sm:text-lg">Search for CVEs</h3>
 
-  <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
-    <div class="input">
+  <section class="flex flex-wrap gap-4">
+    <div class="input min-w-16 grow">
       <input
         id="search_term"
         name="search_term"
@@ -144,6 +144,22 @@
 
     <div class="input">
       <input
+        id="cve"
+        name="cve"
+        placeholder=" "
+        class="input"
+        type="text"
+        value={$cveQuery.cves ? $cveQuery.cves.join(" ") : ""}
+        on:input={(e) =>
+          handleDelayedInput(e, "cves", (val) =>
+            val.length > 0 ? val.split(" ") : undefined
+          )}
+      />
+      <label for="cve" class="input">CVE IDs (space-seperated)</label>
+    </div>
+
+    <div class="input">
+      <input
         id="min_doc_count"
         name="min_doc_count"
         placeholder=" "
@@ -155,7 +171,7 @@
             val.length > 0 ? parseInt(val) : undefined
           )}
       />
-      <label for="search_term" class="input">Minimum document count</label>
+      <label for="min_doc_count" class="input">Minimum document count</label>
     </div>
 
     <div class="input">
@@ -171,7 +187,7 @@
             val.length > 0 ? parseInt(val) : undefined
           )}
       />
-      <label for="search_term" class="input">Limit</label>
+      <label for="min_doc_count" class="input">Limit</label>
     </div>
   </section>
 
@@ -183,3 +199,9 @@
 {:then cves}
   <CVEList {cves} search={$cveSearch} />
 {/await}
+
+<style lang="postcss">
+  div.input {
+    @apply min-w-16 grow;
+  }
+</style>
