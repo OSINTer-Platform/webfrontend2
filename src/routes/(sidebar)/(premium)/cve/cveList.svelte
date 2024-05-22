@@ -56,4 +56,11 @@
   $: items = filteredCVEs.map((c) => createListItem(c));
 </script>
 
-<ItemList {items} />
+<ItemList
+  {items}
+  emptyMessage={{
+    title: "No CVE's was found",
+    description:
+      "Try adjusting your search paramaters, or contact the system administrator if you believe this is an error",
+  }}
+/>
