@@ -63,11 +63,12 @@
     ) {
       spawnSurveyRequest(1);
     } else {
-      spawnActionModal(
-        $user,
-        remindMePaymentUpdate,
-        data.stripe.paymentIntentClientSecret
-      );
+      if (!$page.url.pathname.startsWith("/purchase"))
+        spawnActionModal(
+          $user,
+          remindMePaymentUpdate,
+          data.stripe.paymentIntentClientSecret
+        );
     }
   });
 </script>
