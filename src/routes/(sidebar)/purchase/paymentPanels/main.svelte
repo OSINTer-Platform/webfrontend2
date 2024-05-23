@@ -44,7 +44,7 @@
       {
         title: "Guarranteed reliability",
         description:
-          "Get prioritized bug-reporting along with a SLA, to guarantee that we won't be the bottleneck in your workflow",
+          "Get prioritized bug-reporting and support, guaranteeing we won't be the bottleneck in your workflow",
         icon: faClockRotateLeft,
       },
       {
