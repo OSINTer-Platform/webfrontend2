@@ -56,6 +56,8 @@ export interface User {
       last_updated: number;
       level: "" | "pro";
       state: "" | "active" | "past_due" | "closed";
+      cancel_at_period_end: boolean;
+      current_period_end: number;
     };
   };
 }
