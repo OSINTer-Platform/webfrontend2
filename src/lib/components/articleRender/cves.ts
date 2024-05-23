@@ -44,6 +44,8 @@ async function cacheCves(cveIds: string[]) {
   }
 
   const newCveIds = cveIds.filter((id) => !(id in cachedCVEs));
+  if (newCveIds.length < 1) return;
+
   const newCves = await query(newCveIds);
 
   newCves.forEach((cve) => (cachedCVEs[cve.cve] = cve));
@@ -62,7 +64,8 @@ export async function mountCVEPreview(containerSelector: string) {
   if (cveAnchors.length < 1) return;
 
   const cves = cveAnchors.map((el) => el.text);
-  await cacheCves(cves);
+  const uniqueCves = [...new Set(cves)];
+  await cacheCves(uniqueCves);
 
   cveAnchors.forEach((anchor) => {
     if (!(anchor.text in cachedCVEs) && anchor.title === "OSINTer-CVE") {
