@@ -88,7 +88,11 @@
         <button class="btn" on:click={cancel}>Cancel</button>
         <a class="btn" href="mailto:{contactEmail}">Support</a>
         {#if user.payment.invoice.invoice_url.length > 0}
-          <a class="btn" href={user.payment.invoice.invoice_url}>Last invoice</a
+          <a
+            class="btn"
+            href={user.payment.invoice.invoice_url}
+            target="_blank"
+            rel="noopener noreferrer">Last invoice</a
           >
         {/if}
       </nav>
