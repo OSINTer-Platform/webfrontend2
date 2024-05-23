@@ -177,7 +177,7 @@
         <Editable
           tag="h1"
           content={title}
-          class="lg:text-5xl sm:text-4xl text-3xl"
+          class="lg:text-5xl sm:text-4xl text-3xl link-underline"
           on:commit={(e) => changeName(data.currentItem, e.detail, "current")}
         />
       </EditableWrapper>
