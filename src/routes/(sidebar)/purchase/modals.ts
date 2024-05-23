@@ -155,7 +155,7 @@ function spawnExpiredModal(username: string) {
       title: "Oops...",
       description:
         "Your OSINTer subscription has unfortunately been cancelled. " +
-        "This is likely due to problems with your payment of choice. " +
+        "This is either due to you cancelling it, or problems with your payment of choice. " +
         "If you want to continue to have access, you can signup for a new subscription, " +
         "or if you believe this is an error, then you can [contact support]" +
         `(mailto:${contactEmail}?subject=${encodeURIComponent(
@@ -163,12 +163,12 @@ function spawnExpiredModal(username: string) {
         )})`,
       options: [
         {
-          text: "Okay",
+          text: "Ignore",
           type: "primary",
           action: acknowledgeExpirery,
         },
         {
-          text: "Create new subscription",
+          text: "Signup",
           type: "secondary",
           action: () => goto("/purchase"),
         },
@@ -257,7 +257,7 @@ function showPaymentResults(clientSecret: string, username?: string) {
         modalContent: {
           title: "Success!",
           description:
-            "Your payment has been authorized, and your subscription will be kept active. Thank you!",
+            "Your payment has been authorized, and your subscription is active. Thank you!",
         },
       });
     else
@@ -266,7 +266,7 @@ function showPaymentResults(clientSecret: string, username?: string) {
         modalContent: {
           title: "Failure!",
           description:
-            "We have unfortunately failed to update your payment details. We will get back to you with another attempt in a few hours",
+            "We have unfortunately failed to update your payment details. We will get back to you with another attempt",
         },
       });
   }
