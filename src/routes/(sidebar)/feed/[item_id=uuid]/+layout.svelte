@@ -160,8 +160,6 @@
   ];
 
   let ownsFeed: boolean;
-  let title: string = data.currentItem.name;
-
   $: ownsFeed = data.currentItem.owner === $user?._id;
 </script>
 
@@ -176,14 +174,14 @@
       <EditableWrapper class="flex gap-4 items-center">
         <Editable
           tag="h1"
-          content={title}
+          content={data.currentItem.name}
           class="lg:text-5xl sm:text-4xl text-3xl link-underline"
           on:commit={(e) => changeName(data.currentItem, e.detail, "current")}
         />
       </EditableWrapper>
     {:else}
       <h1 class="lg:text-5xl sm:text-4xl text-3xl">
-        {title}
+        {data.currentItem.name}
       </h1>
     {/if}
   </svelte:fragment>
