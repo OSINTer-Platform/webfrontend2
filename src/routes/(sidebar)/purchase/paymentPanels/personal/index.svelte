@@ -8,6 +8,9 @@
 
   import { page } from "$app/stores";
   import { contactEmail } from "$shared/config";
+  import { modalState } from "$shared/state/modals";
+  import { PUBLIC_API_BASE } from "$env/static/public";
+  import { invalidateAll } from "$app/navigation";
 
   export let stripe: Stripe;
   export let personalPrice: Price;
@@ -67,9 +70,48 @@
       });
   }
 
+  const renew = () =>
+    modalState.append({
+      modalType: "options",
+      modalContent: {
+        type: "warning",
+        title: "Renew subscription?",
+        description: `Do you want to renew your OSINTer ${subName} subscription? Otherwise it will end on ${endDate}`,
+        options: async () => {
+          const r = await fetch(
+            `${PUBLIC_API_BASE}/my/user/payment/subscription/uncancel`,
+            { method: "POST" }
+          );
+
+          if (r.ok) {
+            modalState.append({
+              modalType: "info",
+              modalContent: {
+                title: "Subscription renewed!",
+                description: `Your OSINTer ${subName} subscription has been renewed!`,
+              },
+            });
+            setTimeout(() => invalidateAll(), 5000);
+            return true;
+          }
+
+          return false;
+        },
+      },
+    });
+
   $: checkStatus($page.data.stripe.paymentIntentClientSecret);
 
   $: user = $page.data.user;
+  $: subName = $user?.payment.subscription.level.toUpperCase();
+
+  $: endDate = new Date(
+    ($user?.payment.subscription.current_period_end ?? 0) * 1000
+  ).toLocaleDateString("en", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 </script>
 
 <div
@@ -98,11 +140,7 @@
       {#if status === "error"}
         <button
           on:click={() => (paymentStatus = undefined)}
-          class="
-          inline-block
-          underline hover:text-primary-500
-          transition-colors duration-300
-        "
+          class="link-option"
         >
           Please try again here.
         </button>
@@ -110,38 +148,50 @@
     </ResultPanel>
   {/await}
 {:else if showSubscriptionState && $user && $user.payment.subscription.state.length > 0}
-  {@const success = $user.payment.subscription.state !== "closed"}
-  <ResultPanel
-    status={success}
-    msg={success
-      ? "You are already subscriped to OSINTer Pro"
-      : "Your subscription to OSINTer Pro has expired"}
-  >
-    {#if !success}
+  {#if $user.payment.subscription.state === "closed"}
+    <ResultPanel
+      status="error"
+      msg="Your OSINTer {subName} subscription has expired"
+    >
       You can either
       <button
         on:click={() => (showSubscriptionState = false)}
-        class="
-          inline-block
-          underline hover:text-primary-500
-          transition-colors duration-300
-        "
+        class="link-option"
       >
         create a new subscription
       </button>
       or
-      <a
-        href={`mailto:${contactEmail}`}
-        class="
-        inline-block
-        underline hover:text-primary-500
-        transition-colors duration-300
-      "
-      >
+      <a href={`mailto:${contactEmail}`} class="link-option">
         contact support
       </a>
-    {/if}
-  </ResultPanel>
+    </ResultPanel>
+  {:else if $user.payment.subscription.cancel_at_period_end}
+    <ResultPanel
+      status="warning"
+      msg="You have cancelled your OSINTer {subName} subscription"
+    >
+      You can either
+      <button on:click={renew} class="link-option">
+        renew your subscription
+      </button>
+      or
+      <a href={`mailto:${contactEmail}`} class="link-option">
+        contact support
+      </a>
+
+      Otherwise it expires on {endDate}
+    </ResultPanel>
+  {:else}
+    <ResultPanel status="success" msg="You are subscribed to OSINTer" />
+  {/if}
 {:else}
   <StripeForm {stripe} {personalPrice} />
 {/if}
+
+<style lang="postcss">
+  .link-option {
+    @apply inline-block
+    underline hover:text-primary-500
+    transition-colors duration-300;
+  }
+</style>

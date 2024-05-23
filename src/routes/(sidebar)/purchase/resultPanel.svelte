@@ -3,14 +3,15 @@
 
   import {
     faCheck,
+    faCircleExclamation,
     faSpinner,
     faXmark,
   } from "@fortawesome/free-solid-svg-icons";
 
-  export let status: "success" | "error" | "processing" | boolean;
+  export let status: "success" | "warning" | "error" | "processing" | boolean;
   export let msg: string | null = null;
 
-  let normalizedStatus: "success" | "error" | "processing";
+  let normalizedStatus: "success" | "warning" | "error" | "processing";
   $: normalizedStatus =
     typeof status === "string" ? status : status ? "success" : "error";
 </script>
@@ -22,12 +23,15 @@
     items-center justify-center
     rounded-xl
     {normalizedStatus === 'success' ? 'bg-success-900/20' : ''}
+    {normalizedStatus === 'warning' ? 'bg-warning-900/20' : ''}
     {normalizedStatus === 'error' ? 'bg-error-900/20' : ''}
     {normalizedStatus === 'processing' ? 'bg-white dark:bg-gray-900' : ''}
   "
 >
   {#if normalizedStatus === "success"}
     <Fa icon={faCheck} class="text-success-500 text-8xl mb-4" />
+  {:else if normalizedStatus === "warning"}
+    <Fa icon={faCircleExclamation} class="text-warning-500 text-8xl mb-4" />
   {:else if normalizedStatus === "error"}
     <Fa icon={faXmark} class="text-error-500 text-8xl mb-4" />
   {:else}
