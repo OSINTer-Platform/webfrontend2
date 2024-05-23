@@ -17,7 +17,6 @@
   import LightSwitch from "$com/lightSwitch.svelte";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
-  import { sponsorLink } from "$shared/config";
   import { faUser } from "@fortawesome/free-regular-svg-icons";
   import { modalState } from "$shared/state/modals";
 
@@ -36,10 +35,6 @@
       },
     },
   ];
-
-  onMount(() => {
-    if (Math.floor(Math.random() * 20) == 0) showSponser = true;
-  });
 </script>
 
 <header
@@ -79,36 +74,15 @@
     md:gap-8 gap-2
   "
   >
-    {#if showSponser}
-      <a
-        class="btn py-2 px-6 rounded-xl"
-        href={sponsorLink}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Sponsor us
-        <Fa icon={faHandHoldingDollar} />
-      </a>
-    {:else}
-      <ListMenu
-        listOptions={Object.values(navItems)}
-        containerClasses="hidden sm:block"
-      >
-        <button
-          class="
-          btn
-
-          py-2
-          px-6
-
-          rounded-xl
-        "
-        >
-          Navigate
-          <Fa icon={faCaretDown} />
-        </button>
-      </ListMenu>
-    {/if}
+    <ListMenu
+      listOptions={Object.values(navItems)}
+      containerClasses="hidden sm:block"
+    >
+      <button class="btn py-2 px-6 rounded-xl">
+        Navigate
+        <Fa icon={faCaretDown} />
+      </button>
+    </ListMenu>
 
     <LightSwitch />
 

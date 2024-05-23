@@ -1,11 +1,8 @@
 <script lang="ts">
   import Cyber from "$assets/Cyber.svelte";
   import LogoFull from "$assets/LogoFull.svelte";
-  import Fa from "svelte-fa";
   import Grid from "./grid.svelte";
 
-  import { sponsorLink } from "$shared/config";
-  import { faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
   import { page } from "$app/stores";
 
   $: darkMode = $page.data.settings.darkMode;
@@ -123,30 +120,17 @@
         >
 
         <a
-          href={sponsorLink}
+          href="/purchase"
           class="
-          bg-surface-200/75
-          hover:bg-surface-200
-
-          dark:bg-surface-900/75
-          dark:hover:bg-surface-700
-
-          transition-colors
-          duration-300
-
-          border
-          border-surface-400
-
-          px-4
-          py-2
-          flex gap-3
-          rounded-lg
-
-          font-light
+            px-4 py-2 flex gap-3
+            border border-surface-400
+            bg-surface-200 hover:bg-surface-200
+            dark:bg-surface-900 dark:hover:bg-surface-700
+            rounded-lg font-light
+            transition-colors duration-300
         "
         >
-          Sponsor us
-          <Fa icon={faHandHoldingDollar} class="mt-1" />
+          OSINTer PRO
         </a>
       </div>
     </div>

@@ -3,7 +3,6 @@ import type { ArticleListRender, InbuiltFeed } from "./types/internal";
 import { PUBLIC_API_BASE } from "$env/static/public";
 
 export const contactEmail = "contact@osinter.dk";
-export const sponsorLink = "https://github.com/sponsors/OSINTer-Platform";
 
 export const config: {
   images: {

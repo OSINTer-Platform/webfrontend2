@@ -9,14 +9,11 @@ import {
   faQuestion,
   faArrowTrendUp,
   faChartSimple,
-  faHandHoldingDollar,
   faBug,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { sponsorLink } from "./config";
-
 export const navItems: {
-  [key in "information" | "lists" | "ml" | "external"]: Array<
+  [key in "information" | "lists" | "ml"]: Array<
     NavItem & { description: string }
   >;
 } = {
@@ -80,14 +77,6 @@ export const navItems: {
       description: "Ask questions about data in OSINTer",
       route: "/assistant",
       icon: faQuestion,
-    },
-  ],
-  external: [
-    {
-      title: "Sponsor us",
-      description: "Sponsor the open-source development of OSINTer",
-      route: sponsorLink,
-      icon: faHandHoldingDollar,
     },
   ],
 };
