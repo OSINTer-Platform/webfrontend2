@@ -12,6 +12,7 @@
   import RenderSetting from "./renderSetting.svelte";
   import SignupCode from "./signupCode.svelte";
   import StatsRender from "./statsRender.svelte";
+  import Subscription from "./subscription.svelte";
 
   export let topModal: boolean;
 
@@ -93,7 +94,9 @@
     <hr class="my-8 border border-surface-400/50" />
 
     <section class="grid grid-cols-1 md:grid-cols-2">
-      <SignupCode />
+      {#if $user}
+        <Subscription user={$user} />
+      {/if}
       <form
         method="POST"
         action="/logout"
