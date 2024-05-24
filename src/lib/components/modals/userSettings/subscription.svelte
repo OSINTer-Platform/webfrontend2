@@ -1,9 +1,15 @@
 <script lang="ts">
   import { invalidateAll } from "$app/navigation";
-  import { PUBLIC_API_BASE } from "$env/static/public";
+  import {
+    PUBLIC_API_BASE,
+    PUBLIC_PURCHASE_AVAILABLE,
+  } from "$env/static/public";
   import { contactEmail } from "$shared/config";
   import { modalState } from "$shared/state/modals";
+
   import type { User } from "$shared/types/userItems";
+
+  import SignupCode from "./signupCode.svelte";
 
   export let user: User;
 
@@ -48,6 +54,12 @@
           return false;
         },
       },
+    });
+
+  const spawnSignupCodePanel = () =>
+    modalState.append({
+      modalType: "custom",
+      modalContent: { component: SignupCode },
     });
 </script>
 
@@ -101,6 +113,7 @@
     <h3 class="font-bold text-xl mb-2">You are not subscribed to OSINTer</h3>
     <nav class="flex gap-3 flex-wrap">
       <a class="btn" href="/purchase">Subscribe</a>
+      <button class="btn" on:click={spawnSignupCodePanel}>Submit code</button>
       <a class="btn" href="mailto:{contactEmail}">Support</a>
     </nav>
   {/if}
