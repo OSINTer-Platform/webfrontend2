@@ -5,6 +5,7 @@ import type {
   ArticleCategories,
   ArticleSearchQuery,
 } from "./api";
+import type { ComponentType, SvelteComponent } from "svelte";
 
 export type ArticleListRender = "large" | "title";
 
@@ -125,6 +126,16 @@ export type Modal = (
           text: string;
           icon?: IconDefinition;
         }[];
+      };
+    }
+  | {
+      modalType: "custom";
+      modalContent: {
+        data?: any;
+        class?: string;
+        component: ComponentType<
+          SvelteComponent<{ modalId: string; data?: any }>
+        >;
       };
     }
 ) & { id: string };

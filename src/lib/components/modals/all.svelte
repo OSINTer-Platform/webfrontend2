@@ -11,6 +11,7 @@
   import CollectPayment from "./collectPayment.svelte";
   import Processing from "./processing.svelte";
   import Actions from "./actions.svelte";
+  import Custom from "./custom.svelte";
 </script>
 
 {#each $modalState as modal, i (modal.id)}
@@ -63,5 +64,12 @@
     />
   {:else if modal.modalType == "actions"}
     <Actions options={modal.modalContent.options} modalId={modal.id} />
+  {:else if modal.modalType == "custom"}
+    <Custom
+      component={modal.modalContent.component}
+      class={modal.modalContent.class}
+      data={modal.modalContent.data}
+      modalId={modal.id}
+    />
   {/if}
 {/each}
