@@ -74,16 +74,18 @@
         You have cancelled your OSINTer {subName} subscription
       </h3>
       <p class="font-light">
-        <a
-          href="/purchase"
-          class="underline hover:text-primary-500 transition-colors"
-        >
-          renew it here
-        </a>
-        or you can
         Your current subscription will end on {getReadableDate(
           user.payment.subscription.current_period_end * 1000
         )}. You can
+        {#if PUBLIC_PURCHASE_AVAILABLE}
+          <a
+            href="/purchase"
+            class="underline hover:text-primary-500 transition-colors"
+          >
+            renew it here
+          </a>
+          or you can
+        {/if}
         <a
           href="mailto:{contactEmail}"
           class="underline hover:text-primary-500 transition-colors"
@@ -112,8 +114,10 @@
   {:else}
     <h3 class="font-bold text-xl mb-2">You are not subscribed to OSINTer</h3>
     <nav class="flex gap-3 flex-wrap">
-      <a class="btn" href="/purchase">Subscribe</a>
       <button class="btn" on:click={spawnSignupCodePanel}>Submit code</button>
+      {#if PUBLIC_PURCHASE_AVAILABLE}
+        <a class="btn" href="/purchase">Subscribe</a>
+      {/if}
       <a class="btn" href="mailto:{contactEmail}">Support</a>
     </nav>
   {/if}

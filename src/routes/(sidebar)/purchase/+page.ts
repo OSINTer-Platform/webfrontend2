@@ -1,11 +1,13 @@
 import type { PageLoad } from "./$types";
 import type { Price } from "$shared/types/stripe";
 
-import { PUBLIC_API_BASE } from "$env/static/public";
+import { PUBLIC_API_BASE, PUBLIC_PURCHASE_AVAILABLE } from "$env/static/public";
 import { error, redirect } from "@sveltejs/kit";
 import { get } from "svelte/store";
 
 export const load: PageLoad = async ({ parent }) => {
+  if (!PUBLIC_PURCHASE_AVAILABLE)
+    error(404, "Payment options aren't available on this OSINTer instance");
   const { user } = await parent();
   const userContent = get(user);
 
