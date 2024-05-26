@@ -38,7 +38,7 @@
             title: "Create feed",
             icon: faPlus,
             action: () => {
-              createItem("New feed", data.currentSearch, "feed", "current");
+              createItem("New Feed", data.currentSearch, "feed", "current");
             },
           },
         ]

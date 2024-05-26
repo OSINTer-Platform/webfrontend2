@@ -60,7 +60,7 @@
                 class="btn"
                 on:click={() => {
                   createItem(
-                    "New feed",
+                    "New Feed",
                     sanitizeQuery(searchQuery),
                     "feed",
                     "current"
