@@ -8,7 +8,7 @@
 
 <div
   class="
-  overflow-auto
+  overflow-y-auto scrollbar-hover
   grid grid-cols-2
 "
 >

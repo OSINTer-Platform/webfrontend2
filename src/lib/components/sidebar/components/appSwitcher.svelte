@@ -29,7 +29,8 @@
 	border-tertiary-600
 	dark:border-surface-400
 
-	overflow-auto
+	overflow-y-auto
+  scrollbar-thin
 	shrink-0
 "
 >

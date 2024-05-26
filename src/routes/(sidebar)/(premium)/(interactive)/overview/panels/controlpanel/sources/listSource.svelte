@@ -6,7 +6,7 @@
   export let hovering: string;
 </script>
 
-<div class="overflow-auto">
+<div class="overflow-y-auto scrollbar-hover">
   {#each Object.entries(articleCategories) as [profile, { name }]}
     <label
       class="

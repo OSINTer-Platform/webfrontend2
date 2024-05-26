@@ -1,9 +1,26 @@
 * {
-  &::-webkit-scrollbar {
-    width: 4px;
+  --scrollbar-width: 10px;
 
+  &::-webkit-scrollbar {
+    width: var(--scrollbar-width);
     border: none;
     @apply bg-surface-300 dark:bg-surface-600;
+  }
+
+  &.scrollbar-thin {
+    --scrollbar-width: 4px;
+  }
+
+  &.scrollbar-hover {
+    &::-webkit-scrollbar {
+      width: 0px;
+    }
+
+    &:hover {
+      &::-webkit-scrollbar {
+        width: var(--scrollbar-width);
+      }
+    }
   }
 
   &::-webkit-scrollbar-thumb {

@@ -21,6 +21,7 @@
     w-full h-full
 
     overflow-y-auto
+    scrollbar-hover
     "
 >
   {#each articles as article (article.id)}
