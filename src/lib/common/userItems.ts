@@ -5,7 +5,6 @@ import type { Collection, Feed, ItemBase } from "$shared/types/userItems";
 
 export const sanitizeQuery = (query: ArticleSearchQuery) => {
   const keys = [
-    "sort_by",
     "sort_order",
     "search_term",
     "first_date",
