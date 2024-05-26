@@ -143,8 +143,21 @@
       {/if}
     </ResultPanel>
   {/await}
-{:else if showSubscriptionState && $user && $user.payment.subscription.state.length > 0}
-  {#if $user.payment.subscription.state === "closed"}
+{:else if showSubscriptionState && $user && ($user.payment.subscription.state.length > 0 || $user.premium.status)}
+  {#if $user.premium.status}
+    <ResultPanel
+      status="success"
+      msg="You have been granted a free access to the entirety of the OSINTer interface"
+    >
+      {#if $user.premium.expire_time > 0}
+        <p>
+          This will expire on {getReadableDate(
+            $user.premium.expire_time * 1000
+          )}
+        </p>
+      {/if}
+    </ResultPanel>
+  {:else if $user.payment.subscription.state === "closed"}
     <ResultPanel
       status="error"
       msg="Your OSINTer {subName} subscription has expired"
