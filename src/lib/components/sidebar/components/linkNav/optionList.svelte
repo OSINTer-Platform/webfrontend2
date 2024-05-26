@@ -86,7 +86,6 @@
 						w-full
 
 						rounded-md
-						sm:rounded-xl
 
 						sm:dark:font-medium
 

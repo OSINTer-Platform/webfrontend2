@@ -25,7 +25,7 @@
           sm:text-base text-sm
           text-left text-black/30 dark:text-white/30
 
-          border border-surface-400/30 sm:rounded-xl rounded-md
+          border border-surface-400/30 rounded-sm
           hover:border-surface-400 hover:dark:text-white/80 hover:text-black/80
           transition-colors duration-300
         "
