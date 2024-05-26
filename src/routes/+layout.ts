@@ -83,7 +83,8 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     [user, allowedAreas],
     ([$user, $allowedAreas]) => {
       return (area: AuthArea) =>
-        ($user?.premium && $user.premium > 0) || $allowedAreas.includes(area);
+        ($user?.premium && $user.premium.status) ||
+        $allowedAreas.includes(area);
     }
   );
 

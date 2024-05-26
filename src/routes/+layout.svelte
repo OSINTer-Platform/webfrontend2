@@ -59,7 +59,7 @@
 
     if (
       $user &&
-      $user.premium > 0 &&
+      $user.premium.status &&
       data.submittedSurveys.length < 1 &&
       !window.matchMedia("only screen and (max-width: 40rem)").matches
     ) {

@@ -64,7 +64,7 @@
 </script>
 
 <section class="pb-6 pr-0 md:pb-0 md:pr-4">
-  {#if user.premium > 0}
+  {#if user.premium.status}
     <h3 class="font-bold text-xl">You have been granted premium access</h3>
     <p class="font-light">
       You have been granted a (potentially time-limited) free access to the

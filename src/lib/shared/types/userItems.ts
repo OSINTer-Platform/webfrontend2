@@ -28,7 +28,6 @@ export interface User {
   _id: string;
   username: string;
   active: boolean;
-  premium: number;
 
   feed_ids: string[];
   collection_ids: string[];
@@ -36,6 +35,12 @@ export interface User {
 
   feeds: Feed[];
   collections: Collection[];
+
+  premium: {
+    status: boolean;
+    expire_time: number;
+    acknowledged: { [key: string]: string };
+  };
 
   settings: {
     dark_mode: boolean;
