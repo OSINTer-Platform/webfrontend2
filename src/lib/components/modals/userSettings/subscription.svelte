@@ -57,12 +57,16 @@
     });
 </script>
 
-<section class="pb-6 pr-0 md:pb-0 md:pr-4">
+<section class="pb-6 pr-0 md:pb-0 md:pr-4 flex flex-col justify-center">
   {#if user.premium.status}
     <h3 class="font-bold text-xl">You have been granted premium access</h3>
     <p class="font-light">
-      You have been granted a (potentially time-limited) free access to the
-      entirety of the OSINTer interface
+      You have been granted free access to the entirety of the OSINTer interface
+      {#if user.premium.expire_time > 0}
+        This is access ends on {getReadableDate(
+          user.premium.expire_time * 1000
+        )}
+      {/if}
     </p>
   {:else if user.payment.subscription.level.length > 0}
     {#if user.payment.subscription.cancel_at_period_end}
