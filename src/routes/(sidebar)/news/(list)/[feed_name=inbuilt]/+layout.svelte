@@ -34,7 +34,6 @@
 
 <HeaderShell
   title={data.currentItem.title}
-  badge={"Inbuilt feed"}
   description={data.currentItem.desc}
   {modOptions}
   bind:searchValue={$feedLocalSearch}

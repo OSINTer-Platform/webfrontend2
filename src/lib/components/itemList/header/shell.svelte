@@ -70,22 +70,14 @@
       {#if badge}
         <span
           class="
-					px-2 py-1
-					
-					mt-2 sm:mt-3
-					
+					px-2 py-1 mt-2 sm:mt-3
 					rounded-full
 
-					bg-surface-900
-					text-surface-50
+					bg-surface-900 dark:bg-surface-50
+					text-surface-50 dark:text-surface-900
 
-					dark:bg-surface-50
-					dark:text-surface-900
-
-					text-[0.6rem]
-					sm:text-xs
-					font-bold
-					capitalize
+					text-[0.6rem] sm:text-xs
+					font-bold capitalize
 				">{badge}</span
         >
       {/if}

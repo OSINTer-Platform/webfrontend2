@@ -32,7 +32,6 @@
 
 <HeaderShell
   title={"Commonly read articles"}
-  badge={"Inbuilt feed"}
   description={"Explore the most read articles on this OSINTer instance, and get an insight into what is trending"}
   {modOptions}
   bind:searchValue={$feedLocalSearch}

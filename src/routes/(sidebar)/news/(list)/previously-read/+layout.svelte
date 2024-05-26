@@ -75,7 +75,6 @@
 
 <HeaderShell
   title={"Previously read"}
-  badge={"Inbuilt feed"}
   {description}
   {modOptions}
   bind:searchValue={$feedLocalSearch}
