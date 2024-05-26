@@ -11,6 +11,7 @@
   import { modalState } from "$shared/state/modals";
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { invalidateAll } from "$app/navigation";
+  import { getReadableDate } from "$lib/common/math";
 
   export let stripe: Stripe;
   export let personalPrice: Price;
@@ -104,14 +105,9 @@
 
   $: user = $page.data.user;
   $: subName = $user?.payment.subscription.level.toUpperCase();
-
-  $: endDate = new Date(
+  $: endDate = getReadableDate(
     ($user?.payment.subscription.current_period_end ?? 0) * 1000
-  ).toLocaleDateString("en", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  );
 </script>
 
 <div

@@ -5,18 +5,19 @@
   } from "$shared/types/api";
   import type { Feed } from "$shared/types/userItems";
 
+  import { getReadableDate } from "$lib/common/math";
+
   import ListRender from "$com/itemList/header/detailList.svelte";
 
   export let currentItem: Feed | ArticleSearchQuery;
   export let categories: ArticleCategories;
-  const dateFormatter = (date: string) => new Date(date).toLocaleDateString();
 
   $: params = {
     "First Date": currentItem.first_date
-      ? dateFormatter(currentItem.first_date)
+      ? getReadableDate(currentItem.first_date)
       : null,
     "Last Date": currentItem.last_date
-      ? dateFormatter(currentItem.last_date)
+      ? getReadableDate(currentItem.last_date)
       : null,
 
     Highlight: currentItem.search_term ? currentItem.highlight : null,

@@ -1,5 +1,6 @@
 <script lang="ts">
   import ModalLink from "$com/modalLink.svelte";
+  import { getReadableDate } from "$lib/common/math";
   import type { ArticleBase } from "$shared/types/api";
   import { onMount } from "svelte";
 
@@ -108,7 +109,7 @@
             </h4>
           </div>
           <p class="font-light text-sm text-white">
-            {new Date(article.publish_date).toLocaleDateString()}
+            {getReadableDate(article.publish_date)}
           </p>
         </div>
       </ModalLink>

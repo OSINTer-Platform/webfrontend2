@@ -2,6 +2,7 @@
   import * as d3 from "d3";
   import { onMount, createEventDispatcher } from "svelte";
   import { firstDate as globalFirstDate } from "$shared/config";
+  import { getReadableDate } from "$lib/common/math";
 
   export let config:
     | {
@@ -35,16 +36,8 @@
   $: firstDate = new Date(firstValue);
   $: lastDate = new Date(lastValue);
 
-  $: prettyFirstDate = firstDate.toLocaleDateString("en", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-  $: prettyLastDate = lastDate.toLocaleDateString("en", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  $: prettyFirstDate = getReadableDate(firstDate);
+  $: prettyLastDate = getReadableDate(lastDate);
 
   let containerWidth: number = 0;
 

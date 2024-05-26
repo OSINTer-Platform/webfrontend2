@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getTimespan } from "$lib/common/math";
+  import { getReadableDate, getTimespan } from "$lib/common/math";
   import { firstDate } from "$shared/config";
   import * as d3 from "d3";
 
@@ -9,11 +9,7 @@
   export let date: Date;
   $: date = new Date(value);
   $: timespan = getTimespan(date.toISOString());
-  $: prettyDate = date.toLocaleDateString("en", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  $: prettyDate = getReadableDate(date);
 
   let value: number = date.valueOf();
   let clientWidth: number = 0;

@@ -4,6 +4,7 @@
     PUBLIC_API_BASE,
     PUBLIC_PURCHASE_AVAILABLE,
   } from "$env/static/public";
+  import { getReadableDate } from "$lib/common/math";
   import { contactEmail } from "$shared/config";
   import { modalState } from "$shared/state/modals";
 
@@ -14,13 +15,6 @@
   export let user: User;
 
   $: subName = user.payment.subscription.level.toUpperCase();
-  $: endDate = new Date(
-    user.payment.subscription.current_period_end * 1000
-  ).toLocaleDateString("en", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
 
   const cancel = () =>
     modalState.append({
@@ -76,7 +70,6 @@
         You have cancelled your OSINTer {subName} subscription
       </h3>
       <p class="font-light">
-        Your current subscription will end on {endDate}. You can
         <a
           href="/purchase"
           class="underline hover:text-primary-500 transition-colors"
@@ -84,6 +77,9 @@
           renew it here
         </a>
         or you can
+        Your current subscription will end on {getReadableDate(
+          user.payment.subscription.current_period_end * 1000
+        )}. You can
         <a
           href="mailto:{contactEmail}"
           class="underline hover:text-primary-500 transition-colors"
