@@ -72,7 +72,13 @@
             checked={ids.includes(articleId)}
             class="w-4 checkbox mr-2"
           />
-          <div class="flex flex-nowrap items-center min-w-0 grow">
+          <div
+            class="
+            min-w-0 grow
+            flex flex-nowrap items-center
+            text-black dark:text-white
+          "
+          >
             <p class="flex items-center shrink-1 min-w-0">
               <span
                 class="shrink min-w-0 overflow-hidden text-ellipsis whitespace-nowrap"
@@ -81,7 +87,7 @@
               {#if showStats}
                 <span
                   class="
-                  text-black/50 dark:text-white/50 text-xs
+                  opacity-50 text-xs
                   inline-flex shrink-0 pl-1
                 "
                 >

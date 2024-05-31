@@ -28,7 +28,7 @@
       {article}
       {overlayClass}
       {btnClass}
-      {iconClass}
+      iconClass={iconClass + " text-white"}
     />
   </div>
 {/if}
