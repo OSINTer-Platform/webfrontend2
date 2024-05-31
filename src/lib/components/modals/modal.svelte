@@ -39,7 +39,7 @@
       cursor-auto
       {classes}
 
-      {border ? 'rounded-xl border border-tertiary-500' : ''}
+      {border ? 'border border-tertiary-500' : ''}
     "
     {style}
   >

@@ -113,7 +113,6 @@
 
           px-4
           py-2
-          rounded-lg
           text-white
           font-semibold
         ">Get started</a
@@ -126,7 +125,7 @@
             border border-surface-400
             bg-surface-200 hover:bg-surface-200
             dark:bg-surface-900 dark:hover:bg-surface-700
-            rounded-lg font-light
+            font-light
             transition-colors duration-300
         "
         >

@@ -24,7 +24,7 @@
 <button
   on:click={runAndClose}
   class="
-    first:rounded-l-md last:rounded-r-md
+    first:rounded-l-sm last:rounded-r-sm
     text-sm sm:text-base
     p-2 w-28 sm:p-2 sm:w-40
     active:scale-95

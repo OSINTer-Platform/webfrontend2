@@ -71,7 +71,7 @@
               px-5 h-10 @md:px-4 @md:h-12
               text-xs sm:text-sm md:text-base
               border border-surface-400
-              first:rounded-l-md last:rounded-r-md
+              first:rounded-l-sm last:rounded-r-sm
 
               {$settingStore === value
               ? 'bg-primary-500/30 hover:bg-primary-500/40'

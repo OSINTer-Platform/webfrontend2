@@ -13,7 +13,7 @@
   export let disabledString: string;
   export let extraBtnClass: string = "";
 
-  $: btnClass = `inline-flex items-center justify-center h-12 rounded-xl transition-all duration-300 disabled:cursor-not-allowed ${extraBtnClass}`;
+  $: btnClass = `inline-flex items-center justify-center h-12 rounded-sm transition-all duration-300 disabled:cursor-not-allowed ${extraBtnClass}`;
 </script>
 
 {#if state}

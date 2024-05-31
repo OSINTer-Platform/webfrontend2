@@ -55,7 +55,7 @@
             p-2
             flex items-center
 
-            cursor-pointer rounded-md
+            cursor-pointer
 
             text-left font-light dark:font-normal
             {showStats ? 'text-sm md:text-base' : 'text-xs md:text-sm'}

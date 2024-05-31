@@ -32,7 +32,6 @@
     flex flex-col
     overflow-y-auto
 
-    rounded-xl
     border border-tertiary-500
     bg-surface-100 dark:bg-surface-800
   "
@@ -112,7 +111,7 @@
           title="Logout"
           type="submit"
           class="
-            btn rounded-xl h-20 grow
+            btn rounded-sm h-20 grow
             inline-flex items-center justify-center
             transition-all duration-300
             bg-primary-400/20

@@ -65,7 +65,6 @@
 				border-4
 				border-primary-800/20
 
-				rounded-md
 				dark:text-white/75
 			"
       >

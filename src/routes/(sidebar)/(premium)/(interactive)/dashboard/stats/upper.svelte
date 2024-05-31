@@ -47,7 +47,7 @@
               on:contextmenu|preventDefault={() => window.open(href, "_blank")}
               data-sveltekit-preload-data="off"
               class="
-                block pb-1 rounded-b-xl
+                block pb-1
                 bg-surface-400/10 dark:bg-surface-400/20
 
                 hover:bg-surface-400/20 dark:hover:bg-surface-300/20
@@ -57,7 +57,7 @@
               <div
                 style="width: {score * 100}%"
                 class="
-                bg-primary-500 h-1 rounded-full
+                bg-primary-500 h-1
               "
               />
               <p

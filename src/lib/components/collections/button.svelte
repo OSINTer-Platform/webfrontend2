@@ -50,7 +50,7 @@
 		bg-surface-100 dark:bg-surface-800
 		border border-tertiary-500
 
-		rounded-lg shadow-xl
+		shadow-xl
 
 		cursor-default
 		{overlayClass}

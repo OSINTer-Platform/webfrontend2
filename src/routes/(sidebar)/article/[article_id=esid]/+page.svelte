@@ -76,7 +76,6 @@
 					px-2
 					overflow-hidden truncate
 					text-sm font-light
-					rounded-md
 					cursor-pointer
 					hover:bg-primary-500/5
 					ml-{3 * heading.depth}

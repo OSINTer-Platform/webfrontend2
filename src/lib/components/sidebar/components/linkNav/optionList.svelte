@@ -85,7 +85,6 @@
 						inline-block
 						w-full
 
-						rounded-md
 
 						sm:dark:font-medium
 

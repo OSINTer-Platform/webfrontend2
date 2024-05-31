@@ -9,7 +9,7 @@
   // See https://github.com/sveltejs/svelte/issues/11647
 
   const buttonCss =
-    "flex flex-row gap-6 hover:bg-primary-300/25 items-center justify-start rounded-xl w-full pl-4 p-2 sm:p-3 sm:pl-5 text-sm sm:text-base dark:hover:bg-primary-500/40";
+    "flex flex-row gap-6 hover:bg-primary-300/25 items-center justify-start w-full pl-4 p-2 sm:p-3 sm:pl-5 text-sm sm:text-base dark:hover:bg-primary-500/40";
 </script>
 
 <div
@@ -32,7 +32,7 @@
 		bg-surface-100 dark:bg-surface-800
 		border border-tertiary-500
 
-		rounded-xl shadow-xl
+		shadow-xl
 	"
   >
     <nav class="divide-y divide-tertiary-500 px-3 sm:py-2 sm:px-4">

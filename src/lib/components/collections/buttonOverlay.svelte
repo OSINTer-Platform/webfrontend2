@@ -17,7 +17,6 @@
     flex justify-center items-center
     h-full w-full
     bg-black/75 opacity-0
-    rounded-md
 
     transition-opacity
 

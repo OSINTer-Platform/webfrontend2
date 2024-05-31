@@ -52,7 +52,7 @@
           $sideOpen = !$sideOpen;
         }}
         class="
-          btn xl:!hidden p-2 rounded-xl
+          btn xl:!hidden p-2
           {$page.data.customSidebar ? '' : 'sm:hidden'}
         "
       >
@@ -78,7 +78,7 @@
       listOptions={Object.values(navItems)}
       containerClasses="hidden sm:block"
     >
-      <button class="btn py-2 px-6 rounded-xl">
+      <button class="btn py-2 px-6 rounded-sm">
         Navigate
         <Fa icon={faCaretDown} />
       </button>

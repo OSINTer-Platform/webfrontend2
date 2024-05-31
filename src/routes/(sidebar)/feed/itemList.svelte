@@ -166,7 +166,6 @@
                   class="
                     checkbox hidden sm:block
                     w-12 h-12 mr-2
-                    rounded-none
                     text-surface-50 dark:text-surface-900
                   "
                 />

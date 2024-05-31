@@ -162,7 +162,7 @@
               rel="noopener noreferrer"
               href={url}
               class="
-              p-2 block w-max grow rounded-md
+              p-2 block w-max grow rounded-sm
               bg-primary-500/20 transition-colors
               hover:bg-primary-400/60 hover:dark:bg-primary-700/75
               border border-primary-600

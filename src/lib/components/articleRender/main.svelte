@@ -38,7 +38,7 @@
   {#if articleCategories}
     <div class="flex gap-4 items-center my-6">
       <img
-        class="w-14 h-14 object-contain bg-white rounded-md drop-shadow-md"
+        class="w-14 h-14 object-contain bg-white rounded-sm drop-shadow-md"
         src={articleCategories?.[article.profile]?.image}
         alt="Source logo"
       />

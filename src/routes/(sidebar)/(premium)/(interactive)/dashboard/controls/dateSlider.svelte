@@ -50,7 +50,7 @@
     opacity-0 peer-hover:opacity-100
     transition-opacity duration-300
     absolute -top-16 -translate-x-1/2
-    p-2 rounded-sm
+    p-2
     bg-black w-max
     flex flex-col text-center
   "
