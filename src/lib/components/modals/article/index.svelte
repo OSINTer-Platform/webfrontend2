@@ -92,6 +92,24 @@
       },
     },
   ];
+
+  function flyOnBlockSwitch(node: Element, options: { in: boolean }) {
+    if (blockSwitching) {
+      let x = 0;
+
+      if (options.in) x = switchDirection === "right" ? 200 : -200;
+      else x = switchDirection === "left" ? 200 : -200;
+
+      return fly(node, {
+        delay: options.in ? 100 : 0,
+        duration: 200,
+        easing: quintInOut,
+        x,
+      });
+    }
+
+    return {};
+  }
 </script>
 
 <svelte:window
@@ -117,17 +135,8 @@
       "
         on:outrostart={() => (transitioning = true)}
         on:introend={() => (transitioning = false)}
-        in:fly={{
-          delay: 100,
-          duration: blockSwitching ? 200 : 0,
-          easing: quintInOut,
-          x: switchDirection === "right" ? 200 : -200,
-        }}
-        out:fly={{
-          duration: blockSwitching ? 200 : 0,
-          easing: quintInOut,
-          x: switchDirection === "left" ? 200 : -200,
-        }}
+        in:flyOnBlockSwitch={{ in: true }}
+        out:flyOnBlockSwitch={{ in: false }}
       >
         <ArticleRender
           {article}
