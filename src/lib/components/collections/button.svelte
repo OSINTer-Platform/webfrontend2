@@ -33,9 +33,10 @@
   <Fa
     icon={faStar}
     class="
-    hover:text-primary-500
+    text-white
+    hover:text-primary-500 dark:hover:text-primary-500
     transition-colors
-    text-black dark:text-white/90 {iconClass}
+    {iconClass}
   "
   />
   <div
