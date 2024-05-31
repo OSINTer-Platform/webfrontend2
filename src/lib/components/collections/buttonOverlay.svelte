@@ -6,6 +6,7 @@
   $: userCollections = $page.data.userCollections;
   export let article: ArticleBase;
 
+  export let containerClass: string = "";
   export let overlayClass: string = "top-10";
   export let btnClass: string = "pb-2";
   export let iconClass: string = "text-4xl";
@@ -21,6 +22,7 @@
     transition-opacity
 
     [&:focus-within>button>svg]:text-primary-500
+    {containerClass}
   "
   >
     <CollectionButton

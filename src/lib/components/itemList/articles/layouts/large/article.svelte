@@ -82,7 +82,7 @@
     {read}
   >
     <svelte:fragment slot="icons">
-      <CollectionOverlay {article} />
+      <CollectionOverlay {article} containerClass="rounded-md" />
     </svelte:fragment>
   </Large>
 </Link>
