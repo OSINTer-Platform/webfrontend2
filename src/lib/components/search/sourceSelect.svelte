@@ -168,7 +168,7 @@
 					rounded-full
 
 					{selected ? 'bg-primary-500' : 'border border-tertiary-500'}
-          hidden @sm/half:hidden
+          hidden @sm/half:block
 				"
           >
             <Fa
