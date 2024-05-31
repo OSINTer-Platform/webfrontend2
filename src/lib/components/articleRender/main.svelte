@@ -42,17 +42,14 @@
         src={articleCategories?.[article.profile]?.image}
         alt="Source logo"
       />
-      <ul class="text-tertiary-900 text-sm font-medium">
+      <ul class="text-sm font-medium">
         <li>
-          Written by <span
-            class="text-black dark:text-primary-400 dark:font-bold"
+          Written by <span class="text-primary-500 font-bold"
             >{article.author ?? article.source}</span
           >
         </li>
         <li>
-          From <span class="text-black dark:text-primary-400 dark:font-bold"
-            >{article.source}</span
-          >
+          From <span class="text-primary-500 font-bold">{article.source}</span>
         </li>
       </ul>
     </div>
