@@ -15,6 +15,8 @@
     expandSummary,
     expandHighlights,
   } from "$state/state";
+  import { page } from "$app/stores";
+
   import Fa from "svelte-fa";
   import Switch from "$com/utils/inputs/switch.svelte";
 
@@ -23,6 +25,7 @@
 
   $: articleWithHighlight = hasHighlights(articles);
   $: articleWithSummary = hasSummary(articles);
+  $: listLayout = $page.data.settings.listRenderMode;
 
   $: expanderButtons = [
     ...(articleWithHighlight
@@ -48,7 +51,7 @@
   ];
 
   $: showFilterOptions = showReadFilter || articleWithHighlight;
-  $: showExpandOptions = expanderButtons.length > 0;
+  $: showExpandOptions = expanderButtons.length > 0 && $listLayout === "large";
 </script>
 
 {#if showFilterOptions || showExpandOptions}
