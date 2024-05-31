@@ -4,7 +4,6 @@
     faArrowRightToBracket,
     faBars,
     faCaretDown,
-    faHandHoldingDollar,
   } from "@fortawesome/free-solid-svg-icons/index";
   import { faGithub } from "@fortawesome/free-brands-svg-icons/index";
 
@@ -16,12 +15,10 @@
   import ListMenu from "$com/listMenu.svelte";
   import LightSwitch from "$com/lightSwitch.svelte";
   import { page } from "$app/stores";
-  import { onMount } from "svelte";
   import { faUser } from "@fortawesome/free-regular-svg-icons";
   import { modalState } from "$shared/state/modals";
 
   let socials: Array<NavItem>;
-  let showSponser = false;
 
   $: user = $page.data.user;
 

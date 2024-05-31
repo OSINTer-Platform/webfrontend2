@@ -10,7 +10,6 @@
   import CredentialChange from "./credentialChange.svelte";
   import ExternalSetting from "./externalSetting.svelte";
   import RenderSetting from "./renderSetting.svelte";
-  import SignupCode from "./signupCode.svelte";
   import StatsRender from "./statsRender.svelte";
   import Subscription from "./subscription.svelte";
 
