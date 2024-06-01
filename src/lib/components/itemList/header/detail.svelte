@@ -10,7 +10,7 @@
   let showFull = false;
 
   const boxClass =
-    "text-xs py-1 px-2 inline block w-fit bg-primary-500/20 border border-primary-600 truncate shrink-0";
+    "text-xs py-1 px-2 inline block w-fit bg-primary-500/20 border border-primary-600 truncate shrink-0 rounded-md";
 </script>
 
 {#if Array.isArray(detail)}
