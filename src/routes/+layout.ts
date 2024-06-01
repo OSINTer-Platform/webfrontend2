@@ -7,7 +7,7 @@ import {
   setLike,
 } from "$lib/common/customStores";
 import { config } from "$shared/config";
-import { derived, writable } from "svelte/store";
+import { derived, get, writable } from "svelte/store";
 import type { AuthArea, MLAvailability, Survey } from "$shared/types/api";
 import type { ArticleListRender } from "$shared/types/internal";
 import type { Collection, User } from "$shared/types/userItems";
@@ -95,10 +95,31 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     ? writable(userContents.read_articles)
     : persisted<string[]>("readArticleIds", []);
 
+  const updateReadArticles = userContents
+    ? (ids: string[]) => {
+        readArticleIds.update((content) => {
+          const presentIds = content.filter((id) => !ids.includes(id));
+          fetch(`${PUBLIC_API_BASE}/my/user/read-articles`, {
+            method: "PUT",
+            body: JSON.stringify(presentIds),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          return presentIds;
+        });
+      }
+    : (ids: string[]) =>
+        readArticleIds.update((content) =>
+          content.filter((id) => !ids.includes(id))
+        );
+
   const readArticles = documentCache(
     (ids: string[], sort: boolean) =>
       queryArticlesById(ids, sort, false, 10000, fetch),
-    readArticleIds
+    readArticleIds,
+    updateReadArticles
   );
 
   return {

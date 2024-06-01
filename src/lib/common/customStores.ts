@@ -248,7 +248,8 @@ export function cookieStore<T>(
 
 export function documentCache<DocumentType extends ArticleBase | CVEBase>(
   searchFn: (ids: string[], sort: boolean) => Promise<DocumentType[]>,
-  ids: Readable<string[]>
+  ids: Readable<string[]>,
+  onMissing: (ids: string[]) => void
 ): Readable<Promise<DocumentType[]>> {
   return derived(
     ids,
@@ -263,6 +264,13 @@ export function documentCache<DocumentType extends ArticleBase | CVEBase>(
 
         const newIds = $ids.filter((id) => !docIds.includes(id));
         const newDocs = newIds.length > 0 ? await searchFn(newIds, false) : [];
+
+        const missingIds =
+          newIds.length != newDocs.length
+            ? newIds.filter((id) => !newDocs.some((doc) => doc.id == id))
+            : [];
+
+        if (missingIds.length > 0) onMissing(missingIds);
 
         return sortDocumentsById(
           $ids,

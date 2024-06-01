@@ -7,7 +7,9 @@ import { queryCVEsById } from "$lib/common/queryArticles";
 export const readCVEIds = setLike(persisted("readCVEIds", [] as string[]));
 export const readCVEs = documentCache(
   (ids: string[], sort: boolean) => queryCVEsById(ids, sort, true),
-  readCVEIds
+  readCVEIds,
+  (ids) =>
+    readCVEIds.update((content) => content.filter((id) => !ids.includes(id)))
 );
 
 export const cveSearch = writable("");
