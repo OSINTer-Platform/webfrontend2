@@ -5,7 +5,7 @@ import { PUBLIC_API_BASE, PUBLIC_PURCHASE_AVAILABLE } from "$env/static/public";
 import { error, redirect } from "@sveltejs/kit";
 import { get } from "svelte/store";
 
-export const load: PageLoad = async ({ parent }) => {
+export const load: PageLoad = async ({ fetch, parent }) => {
   if (!PUBLIC_PURCHASE_AVAILABLE)
     error(404, "Payment options aren't available on this OSINTer instance");
   const { user } = await parent();
