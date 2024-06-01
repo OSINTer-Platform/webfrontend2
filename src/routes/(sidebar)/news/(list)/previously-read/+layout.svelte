@@ -47,9 +47,16 @@
               "This will completly clear you history of all articles you have ever read on OSINTer, meaning they will no longer appear under Previously Read and no longer greyed out",
             options: async () => {
               if ($user) {
-                const r = await fetch(`${PUBLIC_API_BASE}/my/user/clear-read`, {
-                  method: "POST",
-                });
+                const r = await fetch(
+                  `${PUBLIC_API_BASE}/my/user/read-articles`,
+                  {
+                    method: "PUT",
+                    body: JSON.stringify([]),
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  }
+                );
 
                 if (r.ok) {
                   readArticleIds.set([]);
