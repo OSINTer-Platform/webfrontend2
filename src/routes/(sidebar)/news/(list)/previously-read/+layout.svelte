@@ -9,6 +9,7 @@
   import { createItem } from "$lib/common/userItems";
   import { modalState } from "$shared/state/modals";
   import { PUBLIC_API_BASE } from "$env/static/public";
+  import { page } from "$app/stores";
 
   export let data: LayoutData;
 
@@ -78,6 +79,8 @@
     ($user
       ? ""
       : " Do keep in mind that they are saved in local browser storage, so they do not transfer across devices, and clearing you cache may remove them. Create a collection if you want to save them");
+
+  $: readArticles = $page.data.readArticles;
 </script>
 
 <HeaderShell
@@ -86,6 +89,7 @@
   {modOptions}
   bind:searchValue={$feedLocalSearch}
   showReadFilter={false}
+  articles={$readArticles}
 />
 
 <slot />

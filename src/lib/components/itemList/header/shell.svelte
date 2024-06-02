@@ -25,7 +25,8 @@
 
   export let contentType = "articles";
 
-  export let articles: ArticleBase[] | undefined = undefined;
+  export let articles: Promise<ArticleBase[]> | ArticleBase[] | undefined =
+    undefined;
   export let showReadFilter = true;
 
   export let tabs: null | {
@@ -111,7 +112,9 @@
     <Tabs bind:selected={$tabStore} options={tabs.options}>
       <svelte:fragment slot="end">
         {#if articles}
-          <ArticleFilters {articles} {showReadFilter} />
+          {#await articles then articles}
+            <ArticleFilters {articles} {showReadFilter} />
+          {/await}
         {:else if pageArticles}
           <ArticleFilters articles={pageArticles} {showReadFilter} />
         {:else if pageLoadingArticles}
