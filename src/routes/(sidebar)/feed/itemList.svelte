@@ -212,7 +212,7 @@
       border border-dashed
       border-surface-400/50 hover:border-surface-400
       bg-surface-400/10 hover:bg-surface-400/20
-      transition-colors duration-300
+      transition-all duration-300
       font-light text-sm sm:text-base
     "
     >
