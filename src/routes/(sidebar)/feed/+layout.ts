@@ -5,9 +5,7 @@ import { PUBLIC_API_BASE } from "$env/static/public";
 import { error } from "@sveltejs/kit";
 import { get } from "svelte/store";
 
-export const load = (async ({ parent, fetch, depends }) => {
-  depends("page:feedRoot");
-
+export const load = (async ({ parent, fetch }) => {
   const throwAuthError = () =>
     error(401, {
       message: "",

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { invalidate } from "$app/navigation";
+  import { invalidateAll } from "$app/navigation";
   import {
     changeName,
     createItem,
@@ -32,7 +32,7 @@
 
   async function changeTitle(item: Collection | Feed, newTitle: string) {
     await changeName(item, newTitle, "none");
-    await invalidate("page:feedRoot");
+    await invalidateAll();
   }
 
   $: feedItems = Object.values(data.feeds).map((feed) => {
@@ -49,12 +49,7 @@
         icon: faFileClipboard,
         requireOwn: false,
         action: () =>
-          createItem(
-            `Copy of "${feed.name}"`,
-            feed,
-            "feed",
-            "invalidate:page:feedRoot"
-          ),
+          createItem(`Copy of "${feed.name}"`, feed, "feed", "invalidateAll"),
       },
       {
         title: "Modify feed",
@@ -72,7 +67,7 @@
                   feed._id,
                   sanitizeQuery(query),
                   "feed",
-                  "invalidate:page:feedRoot"
+                  "invalidateAll"
                 );
 
                 if (r) modalState.remove(modalId);
@@ -86,8 +81,7 @@
         title: "Remove feed",
         icon: faXmark,
         requireOwn: false,
-        action: () =>
-          modifySubscription(feed, false, "invalidate:page:feedRoot"),
+        action: () => modifySubscription(feed, false, "invalidateAll"),
       },
     ];
 
@@ -123,7 +117,7 @@
             `Copy of "${collection.name}"`,
             collection.ids,
             "collection",
-            "invalidate:page:feedRoot"
+            "invalidateAll"
           ),
       },
       {
@@ -131,19 +125,13 @@
         icon: faTrashCan,
         requireOwn: true,
         action: () =>
-          updateItem(
-            collection._id,
-            [],
-            "collection",
-            "invalidate:page:feedRoot"
-          ),
+          updateItem(collection._id, [], "collection", "invalidateAll"),
       },
       {
         title: "Remove collection",
         icon: faXmark,
         requireOwn: false,
-        action: () =>
-          modifySubscription(collection, false, "invalidate:page:feedRoot"),
+        action: () => modifySubscription(collection, false, "invalidateAll"),
       },
     ];
     const own = collection.owner === $user?._id;
@@ -180,7 +168,7 @@
               for (const item of items) {
                 await modifySubscription(item, false, "none");
               }
-              await invalidate("page:feedRoot");
+              await invalidateAll();
             },
           },
         });
@@ -208,7 +196,7 @@
                   updateItem(item._id, [], "collection", "none")
                 )
               );
-              await invalidate("page:feedRoot");
+              await invalidateAll();
             },
           },
         });
@@ -231,7 +219,7 @@
               for (const item of items) {
                 await modifySubscription(item, false, "none");
               }
-              await invalidate("page:feedRoot");
+              await invalidateAll();
             },
           },
         });
@@ -257,7 +245,7 @@
             "New Feed",
             sanitizeQuery(query),
             "feed",
-            "invalidate:page:feedRoot"
+            "invalidateAll"
           );
           modalState.remove(modalId);
         },
@@ -265,7 +253,7 @@
     });
   };
 
-  onMount(() => invalidate("page:feedRoot"));
+  onMount(() => invalidateAll());
 </script>
 
 <div
