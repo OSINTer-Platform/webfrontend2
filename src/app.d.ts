@@ -26,7 +26,7 @@ declare global {
     interface PageData {
       mlAvailability: MLAvailability;
       user: Writable<User | null>;
-      authorizeForArea: Readable<(area: AuthArea) => boolean>;
+      checkAuthorization: Readable<(area?: AuthArea) => boolean>;
       customSidebar: boolean;
       readArticleIds: SetLike<string>;
       readArticles: Readable<Promise<ArticleBase[]>>;

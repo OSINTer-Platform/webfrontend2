@@ -7,7 +7,7 @@ import {
   setLike,
 } from "$lib/common/customStores";
 import { config } from "$shared/config";
-import { derived, get, writable } from "svelte/store";
+import { derived, get, writable, type Readable } from "svelte/store";
 import type { AuthArea, MLAvailability, Survey } from "$shared/types/api";
 import type { ArticleListRender } from "$shared/types/internal";
 import type { Collection, User } from "$shared/types/userItems";
@@ -76,15 +76,22 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     );
 
     if (areas) return areas[1];
-    else return [];
   });
 
-  const authorizeForArea = derived(
+  const checkAuthorization: Readable<(area?: AuthArea) => boolean> = derived(
     [user, allowedAreas],
     ([$user, $allowedAreas]) => {
-      return (area: AuthArea) =>
-        ($user?.premium && $user.premium.status) ||
-        $allowedAreas.includes(area);
+      return (area?: AuthArea) => {
+        if ($user?.premium && $user.premium.status) return true;
+        else if (!area && Array.isArray($allowedAreas)) return true;
+        else if (
+          area &&
+          Array.isArray($allowedAreas) &&
+          $allowedAreas.includes(area)
+        )
+          return true;
+        else return false;
+      };
     }
   );
 
@@ -127,7 +134,7 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     user,
     readArticleIds: setLike(readArticleIds),
     readArticles,
-    authorizeForArea,
+    checkAuthorization,
     mlAvailability,
     userCollections,
     customSidebar: false,

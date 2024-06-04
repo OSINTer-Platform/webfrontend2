@@ -21,7 +21,7 @@
   export let articleList: Array<{ id: string }>;
   export let topModal: boolean;
 
-  $: authorizer = $page.data.authorizeForArea;
+  $: authorizer = $page.data.checkAuthorization;
 
   let similarArticles: Promise<ArticleBase[]> | null;
   $: similarArticles = $authorizer("similar") ? getSimilar(article.id) : null;

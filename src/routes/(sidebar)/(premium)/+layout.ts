@@ -6,9 +6,9 @@ import type { LayoutLoad } from "./$types";
 import type { AuthArea, MLAvailability } from "$shared/types/api";
 
 export const load: LayoutLoad = async ({ parent, url }) => {
-  const { user, mlAvailability, authorizeForArea } = await parent();
+  const { user, mlAvailability, checkAuthorization } = await parent();
   const userContent = get(user);
-  const authorizer = get(authorizeForArea);
+  const authorizer = get(checkAuthorization);
 
   const routeProtections: {
     route: string;

@@ -18,7 +18,7 @@
 
   let similarArticles: ArticleBase[] = [];
 
-  $: authorizer = $page.data.authorizeForArea;
+  $: authorizer = $page.data.checkAuthorization;
 
   onMount(async () => {
     if (!browser) return;
