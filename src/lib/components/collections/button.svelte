@@ -17,45 +17,47 @@
   export let article: ArticleBase;
 </script>
 
-<button
-  class="
-		relative
-		[&:focus-within>div]:block
-		[&:hover>div]:block
-		{btnClass}
-	"
-  on:click={() =>
-    modalState.append({
-      modalType: "add-collection",
-      modalContent: { article: article },
-    })}
->
-  <Fa
-    icon={faStar}
+<div class="relative">
+  <button
     class="
-    hover:text-primary-500 dark:hover:text-primary-500
-    transition-colors
-    {iconClass}
-  "
-  />
+      relative
+      peer
+      {btnClass}
+    "
+    on:click={() =>
+      modalState.append({
+        modalType: "add-collection",
+        modalContent: { article: article },
+      })}
+  >
+    <Fa
+      icon={faStar}
+      class="
+      hover:text-primary-500 dark:hover:text-primary-500
+      transition-colors
+      {iconClass}
+    "
+    />
+  </button>
   <div
     role="presentation"
     on:keydown|stopPropagation|preventDefault
     on:click|stopPropagation|preventDefault
     on:mousedown|stopPropagation|preventDefault
     class="
-		hidden absolute z-20
+    hover:block peer-hover:block peer-focus-within:block
+    hidden absolute z-20
     p-2 max-w-md
 
-		bg-surface-100 dark:bg-surface-800
-		border border-tertiary-500
+    bg-surface-100 dark:bg-surface-800
+    border border-tertiary-500
 
-		shadow-xl
+    shadow-xl
 
-		cursor-default
-		{overlayClass}
-	"
+    cursor-default
+    {overlayClass}
+  "
   >
     <CollectionList {userCollections} articleId={article.id} />
   </div>
-</button>
+</div>
