@@ -11,21 +11,24 @@
     faPlus,
   } from "@fortawesome/free-solid-svg-icons";
 
-  import type { ArticleCategories, SearchQuery } from "$shared/types/api";
+  import type {
+    ArticleCategories,
+    ArticleSearchQuery,
+  } from "$shared/types/api";
 
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { getStandardSearch } from "$shared/config";
   import { createItem, sanitizeQuery } from "$lib/common/userItems";
   import { toUrl } from "$lib/common/searchQuery";
 
-  export let searchQuery: SearchQuery = getStandardSearch();
+  export let searchQuery: ArticleSearchQuery = getStandardSearch();
   export let sourceCategories: ArticleCategories | undefined = undefined;
   export let submitText: string = "Search content";
 
   $: queryString = toUrl(searchQuery);
 </script>
 
-<form action="/feed/search" method="get" class="h-full" on:submit>
+<form action="/news/search" method="get" class="h-full" on:submit>
   <TwoHalfs>
     <svelte:fragment slot="first">
       <MajorSection title="Select Sources">
@@ -57,7 +60,7 @@
                 class="btn"
                 on:click={() => {
                   createItem(
-                    "New feed",
+                    "New Feed",
                     sanitizeQuery(searchQuery),
                     "feed",
                     "current"

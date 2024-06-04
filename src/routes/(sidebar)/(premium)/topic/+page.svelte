@@ -1,6 +1,6 @@
 <script lang="ts">
-  import HeaderShell from "$com/article-list/header/shell.svelte";
-  import ClusterListElement from "./clusterListElement.svelte";
+  import HeaderShell from "$com/itemList/header/shell.svelte";
+  import ClusterList from "./clusterList.svelte";
   import TopicChart from "./chart.svelte";
   import Loader from "$com/loader.svelte";
 
@@ -10,11 +10,10 @@
 
   import { faArrowTrendUp } from "@fortawesome/free-solid-svg-icons";
   import { writable } from "svelte/store";
-  import { onDestroy, onMount } from "svelte";
+  import { onMount } from "svelte";
   import { searchInCluster } from "$lib/common/filter";
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { slide } from "svelte/transition";
-  import { listElementCount } from "$shared/state/state";
 
   export let data: PageData;
 
@@ -28,8 +27,6 @@
       (c) => $clusterSearch.length < 1 || searchInCluster(c, $clusterSearch)
     );
 
-  $: listElementCount.set(filteredClusters.length);
-
   const modOptions: HeaderModOptions[] = [
     {
       title: "Show cluster development",
@@ -39,8 +36,6 @@
       },
     },
   ];
-
-  onDestroy(() => listElementCount.set(0));
 
   onMount(() => {
     fullClusters = fetch(`${PUBLIC_API_BASE}/ml/clusters?complete=true`).then(
@@ -60,10 +55,9 @@
   <HeaderShell
     title={"Topics in OSINTer"}
     description={"Clusters of different articles from OSINTer - each presenting a different topic"}
-    searchAble={false}
+    searchSubmitable={false}
     {modOptions}
     bind:searchValue={$clusterSearch}
-    tabs={null}
     contentType="topics"
   >
     {#if showClusterGraph}
@@ -78,17 +72,10 @@
           </section>
         {/if}
       {/await}
+    {:else}
+      <hr class="border-tertiary-600/50 my-4" />
     {/if}
   </HeaderShell>
 
-  <main
-    class="
-    flex flex-col gap-8
-    p-4 sm:p-12
-  "
-  >
-    {#each filteredClusters as cluster}
-      <ClusterListElement {cluster} />
-    {/each}
-  </main>
+  <ClusterList clusters={filteredClusters} />
 </div>

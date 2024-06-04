@@ -2,8 +2,8 @@
   import type { HeaderModOptions } from "$shared/types/internal";
   import type { LayoutData } from "./$types";
 
-  import DetailList from "$com/article-list/header/detailList.svelte";
-  import HeaderShell from "$com/article-list/header/shell.svelte";
+  import DetailList from "$com/itemList/header/detailList.svelte";
+  import HeaderShell from "$com/itemList/header/shell.svelte";
 
   import { faDownload, faXmark } from "@fortawesome/free-solid-svg-icons";
   import { goto } from "$app/navigation";
@@ -53,18 +53,24 @@
     },
   ];
 
-  $: clusterDetails = {
-    Nr: [data.cluster.nr.toString()],
-    ID: [data.cluster.id],
-    Contains: [`${data.cluster.document_count} articles`],
-    Keywords: data.cluster.keywords,
-  };
+  $: clusterDetails = [
+    [
+      { title: "Nr", content: [data.cluster.nr.toString()], mono: false },
+      { title: "ID", content: [data.cluster.id], mono: false },
+      {
+        title: "Contains",
+        content: [`${data.cluster.document_count} articles`],
+        mono: false,
+      },
+      { title: "Keywords", content: data.cluster.keywords, mono: false },
+    ],
+  ];
 </script>
 
 <HeaderShell
   title={data.cluster.title}
   description={data.cluster.description}
-  searchAble={false}
+  searchSubmitable={false}
   {modOptions}
   bind:searchValue={$articleSearch}
 >
@@ -77,10 +83,7 @@
   >
     {data.cluster.summary}
   </p>
-  <hr class="my-4 border-tertiary-700/50" />
-
-  <DetailList options={clusterDetails} mono={true} />
-  <hr class="my-4 border-tertiary-700/50" />
+  <DetailList detailBatches={clusterDetails} />
 </HeaderShell>
 
 <slot />

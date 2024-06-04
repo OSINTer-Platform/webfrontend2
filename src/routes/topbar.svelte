@@ -4,7 +4,6 @@
     faArrowRightToBracket,
     faBars,
     faCaretDown,
-    faHandHoldingDollar,
   } from "@fortawesome/free-solid-svg-icons/index";
   import { faGithub } from "@fortawesome/free-brands-svg-icons/index";
 
@@ -16,13 +15,10 @@
   import ListMenu from "$com/listMenu.svelte";
   import LightSwitch from "$com/lightSwitch.svelte";
   import { page } from "$app/stores";
-  import { onMount } from "svelte";
-  import { sponsorLink } from "$shared/config";
   import { faUser } from "@fortawesome/free-regular-svg-icons";
   import { modalState } from "$shared/state/modals";
 
   let socials: Array<NavItem>;
-  let showSponser = false;
 
   $: user = $page.data.user;
 
@@ -30,14 +26,12 @@
     {
       title: "Source-code",
       route: "https://github.com/OSINTer-Platform",
-      blank: true,
       icon: faGithub,
+      options: {
+        target: "_blank",
+      },
     },
   ];
-
-  onMount(() => {
-    if (Math.floor(Math.random() * 20) == 0) showSponser = true;
-  });
 </script>
 
 <header
@@ -55,7 +49,7 @@
           $sideOpen = !$sideOpen;
         }}
         class="
-          btn xl:!hidden p-2 rounded-xl
+          btn xl:!hidden p-2
           {$page.data.customSidebar ? '' : 'sm:hidden'}
         "
       >
@@ -77,36 +71,15 @@
     md:gap-8 gap-2
   "
   >
-    {#if showSponser}
-      <a
-        class="btn py-2 px-6 rounded-xl"
-        href={sponsorLink}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Sponsor us
-        <Fa icon={faHandHoldingDollar} />
-      </a>
-    {:else}
-      <ListMenu
-        listOptions={Object.values(navItems)}
-        containerClasses="hidden sm:block"
-      >
-        <button
-          class="
-          btn
-
-          py-2
-          px-6
-
-          rounded-xl
-        "
-        >
-          Navigate
-          <Fa icon={faCaretDown} />
-        </button>
-      </ListMenu>
-    {/if}
+    <ListMenu
+      listOptions={Object.values(navItems)}
+      containerClasses="hidden sm:block"
+    >
+      <button class="btn py-2 px-6 rounded-sm">
+        Navigate
+        <Fa icon={faCaretDown} />
+      </button>
+    </ListMenu>
 
     <LightSwitch />
 
@@ -117,9 +90,9 @@
           class="btn p-2 rounded-full"
           title={social.title}
           href={social.route}
-          target={social.blank ? "_blank" : ""}
           rel="noreferrer noopener"
           data-sveltekit-preload-data="tap"
+          {...social.options}
         >
           <Fa icon={social.icon} class="text-xl" />
         </a>

@@ -37,6 +37,8 @@
 
   <p class="text-xl font-light">
     <span
+      role="tab"
+      tabindex="0"
       on:click={() => (showAsGrid = true)}
       on:keydown={() => (showAsGrid = true)}
       class="
@@ -45,6 +47,8 @@
     >
     /
     <span
+      role="tab"
+      tabindex="0"
       on:click={() => (showAsGrid = false)}
       on:keydown={() => (showAsGrid = false)}
       class="

@@ -1,31 +1,23 @@
 <script lang="ts">
+  import { feedLocalSearch } from "$state/state";
+  import { searchInArticle } from "$lib/common/filter";
+  import { page } from "$app/stores";
+
   import Sidebar from "$com/sidebar/linkList.svelte";
-  import Search from "$inputs/search.svelte";
 
-  import type { SidebarOption } from "$shared/types/internal";
-
-  import { filteredArticles } from "$state/storedArticles";
-  import { localSearch } from "$state/storedArticles";
-
-  let option: SidebarOption;
-  $: option = {
-    id: "articles",
-    list: $filteredArticles.map((article) => ({
-      href: `/article/${article.id}`,
-      label: article.title,
-    })),
-  };
+  $: readArticles = $page.data.readArticles;
 </script>
 
-<Sidebar options={[option]}>
-  <svelte:fragment slot="top">
-    <Search
-      bind:value={$localSearch}
-      placeholder={"Filter saved articles"}
-      containerClass={"m-4"}
-    />
-  </svelte:fragment>
-</Sidebar>
+<Sidebar
+  docs={$readArticles}
+  generateOptionLink={(a) => ({
+    href: `/article/${a.id}`,
+    label: a.title,
+  })}
+  searchFilter={(a, search) => searchInArticle(a, search)}
+  search={feedLocalSearch}
+  type="article"
+/>
 
 <main
   class="

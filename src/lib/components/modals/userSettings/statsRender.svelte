@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
   import type { User } from "$shared/types/userItems";
 
-  $: alreadyRead = $page.data.alreadyRead;
+  $: readArticleIds = $page.data.readArticleIds;
   export let user: User | null;
 </script>
 
@@ -20,9 +20,11 @@
       </span>
     </li>
     <li>
-      Premium access:
+      Subscription:
       <span class="capitalize font-bold">
-        {user.premium > 0}
+        {user.payment.subscription.level.length > 0
+          ? user.payment.subscription.level
+          : "None"}
       </span>
     </li>
     <li>
@@ -31,7 +33,7 @@
       <span class="font-bold">{user.collection_ids.length}</span> collections
     </li>
     <li>
-      <span class="font-bold">{$alreadyRead?.ids.length ?? 0}</span>
+      <span class="font-bold">{$readArticleIds?.length ?? 0}</span>
       already read articles
     </li>
   </ul>

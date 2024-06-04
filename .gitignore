@@ -23,3 +23,4 @@ symlink-from
 build
 src/lib/blog/
 static/blog-images
+todo.txt

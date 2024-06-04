@@ -18,11 +18,11 @@
 
   let similarArticles: ArticleBase[] = [];
 
-  $: user = $page.data.user;
+  $: authorizer = $page.data.checkAuthorization;
 
   onMount(async () => {
     if (!browser) return;
-    if (!$user || $user.premium < 1) return;
+    if (!$authorizer("similar")) return;
 
     const r = await fetch(
       `${PUBLIC_API_BASE}/articles/${encodeURIComponent(article.id)}/similar`
@@ -42,7 +42,7 @@
   <aside class="relative mb-8 sm:mb-0">
     {#if open}
       <main
-        transition:slide|local
+        transition:slide
         class="
         bg-surface-200
         dark:bg-surface-900
@@ -57,7 +57,7 @@
           Related articles:
           <a
             href="/article/{article.id}/similar"
-            class="italic text-sm sm:text-base link-underline"
+            class="italic text-sm sm:text-base link-underline h-min"
             >See all {similarArticles.length}</a
           >
         </h3>

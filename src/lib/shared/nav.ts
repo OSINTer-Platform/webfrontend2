@@ -4,18 +4,16 @@ import {
   faHome,
   faBullhorn,
   faRss,
-  faNewspaper,
-  faMagnifyingGlass,
+  faList,
   faSitemap,
   faQuestion,
   faArrowTrendUp,
   faChartSimple,
-  faHandHoldingDollar,
-} from "@fortawesome/free-solid-svg-icons/index";
-import { sponsorLink } from "./config";
+  faBug,
+} from "@fortawesome/free-solid-svg-icons";
 
 export const navItems: {
-  [key in "information" | "lists" | "ml" | "external"]: Array<
+  [key in "information" | "lists" | "ml"]: Array<
     NavItem & { description: string }
   >;
 } = {
@@ -42,22 +40,23 @@ export const navItems: {
   ],
   lists: [
     {
-      title: "Feeds",
-      description: "Access one of the feeds integrated in OSINTer",
-      route: "/feed",
+      title: "News",
+      description: "Get the latest news from the cybersecurity sphere",
+      route: "/news",
       icon: faRss,
     },
     {
-      title: "Articles",
-      description: "Browse the articles you have previously viewed on OSINTer",
-      route: "/article",
-      icon: faNewspaper,
+      title: "Feeds",
+      description: "Access one of your feeds in OSINTer",
+      route: "/feed",
+      icon: faList,
     },
     {
-      title: "Search",
-      description: "Create your own search-query to gain specific insights",
-      route: "/search",
-      icon: faMagnifyingGlass,
+      title: "CVEs",
+      description:
+        "Keep up to date on the most recent CVE's represented in OSINTer",
+      route: "/cve",
+      icon: faBug,
     },
   ],
   ml: [
@@ -78,14 +77,6 @@ export const navItems: {
       description: "Ask questions about data in OSINTer",
       route: "/assistant",
       icon: faQuestion,
-    },
-  ],
-  external: [
-    {
-      title: "Sponsor us",
-      description: "Sponsor the open-source development of OSINTer",
-      route: sponsorLink,
-      icon: faHandHoldingDollar,
     },
   ],
 };

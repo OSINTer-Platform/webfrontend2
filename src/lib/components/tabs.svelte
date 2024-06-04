@@ -11,7 +11,7 @@
     <label
       class="
 			px-4 py-2
-			rounded-t-md
+			rounded-t-sm
 
 			cursor-pointer
 

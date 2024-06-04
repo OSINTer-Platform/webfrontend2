@@ -1,5 +1,14 @@
 import { browser } from "$app/environment";
-import { get, writable, type Updater, type Writable } from "svelte/store";
+import type { ArticleBase, CVEBase } from "$shared/types/api";
+import type { Readable } from "svelte/motion";
+import {
+  derived,
+  get,
+  writable,
+  type Updater,
+  type Writable,
+} from "svelte/store";
+import { sortDocumentsById } from "./sort";
 
 export interface ListStore<T> extends Writable<T[]> {
   remove: () => T | undefined;
@@ -7,12 +16,24 @@ export interface ListStore<T> extends Writable<T[]> {
   prepend: (el: T) => void;
 }
 
-export interface Updatable<T> extends Writable<T> {
-  autoUpdate: () => void;
+export interface Updatable<R, T = void> extends Writable<Promise<R>> {
+  autoUpdate: (arg?: T) => Promise<R>;
 }
 
-export function listStore<T>(initialVal: T[]): ListStore<T> {
-  const { subscribe, set, update } = writable(initialVal);
+export interface BackgroundUpdatable<R, T = void> extends Writable<R> {
+  autoUpdate: (arg?: T) => Promise<R>;
+}
+
+export interface SetLike<T> extends Writable<T[]> {
+  remove: () => T | undefined;
+  append: (el: T, moveIfPresent?: boolean) => void;
+  prepend: (el: T, moveIfPresent?: boolean) => void;
+}
+
+export function listStore<T>(initialVal: T[] | Writable<T[]>): ListStore<T> {
+  const { subscribe, set, update } = Array.isArray(initialVal)
+    ? writable(initialVal)
+    : initialVal;
 
   const remove = () => {
     let el: T | undefined;
@@ -36,15 +57,38 @@ export function listStore<T>(initialVal: T[]): ListStore<T> {
   };
 }
 
-export async function updatable<T>(
-  updateFn: () => Promise<T>
-): Promise<Updatable<T>> {
-  const initialVal = await updateFn();
+export function updatable<T, R>(
+  updateFn: (arg?: T) => Promise<R>,
+  initialArg?: T
+): Updatable<R, T> {
+  const initialVal = updateFn(initialArg);
   const { subscribe, set, update } = writable(initialVal);
 
-  const autoUpdate = async () => {
-    const updateVal = await updateFn();
+  const autoUpdate = (arg?: T) => {
+    const updatePromise = updateFn(arg);
+    set(updatePromise);
+    return updatePromise;
+  };
+
+  return {
+    subscribe,
+    set,
+    update,
+    autoUpdate,
+  };
+}
+
+export async function backgroundUpdatable<T, R>(
+  updateFn: (arg?: T) => Promise<R>,
+  initialArg?: T
+): Promise<BackgroundUpdatable<R, T>> {
+  const initialVal = await updateFn(initialArg);
+  const { subscribe, set, update } = writable(initialVal);
+
+  const autoUpdate = async (arg?: T) => {
+    const updateVal = await updateFn(arg);
     set(updateVal);
+    return updateVal;
   };
 
   return {
@@ -199,5 +243,73 @@ export function cookieStore<T>(
     subscribe: internal.subscribe,
     set: set,
     update: update,
+  };
+}
+
+export function documentCache<DocumentType extends ArticleBase | CVEBase>(
+  searchFn: (ids: string[], sort: boolean) => Promise<DocumentType[]>,
+  ids: Readable<string[]>,
+  onMissing: (ids: string[]) => void
+): Readable<Promise<DocumentType[]>> {
+  return derived(
+    ids,
+    ($ids, _, update) => {
+      update(async (existingDocsPromise) => {
+        const existingDocs = await existingDocsPromise;
+        const filteredDocs = existingDocs.filter((doc) =>
+          $ids.includes(doc.id)
+        );
+
+        const docIds = filteredDocs.map((doc) => doc.id);
+
+        const newIds = $ids.filter((id) => !docIds.includes(id));
+        const newDocs = newIds.length > 0 ? await searchFn(newIds, false) : [];
+
+        const missingIds =
+          newIds.length != newDocs.length
+            ? newIds.filter((id) => !newDocs.some((doc) => doc.id == id))
+            : [];
+
+        if (missingIds.length > 0) onMissing(missingIds);
+
+        return sortDocumentsById(
+          $ids,
+          [...newDocs, ...filteredDocs],
+          (doc) => doc.id
+        );
+      });
+    },
+    Promise.resolve([] as DocumentType[])
+  );
+}
+
+export function setLike<T>(initialVal: T[] | Writable<T[]>): SetLike<T> {
+  const internal = listStore(initialVal);
+
+  const prepend = (el: T, moveIfPresent = true) =>
+    internal.update((list) => {
+      const includes = list.includes(el);
+      if (includes && moveIfPresent)
+        return [el, ...list.filter((v) => v !== el)];
+      else if (!includes) return [el, ...list];
+      else return list;
+    });
+
+  const append = (el: T, moveIfPresent = true) =>
+    internal.update((list) => {
+      const includes = list.includes(el);
+      if (includes && moveIfPresent)
+        return [...list.filter((v) => v !== el), el];
+      else if (!includes) return [...list, el];
+      else return list;
+    });
+
+  return {
+    subscribe: internal.subscribe,
+    set: internal.set,
+    update: internal.update,
+    remove: internal.remove,
+    append,
+    prepend,
   };
 }

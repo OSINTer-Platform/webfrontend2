@@ -5,9 +5,10 @@
   import SvelteMarkdown from "svelte-markdown";
   import Fa from "svelte-fa";
 
-  import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+  import { faRectangleList } from "@fortawesome/free-solid-svg-icons";
   import { getTimespan } from "$lib/common/math";
   import { slide } from "svelte/transition";
+  import { createSearchFromTag } from "$lib/common/searchQuery";
 
   import type { ArticleBase } from "$shared/types/api";
 
@@ -19,8 +20,6 @@
 
   $: read = readArticles.includes(article.id);
 </script>
-
-<hr class="border-tertiary-500 dark:text-surface-500 my-3" />
 
 <Link {article} {articleList}>
   <article
@@ -44,7 +43,8 @@
       [&:hover>button]:block
   "
   >
-    <div
+    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+    <figure
       on:click|preventDefault|stopPropagation
       on:keydown|preventDefault|stopPropagation
       class="
@@ -89,7 +89,7 @@
       />
 
       <CollectionOverlay {article} overlayClass="top-12" iconClass="text-5xl" />
-    </div>
+    </figure>
 
     <div class="flex flex-col justify-center">
       <div
@@ -145,10 +145,7 @@
         <footer class="flex flex-wrap gap-3 mt-6">
           {#each article.tags.automatic as tag}
             <a
-              on:click|stopPropagation
-              href="/feed/search?sort_by=publish_date&search_term={encodeURIComponent(
-                tag
-              )}"
+              href={createSearchFromTag(tag)}
               class="
                 py-1 px-4 rounded-full
                 shrink-0
@@ -186,7 +183,7 @@
           (showSummary = !showSummary)}
       >
         <Fa
-          icon={faCaretDown}
+          icon={faRectangleList}
           class="
           mx-auto
           transition-transform duration-300

@@ -6,7 +6,7 @@
   export let hovering: string;
 </script>
 
-<div class="overflow-auto">
+<div class="overflow-y-auto scrollbar-hover">
   {#each Object.entries(articleCategories) as [profile, { name }]}
     <label
       class="
@@ -29,7 +29,9 @@
         class="w-4 checkbox"
       />
 
-      <span class="font-normal text-sm text-black/60">{name}</span>
+      <span class="font-normal text-sm text-black/60 dark:text-white/60">
+        {name}
+      </span>
     </label>
   {/each}
 </div>

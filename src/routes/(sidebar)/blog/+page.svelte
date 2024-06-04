@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { PageData } from "./$types";
   import FullLogo from "$assets/fullLogo.png";
+  import { getReadableDate } from "$lib/common/math";
   export let data: PageData;
 </script>
 
@@ -26,13 +27,6 @@
 
   <section class="flex flex-col gap-6">
     {#each data.postList as post}
-      {@const readableDate = post.date.toLocaleDateString("en-DK", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })}
-
       <a
         href={post.route}
         class="
@@ -71,7 +65,9 @@
           />
           <div class="md:py-4 md:flex flex-col justify-between">
             <div>
-              <time class="text-sm font-light">{readableDate}</time>
+              <time class="text-sm font-light"
+                >{getReadableDate(post.date)}</time
+              >
               <h2 class="md:text-3xl text-2xl font-semibold mt-2">
                 {post.title}
               </h2>

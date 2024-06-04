@@ -14,11 +14,20 @@
 
   $: href = $renderExternal ? article.url : `/article/${article.id}`;
 
-  const showArticleModal = (e: MouseEvent) => {
-    const small = window.matchMedia(
-      "only screen and (max-width: 60rem)"
-    ).matches;
-    if (small || e.ctrlKey || $renderExternal) {
+  const showArticleModal = (
+    e: MouseEvent & {
+      currentTarget: EventTarget & HTMLAnchorElement;
+    }
+  ) => {
+    if (
+      e.target &&
+      e.target !== e.currentTarget &&
+      "tagName" in e.target &&
+      e.target.tagName == "A"
+    )
+      return;
+
+    if (e.ctrlKey || $renderExternal) {
       return;
     }
 
@@ -31,7 +40,7 @@
 <a
   on:click={(e) => showArticleModal(e)}
   on:contextmenu|preventDefault={() => goto(`/article/${article.id}`)}
-  data-sveltekit-preload-data="off"
+  data-sveltekit-preload-data="tap"
   {href}
   class={classes}
   {title}

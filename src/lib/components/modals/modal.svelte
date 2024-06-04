@@ -7,31 +7,39 @@
   export let style = "";
   export let border = true;
 
-  const resetModal = () => modalState.remove();
+  const resetModal = (
+    e:
+      | MouseEvent
+      | (KeyboardEvent & {
+          currentTarget: EventTarget & HTMLDivElement;
+        })
+  ) => {
+    if (e.target === e.currentTarget) modalState.remove();
+  };
 </script>
 
 <div
+  role="presentation"
   on:click={resetModal}
   on:keydown={resetModal}
-  transition:fade={{ duration: 200 }}
+  transition:fade|global={{ duration: 200 }}
   class="
-    z-50 absolute
+    z-40 absolute
     h-screen w-screen
     flex flex-col items-center justify-center
     bg-black/60
   "
 >
   <div
-    on:click|stopPropagation
-    on:keydown|stopPropagation
-    in:fly={{ y: 50 }}
-    out:fly={{ y: 50 }}
+    role="presentation"
+    in:fly|global={{ y: 50 }}
+    out:fly|global={{ y: 50 }}
     class="
       overflow-auto
       cursor-auto
       {classes}
 
-      {border ? 'rounded-xl border border-tertiary-500' : ''}
+      {border ? 'border border-tertiary-500' : ''}
     "
     {style}
   >

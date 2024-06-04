@@ -47,3 +47,12 @@ export function getMonths(firstDate: Date): ReadableMonths {
     if (firstDate > date) return months;
   }
 }
+
+export function getReadableDate(time: Date | number | string): string {
+  const date = typeof time !== "object" ? new Date(time) : time;
+  return date.toLocaleDateString("en", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}

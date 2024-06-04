@@ -29,7 +29,7 @@
     })
   );
 
-  $: alreadyRead = $page.data?.alreadyRead;
+  $: readArticleIds = $page.data.readArticleIds;
 
   let actionButtons: {
     icon: IconDefinition;
@@ -107,8 +107,8 @@
             border-surface-400 border-y
             hover:border-primary-400 hover:dark:border-primary-900
             transition-colors duration-75"
-        class:opacity-70={$alreadyRead
-          ? $alreadyRead.ids.includes(article.id)
+        class:opacity-70={$readArticleIds
+          ? $readArticleIds.includes(article.id)
           : false}
         title={article.description}
       >

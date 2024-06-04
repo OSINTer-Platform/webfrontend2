@@ -1,10 +1,4 @@
-import type SvelteMarkdown from "svelte-markdown";
-
-export type ParsedEvent = SvelteMarkdown["$$events_def"]["parsed"];
-type TokensList = ParsedEvent["detail"]["tokens"];
-
-type UnpackTokenList<L> = L extends (infer T)[] ? T : L;
-type Token = UnpackTokenList<TokensList>;
+import { marked } from "marked";
 
 export type HeadingList = Array<{
   text: string;
@@ -12,14 +6,13 @@ export type HeadingList = Array<{
   depth: number;
 }>;
 
-function extractTitleText(token: Token): string {
-  if (
-    token.type == "text" ||
-    !(Array.isArray(token.tokens) && token.tokens.length > 0)
-  ) {
+function extractTitleText(token: marked.Token): string {
+  if (token.type == "text" || ("tokens" in token && token.tokens.length < 1)) {
     return token.raw ?? token.text;
   } else {
-    return extractTitleText(token.tokens[0]);
+    if ("tokens" in token && token.tokens.length > 0)
+      return extractTitleText(token.tokens[0]);
+    return "";
   }
 }
 
@@ -31,11 +24,11 @@ function generateHeaderID(text: string): string {
   return text;
 }
 
-export function MDtoToC(e: ParsedEvent): HeadingList {
+export function MDtoToC(tokens: marked.Token[]): HeadingList {
   let lowestDepth: number = 6;
   const list: HeadingList = [];
 
-  for (const token of e.detail.tokens) {
+  for (const token of tokens) {
     if (token.type == "heading") {
       const titleText = extractTitleText(token);
 

@@ -1,9 +1,26 @@
 * {
-  &::-webkit-scrollbar {
-    width: 4px;
+  --scrollbar-width: 10px;
 
+  &::-webkit-scrollbar {
+    width: var(--scrollbar-width);
     border: none;
     @apply bg-surface-300 dark:bg-surface-600;
+  }
+
+  &.scrollbar-thin {
+    --scrollbar-width: 4px;
+  }
+
+  &.scrollbar-hover {
+    &::-webkit-scrollbar {
+      width: 0px;
+    }
+
+    &:hover {
+      &::-webkit-scrollbar {
+        width: var(--scrollbar-width);
+      }
+    }
   }
 
   &::-webkit-scrollbar-thumb {
@@ -33,25 +50,44 @@
 .checkbox {
   @apply aspect-square
 
-  bg-transparent
-  checked:bg-primary-500/50
-  focus:bg-transparent
-  checked:focus:bg-primary-500/50
-
-  focus:ring-0
-  focus:shadow-none
-  focus:ring-offset-0
-
-  rounded-sm
+  text-transparent bg-current
+  transition-colors
 
   cursor-pointer
   form-checkbox;
+
+  &:focus {
+    @apply bg-current;
+  }
+
+  &:hover {
+    @apply bg-current;
+  }
+
+  &:checked {
+    @apply bg-primary-500/50;
+
+    &:focus {
+      @apply bg-primary-500/50;
+    }
+
+    &:hover {
+      @apply bg-primary-500/60;
+    }
+  }
+
+  &:focus {
+    @apply ring-0 shadow-none ring-offset-0;
+  }
 }
 
 .link-underline {
+  @apply relative;
+
   &:after {
     content: "";
     @apply block
+    absolute bottom-0
 		w-full h-px
 
 		scale-x-0 origin-bottom-right
@@ -59,7 +95,9 @@
 		bg-current;
   }
 
-  &:hover:after {
+  &:hover:after,
+  &:focus:after,
+  &:focus-within:after {
     @apply scale-x-100 origin-bottom-left;
   }
 }
@@ -90,8 +128,8 @@ div.input {
   input.input {
     @apply w-full h-12 pl-4
 
-    appearance-none rounded-lg
-    border border-tertiary-700 dark:border-surface-600
+    appearance-none
+    border border-surface-300 dark:border-surface-400/50
     outline outline-2 outline-surface-100 dark:outline-surface-800
     bg-surface-50 dark:bg-surface-500
 
@@ -101,7 +139,7 @@ div.input {
 
     &:hover:not([disabled]):not([readonly]),
     &:focus:not([disabled]):not([readonly]) {
-      @apply border-white dark:border-surface-600 outline-primary-500/75;
+      @apply border-surface-100 dark:border-surface-600 outline-primary-500/75;
     }
 
     &:hover:not([disabled]):not([readonly]) ~ label,
@@ -153,7 +191,7 @@ div.input {
 
 div.article-content-render {
   * {
-    @apply max-w-full mb-6;
+    @apply max-w-full mb-6 break-words;
   }
 
   ul,
@@ -169,25 +207,48 @@ div.article-content-render {
   p,
   a,
   li {
-    @apply text-sm sm:text-base font-light sm:dark:font-medium;
+    @apply text-sm sm:text-base;
   }
 
   h1 {
-    @apply text-4xl;
+    @apply text-4xl font-bold;
+    span,
+    p,
+    a {
+      @apply text-4xl font-bold;
+    }
   }
 
   h2 {
-    @apply text-3xl font-normal;
+    @apply text-3xl font-bold;
+
+    span,
+    p,
+    a {
+      @apply text-3xl font-bold;
+    }
   }
 
   h3 {
-    @apply text-2xl font-light;
+    @apply text-2xl font-normal;
+
+    span,
+    p,
+    a {
+      @apply text-2xl font-normal;
+    }
   }
 
   h4,
   h5,
   h6 {
-    @apply text-xl font-thin;
+    @apply text-xl font-normal;
+
+    span,
+    p,
+    a {
+      @apply text-xl font-normal;
+    }
   }
 
   a {
@@ -246,5 +307,42 @@ div.article-content-render {
     td {
       @apply p-4 text-sm md:text-base;
     }
+  }
+}
+
+label.stripe-input {
+  @apply text-black/70 dark:text-white;
+  div {
+    @apply flex w-full py-2 px-3 rounded-md
+    bg-white dark:bg-gray-900
+    shadow shadow-gray-400/10 dark:shadow-black
+    border border-black/0
+
+    focus-within:shadow-[0_0_0_3px]
+    focus-within:border-primary-300
+    focus-within:shadow-primary-600/30
+
+    dark:focus-within:border-primary-900
+    dark:focus-within:shadow-primary-600/20
+
+    transition-all;
+
+    &.error {
+      @apply border-2 border-error-500;
+
+      input,
+      textarea {
+        @apply text-error-400;
+      }
+    }
+
+    input,
+    textarea {
+      @apply grow bg-transparent !outline-none
+      placeholder-gray-400 dark:placeholder-gray-200/75;
+    }
+  }
+  p.error {
+    @apply text-error-500 dark:text-error-400;
   }
 }

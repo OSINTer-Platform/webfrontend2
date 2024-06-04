@@ -4,7 +4,7 @@
     SignificantTermAgg,
     TermAgg,
   } from "$lib/common/elasticsearch/aggregations";
-  import type { ClusterBase } from "$shared/types/api";
+  import type { CVEBase, ClusterBase } from "$shared/types/api";
 
   import * as d3 from "d3";
 
@@ -15,12 +15,22 @@
   import { getBaseArticles } from "$lib/common/elasticsearch/search";
   import { spawnArticleModal } from "$lib/common/state";
   import { page } from "$app/stores";
+  import { createSearchFromTag } from "$lib/common/searchQuery";
 
   $: renderExternal = $page.data.settings.renderExternal;
 
   export let data: PageData;
 
-  const convertTermAggs = (agg: TermAgg | SignificantTermAgg) => {
+  type Item = {
+    title: string;
+    description: string;
+    score: number;
+    large: boolean;
+    href: string;
+    action: () => void;
+  };
+
+  const convertTermAggs = (agg: TermAgg | SignificantTermAgg): Item[] => {
     const getScore = (bucket: { score?: number; doc_count: number }) =>
       bucket.score ?? bucket.doc_count;
 
@@ -37,9 +47,7 @@
       description: getDescription(bucket),
       score: scale(getScore(bucket)),
       large: false,
-      href: `/feed/search?sort_by=publish_date&highlight=true&search_term=${encodeURIComponent(
-        `"${bucket.key}"`
-      )}`,
+      href: createSearchFromTag(bucket.key),
       action: () => {
         modalState.append({
           modalType: "article-list",
@@ -57,13 +65,16 @@
     }));
   };
 
-  const convertClusters = (
-    items: { title: string; description: string; score: number }[]
-  ) =>
-    items
+  async function convertClusters(
+    items: { title: string; description: string; score: number }[],
+    clusterPromise: Promise<ClusterBase[]>
+  ) {
+    const clusters = await clusterPromise;
+
+    return items
       .map((item): [typeof item, ClusterBase | undefined] => [
         item,
-        data.clusters.find((c) => c.id == item.title),
+        clusters.find((c) => c.id == item.title),
       ])
       .map(([{ title, description, score }, cluster]) => ({
         large: true,
@@ -85,6 +96,25 @@
         description,
         score,
       }));
+  }
+
+  async function convertCves(items: Item[], cvePromise: Promise<CVEBase[]>) {
+    const cves = await cvePromise;
+
+    return items
+      .map((item): [typeof item, CVEBase | undefined] => [
+        item,
+        cves.find((c) => c.cve == item.title),
+      ])
+      .map(([{ title, description, score, href, action }, cve]) => ({
+        large: true,
+        title: cve?.title ?? title,
+        description: title + " | " + description,
+        score,
+        href,
+        action,
+      }));
+  }
 
   const convertArticles = (
     articles: { title: string; id: string; read_times: number; url: string }[],
@@ -112,11 +142,14 @@
     },
     {
       title: "Common CVE's",
-      items: convertTermAggs(data.metrics.limited.cves),
+      items: convertCves(convertTermAggs(data.metrics.limited.cves), data.cves),
     },
     {
       title: "Emerging topics",
-      items: convertClusters(convertTermAggs(data.metrics.limited.clusters)),
+      items: convertClusters(
+        convertTermAggs(data.metrics.limited.clusters),
+        data.clusters
+      ),
     },
     {
       title: "Most Read Articles",
@@ -152,11 +185,16 @@
   >
     <Lower
       startDate={data.startDate}
+      endDate={data.endDate}
       significantTags={data.metrics.limited.new_tags}
       cves={data.metrics.limited.cves}
       globalTags={data.metrics.global.tags}
     />
   </section>
 
-  <Controls startDate={data.startDate} />
+  <Controls
+    startDate={data.startDate}
+    endDate={data.endDate}
+    extraElCount={0}
+  />
 </main>

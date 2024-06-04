@@ -11,20 +11,24 @@
   import type { Writable } from "svelte/store";
 
   export let startDate: Date;
+  export let endDate: Date;
+
   export let keywords: Writable<string[]>;
   let mounted = false;
 
-  $: trends = updateTrends($keywords, startDate, mounted);
+  $: trends = updateTrends($keywords, startDate, endDate, mounted);
 
   const getArticles = async (
     keyword: string,
-    startDate: Date
+    startDate: Date,
+    endDate: Date
   ): Promise<[string, Pick<FullArticle, "id" | "publish_date">[]]> => [
     keyword,
     await searchArticles(
       {
         limit: 0,
         first_date: startDate.toISOString(),
+        last_date: endDate.toISOString(),
         search_term: `"${keyword}"`,
         sort_order: "asc",
         sort_by: "publish_date",
@@ -36,18 +40,24 @@
   async function updateTrends(
     keywords: string[],
     startDate: Date,
+    endDate: Date,
     mounted: boolean
   ): Promise<Trend[]> {
     if (!mounted) return [];
 
     const findCached = (keyword: string, cache: Trend[]) =>
-      cache.find((t) => t.name === keyword && t.queryDate === startDate);
+      cache.find(
+        (t) =>
+          t.name === keyword &&
+          t.startDate === startDate &&
+          t.endDate === endDate
+      );
 
     const cached = await trends;
 
     const queries = keywords
       .filter((w) => findCached(w, cached) === undefined)
-      .map((w) => getArticles(w, startDate));
+      .map((w) => getArticles(w, startDate, endDate));
 
     const results = await Promise.all(queries);
     const cachedResults = keywords
@@ -58,7 +68,8 @@
       ...cachedResults,
       ...results.map(([keyword, articles]) => ({
         name: keyword,
-        queryDate: startDate,
+        startDate,
+        endDate,
         trend: articles.map((a) => new Date(a.publish_date)),
       })),
     ];
@@ -73,5 +84,5 @@
 {#await trends}
   <Loader text="Loading stats" />
 {:then trends}
-  <Linechart {trends} {startDate} {keywords} />
+  <Linechart {trends} {startDate} {endDate} {keywords} />
 {/await}

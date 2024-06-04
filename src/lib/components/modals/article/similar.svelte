@@ -12,6 +12,7 @@
     faSitemap,
   } from "@fortawesome/free-solid-svg-icons";
   import { goto } from "$app/navigation";
+  import { getReadableDate } from "$lib/common/math";
 
   export let mainArticle: FullArticle;
   export let articles: ArticleBase[];
@@ -59,7 +60,7 @@
 
 <section
   class="
-  grid grid-cols-3
+  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3
 "
 >
   {#each articleList as article}
@@ -89,7 +90,7 @@
       "
         >
           <span>{article.source}</span>
-          <span>{new Date(article.publish_date).toLocaleDateString()}</span>
+          <span>{getReadableDate(article.publish_date)}</span>
         </div>
       </header>
 

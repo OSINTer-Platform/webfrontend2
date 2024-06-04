@@ -7,6 +7,8 @@
 
   export let lines: Line[];
   export let hoveredLines: string[] = [];
+  $: hoveredLines = hoveredLines ?? [];
+  // See https://github.com/sveltejs/svelte/issues/11647
 
   export let xDomain: undefined | [number, number] = undefined;
   export let yDomain: undefined | [number, number] = undefined;
@@ -21,7 +23,7 @@
   export let containerClass = "";
   export let yAxisText = "";
 
-  const dispatch = createEventDispatcher<{ click: Line }>();
+  const dispatch = createEventDispatcher<{ click: Line | undefined }>();
 
   let svg: SVGElement;
   let tipSvg: SVGElement; // Used for displaying tooltips

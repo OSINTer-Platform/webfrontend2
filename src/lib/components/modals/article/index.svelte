@@ -21,13 +21,14 @@
   export let articleList: Array<{ id: string }>;
   export let topModal: boolean;
 
-  $: user = $page.data.user;
-  $: premium = $user && $user.premium > 0;
+  $: authorizer = $page.data.checkAuthorization;
+
   let similarArticles: Promise<ArticleBase[]> | null;
-  $: similarArticles = premium ? getSimilar(article.id) : null;
+  $: similarArticles = $authorizer("similar") ? getSimilar(article.id) : null;
 
   let switchDirection: "left" | "right" = "left";
   let blockSwitching: boolean = false;
+  let transitioning = false;
 
   async function getSimilar(articleID: string) {
     const r = await fetch(
@@ -54,7 +55,7 @@
       switchDirection = "right";
     }
 
-    if (!newArticleId) return;
+    if (!newArticleId || !topModal) return;
 
     const newArticle: FullArticle | null = await fetch(
       `${PUBLIC_API_BASE}/articles/${newArticleId}/content`
@@ -63,7 +64,9 @@
       return r.json();
     });
 
-    if (!newArticle || !topModal) return;
+    if (!newArticle) return;
+
+    $page.data.readArticleIds.prepend(newArticle.id, true);
 
     modalState.update((modals) => {
       const topModal = modals.pop();
@@ -75,11 +78,6 @@
 
       return [...modals, topModal];
     });
-
-    $page.data.userCollections.autoUpdate();
-    $page.data.alreadyRead.autoUpdate();
-
-    await new Promise((r) => setTimeout(r, 400)); // Wait for transitions
   }
 
   const buttonActions = [
@@ -94,11 +92,29 @@
       },
     },
   ];
+
+  function flyOnBlockSwitch(node: Element, options: { in: boolean }) {
+    if (blockSwitching) {
+      let x = 0;
+
+      if (options.in) x = switchDirection === "right" ? 200 : -200;
+      else x = switchDirection === "left" ? 200 : -200;
+
+      return fly(node, {
+        delay: options.in ? 100 : 0,
+        duration: 200,
+        easing: quintInOut,
+        x,
+      });
+    }
+
+    return {};
+  }
 </script>
 
 <svelte:window
   on:keydown={async (e) => {
-    if (!blockSwitching && topModal) {
+    if (!blockSwitching && !transitioning && topModal) {
       blockSwitching = true;
       await handleKeypress(e);
       blockSwitching = false;
@@ -108,25 +124,19 @@
 
 <Modal
   border={false}
-  class="w-[80vw] h-[90vh] bg-surface-200 dark:bg-surface-700"
+  class="w-[90vw] lg:w-[80vw] h-[90vh] bg-surface-200 dark:bg-surface-700"
 >
   {#key article}
-    <main class="w-full h-full overflow-y-auto">
+    <main class="w-full h-full overflow-y-auto overflow-x-hidden">
       <article
         class="
-          py-8 px-16 mx-auto max-w-[100ch]
+          p-8 md:px-16 mx-auto max-w-[100ch]
           bg-surface-100 dark:bg-surface-800
       "
-        in:fly|local={{
-          duration: blockSwitching ? 400 : 0,
-          easing: quintInOut,
-          x: switchDirection === "right" ? 200 : -200,
-        }}
-        out:fly|local={{
-          duration: blockSwitching ? 200 : 0,
-          easing: quintInOut,
-          x: switchDirection === "left" ? 200 : -200,
-        }}
+        on:outrostart={() => (transitioning = true)}
+        on:introend={() => (transitioning = false)}
+        in:flyOnBlockSwitch={{ in: true }}
+        out:flyOnBlockSwitch={{ in: false }}
       >
         <ArticleRender
           {article}

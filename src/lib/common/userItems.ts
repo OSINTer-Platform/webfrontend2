@@ -1,11 +1,10 @@
-import { goto } from "$app/navigation";
+import { goto, invalidate, invalidateAll } from "$app/navigation";
 import { PUBLIC_API_BASE } from "$env/static/public";
-import type { SearchQuery } from "$shared/types/api";
-import type { Collection, Feed, ItemBase, User } from "$shared/types/userItems";
+import type { ArticleSearchQuery } from "$shared/types/api";
+import type { Collection, Feed, ItemBase } from "$shared/types/userItems";
 
-export const sanitizeQuery = (query: SearchQuery) => {
+export const sanitizeQuery = (query: ArticleSearchQuery) => {
   const keys = [
-    "sort_by",
     "sort_order",
     "search_term",
     "first_date",
@@ -20,18 +19,28 @@ export const sanitizeQuery = (query: SearchQuery) => {
   return query;
 };
 
-export const removeable = (user: User | null, item: ItemBase) => {
-  if (!user) return false;
-  if (user.already_read == item._id) return false;
+type NavDest =
+  | "none"
+  | "invalidateAll"
+  | `invalidate:${string}`
+  | "current"
+  | "new";
 
-  return true;
-};
-
-type NavDest = "none" | "current" | "new";
+async function nav(
+  dest: NavDest,
+  id: string,
+  genUrl = (id: string) => `/feed/${id}`
+) {
+  if (dest === "current") await goto(genUrl(id), { invalidateAll: true });
+  else if (dest === "new") window.open(genUrl(id), "_blank");
+  else if (dest === "invalidateAll") await invalidateAll();
+  else if (dest.startsWith("invalidate:"))
+    await invalidate(dest.split(":").slice(1).join(":"));
+}
 
 export function createItem(
   feedName: string,
-  contents: SearchQuery,
+  contents: ArticleSearchQuery,
   type: "feed",
   navigate?: NavDest,
   subscribe?: boolean
@@ -46,7 +55,7 @@ export function createItem(
 
 export async function createItem(
   feedName: string,
-  contents: SearchQuery | string[],
+  contents: ArticleSearchQuery | string[],
   type: "feed" | "collection",
   navigate: NavDest = "none",
   subscribe: boolean = true
@@ -66,11 +75,7 @@ export async function createItem(
 
   if (r.ok) {
     const item: Feed | Collection = await r.json();
-
-    if (navigate === "current")
-      await goto(`/feed/${item._id}`, { invalidateAll: true });
-    else if (navigate === "new") window.open(`/feed/${item._id}`, "_blank");
-
+    await nav(navigate, item._id);
     return item;
   } else {
     console.error(
@@ -81,7 +86,7 @@ export async function createItem(
 
 export function updateItem(
   itemId: string,
-  contents: SearchQuery,
+  contents: ArticleSearchQuery,
   type: "feed",
   navigate?: NavDest
 ): Promise<Feed | undefined>;
@@ -94,7 +99,7 @@ export function updateItem(
 
 export async function updateItem(
   itemId: string,
-  contents: SearchQuery | string[],
+  contents: ArticleSearchQuery | string[],
   type: "feed" | "collection",
   navigate: NavDest = "none"
 ): Promise<Feed | Collection | undefined> {
@@ -108,11 +113,7 @@ export async function updateItem(
 
   if (r.ok) {
     const item: Feed | Collection = await r.json();
-
-    if (navigate === "current")
-      await goto(`/feed/${itemId}`, { invalidateAll: true });
-    else if (navigate === "new") window.open(`/feed/${itemId}`, "_blank");
-
+    await nav(navigate, item._id);
     return item;
   } else {
     console.error(
@@ -136,9 +137,7 @@ export const changeName = async (
   );
 
   if (r.ok) {
-    if (navigate === "current")
-      await goto(`/feed/${item._id}`, { invalidateAll: true });
-    else if (navigate === "new") window.open(`/feed/${item._id}`, "_blank");
+    await nav(navigate, item._id);
     return true;
   } else {
     console.error(
@@ -146,4 +145,22 @@ export const changeName = async (
     );
     return false;
   }
+};
+
+export const modifySubscription = async (
+  item: ItemBase,
+  subscribe: boolean,
+  navigate: NavDest = "none"
+): Promise<boolean> => {
+  const r = await fetch(
+    `${PUBLIC_API_BASE}/my/${item.type}s/subscription/${item._id}`,
+    { method: subscribe ? "PUT" : "DELETE" }
+  );
+
+  if (r.ok) {
+    await nav(navigate, item._id, (id: string) =>
+      subscribe ? `/feed/${id}` : "/feed"
+    );
+    return true;
+  } else return false;
 };

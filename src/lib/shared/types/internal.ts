@@ -3,16 +3,18 @@ import type {
   ArticleBase,
   FullArticle,
   ArticleCategories,
-  SearchQuery,
+  ArticleSearchQuery,
 } from "./api";
+import type { ComponentType, SvelteComponent } from "svelte";
 
 export type ArticleListRender = "large" | "title";
 
-export interface Inbuilt {
+export interface InbuiltFeed {
   id: string;
   title: string;
   desc: string;
-  url: URL;
+  query: ArticleSearchQuery;
+  type: "timecontrol" | "other";
 }
 
 export interface HeaderModOptions {
@@ -26,9 +28,9 @@ export interface HeaderModOptions {
 export type NavItem = {
   title: string;
   description?: string;
-  blank?: boolean;
   route: string;
   icon: IconDefinition;
+  options?: { [key: string]: string };
 };
 
 export type SidebarOption = {
@@ -41,16 +43,12 @@ export type SidebarOption = {
   }>;
 };
 
-export interface UserItemSidebarOption extends SidebarOption {
-  id: "inbuilts" | "feeds" | "collections" | "clusters";
-}
-
 export type Modal = (
   | {
       modalType: "search";
       modalContent: {
-        query?: SearchQuery;
-        searchAction?: (q: SearchQuery) => void;
+        query?: ArticleSearchQuery;
+        searchAction?: (q: ArticleSearchQuery) => void;
         searchText?: string;
       };
     }
@@ -90,20 +88,54 @@ export type Modal = (
       modalContent: {
         type: "info" | "success" | "warning" | "error";
         title: string;
-        description: string;
+        description: string | string[];
         options:
           | {
               text: string;
               type: "primary" | "secondary" | "yes" | "no" | "cancel";
-              action: () => void;
+              action: () => boolean | void | Promise<boolean> | Promise<void>;
             }[]
-          | (() => void);
+          | (() => boolean | void | Promise<boolean> | Promise<void>);
       };
     }
   | {
       modalType: "survey";
       modalContent: {
         version: number;
+      };
+    }
+  | {
+      modalType: "collect-payment";
+      modalContent: {
+        title?: string;
+        clientSecret?: string;
+      };
+    }
+  | {
+      modalType: "processing";
+      modalContent: {
+        process: Promise<any>;
+        text?: string;
+      };
+    }
+  | {
+      modalType: "actions";
+      modalContent: {
+        options: {
+          action: () => boolean | void | Promise<boolean> | Promise<void>;
+          text: string;
+          icon?: IconDefinition;
+        }[];
+      };
+    }
+  | {
+      modalType: "custom";
+      modalContent: {
+        data?: any;
+        class?: string;
+        component: ComponentType<
+          SvelteComponent<{ modalId: string; data?: any }>
+        >;
       };
     }
 ) & { id: string };

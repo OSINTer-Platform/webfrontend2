@@ -2,11 +2,15 @@
   import Switch from "$inputs/switch.svelte";
   import OptionSection from "./optionSection.svelte";
 
-  import type { SearchQuery, SortBy, SortOrder } from "$shared/types/api";
+  import type {
+    ArticleSearchQuery,
+    ArticleSortBy,
+    SortOrder,
+  } from "$shared/types/api";
   import Datetime from "$inputs/datetime.svelte";
   import { page } from "$app/stores";
 
-  const sortBy: Array<{ value: SortBy; name: string }> = [
+  const sortBy: Array<{ value: ArticleSortBy; name: string }> = [
     { value: "", name: "Best Match" },
     { value: "publish_date", name: "Publish Date" },
     { value: "read_times", name: "Read Times" },
@@ -22,7 +26,7 @@
 
   let limitEnabled = true;
 
-  export let searchQuery: SearchQuery;
+  export let searchQuery: ArticleSearchQuery;
 
   function limitEnabledChange(e: Event) {
     searchQuery.limit = (e.target as HTMLInputElement).checked ? 100 : 0;

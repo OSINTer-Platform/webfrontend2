@@ -53,7 +53,7 @@
   </button>
 </div>
 
-<div class="overflow-auto">
+<div class="overflow-y-auto scrollbar-hover">
   {#each filteredClusters as { id, nr, title } (id)}
     <label
       title="Topic nr {nr}"

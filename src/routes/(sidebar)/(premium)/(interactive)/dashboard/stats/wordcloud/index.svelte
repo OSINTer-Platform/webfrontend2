@@ -16,12 +16,17 @@
   let hoverText = "";
   let totalHits = 0;
 
+  export let startDate: Date;
+  export let endDate: Date;
+
   const queryTags = (
+    startDate: Date,
+    endDate: Date,
     selected: string[],
     mounted: boolean
   ): ReturnType<typeof getTags> =>
     mounted
-      ? getTags(selected, 50)
+      ? getTags(startDate, endDate, selected, 50)
       : Promise.resolve({
           tags: {
             doc_count_error_upper_bound: 0,
@@ -31,14 +36,20 @@
           hitCount: 0,
         });
 
-  $: tags = queryTags($selectedTags, mounted).then((response) => {
-    totalHits = response.hitCount;
-    return response;
-  });
+  $: tags = queryTags(startDate, endDate, $selectedTags, mounted).then(
+    (response) => {
+      totalHits = response.hitCount;
+      return response;
+    }
+  );
 
   function showArticles() {
     const articles = getBaseArticles(
-      { limit: 0 },
+      {
+        limit: 0,
+        first_date: startDate.toISOString(),
+        last_date: endDate.toISOString(),
+      },
       {
         filters: $selectedTags.map((tag) => ({
           term: { "tags.automatic": tag },

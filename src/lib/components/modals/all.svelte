@@ -8,6 +8,10 @@
   import Info from "./info.svelte";
   import Options from "./options/index.svelte";
   import Survey from "./survey//index.svelte";
+  import CollectPayment from "./collectPayment.svelte";
+  import Processing from "./processing.svelte";
+  import Actions from "./actions.svelte";
+  import Custom from "./custom.svelte";
 </script>
 
 {#each $modalState as modal, i (modal.id)}
@@ -46,5 +50,26 @@
     />
   {:else if modal.modalType == "survey"}
     <Survey modalId={modal.id} version={modal.modalContent.version} />
+  {:else if modal.modalType == "collect-payment"}
+    <CollectPayment
+      clientSecret={modal.modalContent.clientSecret}
+      title={modal.modalContent.title}
+      modalId={modal.id}
+    />
+  {:else if modal.modalType == "processing"}
+    <Processing
+      process={modal.modalContent.process}
+      text={modal.modalContent.text}
+      modalId={modal.id}
+    />
+  {:else if modal.modalType == "actions"}
+    <Actions options={modal.modalContent.options} modalId={modal.id} />
+  {:else if modal.modalType == "custom"}
+    <Custom
+      component={modal.modalContent.component}
+      class={modal.modalContent.class}
+      data={modal.modalContent.data}
+      modalId={modal.id}
+    />
   {/if}
 {/each}

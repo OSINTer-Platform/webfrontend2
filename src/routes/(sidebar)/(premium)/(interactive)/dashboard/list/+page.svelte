@@ -1,15 +1,14 @@
 <script lang="ts">
-  import type { ArticleBase, SearchQuery } from "$shared/types/api";
+  import type { ArticleBase, ArticleSearchQuery } from "$shared/types/api";
   import type { PageData } from "./$types";
 
   import Loader from "$com/loader.svelte";
   import Controls from "./controls/index.svelte";
   import ArticleList from "./articleList.svelte";
 
-  import { PUBLIC_API_BASE } from "$env/static/public";
   import { onMount } from "svelte";
-  import { toUrl } from "$lib/common/searchQuery";
   import { browser } from "$app/environment";
+  import { queryArticles } from "$lib/common/queryArticles";
 
   export let data: PageData;
 
@@ -20,22 +19,20 @@
   let scrollSpeed = 1;
 
   async function fetchArticles(
-    firstDate: Date | undefined = undefined
+    firstDate: Date | undefined = undefined,
+    lastDate: Date | undefined = undefined
   ): Promise<ArticleBase[]> {
-    const q: SearchQuery = {
+    const q: ArticleSearchQuery = {
       sort_by: "publish_date",
       sort_order: "desc",
       limit: 10000,
       first_date: (firstDate ?? data.startDate).toISOString(),
+      last_date: (lastDate ?? data.endDate).toISOString(),
     };
 
-    const r = await fetch(`${PUBLIC_API_BASE}/articles/search?${toUrl(q)}`);
-
-    if (r.ok) {
-      return await r.json();
-    } else {
-      throw Error;
-    }
+    const articleQuery = await queryArticles(q);
+    if (!articleQuery.documents) throw Error;
+    else return articleQuery.documents;
   }
 
   onMount(async () => {
@@ -54,8 +51,9 @@
     <Controls
       bind:scrollSpeed
       startDate={data.startDate}
+      endDate={data.endDate}
       on:date={(e) => {
-        articleQuery = fetchArticles(e.detail.date);
+        articleQuery = fetchArticles(e.detail.startDate, e.detail.endDate);
       }}
     />
   {:catch}

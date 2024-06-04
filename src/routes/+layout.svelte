@@ -3,6 +3,7 @@
 
   import TopBar from "./topbar.svelte";
   import Modals from "$com/modals/all.svelte";
+  import Tooltip from "$com/tooltip.svelte";
   import { ProgressBar } from "@prgm/sveltekit-progress-bar";
 
   import { modalState } from "$state/modals";
@@ -12,7 +13,9 @@
   import { page } from "$app/stores";
   import { afterNavigate } from "$app/navigation";
   import { onMount } from "svelte";
-  import { spawnSurveyRequest } from "$lib/common/modals";
+  import { spawnActionModal } from "./(sidebar)/purchase/modals";
+  import { config } from "$shared/config";
+  import { tooltip } from "$shared/state/state";
 
   import type { PageData } from "./$types";
 
@@ -20,6 +23,7 @@
 
   $: darkMode = $page.data.settings.darkMode;
   $: user = data.user;
+  $: remindMePaymentUpdate = data.remindMe.paymentUpdate;
 
   function handleKeypress(e: KeyboardEvent) {
     switch (e.key) {
@@ -34,6 +38,7 @@
 
   afterNavigate(({ type }) => {
     if (type !== "enter") modalState.set([]);
+    tooltip.set(null);
   });
 
   onMount(() => {
@@ -51,11 +56,12 @@
       });
     }
 
-    if ($user && $user.premium > 0 && data.submittedSurveys.length < 1) {
-      if (!window.matchMedia("only screen and (max-width: 40rem)").matches) {
-        spawnSurveyRequest(1);
-      }
-    }
+    if (!$page.url.pathname.startsWith("/purchase"))
+      spawnActionModal(
+        $user,
+        remindMePaymentUpdate,
+        data.stripe.paymentIntentClientSecret
+      );
   });
 </script>
 
@@ -68,8 +74,11 @@
     <meta property="og:title" content={$page.data.meta.title.meta} />
   {/if}
   <meta property="og:description" content={$page.data.meta.description} />
-  <meta property="og:image" content={$page.data.meta.image} />
-  <meta property="og:type" content={$page.data.meta.type} />
+  <meta
+    property="og:image"
+    content={$page.data.meta.image ?? config.images.fullLogo}
+  />
+  <meta property="og:type" content={$page.data.meta.type ?? "website"} />
 </svelte:head>
 
 <svelte:window on:keydown|capture={(e) => handleKeypress(e)} />
@@ -78,11 +87,12 @@
 
 <div class="h-screen" class:dark={$darkMode}>
   <div class="w-full h-full overflow-hidden flex flex-col dark:text-white">
+    <Tooltip />
     <Modals />
     {#if $page.data.topbar ?? true}
       <div
         class="
-        z-40 relative
+        z-30 relative
         bg-surface-100 dark:bg-surface-800
         dark:border-b dark:border-surface-300
         shadow-lg

@@ -48,7 +48,7 @@ export const actions = {
     });
 
     if (r.ok) {
-      throw redirect(
+      redirect(
         303,
         `/login?${new URLSearchParams({
           msg: "User successfully created, please login down below to enter the wonderful world of CTI",

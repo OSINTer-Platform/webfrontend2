@@ -18,7 +18,7 @@
 <style lang="postcss">
   button {
     @apply w-24 first:last:w-40 h-10
-    border first:rounded-l-md last:rounded-r-md;
+    border first:rounded-l-sm last:rounded-r-sm;
 
     &:not(:disabled) {
       @apply transition-all duration-300 active:scale-95;

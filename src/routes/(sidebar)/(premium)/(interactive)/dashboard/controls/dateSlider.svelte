@@ -1,18 +1,15 @@
 <script lang="ts">
-  import { getTimespan } from "$lib/common/math";
+  import { getReadableDate, getTimespan } from "$lib/common/math";
+  import { firstDate } from "$shared/config";
   import * as d3 from "d3";
 
   const maxDate = new Date().setDate(new Date().getDate() - 1);
-  const minDate = new Date().setFullYear(new Date().getFullYear() - 3);
+  const minDate = firstDate.valueOf();
 
   export let date: Date;
   $: date = new Date(value);
   $: timespan = getTimespan(date.toISOString());
-  $: prettyDate = date.toLocaleDateString("en", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  $: prettyDate = getReadableDate(date);
 
   let value: number = date.valueOf();
   let clientWidth: number = 0;
@@ -53,7 +50,7 @@
     opacity-0 peer-hover:opacity-100
     transition-opacity duration-300
     absolute -top-16 -translate-x-1/2
-    p-2 rounded-sm
+    p-2
     bg-black w-max
     flex flex-col text-center
   "

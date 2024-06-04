@@ -1,6 +1,6 @@
 <script lang="ts">
-  import AppSwitcher from "./compontents/appSwitcher.svelte";
-  import SidebarShell from "./compontents//shell.svelte";
+  import AppSwitcher from "./components/appSwitcher.svelte";
+  import SidebarShell from "./components/shell.svelte";
 </script>
 
 <SidebarShell>

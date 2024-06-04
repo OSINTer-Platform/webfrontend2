@@ -7,7 +7,7 @@ export const load: LayoutLoad = async ({ parent }) => {
   const user = get(parentData.user);
 
   if (!user)
-    throw error(401, {
+    error(401, {
       message: "",
       title: "You have to be logged in to access this article",
       description: [
@@ -23,9 +23,5 @@ export const load: LayoutLoad = async ({ parent }) => {
     });
   return {
     customSidebar: true,
-    meta: {
-      title: "Article list | OSINTer",
-      description: "List of the articles you have recently viewed in OSINTer",
-    },
   };
 };

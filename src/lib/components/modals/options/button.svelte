@@ -1,13 +1,30 @@
 <script lang="ts">
+  import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+  import Fa from "svelte-fa";
+
   type ButtonType = "primary" | "secondary" | "yes" | "no" | "cancel";
 
   export let type: ButtonType;
+  export let action: () => void | boolean | Promise<void> | Promise<boolean>;
+  export let close: () => void;
+
+  let loading = false;
+
+  async function runAndClose() {
+    if (loading) return;
+    loading = true;
+
+    const r = await action();
+    if (r != false) close();
+
+    loading = false;
+  }
 </script>
 
 <button
-  on:click
+  on:click={runAndClose}
   class="
-    first:rounded-l-md last:rounded-r-md
+    first:rounded-l-sm last:rounded-r-sm
     text-sm sm:text-base
     p-2 w-28 sm:p-2 sm:w-40
     active:scale-95
@@ -22,5 +39,9 @@
     : ''}
   "
 >
-  <slot />
+  {#if loading}
+    <Fa icon={faSpinner} class="animate-spin mx-auto" />
+  {:else}
+    <slot />
+  {/if}
 </button>

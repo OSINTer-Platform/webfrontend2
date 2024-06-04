@@ -10,8 +10,8 @@
   import CredentialChange from "./credentialChange.svelte";
   import ExternalSetting from "./externalSetting.svelte";
   import RenderSetting from "./renderSetting.svelte";
-  import SignupCode from "./signupCode.svelte";
   import StatsRender from "./statsRender.svelte";
+  import Subscription from "./subscription.svelte";
 
   export let topModal: boolean;
 
@@ -31,7 +31,6 @@
     flex flex-col
     overflow-y-auto
 
-    rounded-xl
     border border-tertiary-500
     bg-surface-100 dark:bg-surface-800
   "
@@ -93,7 +92,9 @@
     <hr class="my-8 border border-surface-400/50" />
 
     <section class="grid grid-cols-1 md:grid-cols-2">
-      <SignupCode />
+      {#if $user}
+        <Subscription user={$user} />
+      {/if}
       <form
         method="POST"
         action="/logout"
@@ -109,7 +110,7 @@
           title="Logout"
           type="submit"
           class="
-            btn rounded-xl h-20 grow
+            btn rounded-sm h-20 grow
             inline-flex items-center justify-center
             transition-all duration-300
             bg-primary-400/20

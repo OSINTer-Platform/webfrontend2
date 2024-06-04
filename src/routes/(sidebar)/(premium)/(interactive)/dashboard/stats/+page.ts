@@ -1,30 +1,29 @@
 import type { PageLoad } from "../$types";
-import type { ClusterBase } from "$shared/types/api";
 
 import { getDashboardMetrics } from "$lib/common/elasticsearch/aggregations";
-import { PUBLIC_API_BASE } from "$env/static/public";
-import { error } from "@sveltejs/kit";
+import { queryCVEs, queryClustersById } from "$lib/common/queryArticles";
 
 export const load: PageLoad = async ({ parent, fetch }) => {
-  const { startDate } = await parent();
+  const { startDate, endDate } = await parent();
 
-  async function getClusters(): Promise<ClusterBase[]> {
-    const r = await fetch(`${PUBLIC_API_BASE}/ml/clusters?complete=false`);
+  const metrics = await getDashboardMetrics(startDate, endDate);
 
-    if (r.ok) {
-      return await r.json();
-    } else {
-      throw error(r.status, "Error when fetching cluster list");
-    }
-  }
+  const clusters = queryClustersById(
+    metrics.limited.clusters.buckets.map(({ key }) => key),
+    false,
+    false,
+    10000,
+    fetch
+  );
 
-  const [metrics, clusters] = await Promise.all([
-    getDashboardMetrics(startDate, new Date()),
-    getClusters(),
-  ]);
+  const cveIds = metrics.limited.cves.buckets.map(({ key }) => key);
+  const cves = queryCVEs({ cves: cveIds, limit: 10000 }, false, fetch).then(
+    ({ documents }) => documents ?? []
+  );
 
   return {
     metrics,
     clusters,
+    cves,
   };
 };

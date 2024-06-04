@@ -1,6 +1,6 @@
 <script lang="ts">
-  import ModList from "$com/article-list/header/modList.svelte";
-  import DetailList from "$com/article-list/header/detailList.svelte";
+  import HeaderShell from "$com/itemList/header/shell.svelte";
+  import DetailList from "$com/itemList/header/detailList.svelte";
 
   import type { ArticleTags } from "$shared/types/api";
   import type { HeaderModOptions } from "$shared/types/internal";
@@ -18,53 +18,68 @@
     faXmark,
   } from "@fortawesome/free-solid-svg-icons/index";
 
-  import { fullArticles } from "$state/storedArticles";
+  import { similarSearch } from "$state/storedArticles";
   import { goto } from "$app/navigation";
 
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { modalState } from "$shared/state/modals";
+  import { page } from "$app/stores";
+  import { createSearchFromTag } from "$lib/common/searchQuery";
 
   export let data: LayoutData;
 
   function getTags(tags: ArticleTags) {
     const extractedTags: {
-      [key: string]: string[] | { content: string; href: string }[];
-    } = {};
+      title: string;
+      content: string[] | { content: string; href: string }[];
+      mono: boolean;
+    }[] = [];
 
     if (tags.automatic.length > 1) {
-      extractedTags["Automatic Tags"] = tags.automatic.map((tag) => ({
-        content: tag,
-        href: `/feed/search?sort_by=publish_date&search_term=${encodeURIComponent(
-          tag
-        )}`,
-      }));
+      extractedTags.push({
+        title: "Automatic Tags",
+        mono: false,
+        content: tags.automatic.map((tag) => ({
+          content: tag,
+          href: createSearchFromTag(tag),
+        })),
+      });
     }
 
     if (tags.interesting.length > 0) {
       for (const { name, values } of tags.interesting) {
-        extractedTags[name.toUpperCase()] = values;
+        extractedTags.push({
+          title: name.toUpperCase(),
+          content: values,
+          mono: true,
+        });
       }
     }
 
     return extractedTags;
   }
 
-  $: overviews = [
-    {
-      Sources: [
-        `Medium: ${data.article.source}`,
-        `Author: ${data.article.author ?? data.article.source}`,
-      ],
-    },
-    {
-      Dates: [
-        `Published: ${data.article.publish_date}`,
-        `Scraped: ${data.article.inserted_at}`,
-      ],
-    },
+  $: articleDetails = [
+    [
+      {
+        title: "Sources",
+        content: [
+          `Medium: ${data.article.source}`,
+          `Author: ${data.article.author ?? data.article.source}`,
+        ],
+        mono: false,
+      },
+      {
+        title: "Sources",
+        content: [
+          `Published: ${data.article.publish_date}`,
+          `Scraped: ${data.article.inserted_at}`,
+        ],
+        mono: false,
+      },
+    ],
+    getTags(data.article.tags),
   ];
-
-  $: tags = getTags(data.article.tags);
 
   let modOptions: Array<HeaderModOptions>;
 
@@ -110,14 +125,15 @@
       title: "Close article",
       icon: faXmark,
       action: () => {
-        fullArticles.update((content) => {
-          delete content[data.article.id];
-          return content;
-        });
-        goto("/article");
+        goto("/news/previously-read");
       },
     },
   ];
+
+  const updateReadArticles = (id: string) =>
+    data.readArticleIds.prepend(id, true);
+
+  $: updateReadArticles(data.article.id);
 </script>
 
 <svelte:head>
@@ -128,42 +144,16 @@
   />
 </svelte:head>
 
-<aside
-  class="
-	bg-surface-200
-	dark:bg-surface-900
-
-	border-b border-surface-300 dark:border-surface-400
-
-	p-6
-	sm:p-12
-	!pb-4
-"
+<HeaderShell
+  title={data.article.title}
+  description={data.article.description}
+  {modOptions}
+  searchAble={$page.url.pathname.includes("similar")}
+  searchSubmitable={false}
+  tabs={null}
+  bind:searchValue={$similarSearch}
 >
-  <header class="flex justify-between mb-3">
-    <h1 class="sm:text-5xl text-3xl xl:max-w-5xl">
-      {data.article.title}
-    </h1>
-
-    <section class="flex items-start shrink-0">
-      <ModList {modOptions} />
-    </section>
-  </header>
-
-  <p class="italic font-light dark:font-medium">
-    {data.article.description}
-  </p>
-
-  <hr class="my-4 border-tertiary-700/50" />
-  {#each overviews as overview}
-    <DetailList options={overview} mono={false} />
-    <hr class="my-4 border-tertiary-700/50" />
-  {/each}
-
-  {#if Object.values(tags).length > 0}
-    <DetailList options={tags} mono={true} />
-    <hr class="my-4 border-tertiary-700/50" />
-  {/if}
-</aside>
+  <DetailList detailBatches={articleDetails} />
+</HeaderShell>
 
 <slot />

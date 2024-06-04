@@ -12,5 +12,14 @@ export const sideMenuOpen: Writable<{ [key: string]: Boolean }> = persisted(
 export const feedLocalSearch = writable("");
 export const showRead = writable(true);
 export const showHighlights = writable(true);
+export const expandHighlights = writable(false);
+export const expandSummary = writable(false);
 
 export const listElementCount = writable(0);
+
+export const tooltip = writable<null | {
+  padding?: number;
+  text: string | { title: string; description: string };
+  x: number;
+  y: number;
+}>(null);

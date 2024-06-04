@@ -1,1 +1,6 @@
-export type Trend = { name: string; trend: Date[]; queryDate: Date };
+export type Trend = {
+  name: string;
+  trend: Date[];
+  startDate: Date;
+  endDate: Date;
+};

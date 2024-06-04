@@ -2,5 +2,5 @@ import type { ParamMatcher } from "@sveltejs/kit";
 import { inbuiltFeeds } from "$shared/config";
 
 export const match = ((param) => {
-  return Object.keys(inbuiltFeeds).includes(param);
+  return inbuiltFeeds.some((inbuiltFeed) => inbuiltFeed.id === param);
 }) satisfies ParamMatcher;

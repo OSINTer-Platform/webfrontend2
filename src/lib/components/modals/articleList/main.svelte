@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { ArticleBase } from "$shared/types/api";
-  import type { ArticleListRender } from "$shared/types/internal";
 
   import Switch from "$com/utils/inputs/switch.svelte";
   import Search from "$com/utils/inputs/search.svelte";
@@ -15,16 +14,14 @@
     faHighlighter,
   } from "@fortawesome/free-solid-svg-icons";
   import { hasHighlights } from "$lib/common/filter";
-  import { listElementCount } from "$state/state";
+  import { listElementCount, showHighlights, showRead } from "$state/state";
 
   export let articles: ArticleBase[];
-  let listRenderMode: ArticleListRender = "large";
-  let showRead: boolean = true;
-  let showHighlights: boolean = true;
   let search: string = "";
 
   $: user = $page.data.user;
   $: articleWithHighlight = hasHighlights(articles);
+  $: listRenderMode = $page.data.settings.listRenderMode;
 </script>
 
 <div class="flex gap-6 px-6 sm:px-12 mt-3 sm:mt-6">
@@ -37,7 +34,7 @@
 
         transition-all
 
-        {listRenderMode === value
+        {$listRenderMode === value
           ? 'bg-primary-600/60 hover:dark:bg-primary-600/70'
           : 'dark:text-primary-600 bg-primary-600/10 hover:bg-primary-400/20 hover:dark:bg-primary-500/20'}
 
@@ -48,7 +45,7 @@
       >
         <input
           type="radio"
-          bind:group={listRenderMode}
+          bind:group={$listRenderMode}
           {value}
           class="hidden"
         />
@@ -68,22 +65,22 @@
     <div class="self-center flex gap-2">
       {#if $user}
         <Switch
-          title="{showRead
+          title="{$showRead
             ? 'Show'
             : 'Hide'} articles which have been read already"
           name="show-read"
-          bind:checked={showRead}
+          bind:checked={$showRead}
           icons={{ on: faEye, off: faEyeSlash }}
           size="lg"
         />
       {/if}
       {#if articleWithHighlight}
         <Switch
-          title={showHighlights
+          title={$showHighlights
             ? "Show article search highlights"
             : "Show article title"}
           name="show-read"
-          bind:checked={showHighlights}
+          bind:checked={$showHighlights}
           icons={{ on: faHighlighter, off: faHeading }}
           iconClass="text-sm"
           size="lg"
@@ -93,10 +90,4 @@
   {/if}
 </div>
 
-<List
-  {articles}
-  {search}
-  {showRead}
-  {listRenderMode}
-  showHighlights={showHighlights && articleWithHighlight}
-/>
+<List {articles} {search} />

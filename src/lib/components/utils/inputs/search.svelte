@@ -19,9 +19,12 @@
   class="
     flex items-center
 
-    border border-tertiary-600
     bg-surface-600/10 text-black
-    rounded-md
+    rounded-sm
+
+    border border-tertiary-600/50
+    hover:border-tertiary-600 focus:border-tertiary-600 focus-within:border-tertiary-600
+    transition-colors duration-300
 
     {containerClass}
   "
@@ -35,7 +38,8 @@
       {placeholder}
       class="
         grow h-full min-w-0 shrink-1
-        bg-transparent placeholder-tertiary-800 text-xs
+        bg-transparent placeholder-tertiary-800
+        text-white text-xs
         border-0 focus:outline-none focus:border-0
         {inputClass}
     "

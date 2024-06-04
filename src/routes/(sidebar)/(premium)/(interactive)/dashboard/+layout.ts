@@ -1,17 +1,19 @@
 import type { LayoutLoad } from "./$types";
 
 export const load: LayoutLoad = ({ url }) => {
-  function getStartDate(): Date {
-    const dateDefault = new Date(new Date().setDate(new Date().getDate() - 7));
+  const startDateDefault = new Date(
+    new Date().setDate(new Date().getDate() - 7)
+  );
+  function getDate(key: string): Date | undefined {
+    const queryTime = Date.parse(url.searchParams.get(key) ?? "");
 
-    const queryTime = Date.parse(url.searchParams.get("startDate") ?? "");
-
-    if (isNaN(queryTime)) return dateDefault;
+    if (isNaN(queryTime)) return;
     return new Date(queryTime);
   }
 
   return {
-    startDate: getStartDate(),
+    startDate: getDate("startDate") ?? startDateDefault,
+    endDate: getDate("endDate") ?? new Date(),
     customSidebar: true,
     topbar: false,
     meta: {

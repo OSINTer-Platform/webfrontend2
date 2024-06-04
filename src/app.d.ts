@@ -1,11 +1,12 @@
 // See https://kit.svelte.dev/docs/types#app
 
 import type { User } from "$shared/types/userItems";
-import type { Updatable } from "$lib/common/customStores";
-import type { MLAvailability } from "$shared/types/api";
+import type { BackgroundUpdatable, SetLike } from "$lib/common/customStores";
+import type { ArticleBase, MLAvailability } from "$shared/types/api";
 import type { Collection } from "$shared/types/userItems";
 import type { Writable } from "svelte/store";
 import type { ArticleListRender } from "$shared/types/internal";
+import type { Readable } from "svelte/motion";
 
 // for information about these interfaces
 declare global {
@@ -25,20 +26,30 @@ declare global {
     interface PageData {
       mlAvailability: MLAvailability;
       user: Writable<User | null>;
+      checkAuthorization: Readable<(area?: AuthArea) => boolean>;
       customSidebar: boolean;
-      alreadyRead: Updatable<Collection | null>;
-      userCollections: Updatable<{ [key: string]: Collection }>;
+      readArticleIds: SetLike<string>;
+      readArticles: Readable<Promise<ArticleBase[]>>;
+      userCollections: BackgroundUpdatable<{ [key: string]: Collection }>;
       meta: {
         title?: string | { visual: string; meta: string };
         description?: string;
         image?: string;
         type?: string;
       };
+      remindMe: {
+        paymentUpdate: Writable<number>;
+      };
       settings: {
         darkMode: Writable<boolean>;
         listRenderMode: Writable<ArticleListRender>;
         renderExternal: Writable<boolean>;
       };
+      stripe: {
+        paymentIntentClientSecret: string | null;
+      };
+      articles?: ArticleBase[];
+      loadingArticles?: Readable<Promise<ArticleBase[]>>;
     }
     // interface Platform {}
   }

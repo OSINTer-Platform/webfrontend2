@@ -38,3 +38,11 @@
     </p>
   {/if}
 </Modal>
+
+<style lang="postcss">
+  p {
+    :global(a) {
+      @apply underline hover:text-primary-500 transition-colors duration-300;
+    }
+  }
+</style>

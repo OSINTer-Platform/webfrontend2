@@ -8,7 +8,7 @@
   export let infoText = "";
 </script>
 
-<form action="/feed/search" method="get">
+<form action="/news/search" method="get">
   <Search
     bind:value
     {placeholder}

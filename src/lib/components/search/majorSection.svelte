@@ -39,7 +39,7 @@
 </button>
 
 <section
-  transition:slide|local
+  transition:slide
   class="
 		flex
 		flex-col

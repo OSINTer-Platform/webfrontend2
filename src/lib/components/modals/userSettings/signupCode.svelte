@@ -1,19 +1,19 @@
 <script lang="ts">
+  import { invalidateAll } from "$app/navigation";
+  import { modalState } from "$shared/state/modals";
   import { updateUser } from "./common";
-  import { page } from "$app/stores";
   import { PUBLIC_API_BASE } from "$env/static/public";
+
   import SubmitButton from "./submitButton.svelte";
+
+  export let modalId: string;
 
   let signupCode = "";
 
   let submitState: null | Promise<string> = null;
 
-  $: user = $page.data.user;
-  $: premium = !!$user?.premium && $user.premium > 0;
-  $: disabled = premium || signupCode.length < 1;
-  $: disabledString = premium
-    ? "User already has premium access"
-    : "Missing code";
+  $: disabled = signupCode.length < 1;
+  $: disabledString = "Missing code";
 
   function useSignupCode() {
     if (signupCode.length < 1) return;
@@ -30,20 +30,23 @@
       }
     );
   }
+
+  $: submitState?.then(() => {
+    invalidateAll();
+    modalState.remove(modalId);
+  });
 </script>
 
 <form
   class="
-  flex gap-4 flex-col
+  bg-surface-100 dark:bg-surface-800
+  max-w-[80vw] w-[30rem] p-4 flex gap-4 flex-col
   transition-opacity duration-1000
-  pb-6 pr-0 md:pb-0 md:pr-6
 "
-  class:opacity-40={premium}
-  title={premium ? "User already has premium access" : ""}
   on:submit|preventDefault={() => useSignupCode()}
 >
   <header>
-    <h3 class="text-lg sm:text-xl font-bold">Apply signup-code:</h3>
+    <h3 class="text-lg sm:text-xl font-bold">Submit signup-code:</h3>
     {#if submitState}
       {#await submitState then state}
         <p class="mb-2 sm:text-sm text-xs italic text-success-500">
@@ -57,7 +60,7 @@
     {/if}
   </header>
 
-  <div class="grow flex gap-2">
+  <div class="shrink grow flex gap-2">
     <div class="input grow">
       <input
         type="text"
@@ -66,7 +69,6 @@
         class="input !m-0"
         placeholder=" "
         id="signup-code"
-        disabled={premium}
       />
       <label class="input" for="signup-code">Code</label>
     </div>
@@ -76,7 +78,7 @@
       {disabled}
       {disabledString}
       submitString="Submit new signup-code"
-      extraBtnClass="w-12 sm:w-20"
+      extraBtnClass="w-12 sm:w-24"
     />
   </div>
 </form>

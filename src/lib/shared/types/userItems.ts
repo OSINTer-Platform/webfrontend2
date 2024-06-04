@@ -1,4 +1,4 @@
-import type { SearchQuery } from "./api";
+import type { ArticleSearchQuery } from "./api";
 import type { ArticleListRender } from "./internal";
 
 export interface ItemBase {
@@ -14,7 +14,7 @@ export interface Collection extends ItemBase {
   ids: string[];
 }
 
-export interface Feed extends ItemBase, SearchQuery {
+export interface Feed extends ItemBase, ArticleSearchQuery {
   type: "feed";
 }
 
@@ -28,19 +28,41 @@ export interface User {
   _id: string;
   username: string;
   active: boolean;
-  premium: number;
-
-  already_read: string;
 
   feed_ids: string[];
   collection_ids: string[];
+  read_articles: string[];
 
   feeds: Feed[];
   collections: Collection[];
+
+  premium: {
+    status: boolean;
+    expire_time: number;
+    acknowledged: { [key: string]: string };
+  };
 
   settings: {
     dark_mode: boolean;
     render_external: boolean;
     list_render_mode: ArticleListRender;
+  };
+
+  payment: {
+    stripe_id: string;
+    invoice: {
+      last_updated: number;
+      action_required: boolean;
+      action_type: "" | "authenticate" | "update";
+      payment_intent: string;
+      invoice_url: string;
+    };
+    subscription: {
+      last_updated: number;
+      level: "" | "pro";
+      state: "" | "active" | "past_due" | "closed";
+      cancel_at_period_end: boolean;
+      current_period_end: number;
+    };
   };
 }

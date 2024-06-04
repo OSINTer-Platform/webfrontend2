@@ -7,7 +7,7 @@ export const load = (async ({ parent, params }) => {
   const currentPost = posts[params.blogTitle];
 
   if (!currentPost) {
-    throw error(404, "Post not found");
+    error(404, "Post not found");
   }
   return {
     currentPost: currentPost,

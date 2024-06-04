@@ -9,6 +9,8 @@
 
   import Fa from "svelte-fa";
 
+  export let containerClass = "";
+
   const navOptions: {
     href: string;
     title: string;
@@ -30,7 +32,8 @@
 <div
   class="
   flex rounded-full px-4
-  bg-black
+  bg-black max-w-max
+  {containerClass}
 "
 >
   {#each navOptions as { href, title, icon }}

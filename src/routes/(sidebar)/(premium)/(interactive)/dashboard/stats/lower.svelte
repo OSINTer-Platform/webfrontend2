@@ -17,6 +17,7 @@
   } from "@fortawesome/free-solid-svg-icons";
 
   export let startDate: Date;
+  export let endDate: Date;
 
   export let significantTags: SignificantTermAgg;
   export let cves: TermAgg;
@@ -75,10 +76,10 @@
       {/each}
     </div>
   </header>
-  <TrendChart {startDate} {keywords} />
+  <TrendChart {startDate} {endDate} {keywords} />
 </section>
 
 <section class="flex flex-col py-2 px-6">
   <h3 class="font-bold text-2xl mb-1">Common article tags</h3>
-  <Wordcloud />
+  <Wordcloud {startDate} {endDate} />
 </section>
