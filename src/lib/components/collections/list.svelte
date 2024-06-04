@@ -16,11 +16,7 @@
 
   let loadingNew = false;
 
-  const handleCheckbox = async (
-    e: (MouseEvent | KeyboardEvent) & {
-      currentTarget: EventTarget & HTMLLabelElement;
-    }
-  ) => {
+  const handleCheckbox = async (e: any) => {
     const collectionId = e.currentTarget.id;
     const collection = $userCollections[collectionId];
 
@@ -52,17 +48,11 @@
         .toLowerCase()
         .includes(collectionSearch.toLowerCase())}
       <li class="w-full">
-        <!-- svelte-ignore a11y-no-noninteractive-element-interactions permalink -->
-        <label
+        <button
           id={_id}
-          on:click|stopPropagation|preventDefault={handleCheckbox}
-          on:keydown|stopPropagation|preventDefault={handleCheckbox}
-          for="collection-{_id}"
+          on:click={handleCheckbox}
           class="
-            p-2
-            flex items-center
-
-            cursor-pointer
+            w-full p-2 flex items-center cursor-pointer
 
             text-left font-light dark:font-normal
             {showStats ? 'text-sm md:text-base' : 'text-xs md:text-sm'}
@@ -78,6 +68,7 @@
             id="collection-{_id}"
             checked={ids.includes(articleId)}
             class="w-4 checkbox mr-2"
+            on:click|preventDefault
           />
           <div
             class="
