@@ -35,7 +35,7 @@
     showStats={true}
     userCollections={$page.data.userCollections}
     articleId={article.id}
-    containerClass="overflow-y-auto min-h-[6rem]"
+    containerClass="overflow-y-auto"
     {collectionSearch}
   />
 
