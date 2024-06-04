@@ -3,7 +3,10 @@
   import Fa from "svelte-fa";
 
   import { createItem, updateItem } from "$lib/common/userItems";
-  import { faPlus } from "@fortawesome/free-solid-svg-icons";
+  import {
+    faArrowUpRightFromSquare,
+    faPlus,
+  } from "@fortawesome/free-solid-svg-icons";
 
   import type { Collection } from "$shared/types/userItems";
   import type { Writable } from "svelte/store";
@@ -17,6 +20,7 @@
   let loadingNew = false;
 
   const handleCheckbox = async (e: any) => {
+    if (e.target.tagName == "A") return;
     const collectionId = e.currentTarget.id;
     const collection = $userCollections[collectionId];
 
@@ -61,6 +65,7 @@
             [&:hover>input]:bg-primary-500/20
             [&:hover>input:checked]:bg-primary-600/75
             [&:hover>div>p.opacity-0]:opacity-75
+            [&:hover>a]:opacity-100
           "
         >
           <input
@@ -106,7 +111,18 @@
               </p>
             {/if}
           </div>
-        </label>
+          {#if showStats}
+            <a
+              title="Go to collection"
+              class="h-8 w-8 btn opacity-0"
+              href="/feed/{_id}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Fa icon={faArrowUpRightFromSquare} />
+            </a>
+          {/if}
+        </button>
       </li>
       <hr
         class="border-surface-400/25 last:hidden {showStats ? 'my-2' : 'my-1'}"
