@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { updateItem } from "$lib/common/userItems";
+  import Loader from "$com/loader.svelte";
+  import Fa from "svelte-fa";
+
+  import { createItem, updateItem } from "$lib/common/userItems";
+  import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
   import type { Collection } from "$shared/types/userItems";
   import type { Writable } from "svelte/store";
 
@@ -8,6 +13,8 @@
   export let containerClass = "";
   export let showStats = false;
   export let collectionSearch = "";
+
+  let loadingNew = false;
 
   const handleCheckbox = async (
     e: (MouseEvent | KeyboardEvent) & {
@@ -115,4 +122,33 @@
       />
     {/if}
   {/each}
+  {#if loadingNew}
+    <li>
+      <div class="flex justify-center h-12">
+        <Loader rows={1} containerClass="!items-start" class="w-16 h-4" />
+      </div>
+      <hr class="border-surface-400/25 {showStats ? 'my-2' : 'my-1'}" />
+    </li>
+  {/if}
+  {#if showStats}
+    <li>
+      <button
+        class="
+        w-full p-2 flex items-center gap-2
+        opacity-50 hover:opacity-100
+        hover:bg-primary-500/5
+        transition-all duration-300
+      "
+        on:click={async () => {
+          if (loadingNew) return;
+          loadingNew = true;
+          await createItem("New Collection", [], "collection", "invalidateAll");
+          loadingNew = false;
+        }}
+      >
+        <Fa icon={faPlus} />
+        Create new collection
+      </button>
+    </li>
+  {/if}
 </ul>
