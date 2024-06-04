@@ -39,25 +39,27 @@
     "
     />
   </button>
-  <div
-    role="presentation"
-    on:keydown|stopPropagation|preventDefault
-    on:click|stopPropagation|preventDefault
-    on:mousedown|stopPropagation|preventDefault
-    class="
-    hover:block peer-hover:block peer-focus-within:block
-    hidden absolute z-20
-    p-2 max-w-md
+  {#if Object.values($userCollections).length > 0}
+    <div
+      role="presentation"
+      on:keydown|stopPropagation|preventDefault
+      on:click|stopPropagation|preventDefault
+      on:mousedown|stopPropagation|preventDefault
+      class="
+      hover:block peer-hover:block peer-focus-within:block
+      hidden absolute z-20
+      p-2 max-w-md
 
-    bg-surface-100 dark:bg-surface-800
-    border border-tertiary-500
+      bg-surface-100 dark:bg-surface-800
+      border border-tertiary-500
 
-    shadow-xl
+      shadow-xl
 
-    cursor-default
-    {overlayClass}
-  "
-  >
-    <CollectionList {userCollections} articleId={article.id} />
-  </div>
+      cursor-default
+      {overlayClass}
+    "
+    >
+      <CollectionList {userCollections} articleId={article.id} />
+    </div>
+  {/if}
 </div>

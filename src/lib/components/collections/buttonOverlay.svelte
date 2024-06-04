@@ -12,25 +12,23 @@
   export let iconClass: string = "text-4xl";
 </script>
 
-{#if Object.values($userCollections).length > 0}
-  <div
-    class="
-    flex justify-center items-center
-    h-full w-full
-    bg-black/75 opacity-0
+<div
+  class="
+  flex justify-center items-center
+  h-full w-full
+  bg-black/75 opacity-0
 
-    transition-opacity
+  transition-opacity
 
-    [&:focus-within>button>svg]:text-primary-500
-    {containerClass}
-  "
-  >
-    <CollectionButton
-      {userCollections}
-      {article}
-      {overlayClass}
-      {btnClass}
-      iconClass={iconClass + " text-white"}
-    />
-  </div>
-{/if}
+  [&:focus-within>button>svg]:text-primary-500
+  {containerClass}
+"
+>
+  <CollectionButton
+    {userCollections}
+    {article}
+    {overlayClass}
+    {btnClass}
+    iconClass={iconClass + " text-white"}
+  />
+</div>
