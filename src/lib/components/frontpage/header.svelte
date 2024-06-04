@@ -4,8 +4,11 @@
   import Grid from "./grid.svelte";
 
   import { page } from "$app/stores";
+  import { PUBLIC_PURCHASE_AVAILABLE } from "$env/static/public";
 
   $: darkMode = $page.data.settings.darkMode;
+  $: user = $page.data.user;
+  $: authorizer = $page.data.checkAuthorization;
 
   export let mouse: null | { x: number; y: number };
 </script>
@@ -118,19 +121,49 @@
         ">Get started</a
         >
 
-        <a
-          href="/purchase"
-          class="
-            px-4 py-2 flex gap-3
-            border border-surface-400
-            bg-surface-200 hover:bg-surface-200
-            dark:bg-surface-900 dark:hover:bg-surface-700
-            font-light
-            transition-colors duration-300
-        "
-        >
-          OSINTer PRO
-        </a>
+        {#if PUBLIC_PURCHASE_AVAILABLE && !$authorizer()}
+          <a
+            href="/purchase"
+            class="
+              px-4 py-2 flex gap-3
+              border border-surface-400
+              bg-surface-200 hover:bg-surface-200
+              dark:bg-surface-900 dark:hover:bg-surface-700
+              font-light
+              transition-colors duration-300
+          "
+          >
+            OSINTer PRO
+          </a>
+        {:else if !$user}
+          <a
+            href="/login"
+            class="
+              px-4 py-2 flex gap-3
+              border border-surface-400
+              bg-surface-200 hover:bg-surface-200
+              dark:bg-surface-900 dark:hover:bg-surface-700
+              font-light
+              transition-colors duration-300
+          "
+          >
+            Log in
+          </a>
+        {:else}
+          <a
+            href="/blog"
+            class="
+              px-4 py-2 flex gap-3
+              border border-surface-400
+              bg-surface-200 hover:bg-surface-200
+              dark:bg-surface-900 dark:hover:bg-surface-700
+              font-light
+              transition-colors duration-300
+          "
+          >
+            Read more
+          </a>
+        {/if}
       </div>
     </div>
 

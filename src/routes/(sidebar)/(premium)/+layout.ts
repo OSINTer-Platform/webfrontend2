@@ -4,6 +4,7 @@ import { contactEmail } from "$shared/config";
 
 import type { LayoutLoad } from "./$types";
 import type { AuthArea, MLAvailability } from "$shared/types/api";
+import { PUBLIC_PURCHASE_AVAILABLE } from "$env/static/public";
 
 export const load: LayoutLoad = async ({ parent, url }) => {
   const { user, mlAvailability, checkAuthorization } = await parent();
@@ -37,7 +38,18 @@ export const load: LayoutLoad = async ({ parent, url }) => {
       });
 
     if (!authorizer(authArea))
-      if (userContent)
+      if (!PUBLIC_PURCHASE_AVAILABLE)
+        error(403, {
+          message: "",
+          title: "This page is reserved for beta-testers and B2B partners",
+          description: [
+            "We are at OSINTer currently beta-testing new features",
+            "Do you want early access?",
+            "Contact us below",
+          ],
+          logo: false,
+        });
+      else if (userContent)
         error(403, {
           message: "",
           title:
