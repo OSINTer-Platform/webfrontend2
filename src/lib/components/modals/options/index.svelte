@@ -51,13 +51,13 @@
   style="max-height: min(90vh, 40rem)"
 >
   <main class="flex flex-col">
-    <section class="flex grow items-center text-contents">
+    <section class="flex grow items-center text-contents flex-col md:flex-row">
       <Fa
         icon={modalIcons[type]}
         class="
-          text-4xl lg:text-5xl xl:text-6xl
-          mt-1 ml-4
-          mr-6 lg:mr-8 xl:mr-10
+          text-7xl md:text-6xl
+          md:mt-1 md:ml-4 md:mr-6 mb-4
+          md:mb-0 lg:mr-8 xl:mr-10
           {type === 'error' ? 'text-primary-600/50' : ''}
           {type === 'warning' ? 'text-warning-600' : ''}
           {type === 'success' ? 'text-success-600' : ''}
