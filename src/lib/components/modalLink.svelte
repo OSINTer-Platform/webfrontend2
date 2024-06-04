@@ -27,10 +27,7 @@
     )
       return;
 
-    const small = window.matchMedia(
-      "only screen and (max-width: 60rem)"
-    ).matches;
-    if (small || e.ctrlKey || $renderExternal) {
+    if (e.ctrlKey || $renderExternal) {
       return;
     }
 

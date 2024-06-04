@@ -34,7 +34,9 @@
     <span class="text-xs">Read {article.read_times} times</span>
   </div>
 
-  <h1 class="text-5xl font-semibold">{article.title}</h1>
+  <h1 class="text-3xl md:text-4xl lg:text-5xl font-semibold">
+    {article.title}
+  </h1>
   {#if articleCategories}
     <div class="flex gap-4 items-center my-6">
       <img
@@ -72,7 +74,7 @@
 </div>
 
 {#if header}
-  <h3 class="text-2xl mb-4">{article.description}</h3>
+  <h3 class="text-lg md:text-2xl mb-4">{article.description}</h3>
 {/if}
 
 {#key article}

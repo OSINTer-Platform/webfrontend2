@@ -124,13 +124,13 @@
 
 <Modal
   border={false}
-  class="w-[80vw] h-[90vh] bg-surface-200 dark:bg-surface-700"
+  class="w-[90vw] lg:w-[80vw] h-[90vh] bg-surface-200 dark:bg-surface-700"
 >
   {#key article}
     <main class="w-full h-full overflow-y-auto overflow-x-hidden">
       <article
         class="
-          py-8 px-16 mx-auto max-w-[100ch]
+          p-8 md:px-16 mx-auto max-w-[100ch]
           bg-surface-100 dark:bg-surface-800
       "
         on:outrostart={() => (transitioning = true)}
