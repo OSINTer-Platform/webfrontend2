@@ -1,8 +1,9 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { get } from "svelte/store";
-import { goto } from "$app/navigation";
+import { goto, invalidateAll } from "$app/navigation";
 import { modalState } from "$shared/state/modals";
 import { contactEmail } from "$shared/config";
+import { getReadableDate } from "$lib/common/math";
 import { PUBLIC_API_BASE, PUBLIC_STRIPE_KEY } from "$env/static/public";
 
 import type { PaymentIntent } from "@stripe/stripe-js";
@@ -277,6 +278,41 @@ function showPaymentResults(clientSecret: string, username?: string) {
   });
 }
 
+const spawnPremiumExpirationModal = (user: User) =>
+  modalState.append({
+    modalType: "options",
+    modalContent: {
+      type: "warning",
+      title: "Your premium is expiring",
+      description: `Your premium status, enabling you to access the entirety of the OSINTer interface is set to expire on ${getReadableDate(
+        user.premium.expire_time * 1000
+      )}. If you believe that this is an error you can [contact support](mailto:${contactEmail})`,
+      options: [
+        {
+          text: "Acknowledge",
+          type: "primary",
+          action: async () => {
+            const r = await fetch(
+              `${PUBLIC_API_BASE}/my/user/acknowledge-premium`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ field: "expiry", status: true }),
+              }
+            );
+
+            if (r.ok) {
+              invalidateAll();
+              return true;
+            } else return false;
+          },
+        },
+      ],
+    },
+  });
+
 export function spawnActionModal(
   user: User | null,
   remindDateStore: Writable<number>,
@@ -286,6 +322,13 @@ export function spawnActionModal(
     showPaymentResults(paymentIntentClientSecret, user?.username);
 
   if (!user) return;
+  if (
+    !user.premium.acknowledged["expiry"] &&
+    user.premium.status &&
+    user.premium.expire_time * 1000 > Date.now() &&
+    user.premium.expire_time * 1000 < Date.now() + 1000 * 60 * 60 * 24 * 14
+  )
+    return spawnPremiumExpirationModal(user);
   if (user.payment.subscription.state === "closed")
     return spawnExpiredModal(user.username);
 
