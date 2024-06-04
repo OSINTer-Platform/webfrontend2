@@ -2,13 +2,11 @@ import { PUBLIC_API_BASE } from "$env/static/public";
 import {
   cookieStore,
   backgroundUpdatable,
-  listStore,
   documentCache,
   setLike,
 } from "$lib/common/customStores";
-import { config } from "$shared/config";
-import { derived, get, writable, type Readable } from "svelte/store";
-import type { AuthArea, MLAvailability, Survey } from "$shared/types/api";
+import { derived, writable, type Readable } from "svelte/store";
+import type { AuthArea, MLAvailability } from "$shared/types/api";
 import type { ArticleListRender } from "$shared/types/internal";
 import type { Collection, User } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
@@ -36,11 +34,6 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     else error(r.status, json.detail);
   };
 
-  const getSubmittedSurveys = async (): Promise<Survey[]> => {
-    const r = await fetch(`${PUBLIC_API_BASE}/surveys/?version=1`);
-    return r.ok ? await r.json() : [];
-  };
-
   const updateCollectionList = async (
     user: User | null
   ): Promise<{
@@ -62,13 +55,11 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
 
   const userContents = await getUserObject();
   const user = writable(userContents);
-  const [mlAvailability, authAreas, submittedSurveys, userCollections] =
-    await Promise.all([
-      getMlAvailability(),
-      getAuthAreas(),
-      getSubmittedSurveys(),
-      backgroundUpdatable(() => updateCollectionList(userContents)),
-    ]);
+  const [mlAvailability, authAreas, userCollections] = await Promise.all([
+    getMlAvailability(),
+    getAuthAreas(),
+    backgroundUpdatable(() => updateCollectionList(userContents)),
+  ]);
 
   const allowedAreas = derived(user, ($user) => {
     const areas = Object.entries(authAreas).find(
@@ -130,7 +121,6 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
   );
 
   return {
-    submittedSurveys,
     user,
     readArticleIds: setLike(readArticleIds),
     readArticles,

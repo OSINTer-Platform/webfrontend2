@@ -13,7 +13,6 @@
   import { page } from "$app/stores";
   import { afterNavigate } from "$app/navigation";
   import { onMount } from "svelte";
-  import { spawnSurveyRequest } from "$lib/common/modals";
   import { spawnActionModal } from "./(sidebar)/purchase/modals";
   import { config } from "$shared/config";
   import { tooltip } from "$shared/state/state";
@@ -57,21 +56,12 @@
       });
     }
 
-    if (
-      $user &&
-      $user.premium.status &&
-      data.submittedSurveys.length < 1 &&
-      !window.matchMedia("only screen and (max-width: 40rem)").matches
-    ) {
-      spawnSurveyRequest(1);
-    } else {
-      if (!$page.url.pathname.startsWith("/purchase"))
-        spawnActionModal(
-          $user,
-          remindMePaymentUpdate,
-          data.stripe.paymentIntentClientSecret
-        );
-    }
+    if (!$page.url.pathname.startsWith("/purchase"))
+      spawnActionModal(
+        $user,
+        remindMePaymentUpdate,
+        data.stripe.paymentIntentClientSecret
+      );
   });
 </script>
 
