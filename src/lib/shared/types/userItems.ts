@@ -33,9 +33,6 @@ export interface User {
   collection_ids: string[];
   read_articles: string[];
 
-  feeds: Feed[];
-  collections: Collection[];
-
   premium: {
     status: boolean;
     expire_time: number;
