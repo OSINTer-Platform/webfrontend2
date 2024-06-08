@@ -4,6 +4,8 @@
 
   import { faStar } from "@fortawesome/free-regular-svg-icons";
   import { modalState } from "$state/modals";
+  import { page } from "$app/stores";
+  import { goto } from "$app/navigation";
 
   import type { ArticleBase } from "$shared/types/api";
   import type { Collection } from "$shared/types/userItems";
@@ -15,6 +17,8 @@
 
   export let userCollections: Writable<{ [key: string]: Collection }>;
   export let article: ArticleBase;
+
+  $: user = $page.data.user;
 </script>
 
 <div class="relative">
@@ -24,11 +28,20 @@
       peer
       {btnClass}
     "
-    on:click={() =>
-      modalState.append({
-        modalType: "add-collection",
-        modalContent: { article: article },
-      })}
+    on:click={() => {
+      if ($user)
+        modalState.append({
+          modalType: "add-collection",
+          modalContent: { article: article },
+        });
+      else
+        goto(
+          "/login?msg=" +
+            encodeURIComponent(
+              "You have to log in to access custom collections"
+            )
+        );
+    }}
   >
     <Fa
       icon={faStar}
