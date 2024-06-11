@@ -19,6 +19,7 @@
   import { slide } from "svelte/transition";
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { createSearchFromTag } from "$lib/common/searchQuery";
+  import { getReadableDate } from "$lib/common/math";
 
   export let data: LayoutData;
   $: user = data.user;
@@ -89,8 +90,8 @@
       {
         title: "Dates",
         content: [
-          `Published: ${data.cve.publish_date}`,
-          `Modified: ${data.cve.modified_date}`,
+          `Published: ${getReadableDate(data.cve.publish_date, true)}`,
+          `Modified: ${getReadableDate(data.cve.modified_date, true)}`,
         ],
         mono: false,
       },

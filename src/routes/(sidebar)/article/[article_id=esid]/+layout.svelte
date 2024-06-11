@@ -25,6 +25,7 @@
   import { modalState } from "$shared/state/modals";
   import { page } from "$app/stores";
   import { createSearchFromTag } from "$lib/common/searchQuery";
+  import { getReadableDate } from "$lib/common/math";
 
   export let data: LayoutData;
 
@@ -72,8 +73,8 @@
       {
         title: "Sources",
         content: [
-          `Published: ${data.article.publish_date}`,
-          `Scraped: ${data.article.inserted_at}`,
+          `Published: ${getReadableDate(data.article.publish_date, true)}`,
+          `Scraped: ${getReadableDate(data.article.inserted_at, true)}`,
         ],
         mono: false,
       },
