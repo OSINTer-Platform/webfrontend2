@@ -48,11 +48,16 @@ export function getMonths(firstDate: Date): ReadableMonths {
   }
 }
 
-export function getReadableDate(time: Date | number | string): string {
+export function getReadableDate(
+  time: Date | number | string,
+  includeTime = false
+): string {
   const date = typeof time !== "object" ? new Date(time) : time;
   return date.toLocaleDateString("en", {
     year: "numeric",
     month: "long",
     day: "numeric",
+    hour: includeTime ? "2-digit" : undefined,
+    minute: includeTime ? "2-digit" : undefined,
   });
 }
