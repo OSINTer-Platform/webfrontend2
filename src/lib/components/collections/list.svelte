@@ -20,7 +20,8 @@
   let loadingNew = false;
 
   const handleCheckbox = async (e: any) => {
-    if (e.target.tagName == "A") return;
+    const target: HTMLElement = e.target;
+    if (target.tagName == "A" || target.parentElement?.tagName == "A") return;
     const collectionId = e.currentTarget.id;
     const collection = $userCollections[collectionId];
 
