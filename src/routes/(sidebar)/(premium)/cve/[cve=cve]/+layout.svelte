@@ -8,7 +8,8 @@
   import {
     faCaretDown,
     faCaretUp,
-    faDownload,
+    faFilePdf,
+    faFileZipper,
     faXmark,
   } from "@fortawesome/free-solid-svg-icons";
   import { goto } from "$app/navigation";
@@ -50,12 +51,24 @@
       : []),
     {
       title: "Download MD files",
-      icon: faDownload,
+      icon: faFileZipper,
       route:
         PUBLIC_API_BASE +
         "/cves/" +
-        encodeURIComponent(data.cve.id) +
-        "/export",
+        encodeURIComponent(data.cve.cve) +
+        "/export/md",
+      options: {
+        download: "true",
+      },
+    },
+    {
+      title: "Download PDF file",
+      icon: faFilePdf,
+      route:
+        PUBLIC_API_BASE +
+        "/cves/" +
+        encodeURIComponent(data.cve.cve) +
+        "/export/pdf",
       options: {
         download: "true",
       },
