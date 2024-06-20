@@ -11,7 +11,7 @@
   import { init as initApm } from "@elastic/apm-rum";
   import { env } from "$env/dynamic/public";
   import { page } from "$app/stores";
-  import { afterNavigate } from "$app/navigation";
+  import { afterNavigate, beforeNavigate } from "$app/navigation";
   import { onMount } from "svelte";
   import { spawnActionModal } from "./(sidebar)/purchase/modals";
   import { config } from "$shared/config";
@@ -25,6 +25,8 @@
   $: user = data.user;
   $: remindMePaymentUpdate = data.remindMe.paymentUpdate;
 
+  let showProgressBar = true;
+
   function handleKeypress(e: KeyboardEvent) {
     switch (e.key) {
       case "Escape":
@@ -35,6 +37,26 @@
         break;
     }
   }
+
+  beforeNavigate(({ type, delta, cancel }) => {
+    if (type === "popstate" && delta && delta < 0 && $modalState.length > 0) {
+      // See https://github.com/prgm-dev/sveltekit-progress-bar/issues/5
+      showProgressBar = false;
+
+      cancel();
+
+      let deltaLeft = 0;
+      for (let i = 0; i > delta; i--) {
+        if ($modalState.length > 0) modalState.remove();
+        else deltaLeft--;
+      }
+
+      if (deltaLeft < 0) history.go(deltaLeft);
+
+      // See https://github.com/prgm-dev/sveltekit-progress-bar/issues/5
+      setTimeout(() => (showProgressBar = true), 200);
+    }
+  });
 
   afterNavigate(({ type }) => {
     if (type !== "enter") modalState.set([]);
@@ -83,7 +105,12 @@
 
 <svelte:window on:keydown|capture={(e) => handleKeypress(e)} />
 
-<ProgressBar class="text-primary-500" zIndex={100} settleTime={300} />
+<ProgressBar
+  class="text-primary-500"
+  zIndex={100}
+  settleTime={300}
+  noNavigationProgress={!showProgressBar}
+/>
 
 <div class="h-screen" class:dark={$darkMode}>
   <div class="w-full h-full overflow-hidden flex flex-col dark:text-white">
