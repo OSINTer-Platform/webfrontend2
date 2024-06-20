@@ -20,8 +20,6 @@
   let loadingNew = false;
 
   const handleCheckbox = async (e: any) => {
-    const target: HTMLElement = e.target;
-    if (target.tagName == "A" || target.parentElement?.tagName == "A") return;
     const collectionId = e.currentTarget.id;
     const collection = $userCollections[collectionId];
 
@@ -114,8 +112,9 @@
           </div>
           {#if showStats}
             <a
+              on:click|stopPropagation
               title="Go to collection"
-              class="h-8 w-8 btn opacity-0"
+              class="h-8 w-8 btn opacity-0 shrink-0"
               href="/feed/{_id}"
               target="_blank"
               rel="noopener noreferrer"
