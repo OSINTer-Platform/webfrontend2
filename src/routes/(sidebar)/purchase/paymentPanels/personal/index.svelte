@@ -151,7 +151,42 @@
     </ResultPanel>
   {/await}
 {:else if showSubscriptionState && $user && ($user.payment.subscription.state.length > 0 || $user.premium.status)}
-  {#if $user.premium.status}
+  {#if $user.payment.subscription.state === "closed"}
+    <ResultPanel
+      status="error"
+      msg="Your OSINTer {subName} subscription has expired"
+    >
+      You can either
+      <button
+        on:click={() => (showSubscriptionState = false)}
+        class="link-option"
+      >
+        create a new subscription
+      </button>
+      or
+      <a href={`mailto:${contactEmail}`} class="link-option">
+        contact support
+      </a>
+    </ResultPanel>
+  {:else if $user.payment.subscription.cancel_at_period_end}
+    <ResultPanel
+      status="warning"
+      msg="You have cancelled your OSINTer {subName} subscription"
+    >
+      You can either
+      <button on:click={renew} class="link-option">
+        renew your subscription
+      </button>
+      or
+      <a href={`mailto:${contactEmail}`} class="link-option">
+        contact support
+      </a>
+
+      Otherwise it expires on {endDate}
+    </ResultPanel>
+  {:else if $user.payment.subscription.level.length > 0}
+    <ResultPanel status="success" msg="You are subscribed to OSINTer" />
+  {:else if $user.premium.status}
     {#if $user.premium.expire_time * 1000 > Date.now() && $user.premium.expire_time * 1000 < Date.now() + 1000 * 60 * 60 * 24 * 14}
       <ResultPanel
         status="warning"
@@ -185,41 +220,6 @@
         {/if}
       </ResultPanel>
     {/if}
-  {:else if $user.payment.subscription.state === "closed"}
-    <ResultPanel
-      status="error"
-      msg="Your OSINTer {subName} subscription has expired"
-    >
-      You can either
-      <button
-        on:click={() => (showSubscriptionState = false)}
-        class="link-option"
-      >
-        create a new subscription
-      </button>
-      or
-      <a href={`mailto:${contactEmail}`} class="link-option">
-        contact support
-      </a>
-    </ResultPanel>
-  {:else if $user.payment.subscription.cancel_at_period_end}
-    <ResultPanel
-      status="warning"
-      msg="You have cancelled your OSINTer {subName} subscription"
-    >
-      You can either
-      <button on:click={renew} class="link-option">
-        renew your subscription
-      </button>
-      or
-      <a href={`mailto:${contactEmail}`} class="link-option">
-        contact support
-      </a>
-
-      Otherwise it expires on {endDate}
-    </ResultPanel>
-  {:else}
-    <ResultPanel status="success" msg="You are subscribed to OSINTer" />
   {/if}
 {:else}
   <StripeForm {stripe} {personalPrice} />

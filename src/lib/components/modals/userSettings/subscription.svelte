@@ -58,17 +58,7 @@
 </script>
 
 <section class="pb-6 pr-0 md:pb-0 md:pr-4 flex flex-col justify-center">
-  {#if user.premium.status}
-    <h3 class="font-bold text-xl">You have been granted premium access</h3>
-    <p class="font-light">
-      You have been granted free access to the entirety of the OSINTer interface
-      {#if user.premium.expire_time > 0}
-        This is access ends on {getReadableDate(
-          user.premium.expire_time * 1000
-        )}
-      {/if}
-    </p>
-  {:else if user.payment.subscription.level.length > 0}
+  {#if user.payment.subscription.level.length > 0}
     {#if user.payment.subscription.cancel_at_period_end}
       <h3 class="font-bold text-xl">
         You have cancelled your OSINTer {subName} subscription
@@ -111,6 +101,16 @@
         {/if}
       </nav>
     {/if}
+  {:else if user.premium.status}
+    <h3 class="font-bold text-xl">You have been granted premium access</h3>
+    <p class="font-light">
+      You have been granted free access to the entirety of the OSINTer interface
+      {#if user.premium.expire_time > 0}
+        This is access ends on {getReadableDate(
+          user.premium.expire_time * 1000
+        )}
+      {/if}
+    </p>
   {:else}
     <h3 class="font-bold text-xl mb-2">You are not subscribed to OSINTer</h3>
     <nav class="flex gap-3 flex-wrap">
