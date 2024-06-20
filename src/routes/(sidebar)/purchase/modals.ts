@@ -4,7 +4,11 @@ import { goto, invalidateAll } from "$app/navigation";
 import { modalState } from "$shared/state/modals";
 import { contactEmail } from "$shared/config";
 import { getReadableDate } from "$lib/common/math";
-import { PUBLIC_API_BASE, PUBLIC_STRIPE_KEY } from "$env/static/public";
+import {
+  PUBLIC_API_BASE,
+  PUBLIC_PURCHASE_AVAILABLE,
+  PUBLIC_STRIPE_KEY,
+} from "$env/static/public";
 
 import type { PaymentIntent } from "@stripe/stripe-js";
 import type { User } from "$shared/types/userItems";
@@ -278,7 +282,54 @@ function showPaymentResults(clientSecret: string, username?: string) {
   });
 }
 
-const spawnPremiumExpirationModal = (user: User) =>
+const spawnPremiumExpirationModal = (user: User) => {
+  async function acknowledge() {
+    const r = await fetch(`${PUBLIC_API_BASE}/my/user/acknowledge-premium`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ field: "expiry", status: true }),
+    });
+
+    if (r.ok) {
+      invalidateAll();
+      return true;
+    } else return false;
+  }
+
+  let options: {
+    text: string;
+    type: "primary" | "secondary";
+    action: () => Promise<boolean> | void;
+  }[];
+
+  if (PUBLIC_PURCHASE_AVAILABLE) {
+    options = [
+      {
+        text: "Subscribe",
+        type: "primary",
+        action: () => {
+          goto("/purchase");
+          return;
+        },
+      },
+      {
+        text: "Acknowledge",
+        type: "secondary",
+        action: acknowledge,
+      },
+    ];
+  } else {
+    options = [
+      {
+        text: "Acknowledge",
+        type: "primary",
+        action: acknowledge,
+      },
+    ];
+  }
+
   modalState.append({
     modalType: "options",
     modalContent: {
@@ -287,31 +338,10 @@ const spawnPremiumExpirationModal = (user: User) =>
       description: `Your premium status, enabling you to access the entirety of the OSINTer interface is set to expire on ${getReadableDate(
         user.premium.expire_time * 1000
       )}. If you believe that this is an error you can [contact support](mailto:${contactEmail})`,
-      options: [
-        {
-          text: "Acknowledge",
-          type: "primary",
-          action: async () => {
-            const r = await fetch(
-              `${PUBLIC_API_BASE}/my/user/acknowledge-premium`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ field: "expiry", status: true }),
-              }
-            );
-
-            if (r.ok) {
-              invalidateAll();
-              return true;
-            } else return false;
-          },
-        },
-      ],
+      options,
     },
   });
+};
 
 export function spawnActionModal(
   user: User | null,
