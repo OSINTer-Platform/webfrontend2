@@ -324,6 +324,7 @@ export function spawnActionModal(
   if (!user) return;
   if (
     !user.premium.acknowledged["expiry"] &&
+    user.payment.subscription.level.length < 1 &&
     user.premium.status &&
     user.premium.expire_time * 1000 > Date.now() &&
     user.premium.expire_time * 1000 < Date.now() + 1000 * 60 * 60 * 24 * 14
