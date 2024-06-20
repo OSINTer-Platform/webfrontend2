@@ -74,7 +74,7 @@
   <p class="font-light text-sm">Starting at</p>
 
   <h2 class="text-6xl font-bold mb-2">
-    $500<span class="text-xl font-light">/mo</span>
+    $200<span class="text-xl font-light">/mo</span>
   </h2>
 
   <p class="font-light text-lg">Contact us for a qoute</p>
