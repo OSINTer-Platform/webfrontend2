@@ -212,12 +212,18 @@
         msg="You have been granted a free access to the entirety of the OSINTer interface"
       >
         {#if $user.premium.expire_time > 0}
-          <p>
+          <p class="mb-2">
             This will expire on {getReadableDate(
               $user.premium.expire_time * 1000
             )}
           </p>
         {/if}
+        <button
+          on:click={() => (showSubscriptionState = false)}
+          class="link-option"
+        >
+          Subscribe to OSINTer PRO anyway
+        </button>
       </ResultPanel>
     {/if}
   {/if}
