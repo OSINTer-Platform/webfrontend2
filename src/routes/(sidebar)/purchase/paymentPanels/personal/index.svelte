@@ -130,7 +130,7 @@
   </h2>
 
   <p class="font-bold text-sm">Cancel anytime</p>
-  <p class="font-light text-sm">Billed montly.</p>
+  <p class="font-light text-sm">Billed monthly.</p>
 </div>
 
 {#if paymentStatus}
@@ -152,18 +152,39 @@
   {/await}
 {:else if showSubscriptionState && $user && ($user.payment.subscription.state.length > 0 || $user.premium.status)}
   {#if $user.premium.status}
-    <ResultPanel
-      status="success"
-      msg="You have been granted a free access to the entirety of the OSINTer interface"
-    >
-      {#if $user.premium.expire_time > 0}
-        <p>
-          This will expire on {getReadableDate(
-            $user.premium.expire_time * 1000
-          )}
-        </p>
-      {/if}
-    </ResultPanel>
+    {#if $user.premium.expire_time * 1000 > Date.now() && $user.premium.expire_time * 1000 < Date.now() + 1000 * 60 * 60 * 24 * 14}
+      <ResultPanel
+        status="warning"
+        msg="Your free access to OSINTer is about to expire"
+      >
+        {#if $user.premium.expire_time > 0}
+          <p class="mb-2">
+            This will expire on {getReadableDate(
+              $user.premium.expire_time * 1000
+            )}
+          </p>
+          <button
+            on:click={() => (showSubscriptionState = false)}
+            class="link-option"
+          >
+            Subscribe to OSINTer PRO to ensure continued access.
+          </button>
+        {/if}
+      </ResultPanel>
+    {:else}
+      <ResultPanel
+        status="success"
+        msg="You have been granted a free access to the entirety of the OSINTer interface"
+      >
+        {#if $user.premium.expire_time > 0}
+          <p>
+            This will expire on {getReadableDate(
+              $user.premium.expire_time * 1000
+            )}
+          </p>
+        {/if}
+      </ResultPanel>
+    {/if}
   {:else if $user.payment.subscription.state === "closed"}
     <ResultPanel
       status="error"
