@@ -15,7 +15,7 @@
   import { onMount } from "svelte";
   import { spawnActionModal } from "./(sidebar)/purchase/modals";
   import { config } from "$shared/config";
-  import { tooltip } from "$shared/state/state";
+  import { sideOpen, tooltip } from "$shared/state/state";
 
   import type { PageData } from "./$types";
 
@@ -61,6 +61,7 @@
   afterNavigate(({ type }) => {
     if (type !== "enter") modalState.set([]);
     tooltip.set(null);
+    sideOpen.set(false);
   });
 
   onMount(() => {
