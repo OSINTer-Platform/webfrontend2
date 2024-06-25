@@ -147,7 +147,7 @@
         value={$cveQuery.cves ? $cveQuery.cves.join(" ") : ""}
         on:input={(e) =>
           handleDelayedInput(e, "cves", (val) =>
-            val.length > 0 ? val.split(" ") : undefined
+            val.length > 0 ? val.toUpperCase().split(" ") : undefined
           )}
       />
       <label for="cve" class="input">CVE IDs (space-seperated)</label>
