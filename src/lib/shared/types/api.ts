@@ -251,7 +251,6 @@ export interface CVEBase {
   highlights?: {
     title?: string[];
     description?: string[];
-    summary?: string[];
   };
 
   publish_date: string;
