@@ -36,7 +36,8 @@
     e: any,
     key: keyof RequiredCVESEarchQuery,
     converter: (val: string) => T,
-    beforeSuccess: ((newVal: T) => void) | undefined = undefined
+    beforeSuccess: ((newVal: T) => void) | undefined = undefined,
+    afterSucess: ((newVal: T) => void) | undefined = undefined
   ) {
     clearTimeout(timeouts[key]);
     timeouts[key] = setTimeout(() => {
@@ -45,6 +46,7 @@
         beforeSuccess?.(newVal);
         // @ts-ignore
         $cveQuery[key] = newVal;
+        afterSucess?.(newVal);
       }
     }, 500);
   }
@@ -119,13 +121,15 @@
         type="text"
         value={$cveQuery.search_term ?? ""}
         on:input={(e) => {
-          if ($cveQuery.sort_by !== "") $cveQuery.sort_by = "";
           handleDelayedInput(
             e,
             "search_term",
             (val) => val,
             (val) => {
               if (val.length < 1) $cveQuery.sort_by = "document_count";
+            },
+            (val) => {
+              if (val.length > 1) $cveQuery.sort_by = "";
             }
           );
         }}
