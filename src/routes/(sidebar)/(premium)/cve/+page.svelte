@@ -11,7 +11,6 @@
 
   import { cveSearch } from "$state/cves";
   import BoxRadios from "$com/utils/inputs/boxRadios.svelte";
-  import Switch from "$com/utils/inputs/switch.svelte";
 
   export let data: PageData;
 
@@ -76,6 +75,7 @@
   showReadFilter={false}
   bind:searchValue={$cveSearch}
   contentType="cves"
+  documents={$cves}
 >
   <hr class="border-tertiary-600/50 my-4" />
 
@@ -135,15 +135,6 @@
         }}
       />
       <label for="search_term" class="input">Search Term</label>
-
-      <div
-        class="absolute top-1/2 -translate-y-1/2 right-3"
-        title="{$cveQuery.highlight
-          ? 'Disable'
-          : 'Enable'} highlighting of search matches"
-      >
-        <Switch bind:checked={$cveQuery.highlight} name="highlight" />
-      </div>
     </div>
 
     <div class="input">
