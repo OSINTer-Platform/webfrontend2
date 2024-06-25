@@ -89,7 +89,7 @@
   {modOptions}
   bind:searchValue={$feedLocalSearch}
   showReadFilter={false}
-  articles={$readArticles}
+  documents={$readArticles}
 />
 
 <slot />

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { hasHighlights, hasSummary } from "$lib/common/filter";
-  import type { ArticleBase } from "$shared/types/api";
+  import type { HeaderListItem } from "./types";
   import {
     faEye,
     faEyeSlash,
@@ -20,15 +20,15 @@
   import Fa from "svelte-fa";
   import Switch from "$com/utils/inputs/switch.svelte";
 
-  export let articles: ArticleBase[];
+  export let documents: HeaderListItem[];
   export let showReadFilter: boolean;
 
-  $: articleWithHighlight = hasHighlights(articles);
-  $: articleWithSummary = hasSummary(articles);
+  $: documentWithHighlight = hasHighlights(documents);
+  $: documentWithSummary = hasSummary(documents);
   $: listLayout = $page.data.settings.listRenderMode;
 
   $: expanderButtons = [
-    ...(articleWithHighlight
+    ...(documentWithHighlight
       ? [
           {
             icon: faHighlighter,
@@ -38,7 +38,7 @@
           },
         ]
       : []),
-    ...(articleWithSummary
+    ...(documentWithSummary
       ? [
           {
             icon: faRectangleList,
@@ -50,7 +50,7 @@
       : []),
   ];
 
-  $: showFilterOptions = showReadFilter || articleWithHighlight;
+  $: showFilterOptions = showReadFilter || documentWithHighlight;
   $: showExpandOptions = expanderButtons.length > 0 && $listLayout === "large";
 </script>
 
@@ -91,7 +91,7 @@
           />
         {/if}
 
-        {#if articleWithHighlight}
+        {#if documentWithHighlight}
           <Switch
             title={showHighlights
               ? "Show article search highlights"

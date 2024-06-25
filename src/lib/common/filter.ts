@@ -82,9 +82,11 @@ export const searchInCVE = (
   return search(cve.title) || search(cve.description);
 };
 
-export const hasHighlights = (articles: ArticleBase[] | undefined) => {
-  if (Array.isArray(articles)) {
-    return articles.some(
+export const hasHighlights = (
+  documents: { highlights?: { [key: string]: string[] } }[] | undefined
+) => {
+  if (Array.isArray(documents)) {
+    return documents.some(
       (a) =>
         a.highlights && Object.values(a.highlights).some((v) => v.length > 0)
     );
@@ -93,5 +95,5 @@ export const hasHighlights = (articles: ArticleBase[] | undefined) => {
   return false;
 };
 
-export const hasSummary = (articles: ArticleBase[] | undefined) =>
-  articles?.some((a) => a.summary && a.summary.length > 0) ?? false;
+export const hasSummary = (documents: { summary?: string }[] | undefined) =>
+  documents?.some((a) => a.summary && a.summary.length > 0) ?? false;

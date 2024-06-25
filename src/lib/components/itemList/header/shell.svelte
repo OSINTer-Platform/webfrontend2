@@ -1,7 +1,7 @@
 <script lang="ts">
   import Search from "$inputs/search.svelte";
   import ArticleSearch from "$inputs/articleSearch.svelte";
-  import ArticleFilters from "./articleFilters.svelte";
+  import DocumentFilters from "./documentFilters.svelte";
   import Tabs from "$com/tabs.svelte";
   import ModList from "./modList.svelte";
 
@@ -10,7 +10,7 @@
     HeaderModOptions,
   } from "$shared/types/internal";
   import type { Writable } from "svelte/store";
-  import type { ArticleBase } from "$shared/types/api";
+  import type { HeaderListItem } from "./types";
 
   import { listElementCount } from "$state/state";
   import { page } from "$app/stores";
@@ -25,8 +25,10 @@
 
   export let contentType = "articles";
 
-  export let articles: Promise<ArticleBase[]> | ArticleBase[] | undefined =
-    undefined;
+  export let documents:
+    | Promise<HeaderListItem[]>
+    | HeaderListItem[]
+    | undefined = undefined;
   export let showReadFilter = true;
 
   export let tabs: null | {
@@ -111,16 +113,16 @@
   {#if tabs}
     <Tabs bind:selected={$tabStore} options={tabs.options}>
       <svelte:fragment slot="end">
-        {#if articles}
-          {#await articles then articles}
-            <ArticleFilters {articles} {showReadFilter} />
+        {#if documents}
+          {#await documents then documents}
+            <DocumentFilters {documents} {showReadFilter} />
           {/await}
         {:else if pageArticles}
-          <ArticleFilters articles={pageArticles} {showReadFilter} />
+          <DocumentFilters documents={pageArticles} {showReadFilter} />
         {:else if pageLoadingArticles}
           {#await $pageLoadingArticles then articles}
             {#if articles}
-              <ArticleFilters {articles} {showReadFilter} />
+              <DocumentFilters documents={articles} {showReadFilter} />
             {/if}
           {/await}
         {/if}
