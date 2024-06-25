@@ -84,15 +84,25 @@ export const searchInCVE = (
 
 export const hasHighlights = (
   documents: { highlights?: { [key: string]: string[] } }[] | undefined
-) => {
-  if (Array.isArray(documents)) {
-    return documents.some(
-      (a) =>
-        a.highlights && Object.values(a.highlights).some((v) => v.length > 0)
-    );
-  }
+): { highlights: boolean; expandable: boolean } => {
+  if (!Array.isArray(documents))
+    return { highlights: false, expandable: false };
 
-  return false;
+  const highlights = documents.some(
+    (a) => a.highlights && Object.values(a.highlights).some((v) => v.length > 0)
+  );
+
+  if (!highlights) return { highlights: false, expandable: false };
+
+  const expandable = documents.some(
+    (a) =>
+      a.highlights &&
+      Object.entries(a.highlights).some(
+        ([k, v]) => ["content", "summary"].includes(k) && v.length > 0
+      )
+  );
+
+  return { highlights, expandable };
 };
 
 export const hasSummary = (documents: { summary?: string }[] | undefined) =>

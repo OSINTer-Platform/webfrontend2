@@ -28,7 +28,7 @@
   $: listLayout = $page.data.settings.listRenderMode;
 
   $: expanderButtons = [
-    ...(documentWithHighlight
+    ...(documentWithHighlight.expandable
       ? [
           {
             icon: faHighlighter,
@@ -50,7 +50,7 @@
       : []),
   ];
 
-  $: showFilterOptions = showReadFilter || documentWithHighlight;
+  $: showFilterOptions = showReadFilter || documentWithHighlight.highlights;
   $: showExpandOptions = expanderButtons.length > 0 && $listLayout === "large";
 </script>
 
@@ -91,7 +91,7 @@
           />
         {/if}
 
-        {#if documentWithHighlight}
+        {#if documentWithHighlight.highlights}
           <Switch
             title={showHighlights
               ? "Show article search highlights"

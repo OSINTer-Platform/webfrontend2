@@ -61,7 +61,7 @@
     infoText={`${$listElementCount} articles`}
   />
 
-  {#if articleWithHighlight || $user}
+  {#if articleWithHighlight.highlights || $user}
     <div class="self-center flex gap-2">
       {#if $user}
         <Switch
@@ -74,7 +74,7 @@
           size="lg"
         />
       {/if}
-      {#if articleWithHighlight}
+      {#if articleWithHighlight.highlights}
         <Switch
           title={$showHighlights
             ? "Show article search highlights"
