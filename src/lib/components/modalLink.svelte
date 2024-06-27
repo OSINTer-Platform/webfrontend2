@@ -9,6 +9,7 @@
   let classes: string = "";
   export { classes as class };
   export let title: string = "";
+  export let style: string = "";
 
   $: renderExternal = $page.data.settings.renderExternal;
 
@@ -44,6 +45,7 @@
   {href}
   class={classes}
   {title}
+  {style}
   target={$renderExternal ? "_blank" : ""}
   rel="noopener noreferrer"
 >
