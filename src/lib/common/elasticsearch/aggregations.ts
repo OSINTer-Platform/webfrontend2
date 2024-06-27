@@ -23,23 +23,49 @@ export interface SignificantTermAgg {
 export async function getTags(
   startDate: Date,
   endDate: Date,
+  significant: false,
+  selectedTags: string[],
+  metricCount?: number
+): Promise<{ tags: TermAgg; hitCount: number }>;
+export async function getTags(
+  startDate: Date,
+  endDate: Date,
+  significant: true,
+  selectedTags: string[],
+  metricCount?: number
+): Promise<{ tags: SignificantTermAgg; hitCount: number }>;
+export async function getTags(
+  startDate: Date,
+  endDate: Date,
+  significant: boolean,
   selectedTags: string[],
   metricCount: number = 50
-): Promise<{ tags: TermAgg; hitCount: number }> {
+): Promise<{ tags: TermAgg | SignificantTermAgg; hitCount: number }> {
   const request = client();
 
   request.addParameter("limit", 0);
   request.addParameter("track_total", true);
   request.addParameter("first_date", startDate.toISOString());
   request.addParameter("last_date", endDate.toISOString());
-  request.addParameter("aggregations", {
-    tags: {
-      terms: {
-        field: "tags.automatic",
-        size: metricCount,
+
+  if (significant)
+    request.addParameter("aggregations", {
+      tags: {
+        significant_terms: {
+          field: "tags.automatic",
+          size: metricCount,
+        },
       },
-    },
-  });
+    });
+  else
+    request.addParameter("aggregations", {
+      tags: {
+        terms: {
+          field: "tags.automatic",
+          size: metricCount,
+        },
+      },
+    });
 
   if (selectedTags.length > 0)
     request.addParameter(

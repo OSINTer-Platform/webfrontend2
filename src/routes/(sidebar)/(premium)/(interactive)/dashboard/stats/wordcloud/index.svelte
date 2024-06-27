@@ -4,12 +4,15 @@
   import Tagline from "../tagline.svelte";
 
   import { onMount } from "svelte";
-  import { writable, type Writable } from "svelte/store";
+  import { writable } from "svelte/store";
   import { browser } from "$app/environment";
   import { getTags } from "$lib/common/elasticsearch/aggregations";
   import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
   import { getBaseArticles } from "$lib/common/elasticsearch/search";
   import { modalState } from "$shared/state/modals";
+
+  import { type Writable } from "svelte/store";
+  import { type TermAgg } from "$lib/common/elasticsearch/aggregations";
 
   let selectedTags: Writable<string[]> = writable([]);
   let mounted = false;
@@ -24,9 +27,9 @@
     endDate: Date,
     selected: string[],
     mounted: boolean
-  ): ReturnType<typeof getTags> =>
+  ): Promise<{ tags: TermAgg; hitCount: number }> =>
     mounted
-      ? getTags(startDate, endDate, selected, 50)
+      ? getTags(startDate, endDate, false, selected, 50)
       : Promise.resolve({
           tags: {
             doc_count_error_upper_bound: 0,
