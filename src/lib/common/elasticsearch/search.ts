@@ -8,7 +8,10 @@ import type {
 import { client, extractDocHits } from "./common";
 
 type NonEmptyArray<T> = [T, ...T[]];
-type SpecificArticle<K extends keyof FullArticle> = Pick<FullArticle, K> &
+export type SpecificArticle<K extends keyof FullArticle> = Pick<
+  FullArticle,
+  K
+> &
   Article;
 
 const BaseArticleFields: NonEmptyArray<keyof ArticleBase> = [

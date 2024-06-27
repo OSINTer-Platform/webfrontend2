@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { PageData } from "./$types";
+  export let data: PageData;
 
   import InternalLinks from "$com/frontpage/internalLinks.svelte";
   import Faq from "$com/frontpage/faq.svelte";
@@ -43,7 +45,7 @@
 		dark:bg-black
 	"
   >
-    <Header {mouse} />
+    <Header {mouse} trendingArticles={data.trendingArticles} />
   </header>
   <section class="bg-surface-100 dark:bg-surface-900">
     <div class="container p-4 sm:p-8 lg:p-12 xl:py-20">

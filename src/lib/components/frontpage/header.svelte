@@ -1,21 +1,23 @@
 <script lang="ts">
-  import Cyber from "$assets/Cyber.svelte";
   import LogoFull from "$assets/LogoFull.svelte";
   import Grid from "./grid.svelte";
+  import FloatingArticles from "./floatingArticles.svelte";
 
   import { page } from "$app/stores";
   import { PUBLIC_PURCHASE_AVAILABLE } from "$env/static/public";
 
-  $: darkMode = $page.data.settings.darkMode;
+  import type { TrendingArticleBundle } from "./types";
+
   $: user = $page.data.user;
   $: authorizer = $page.data.checkAuthorization;
 
   export let mouse: null | { x: number; y: number };
+  export let trendingArticles: TrendingArticleBundle[];
 </script>
 
 <div class="grid grid-cols-1">
   <Grid
-    class="hidden dark:grid opacity-50 sm:opacity-25"
+    class="hidden dark:grid opacity-50"
     style="
       mask-image: linear-gradient(rgb(0 0 0 / 100%), transparent);
       -webkit-mask-image: linear-gradient(rgb(0 0 0 / 100%), transparent);
@@ -41,15 +43,16 @@
   <div
     class="
     container z-10 row-start-1 col-start-1
+    flex flex-col gap-24 lg:gap-0
     lg:grid lg:grid-cols-2
     items-center justify-items-center
-    py-24 sm:py-48
+    pb-16 pt-36
     px-6 sm:px-0
   "
   >
-    <div>
+    <section class="w-full">
       <div class="hidden sm:block">
-        <h1
+        <h2
           class="
           text-3xl md:text-4xl lg:text-2xl xl:text-4xl
           max-lg:ml-6
@@ -57,7 +60,7 @@
         "
         >
           Automating the CTI heavylifting
-        </h1>
+        </h2>
         <LogoFull
           class="
           lg:w-auto xl:h-30
@@ -65,9 +68,9 @@
           max-lg:-my-6
         "
         />
-        <h2
+        <h3
           class="
-          -mt-4 md:-mt-6 lg:-mt-2
+          -mt-4 md:-mt-8 lg:-mt-2
           ml-16 lg:ml-6 xl:ml-8
           md:text-lg lg:text-base xl:text-xl
 
@@ -76,23 +79,20 @@
         "
         >
           Experience a new approach to CTI, helping you do more with less.
-        </h2>
+        </h3>
       </div>
 
-      <div class="sm:hidden">
-        <LogoFull
-          class="
-        "
-        />
+      <div class="sm:hidden w-full">
+        <LogoFull class="w-full" />
 
-        <h1
+        <h3
           class="
-          ml-12 -mt-4
+          ml-[7vw] -mt-[4vw]
           font-light
         "
         >
           Automating the CTI heavylifting
-        </h1>
+        </h3>
       </div>
 
       <div
@@ -100,9 +100,9 @@
         flex gap-2 sm:gap-4
         mx-auto
         mt-4 xl:mt-8
-        sm:ml-16 lg:ml-6 xl:ml-8
+        ml-[10vw] sm:ml-16 lg:ml-6 xl:ml-8
 
-        text-xs sm:text-base
+        text-base
       "
       >
         <a
@@ -165,78 +165,11 @@
           </a>
         {/if}
       </div>
-    </div>
+    </section>
 
-    <div class="lg:grid grid-cols-1 aspect-square h-60 xl:h-72 hidden">
-      <Cyber
-        class="
-        h-full w-full
-        col-start-1 row-start-1
-        z-10
-        drop-shadow-xl
-      "
-      />
-      <div
-        class="
-        h-full w-full
-        col-start-1 row-start-1
-        rounded-full
-        blur-2xl
-        transition-all
-        {$darkMode ? 'img-dark-bg' : 'img-bg'}
-      "
-      />
-    </div>
+    <FloatingArticles {trendingArticles} />
   </div>
 </div>
 
 <style lang="postcss">
-  .img-bg {
-    animation: pulse 5s linear infinite, light-glow 5s linear infinite;
-  }
-
-  .img-dark-bg {
-    animation: pulse 5s linear infinite, dark-glow 5s linear infinite;
-  }
-
-  @keyframes dark-glow {
-    0% {
-      @apply bg-secondary-600/30;
-    }
-    25% {
-      @apply bg-primary-500/10;
-    }
-    50% {
-      @apply bg-primary-500/20;
-    }
-    75% {
-      @apply bg-primary-500/10;
-    }
-    100% {
-      @apply bg-secondary-600/30;
-    }
-  }
-
-  @keyframes light-glow {
-    0% {
-      @apply bg-primary-400/20;
-    }
-    25% {
-      @apply bg-primary-200/40;
-    }
-    50% {
-      @apply bg-secondary-200/40;
-    }
-    75% {
-      @apply bg-primary-200/40;
-    }
-    100% {
-      @apply bg-primary-400/20;
-    }
-  }
-  @keyframes pulse {
-    50% {
-      transform: scale(1.5);
-    }
-  }
 </style>
