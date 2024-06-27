@@ -24,9 +24,10 @@
 <aside
   class="
   z-30 absolute w-full
+  bg-surface-100
   {scrollY > 0
-    ? 'backdrop-blur-xl bg-white/50 dark:bg-black/50'
-    : 'backdrop-filter-none dark:bg-black/20'}
+    ? 'dark:backdrop-blur-xl dark:bg-black/50'
+    : 'dark:backdrop-filter-none dark:bg-black/20'}
   transition-colors duration-200
   shadow-lg
 "
@@ -41,7 +42,7 @@
     class="
 		w-full
 
-		bg-surface-300
+		bg-surface-100
 		dark:bg-black
 	"
   >
@@ -100,6 +101,16 @@
   div {
     :global(div.container) {
       @apply xl:max-w-7xl mx-auto;
+    }
+  }
+
+  /* prettier-ignore */
+  header {
+    background-image:
+      radial-gradient(at 0% 0%, theme(colors.secondary.500 / 30%) 0px,transparent 50%),
+      radial-gradient(at 98% 1%, theme(colors.primary.500 / 20%) 0px,transparent 50%);
+    &:is(.dark *) {
+      background-image: none;
     }
   }
 </style>
