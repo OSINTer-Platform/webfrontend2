@@ -15,3 +15,16 @@ export function sortDocumentsById<Document>(
   );
   return filteredDocuments;
 }
+
+export function shuffle<T>(list: T[]): T[] {
+  var i = list.length;
+
+  while (--i > 0) {
+    let j = Math.floor(Math.random() * (i + 1));
+    let temp = list[j];
+    list[j] = list[i];
+    list[i] = temp;
+  }
+
+  return list;
+}
