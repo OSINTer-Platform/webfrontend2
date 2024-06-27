@@ -1,9 +1,6 @@
 <script lang="ts">
-  import type { PageServerData } from "./$types";
-  export let data: PageServerData;
 
   import InternalLinks from "$com/frontpage/internalLinks.svelte";
-  import Blogposts from "$com/frontpage/blogposts.svelte";
   import Faq from "$com/frontpage/faq.svelte";
   import Header from "$com/frontpage/header.svelte";
   import Topbar from "./topbar.svelte";
@@ -77,10 +74,6 @@
       -->
 
       <InternalLinks />
-
-      <hr class="border-surface-200 dark:border-surface-700" />
-
-      <Blogposts posts={data.posts} />
     </div>
   </section>
 
