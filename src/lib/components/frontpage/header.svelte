@@ -51,7 +51,7 @@
   "
   >
     <section class="w-full">
-      <div class="hidden sm:block">
+      <div class="hidden sm:block px-8">
         <h2
           class="
           text-3xl md:text-4xl lg:text-2xl xl:text-4xl
@@ -63,7 +63,7 @@
         </h2>
         <LogoFull
           class="
-          lg:w-auto xl:h-30
+          lg:w-auto
           lg:-m-5 xl:-m-6
           max-lg:-my-6
         "
@@ -100,9 +100,9 @@
         flex gap-2 sm:gap-4
         mx-auto
         mt-4 xl:mt-8
-        ml-[10vw] sm:ml-16 lg:ml-6 xl:ml-8
+        ml-[6vw] sm:ml-16 md:ml-20 lg:ml-10 xl:ml-12
 
-        text-base
+        text-sm sm:text-base
       "
       >
         <a
