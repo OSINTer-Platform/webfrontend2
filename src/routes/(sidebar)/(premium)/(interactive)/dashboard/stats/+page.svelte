@@ -138,16 +138,16 @@
   $: upperList = [
     {
       title: "Emerging Tags",
-      items: convertTermAggs(data.metrics.limited.new_tags),
+      items: convertTermAggs(data.metrics.aggs.new_tags),
     },
     {
       title: "Common CVE's",
-      items: convertCves(convertTermAggs(data.metrics.limited.cves), data.cves),
+      items: convertCves(convertTermAggs(data.metrics.aggs.cves), data.cves),
     },
     {
       title: "Emerging topics",
       items: convertClusters(
-        convertTermAggs(data.metrics.limited.clusters),
+        convertTermAggs(data.metrics.aggs.clusters),
         data.clusters
       ),
     },
@@ -186,9 +186,8 @@
     <Lower
       startDate={data.startDate}
       endDate={data.endDate}
-      significantTags={data.metrics.limited.new_tags}
-      cves={data.metrics.limited.cves}
-      globalTags={data.metrics.global.tags}
+      significantTags={data.metrics.aggs.new_tags}
+      cves={data.metrics.aggs.cves}
     />
   </section>
 
