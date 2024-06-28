@@ -12,7 +12,6 @@
   import {
     faArrowTrendUp,
     faBug,
-    faRankingStar,
     type IconDefinition,
   } from "@fortawesome/free-solid-svg-icons";
 
@@ -21,7 +20,6 @@
 
   export let significantTags: SignificantTermAgg;
   export let cves: TermAgg;
-  export let globalTags: TermAgg;
 
   const initialKeywordCount = 10;
 
@@ -47,11 +45,6 @@
       words: significantTags.buckets
         .map((b) => b.key)
         .slice(0, initialKeywordCount),
-    },
-    {
-      title: "Popular tags",
-      icon: faRankingStar,
-      words: globalTags.buckets.map((b) => b.key).slice(0, initialKeywordCount),
     },
   ];
 </script>
