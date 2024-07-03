@@ -268,11 +268,10 @@ export interface CVEBase {
 
   cvss3?: CVSS3;
   cvss2?: CVSS2;
-
-  references: CVEReference[];
 }
 
 export interface FullCVE extends CVEBase {
   documents: string[];
   dating: string[];
+  references: CVEReference[];
 }
