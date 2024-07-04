@@ -86,7 +86,8 @@ export async function getTags(
 export async function getDashboardMetrics(
   startDate: Date,
   endDate: Date,
-  metricCount: number = 50
+  metricCount: number = 50,
+  articleCount: number | null = null
 ): Promise<{
   aggs: {
     cves: TermAgg;
@@ -103,7 +104,7 @@ export async function getDashboardMetrics(
   const request = client();
 
   // For most commonly read articles
-  request.addParameter("limit", metricCount);
+  request.addParameter("limit", articleCount ?? metricCount);
   request.addParameter("sort_by", "read_times");
   request.addParameter("include_fields", ["title", "read_times", "url"]);
 
