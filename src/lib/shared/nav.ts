@@ -33,7 +33,7 @@ export const navItems: {
     },
     {
       title: "Dashboard",
-      description: "Dashboard of news in OSINTer",
+      description: "Dashboard of news and trending topics in OSINTer",
       route: "/dashboard",
       icon: faChartSimple,
     },
