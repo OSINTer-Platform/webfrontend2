@@ -21,7 +21,7 @@
     const q: ArticleSearchQuery = {
       limit: 20,
       sort_order: "desc",
-      semantic_search: previousSearch,
+      search_term: previousSearch,
     };
 
     return await queryArticles(q).then(({ documents }) => documents);

@@ -70,7 +70,6 @@ export const getStandardSearch = (): ArticleSearchQuery => ({
   sort_order: "desc",
 
   search_term: "",
-  semantic_search: "",
   highlight: true,
 
   first_date: "",
