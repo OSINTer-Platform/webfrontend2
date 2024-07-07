@@ -90,50 +90,52 @@
 
   {#each holders as { top, left, animation }, i}
     {@const article = selectedBundle.articles[i]}
-    <ModalLink
-      {article}
-      articleList={selectedBundle.articles}
-      style="
-        top: {top}%; left: {left}%;
-        --delay: {animation.delay}s;
-        --duration: {animation.duration}s;
-      "
-      class="
-        absolute w-32 h-32
-        -translate-x-1/2 -translate-y-1/2
-        rounded-md overflow-hidden
-        [&:hover>div]:opacity-100
-    "
-    >
-      <img src={SmallLogo} alt="OSINTer logo" />
-      {#key article}
-        <img
-          src={article.image_url}
-          alt="Article"
-          transition:fade={{ delay: 1000, duration: 1000 }}
-          class="text-transparent"
-        />
-        <div
-          transition:fade={{ delay: 1000, duration: 1000 }}
-          class="
-          absolute z-10 h-full w-full
-          flex justify-center items-center text-center
-          bg-black/80 opacity-0 transition-opacity duration-300
+    {#if article}
+      <ModalLink
+        {article}
+        articleList={selectedBundle.articles}
+        style="
+          top: {top}%; left: {left}%;
+          --delay: {animation.delay}s;
+          --duration: {animation.duration}s;
         "
-        >
-          <p class="text-white font-bold text-xs">
-            {#if article.highlights?.title}
-              <SvelteMarkdown
-                source={eclipseConcat(article.highlights.title)}
-                isInline
-              />
-            {:else}
-              {article.title}
-            {/if}
-          </p>
-        </div>
-      {/key}
-    </ModalLink>
+        class="
+          absolute w-32 h-32
+          -translate-x-1/2 -translate-y-1/2
+          rounded-md overflow-hidden
+          [&:hover>div]:opacity-100
+      "
+      >
+        <img src={SmallLogo} alt="OSINTer logo" />
+        {#key article}
+          <img
+            src={article.image_url}
+            alt="Article"
+            transition:fade={{ delay: 1000, duration: 1000 }}
+            class="text-transparent"
+          />
+          <div
+            transition:fade={{ delay: 1000, duration: 1000 }}
+            class="
+            absolute z-10 h-full w-full
+            flex justify-center items-center text-center
+            bg-black/80 opacity-0 transition-opacity duration-300
+          "
+          >
+            <p class="text-white font-bold text-xs">
+              {#if article.highlights?.title}
+                <SvelteMarkdown
+                  source={eclipseConcat(article.highlights.title)}
+                  isInline
+                />
+              {:else}
+                {article.title}
+              {/if}
+            </p>
+          </div>
+        {/key}
+      </ModalLink>
+    {/if}
   {/each}
 </section>
 
