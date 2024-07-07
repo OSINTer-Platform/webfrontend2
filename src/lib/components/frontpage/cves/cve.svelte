@@ -1,6 +1,7 @@
 <script lang="ts">
   import DetailList from "$com/itemList/header/detailList.svelte";
   import ArticleListElement from "$com/itemList/articles/layouts/large/article.svelte";
+  import ListLimiter from "$com/itemList/limiter.svelte";
   import Loader from "$com/loader.svelte";
 
   import { createSearchFromTag } from "$lib/common/searchQuery";
@@ -67,14 +68,19 @@
     {#await articles}
       <Loader text="Loading CVE articles" />
     {:then articles}
-      {#each articles as article}
+      <ListLimiter
+        list={articles}
+        listLenLimit={30}
+        let:listElement={article}
+        updateCount={false}
+      >
         <ArticleListElement
           {article}
           articleList={articles}
           showHighlights={true}
           readArticles={[]}
         />
-      {/each}
+      </ListLimiter>
     {/await}
   </section>
 </main>
