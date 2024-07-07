@@ -7,10 +7,12 @@ export function typewriter(
     node.childNodes.length === 1 &&
     node.childNodes[0].nodeType === Node.TEXT_NODE;
 
-  if (!valid)
+  if (!valid) {
     console.error(
       `This transition only works on elements with a single text node child`
     );
+    return {};
+  }
 
   if (!text) return {};
 
