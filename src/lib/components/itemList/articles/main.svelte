@@ -10,6 +10,7 @@
   import TitleArticle from "./layouts/title/article.svelte";
 
   import Limiter from "../limiter.svelte";
+  import Wrapper from "../wrapper.svelte";
 
   import { page } from "$app/stores";
   import { showHighlights } from "$shared/state/state";
@@ -50,27 +51,20 @@
   $: renderLayout = layout ?? $renderSetting;
 </script>
 
-<Limiter
-  list={articles}
-  {listLenLimit}
-  {emptyMessage}
-  {containerClass}
-  ListWrapper={layouts[renderLayout].shell}
-  let:listElement
->
-  <svelte:fragment slot="top">
-    <slot name="top" />
-  </svelte:fragment>
+<Wrapper empty={articles.length < 1} {emptyMessage} class={containerClass}>
+  <svelte:component this={layouts[renderLayout].shell}>
+    <Limiter list={articles} {listLenLimit} let:listElement>
+      <slot name="top" />
 
-  <svelte:component
-    this={layouts[renderLayout].article}
-    article={listElement}
-    {readArticles}
-    showHighlights={$showHighlights}
-    articleList={articles}
-  />
+      <svelte:component
+        this={layouts[renderLayout].article}
+        article={listElement}
+        {readArticles}
+        showHighlights={$showHighlights}
+        articleList={articles}
+      />
 
-  <svelte:fragment slot="bottom">
-    <slot name="bottom" />
-  </svelte:fragment>
-</Limiter>
+      <slot name="bottom" />
+    </Limiter>
+  </svelte:component>
+</Wrapper>
