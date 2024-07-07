@@ -1,15 +1,31 @@
 <script lang="ts">
   import DetailList from "$com/itemList/header/detailList.svelte";
   import ArticleListElement from "$com/itemList/articles/layouts/large/article.svelte";
-
-  import { getReadableDate } from "$lib/common/math";
-  import { createSearchFromTag } from "$lib/common/searchQuery";
-
-  import type { CVEBase } from "$shared/types/api";
-  import { queryArticles, queryArticlesById } from "$lib/common/queryArticles";
   import Loader from "$com/loader.svelte";
 
+  import { createSearchFromTag } from "$lib/common/searchQuery";
+  import { queryArticles } from "$lib/common/queryArticles";
+  import { onMount } from "svelte";
+
+  import type { ArticleBase, CVEBase } from "$shared/types/api";
+
   export let cve: CVEBase;
+
+  let mounted = false;
+
+  const getArticles = (cve: string, mounted: boolean) =>
+    mounted
+      ? queryArticles(
+          {
+            limit: 10000,
+            search_term: `"${cve}"`,
+            sort_by: "",
+            sort_order: "desc",
+            highlight: true,
+          },
+          false
+        ).then(({ documents }) => documents ?? [])
+      : Promise.resolve([] as ArticleBase[]);
 
   $: cveBaseScore =
     cve.cvss3?.cvss_data.base_score ?? cve.cvss2?.cvss_data.base_score;
@@ -34,16 +50,9 @@
     ],
   ];
 
-  $: articles = queryArticles(
-    {
-      limit: 10000,
-      search_term: `"${cve.cve}"`,
-      sort_by: "",
-      sort_order: "desc",
-      highlight: true,
-    },
-    false
-  );
+  $: articles = getArticles(cve.cve, mounted);
+
+  onMount(() => (mounted = true));
 </script>
 
 <main class="flex flex-col overflow-auto">
@@ -57,17 +66,15 @@
   <section class="px-3">
     {#await articles}
       <Loader text="Loading CVE articles" />
-    {:then { documents }}
-      {#if documents}
-        {#each documents as article}
-          <ArticleListElement
-            {article}
-            articleList={documents}
-            showHighlights={true}
-            readArticles={[]}
-          />
-        {/each}
-      {/if}
+    {:then articles}
+      {#each articles as article}
+        <ArticleListElement
+          {article}
+          articleList={articles}
+          showHighlights={true}
+          readArticles={[]}
+        />
+      {/each}
     {/await}
   </section>
 </main>
