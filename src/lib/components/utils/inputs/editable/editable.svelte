@@ -81,23 +81,25 @@
   }
 </script>
 
-<svelte:element
-  this={tag}
-  bind:this={el}
-  role="heading"
-  on:keydown={keydown}
-  on:blur={commit}
-  on:paste={paste}
-  on:drop|preventDefault
-  on:click
-  {id}
-  class="{classes} focus:outline-none"
-  contenteditable="true"
-  autocorrect="off"
-  autocapitalize="off"
-  spellcheck="false"
-  data-gramm="false"
-  draggable="false"
->
-  {content}
-</svelte:element>
+{#key content}
+  <svelte:element
+    this={tag}
+    bind:this={el}
+    role="heading"
+    on:keydown={keydown}
+    on:blur={commit}
+    on:paste={paste}
+    on:drop|preventDefault
+    on:click
+    {id}
+    class="{classes} focus:outline-none"
+    contenteditable="true"
+    autocorrect="off"
+    autocapitalize="off"
+    spellcheck="false"
+    data-gramm="false"
+    draggable="false"
+  >
+    {content}
+  </svelte:element>
+{/key}
