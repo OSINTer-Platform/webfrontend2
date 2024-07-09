@@ -9,6 +9,7 @@
   import { onMount } from "svelte";
   import { browser } from "$app/environment";
   import { queryArticles } from "$lib/common/queryArticles";
+  import { contactEmail } from "$shared/config";
 
   export let data: PageData;
 
@@ -47,7 +48,34 @@
   {#await articleQuery}
     <Loader text="Loading articles for dashboard" />
   {:then articles}
-    <ArticleList {articles} dashboard="title" {fetchArticles} {scrollSpeed} />
+    {#if articles.length > 0}
+      <ArticleList {articles} dashboard="title" {fetchArticles} {scrollSpeed} />
+    {:else}
+      <div
+        class="
+        h-full mx-auto px-8
+        xl:max-w-5xl max-w-2xl
+        flex flex-col
+        justify-center items-center text-center"
+      >
+        <h2
+          class="xl:text-5xl md:text-4xl sm:text-3xl text-2xl font-bold md:mb-2"
+        >
+          No articles found
+        </h2>
+        <p
+          class="xl:text-2xl md:text-xl sm:text-lg font-light md:tracking-tighter mb-8"
+        >
+          No articles was found for this timeperiod. Either change the
+          time-period, or
+          <a
+            href="mailto:{contactEmail}"
+            class="underline hover:text-primary-500 transition-colors"
+            >contact support.</a
+          >
+        </p>
+      </div>
+    {/if}
     <Controls
       bind:scrollSpeed
       startDate={data.startDate}
@@ -67,12 +95,12 @@
       <h2
         class="xl:text-5xl md:text-4xl sm:text-3xl text-2xl font-bold md:mb-2"
       >
-        Error when loading overview.
+        Error when loading the dasboard.
       </h2>
       <p
         class="xl:text-2xl md:text-xl sm:text-lg font-light md:tracking-tighter mb-8"
       >
-        An unknown error occurred when attempting to load the overview
+        An unknown error occurred when attempting to load the dashboard
       </p>
       <button
         class="btn p-2 w-48 lg:p-4 lg:w-64 lg:text-xl font-bold
