@@ -61,3 +61,6 @@ export function getReadableDate(
     minute: includeTime ? "2-digit" : undefined,
   });
 }
+
+export const genPastDate = (days: number) =>
+  new Date(new Date().setDate(new Date().getDate() - days));

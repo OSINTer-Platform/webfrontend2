@@ -3,6 +3,7 @@
   import LogoIcon from "$assets/LogoIcon.svelte";
   import Navigator from "./navigator.svelte";
 
+  import { genPastDate } from "$lib/common/math";
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { createEventDispatcher } from "svelte";
@@ -28,8 +29,6 @@
     dispatch("date", { startDate: startDate, endDate: endDate });
   }
 
-  const genPastDate = (days: number) =>
-    new Date(new Date().setDate(new Date().getDate() - days));
 
   const dateRanges: {
     title: string;
