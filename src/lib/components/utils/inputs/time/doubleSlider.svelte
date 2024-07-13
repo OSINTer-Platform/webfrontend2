@@ -1,5 +1,5 @@
 <script lang="ts">
-  import DoubleSlider from "../doubleSlider/index.svelte";
+  import DoubleSlider, { type Config } from "../doubleSlider/index.svelte";
 
   import { firstDate as globalFirstDate } from "$shared/config";
   import { getReadableDate } from "$lib/common/math";
@@ -9,14 +9,7 @@
     change: { firstDate: Date; lastDate: Date };
   }>();
 
-  export let config:
-    | {
-        hoverTitles?: boolean;
-        rounded?: boolean;
-        backgroundColor?: string;
-        foregroundColor?: string;
-      }
-    | undefined = undefined;
+  export let config: Partial<Config> = {};
 
   export let minDate: Date = globalFirstDate;
   export let maxDate: Date = new Date();

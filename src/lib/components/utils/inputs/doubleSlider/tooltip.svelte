@@ -25,6 +25,7 @@
 
 <aside
   class="
+  opacity-0
   flex h-8 absolute
   right-0 left-0 top-0
   -translate-y-full

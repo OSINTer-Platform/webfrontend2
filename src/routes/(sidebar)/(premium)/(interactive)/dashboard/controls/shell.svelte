@@ -191,7 +191,7 @@
           bind:firstDate={startDate}
           bind:lastDate={endDate}
           config={{
-            hoverTitles: true,
+            hoverTooltip: true,
             rounded: true,
             backgroundColor: "bg-primary-900/75",
             foregroundColor: "bg-primary-500",

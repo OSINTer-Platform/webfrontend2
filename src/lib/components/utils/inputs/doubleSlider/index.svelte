@@ -1,16 +1,19 @@
+<script lang="ts" context="module">
+  export type Config = {
+    showTooltip: boolean;
+    hoverTooltip: boolean;
+    rounded: boolean;
+    backgroundColor: string;
+    foregroundColor: string;
+  };
+</script>
+
 <script lang="ts">
   import * as d3 from "d3";
   import Tooltip from "./tooltip.svelte";
   import { createEventDispatcher } from "svelte";
 
-  export let config:
-    | {
-        hoverTitles?: boolean;
-        rounded?: boolean;
-        backgroundColor?: string;
-        foregroundColor?: string;
-      }
-    | undefined = undefined;
+  export let config: Partial<Config> = {};
 
   export let minValue: number;
   export let maxValue: number;
@@ -21,6 +24,17 @@
   export let stepSize: number;
 
   export let formatNumber: (n: number) => string;
+
+  const defaultConfig: Config = {
+    showTooltip: true,
+    hoverTooltip: true,
+    rounded: false,
+    backgroundColor: "bg-gray-400/25",
+    foregroundColor: "bg-primary-600",
+  };
+
+  let mergedConfig: Config;
+  $: mergedConfig = { ...defaultConfig, ...config };
 
   const dispatch = createEventDispatcher<{
     change: { firstValue: number; lastValue: number };
@@ -54,10 +68,12 @@
 </script>
 
 <div
-  class:mt-10={!config?.hoverTitles}
+  class:mt-10={!mergedConfig.hoverTooltip && mergedConfig.showTooltip}
   class="
     grow relative
-    {config?.hoverTitles ? '[&:hover>aside]:opacity-100' : ''}
+    {mergedConfig.hoverTooltip
+    ? '[&:hover>aside]:opacity-100'
+    : '[&>aside]:opacity-100'}
   "
   on:pointerleave={() => {
     if (lastMiddleDragX) change();
@@ -75,7 +91,7 @@
     lastMiddleDragX = e.x;
   }}
 >
-  {#if config?.hoverTitles}
+  {#if mergedConfig.showTooltip}
     <Tooltip
       {containerWidth}
       {firstX}
@@ -86,11 +102,11 @@
   {/if}
 
   <div
-    class:rounded-full={config?.rounded}
+    class:rounded-full={mergedConfig.rounded}
     class="
       grow flex
       relative h-2
-      {config?.backgroundColor ?? 'bg-gray-400/25'}
+      {mergedConfig.backgroundColor ?? 'bg-gray-400/25'}
     "
     bind:clientWidth={containerWidth}
   >
@@ -102,7 +118,7 @@
       }}
       class="
         absolute h-full cursor-col-resize rounded-full
-        {config?.foregroundColor ?? 'bg-primary-600 '}
+        {mergedConfig.foregroundColor ?? 'bg-primary-600 '}
       "
       style="
         left: max({firstX}px, 0px);
@@ -117,7 +133,7 @@
       max={maxValue}
       step={stepSize}
       class="w-full absolute -translate-y-1/2 top-1/2"
-      style="--rounded: {config?.rounded ? '9999' : '0'}px"
+      style="--rounded: {mergedConfig.rounded ? '9999' : '0'}px"
     />
     <input
       on:change={() => change()}
@@ -127,7 +143,7 @@
       max={maxValue}
       step={stepSize}
       class="w-full absolute -translate-y-1/2 top-1/2"
-      style="--rounded: {config?.rounded ? '9999' : '0'}px"
+      style="--rounded: {mergedConfig.rounded ? '9999' : '0'}px"
     />
   </div>
 </div>
