@@ -9,11 +9,13 @@
   import { getTimespan } from "$lib/common/math";
   import { slide } from "svelte/transition";
   import { createSearchFromTag } from "$lib/common/searchQuery";
+  import { qr } from "@svelte-put/qr/svg";
 
   import type { ArticleBase } from "$shared/types/api";
 
   export let articleList: ArticleBase[];
   export let article: ArticleBase;
+  export let showQr: boolean;
 
   let showSummary = false;
 </script>
@@ -25,7 +27,7 @@
 
       grid
       grid-cols-1
-      md:grid-cols-[auto_1fr]
+      md:grid-cols-[auto_1fr_auto]
 
       gap-14
 
@@ -46,7 +48,8 @@
       on:keydown|preventDefault|stopPropagation
       class="
         absolute-grid
-        w-full md:w-48 max-h-[30rem]
+        w-full md:w-48
+        {showQr ? '' : 'max-h-[30rem]'}
         aspect-video md:aspect-square
         drop-shadow-lg
 
@@ -76,6 +79,20 @@
         src={article.image_url}
       />
 
+      {#if showQr}
+        <div
+          class="xl:hidden block bg-surface-100 dark:bg-surface-900 min-h-0 h-full"
+        >
+          <svg
+            use:qr={{
+              data: article.url,
+              shape: "circle",
+              errorCorrectionLevel: "L",
+            }}
+            class="w-full h-full"
+          />
+        </div>
+      {/if}
 
       <CollectionOverlay {article} overlayClass="top-12" iconClass="text-5xl" />
     </figure>
@@ -153,6 +170,19 @@
         </footer>
       {/if}
     </div>
+
+    {#if showQr}
+      <div class="hidden xl:block">
+        <svg
+          use:qr={{
+            data: article.url,
+            shape: "circle",
+            errorCorrectionLevel: "L",
+          }}
+          class="w-full h-full"
+        />
+      </div>
+    {/if}
 
     {#if article.summary && article.summary.length > 0}
       <button

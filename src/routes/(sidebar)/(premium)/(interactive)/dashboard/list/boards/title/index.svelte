@@ -5,6 +5,7 @@
 
   export let articleListContainer: HTMLDivElement | null;
   export let articles: ArticleBase[];
+  export let showQr: boolean;
 </script>
 
 <div
@@ -21,7 +22,7 @@
     "
 >
   {#each articles as article (article.id)}
-    <Article {article} articleList={articles} />
+    <Article {article} articleList={articles} {showQr} />
 
     <hr class="border border-surface-400/25 my-3" />
   {/each}

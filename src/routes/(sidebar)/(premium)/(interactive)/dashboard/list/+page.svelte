@@ -18,6 +18,7 @@
     resolve([])
   );
   let scrollSpeed = 1;
+  let showQr = false;
 
   async function fetchArticles(
     firstDate: Date | undefined = undefined,
@@ -49,7 +50,13 @@
     <Loader text="Loading articles for dashboard" />
   {:then articles}
     {#if articles.length > 0}
-      <ArticleList {articles} dashboard="title" {fetchArticles} {scrollSpeed} />
+      <ArticleList
+        {articles}
+        dashboard="title"
+        {fetchArticles}
+        {scrollSpeed}
+        {showQr}
+      />
     {:else}
       <div
         class="
@@ -77,6 +84,7 @@
       </div>
     {/if}
     <Controls
+      bind:showQr
       bind:scrollSpeed
       startDate={data.startDate}
       endDate={data.endDate}
