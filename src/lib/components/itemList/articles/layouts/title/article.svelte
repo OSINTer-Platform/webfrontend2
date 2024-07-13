@@ -6,7 +6,6 @@
 
   import type { ArticleBase } from "$shared/types/api";
 
-  import { eclipseConcat } from "$lib/common/strings";
   import { getTimespan } from "$lib/common/math";
   import { PUBLIC_API_BASE } from "$env/static/public";
 
@@ -17,12 +16,12 @@
 
   $: title =
     article.highlights?.title && showHighlights
-      ? { text: eclipseConcat(article.highlights.title), markdown: true }
+      ? { text: article.highlights.title[0], markdown: true }
       : { text: article.title, markdown: false };
 
   $: description =
     article.highlights?.description && showHighlights
-      ? { text: eclipseConcat(article.highlights.description), markdown: true }
+      ? { text: article.highlights.description[0], markdown: true }
       : { text: article.description, markdown: false };
 
   $: read = readArticles.includes(article.id);

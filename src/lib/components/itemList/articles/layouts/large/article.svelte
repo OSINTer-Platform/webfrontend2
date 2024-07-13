@@ -23,12 +23,12 @@
 
   $: title =
     article.highlights?.title && showHighlights
-      ? { text: eclipseConcat(article.highlights.title), markdown: true }
+      ? { text: article.highlights.title[0], markdown: true }
       : { text: article.title, markdown: false };
 
   $: description =
     article.highlights?.description && showHighlights
-      ? { text: eclipseConcat(article.highlights.description), markdown: true }
+      ? { text: article.highlights.description[0], markdown: true }
       : { text: article.description, markdown: false };
 
   let textExpands: {

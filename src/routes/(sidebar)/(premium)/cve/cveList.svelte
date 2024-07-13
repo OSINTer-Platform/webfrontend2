@@ -7,7 +7,6 @@
   import { faStar } from "@fortawesome/free-regular-svg-icons";
   import { searchInCVE } from "$lib/common/filter";
   import { queryCVEsById } from "$lib/common/queryArticles";
-  import { eclipseConcat } from "$lib/common/strings";
   import { showHighlights } from "$shared/state/state";
 
   export let cves: CVEBase[];
@@ -33,11 +32,11 @@
 
     title:
       cve.highlights?.title && showHighlights
-        ? { text: eclipseConcat(cve.highlights.title), markdown: true }
+        ? { text: cve.highlights.title[0], markdown: true }
         : { text: cve.title, markdown: false },
     description:
       cve.highlights?.description && showHighlights
-        ? { text: eclipseConcat(cve.highlights.description), markdown: true }
+        ? { text: cve.highlights.description[0], markdown: true }
         : { text: cve.description, markdown: false },
 
     leftLegend: { text: cve.cve, hover: "" },

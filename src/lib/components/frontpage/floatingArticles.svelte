@@ -8,7 +8,6 @@
   import type { TrendingArticleBundle } from "./types";
   import { fade } from "svelte/transition";
   import SvelteMarkdown from "svelte-markdown";
-  import { eclipseConcat } from "$lib/common/strings";
 
   const holders: {
     top: number;
@@ -124,10 +123,7 @@
           >
             <p class="text-white font-bold text-xs">
               {#if article.highlights?.title}
-                <SvelteMarkdown
-                  source={eclipseConcat(article.highlights.title)}
-                  isInline
-                />
+                <SvelteMarkdown source={article.highlights.title[0]} isInline />
               {:else}
                 {article.title}
               {/if}
