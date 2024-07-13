@@ -14,11 +14,8 @@
 
   export let articleList: ArticleBase[];
   export let article: ArticleBase;
-  export let readArticles: string[];
 
   let showSummary = false;
-
-  $: read = readArticles.includes(article.id);
 </script>
 
 <Link {article} {articleList}>
@@ -79,14 +76,6 @@
         src={article.image_url}
       />
 
-      <div
-        class="
-        rounded-md
-        w-full h-full
-        bg-surface-100/60 dark:bg-surface-900/60
-        {read ? 'block' : 'hidden'}
-      "
-      />
 
       <CollectionOverlay {article} overlayClass="top-12" iconClass="text-5xl" />
     </figure>
@@ -110,7 +99,7 @@
           class="
             lg:text-4xl text-3xl
 
-            {read ? 'opacity-75' : 'font-bold'}
+            font-bold
             [&>strong]:font-semibold
             [&>strong]:text-primary-600
           "
@@ -121,7 +110,7 @@
         <p
           class="
             sm:text-lg md:text-base lg:text-lg
-            {read ? 'font-light' : 'font-normal'}
+            font-normal
             text-tertiary-900 dark:text-white/80
             [&>strong]:font-semibold
             [&>strong]:text-primary-600
