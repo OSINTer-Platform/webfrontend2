@@ -46,14 +46,7 @@
           { title: "Owner", content: currentItem.owner, mono: true },
         ]
       : [],
-    [
-      { title: "Search Term", content: currentItem.search_term, mono: false },
-      {
-        title: "Semantic Search",
-        content: currentItem.semantic_search,
-        mono: false,
-      },
-    ],
+    [{ title: "Search Term", content: currentItem.search_term, mono: false }],
     [{ title: "Sources", content: sources, mono: false }],
     [{ title: "Search Params", content: paramStrings, mono: false }],
   ];

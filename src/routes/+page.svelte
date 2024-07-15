@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { PageServerData } from "./$types";
-  export let data: PageServerData;
+  import type { PageData } from "./$types";
+  export let data: PageData;
 
   import InternalLinks from "$com/frontpage/internalLinks.svelte";
-  import Blogposts from "$com/frontpage/blogposts.svelte";
   import Faq from "$com/frontpage/faq.svelte";
   import Header from "$com/frontpage/header.svelte";
   import Topbar from "./topbar.svelte";
+  import Cves from "$com/frontpage/cves/index.svelte";
 
   let scrollY = 0;
 
@@ -25,9 +25,10 @@
 <aside
   class="
   z-30 absolute w-full
+  bg-surface-100
   {scrollY > 0
-    ? 'backdrop-blur-xl bg-white/50 dark:bg-black/50'
-    : 'backdrop-filter-none dark:bg-black/20'}
+    ? 'dark:backdrop-blur-xl dark:bg-black/50'
+    : 'dark:backdrop-filter-none dark:bg-black/20'}
   transition-colors duration-200
   shadow-lg
 "
@@ -40,47 +41,25 @@
 <div class="overflow-y-auto" on:scroll={scroll}>
   <header
     class="
-		w-full
+      hero w-full
 
-		bg-surface-300
-		dark:bg-black
+      bg-surface-100
+      dark:bg-black
 	"
   >
-    <Header {mouse} />
+    <Header {mouse} trendingArticles={data.trendingArticles} />
   </header>
   <section class="bg-surface-100 dark:bg-surface-900">
     <div class="container p-4 sm:p-8 lg:p-12 xl:py-20">
-      <!--
-      <div
-        class="
-				p-4
-
-				flex
-				items-center
-				gap-8
-
-				md:text-lg
-				font-medium
-				bg-primary-400/20
-				border-4
-				border-primary-800/20
-
-				dark:text-white/75
-			"
-      >
-        <Fa icon={faExclamationCircle} class="text-3xl text-primary-800" />
-        Do keep in mind that this OSINTer instance is for testing and development,
-        and stability may vary.
-      </div>
-
-      <hr class="border-surface-200 dark:border-surface-700" />
-      -->
-
       <InternalLinks />
-
-      <hr class="border-surface-200 dark:border-surface-700" />
-
-      <Blogposts posts={data.posts} />
+      <hr />
+      <header class="text-right mb-4">
+        <h2 class="text-4xl sm:text-6xl font-bold">Trending CVE's</h2>
+        <p class="sm:text-xl font-light">
+          Track their ever-evolving media presence
+        </p>
+      </header>
+      <Cves cves={data.trendingCVEs} />
     </div>
   </section>
 
@@ -95,7 +74,7 @@
 
 <style lang="postcss">
   hr {
-    @apply text-surface-400/10 border-2 my-6 sm:my-10 md:my-14 lg:my-16;
+    @apply border-surface-400/30 border-2 my-6 sm:my-10 md:my-14 lg:my-16;
   }
 
   section {
@@ -105,6 +84,16 @@
   div {
     :global(div.container) {
       @apply xl:max-w-7xl mx-auto;
+    }
+  }
+
+  /* prettier-ignore */
+  header.hero {
+    background-image:
+      radial-gradient(at 0% 0%, theme(colors.secondary.500 / 30%) 0px,transparent 50%),
+      radial-gradient(at 98% 1%, theme(colors.primary.500 / 20%) 0px,transparent 50%);
+    &:is(.dark *) {
+      background-image: none;
     }
   }
 </style>

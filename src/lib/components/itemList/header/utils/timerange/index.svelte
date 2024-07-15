@@ -1,6 +1,7 @@
 <script lang="ts">
   import BoxRadios from "$com/utils/inputs/boxRadios.svelte";
   import TimeSlider from "$com/utils/inputs/time/doubleSlider.svelte";
+  import { genPastDate } from "$lib/common/math";
 
   import { createEventDispatcher } from "svelte";
 
@@ -81,9 +82,14 @@
 
   {#if selected === "custom"}
     <TimeSlider
-      bind:firstDate
-      bind:lastDate
+      on:change={(e) => {
+        firstDate = e.detail.firstDate;
+        lastDate = e.detail.lastDate;
+      }}
+      firstDate={firstDate ?? genPastDate(30)}
+      lastDate={lastDate ?? new Date()}
       on:change={(e) => dispatchChange(e.detail.firstDate, e.detail.lastDate)}
+      config={{ hoverTooltip: false, showTooltip: true }}
     />
   {/if}
 </aside>

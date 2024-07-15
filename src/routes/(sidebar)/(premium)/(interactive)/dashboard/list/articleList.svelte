@@ -11,6 +11,7 @@
   export let dashboard: Dashboards;
   export let fetchArticles: () => Promise<ArticleBase[]>;
   export let scrollSpeed: number;
+  export let showQr: boolean;
 
   let articleListContainer: HTMLDivElement | null = null;
   let hovering: boolean = false;
@@ -87,4 +88,5 @@
   on:mouseleave={() => (hovering = false)}
   bind:articleListContainer
   {articles}
+  {showQr}
 />

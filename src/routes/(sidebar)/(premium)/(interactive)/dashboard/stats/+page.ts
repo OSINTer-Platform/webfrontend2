@@ -9,14 +9,14 @@ export const load: PageLoad = async ({ parent, fetch }) => {
   const metrics = await getDashboardMetrics(startDate, endDate);
 
   const clusters = queryClustersById(
-    metrics.limited.clusters.buckets.map(({ key }) => key),
+    metrics.aggs.clusters.buckets.map(({ key }) => key),
     false,
     false,
     10000,
     fetch
   );
 
-  const cveIds = metrics.limited.cves.buckets.map(({ key }) => key);
+  const cveIds = metrics.aggs.cves.buckets.map(({ key }) => key);
   const cves = queryCVEs({ cves: cveIds, limit: 10000 }, false, fetch).then(
     ({ documents }) => documents ?? []
   );

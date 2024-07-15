@@ -104,7 +104,6 @@ export interface ArticleSearchQuery {
   sort_order?: SortOrder | undefined;
 
   search_term?: string | undefined;
-  semantic_search?: string | undefined;
   highlight?: boolean | undefined;
 
   first_date?: string | undefined;
@@ -251,7 +250,6 @@ export interface CVEBase {
   highlights?: {
     title?: string[];
     description?: string[];
-    summary?: string[];
   };
 
   publish_date: string;
@@ -269,11 +267,10 @@ export interface CVEBase {
 
   cvss3?: CVSS3;
   cvss2?: CVSS2;
-
-  references: CVEReference[];
 }
 
 export interface FullCVE extends CVEBase {
   documents: string[];
   dating: string[];
+  references: CVEReference[];
 }

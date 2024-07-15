@@ -1,7 +1,6 @@
 <script lang="ts">
   import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
   import Fa from "svelte-fa";
-  import { slide } from "svelte/transition";
 
   export let detail: string | Array<string | { content: string; href: string }>;
 
@@ -15,7 +14,6 @@
 
 {#if Array.isArray(detail)}
   <div
-    transition:slide
     class="
       h-full {showFull ? '' : 'max-h-48'}
       overflow-hidden flex flex-wrap gap-3 ml-3 pb-3 relative

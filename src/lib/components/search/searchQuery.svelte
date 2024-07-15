@@ -126,29 +126,6 @@
     </div>
   </OptionSection>
 
-  {#if $page.data.mlAvailability?.elser}
-    <OptionSection
-      title="Semantic search"
-      desc="Use advanced search to find documents answering your questions"
-    >
-      <div class="input">
-        <input
-          id="semantic_search"
-          name="semantic_search"
-          placeholder=" "
-          class="input"
-          type="text"
-          bind:value={searchQuery.semantic_search}
-          on:focus={() => (searchQuery.sort_by = "")}
-          on:blur={() =>
-            (searchQuery.sort_by = searchQuery.semantic_search
-              ? ""
-              : "publish_date")}
-        />
-        <label for="semantic_search" class="input">Ask a question</label>
-      </div>
-    </OptionSection>
-  {/if}
   <OptionSection
     title="Search Term"
     desc="Uses nearly same syntax as Google Dorks. Flip switch to enable highlighting search matches."

@@ -7,6 +7,7 @@
   import { faStar } from "@fortawesome/free-regular-svg-icons";
   import { searchInCVE } from "$lib/common/filter";
   import { queryCVEsById } from "$lib/common/queryArticles";
+  import { showHighlights } from "$shared/state/state";
 
   export let cves: CVEBase[];
   export let search: string;
@@ -25,12 +26,18 @@
     createItem(fullCVE.title, fullCVE.documents, "collection", "current");
   }
 
-  const createListItem = (cve: CVEBase) => ({
+  const createListItem = (cve: CVEBase, showHighlights: boolean) => ({
     id: cve.id,
     href: `/cve/${cve.cve}`,
 
-    title: { text: cve.title, markdown: false },
-    description: { text: cve.description, markdown: false },
+    title:
+      cve.highlights?.title && showHighlights
+        ? { text: cve.highlights.title[0], markdown: true }
+        : { text: cve.title, markdown: false },
+    description:
+      cve.highlights?.description && showHighlights
+        ? { text: cve.highlights.description[0], markdown: true }
+        : { text: cve.description, markdown: false },
 
     leftLegend: { text: cve.cve, hover: "" },
     rightLegend: {
@@ -53,7 +60,7 @@
   $: filteredCVEs =
     search.length > 0 ? cves.filter((cve) => searchInCVE(cve, search)) : cves;
 
-  $: items = filteredCVEs.map((c) => createListItem(c));
+  $: items = filteredCVEs.map((c) => createListItem(c, $showHighlights));
 </script>
 
 <ItemList

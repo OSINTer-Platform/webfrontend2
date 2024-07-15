@@ -11,7 +11,6 @@
 
   import { cveSearch } from "$state/cves";
   import BoxRadios from "$com/utils/inputs/boxRadios.svelte";
-  import Switch from "$com/utils/inputs/switch.svelte";
 
   export let data: PageData;
 
@@ -36,7 +35,8 @@
     e: any,
     key: keyof RequiredCVESEarchQuery,
     converter: (val: string) => T,
-    beforeSuccess: ((newVal: T) => void) | undefined = undefined
+    beforeSuccess: ((newVal: T) => void) | undefined = undefined,
+    afterSucess: ((newVal: T) => void) | undefined = undefined
   ) {
     clearTimeout(timeouts[key]);
     timeouts[key] = setTimeout(() => {
@@ -45,6 +45,7 @@
         beforeSuccess?.(newVal);
         // @ts-ignore
         $cveQuery[key] = newVal;
+        afterSucess?.(newVal);
       }
     }, 500);
   }
@@ -74,6 +75,7 @@
   showReadFilter={false}
   bind:searchValue={$cveSearch}
   contentType="cves"
+  documents={$cves}
 >
   <hr class="border-tertiary-600/50 my-4" />
 
@@ -119,27 +121,20 @@
         type="text"
         value={$cveQuery.search_term ?? ""}
         on:input={(e) => {
-          if ($cveQuery.sort_by !== "") $cveQuery.sort_by = "";
           handleDelayedInput(
             e,
             "search_term",
             (val) => val,
             (val) => {
               if (val.length < 1) $cveQuery.sort_by = "document_count";
+            },
+            (val) => {
+              if (val.length > 1) $cveQuery.sort_by = "";
             }
           );
         }}
       />
       <label for="search_term" class="input">Search Term</label>
-
-      <div
-        class="absolute top-1/2 -translate-y-1/2 right-3"
-        title="{$cveQuery.highlight
-          ? 'Disable'
-          : 'Enable'} highlighting of search matches"
-      >
-        <Switch bind:checked={$cveQuery.highlight} name="highlight" />
-      </div>
     </div>
 
     <div class="input">
@@ -152,7 +147,7 @@
         value={$cveQuery.cves ? $cveQuery.cves.join(" ") : ""}
         on:input={(e) =>
           handleDelayedInput(e, "cves", (val) =>
-            val.length > 0 ? val.split(" ") : undefined
+            val.length > 0 ? val.toUpperCase().split(" ") : undefined
           )}
       />
       <label for="cve" class="input">CVE IDs (space-seperated)</label>

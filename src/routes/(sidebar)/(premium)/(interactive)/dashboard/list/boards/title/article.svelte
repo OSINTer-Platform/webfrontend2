@@ -9,16 +9,15 @@
   import { getTimespan } from "$lib/common/math";
   import { slide } from "svelte/transition";
   import { createSearchFromTag } from "$lib/common/searchQuery";
+  import { qr } from "@svelte-put/qr/svg";
 
   import type { ArticleBase } from "$shared/types/api";
 
   export let articleList: ArticleBase[];
   export let article: ArticleBase;
-  export let readArticles: string[];
+  export let showQr: boolean;
 
   let showSummary = false;
-
-  $: read = readArticles.includes(article.id);
 </script>
 
 <Link {article} {articleList}>
@@ -28,7 +27,7 @@
 
       grid
       grid-cols-1
-      md:grid-cols-[auto_1fr]
+      md:grid-cols-[auto_1fr_auto]
 
       gap-14
 
@@ -49,7 +48,8 @@
       on:keydown|preventDefault|stopPropagation
       class="
         absolute-grid
-        w-full md:w-48 max-h-[30rem]
+        w-full md:w-48
+        {showQr ? '' : 'max-h-[30rem]'}
         aspect-video md:aspect-square
         drop-shadow-lg
 
@@ -79,14 +79,20 @@
         src={article.image_url}
       />
 
-      <div
-        class="
-        rounded-md
-        w-full h-full
-        bg-surface-100/60 dark:bg-surface-900/60
-        {read ? 'block' : 'hidden'}
-      "
-      />
+      {#if showQr}
+        <div
+          class="xl:hidden block bg-surface-100 dark:bg-surface-900 min-h-0 h-full"
+        >
+          <svg
+            use:qr={{
+              data: article.url,
+              shape: "circle",
+              errorCorrectionLevel: "L",
+            }}
+            class="w-full h-full"
+          />
+        </div>
+      {/if}
 
       <CollectionOverlay {article} overlayClass="top-12" iconClass="text-5xl" />
     </figure>
@@ -110,7 +116,7 @@
           class="
             lg:text-4xl text-3xl
 
-            {read ? 'opacity-75' : 'font-bold'}
+            font-bold
             [&>strong]:font-semibold
             [&>strong]:text-primary-600
           "
@@ -121,7 +127,7 @@
         <p
           class="
             sm:text-lg md:text-base lg:text-lg
-            {read ? 'font-light' : 'font-normal'}
+            font-normal
             text-tertiary-900 dark:text-white/80
             [&>strong]:font-semibold
             [&>strong]:text-primary-600
@@ -164,6 +170,19 @@
         </footer>
       {/if}
     </div>
+
+    {#if showQr}
+      <div class="hidden xl:block">
+        <svg
+          use:qr={{
+            data: article.url,
+            shape: "circle",
+            errorCorrectionLevel: "L",
+          }}
+          class="w-full h-full"
+        />
+      </div>
+    {/if}
 
     {#if article.summary && article.summary.length > 0}
       <button

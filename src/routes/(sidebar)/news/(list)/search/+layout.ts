@@ -2,12 +2,9 @@ import { articleSearchQueryFromUrl } from "$lib/common/searchQuery";
 
 import type { LayoutLoad } from "./$types";
 
-export const load = (async ({ url, parent }) => {
-  const parentData = await parent();
+export const load = (async ({ url }) => {
   const searchQuery = articleSearchQueryFromUrl(url.searchParams);
 
-  if (!parentData.mlAvailability?.elser)
-    searchQuery.semantic_search = undefined;
   return {
     currentSearch: searchQuery,
     meta: {

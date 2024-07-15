@@ -357,7 +357,7 @@ export function spawnActionModal(
     user.payment.subscription.level.length < 1 &&
     user.premium.status &&
     user.premium.expire_time * 1000 > Date.now() &&
-    user.premium.expire_time * 1000 < Date.now() + 1000 * 60 * 60 * 24 * 14
+    user.premium.expire_time * 1000 < Date.now() + 1000 * 60 * 60 * 24 * 30
   )
     return spawnPremiumExpirationModal(user);
   if (user.payment.subscription.state === "closed")

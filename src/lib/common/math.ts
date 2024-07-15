@@ -61,3 +61,15 @@ export function getReadableDate(
     minute: includeTime ? "2-digit" : undefined,
   });
 }
+
+export const genPastDate = (days: number) =>
+  new Date(new Date().setDate(new Date().getDate() - days));
+
+export const estimateTimeEquality = (
+  d1: Date,
+  d2: Date,
+  msRange: number = 1000 * 60 * 60 * 12
+) =>
+  d1.getTime() === d2.getTime() ||
+  (d1.getTime() - msRange < d2.getTime() &&
+    d1.getTime() + msRange > d2.getTime());

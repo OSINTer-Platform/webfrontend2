@@ -1,20 +1,14 @@
 <script lang="ts">
   import Detail from "./detail.svelte";
 
-  type OptionDetail =
-    | string
-    | Array<string | { content: string; href: string }>;
+  import type { VisualDetail, VisualDetailBatch } from "./types";
 
-  export let detailBatches: {
-    title: string;
-    content: null | undefined | OptionDetail;
-    mono?: boolean;
-  }[][];
+  export let detailBatches: VisualDetailBatch[][];
 
   $: filteredOptionBatches = detailBatches
     .map((options) =>
       options.filter(
-        (a): a is { title: string; content: OptionDetail; mono?: boolean } =>
+        (a): a is { title: string; content: VisualDetail; mono?: boolean } =>
           !!a.content && a.content.length > 0
       )
     )

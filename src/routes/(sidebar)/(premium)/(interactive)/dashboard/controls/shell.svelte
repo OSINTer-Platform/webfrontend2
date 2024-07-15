@@ -2,14 +2,19 @@
   import DoubleSlider from "$com/utils/inputs/time/doubleSlider.svelte";
   import LogoIcon from "$assets/LogoIcon.svelte";
   import Navigator from "./navigator.svelte";
+  import DateRangeBtn from "./dateRangeBtn.svelte";
 
+  import { estimateTimeEquality, genPastDate } from "$lib/common/math";
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { createEventDispatcher } from "svelte";
   import { firstDate } from "$shared/config";
   import { slide } from "svelte/transition";
   import Fa from "svelte-fa";
-  import { faAngleDoubleDown } from "@fortawesome/free-solid-svg-icons";
+  import {
+    faAngleDoubleDown,
+    faCaretLeft,
+  } from "@fortawesome/free-solid-svg-icons";
 
   export let startDate: Date;
   export let endDate: Date;
@@ -28,27 +33,37 @@
     dispatch("date", { startDate: startDate, endDate: endDate });
   }
 
-  const genPastDate = (days: number) =>
-    new Date(new Date().setDate(new Date().getDate() - days));
+  const getDateRange = (startDate: Date, endDate: Date) =>
+    estimateTimeEquality(endDate, maxDate)
+      ? dateRanges
+          .filter(({ minDate }) => estimateTimeEquality(minDate, startDate))
+          .at(0) ?? null
+      : null;
+
+  const maxDate: Date = new Date();
 
   const dateRanges: {
     title: string;
     text: string;
     minDate: Date;
   }[] = [
-    { title: "All time", text: "all", minDate: firstDate },
-    { title: "Last year", text: "year", minDate: genPastDate(365) },
+    { title: "All time", text: "All", minDate: firstDate },
+    { title: "Last year", text: "Year", minDate: genPastDate(365) },
     { title: "Last 6 months", text: "6 months", minDate: genPastDate(6 * 30) },
-    { title: "Last 3 months", text: "3 months", minDate: genPastDate(3 * 30) },
+    { title: "Last month", text: "Month", minDate: genPastDate(30) },
+    { title: "Last week", text: "Week", minDate: genPastDate(7) },
+    { title: "Last day", text: "Day", minDate: genPastDate(1) },
   ];
 
   let selectedDateRange: {
     title: string;
     text: string;
     minDate: Date;
-  } = dateRanges[3];
+  } | null;
 
-  let hoveringRanges = false;
+  $: selectedDateRange = getDateRange(startDate, endDate);
+
+  let showRanges = true;
   let showControls = true;
 </script>
 
@@ -106,39 +121,58 @@
 
       <slot />
 
-      <div
+      <section
         class:ml-[4.5rem]={extraElCount < 1}
-        on:pointerenter={() => (hoveringRanges = true)}
-        on:pointerleave={() => (hoveringRanges = false)}
         class="
         px-2 grow shrink max-w-max
-        flex justify-center items-center
+        flex justify-center items-center gap-2
         bg-black rounded-full
         lg:ml-0
       "
       >
-        {#each dateRanges as dateRange}
-          {@const selected = selectedDateRange.text === dateRange.text}
-          {#if hoveringRanges || selected}
-            <button
-              transition:slide={{ axis: "x" }}
-              title={dateRange.title}
-              on:click={() => (selectedDateRange = dateRange)}
-              class="
-                btn py-1 px-2
-                border border-primary-500 border-r-0
-                first:rounded-l-full last:rounded-r-full last:border-r
-                text-sm uppercase font-bold whitespace-nowrap
-                {selected
-                ? 'bg-primary-900/50'
-                : '!text-primary-500 bg-primary-500/10'}
-              "
+        <div class="flex">
+          {#each dateRanges as dateRange}
+            {@const selected = selectedDateRange?.text === dateRange.text}
+            {#if showRanges || selected}
+              <DateRangeBtn
+                {selected}
+                title={dateRange.title}
+                on:click={() => {
+                  selectedDateRange = dateRange;
+                  endDate = new Date();
+                  startDate = dateRange.minDate;
+                  changeDate();
+                }}
+              >
+                {dateRange.text}
+              </DateRangeBtn>
+            {/if}
+          {/each}
+          {#if showRanges || selectedDateRange == null}
+            <DateRangeBtn
+              selected={selectedDateRange == null}
+              title="Custom time-frame"
+              on:click={() => {
+                selectedDateRange = null;
+                showRanges = false;
+              }}
             >
-              {dateRange.text}
-            </button>
+              Custom
+            </DateRangeBtn>
           {/if}
-        {/each}
-      </div>
+        </div>
+        <button
+          class="text-2xl btn p-2 rounded-full aspect-square"
+          on:click={() => (showRanges = !showRanges)}
+        >
+          <Fa
+            icon={faCaretLeft}
+            class="{showRanges
+              ? ''
+              : 'rotate-180'} transition-transform duration-500"
+          />
+        </button>
+      </section>
       <div
         class="
         expander w-full px-4
@@ -148,12 +182,16 @@
       "
       >
         <DoubleSlider
-          on:change={changeDate}
-          minDate={selectedDateRange.minDate}
+          on:change={() => {
+            selectedDateRange = null;
+            changeDate();
+          }}
+          minDate={firstDate}
+          {maxDate}
           bind:firstDate={startDate}
           bind:lastDate={endDate}
           config={{
-            hoverTitles: true,
+            hoverTooltip: true,
             rounded: true,
             backgroundColor: "bg-primary-900/75",
             foregroundColor: "bg-primary-500",
