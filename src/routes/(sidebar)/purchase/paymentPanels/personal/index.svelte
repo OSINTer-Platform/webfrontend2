@@ -12,6 +12,7 @@
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { invalidateAll } from "$app/navigation";
   import { getReadableDate } from "$lib/common/math";
+  import { formatPrice } from "$lib/common/strings";
 
   export let stripe: Stripe;
   export let personalPrice: Price;
@@ -108,13 +109,6 @@
   $: endDate = getReadableDate(
     ($user?.payment.subscription.current_period_end ?? 0) * 1000
   );
-
-  $: priceAmount = personalPrice.unit_amount / 100;
-  $: priceString = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: personalPrice.currency,
-    maximumFractionDigits: (priceAmount | 0) < priceAmount ? 2 : 0, // Remove trailing zeroes if present
-  }).format(priceAmount);
 </script>
 
 <div
@@ -126,7 +120,9 @@
   "
 >
   <h2 class="text-6xl font-bold my-4">
-    {priceString}<span class="text-xl font-light">/mo</span>
+    {formatPrice(personalPrice.unit_amount / 100, personalPrice.currency)}<span
+      class="text-xl font-light">/mo</span
+    >
   </h2>
 
   <p class="font-bold text-sm">Cancel anytime</p>
