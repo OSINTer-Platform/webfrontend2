@@ -7,6 +7,7 @@
   import Header from "$com/frontpage/header.svelte";
   import Topbar from "./topbar.svelte";
   import Cves from "$com/frontpage/cves/index.svelte";
+  import Prices from "$com/frontpage/prices/index.svelte";
 
   let scrollY = 0;
 
@@ -49,10 +50,25 @@
   >
     <Header {mouse} trendingArticles={data.trendingArticles} />
   </header>
-  <section class="bg-surface-100 dark:bg-surface-900">
-    <div class="container p-4 sm:p-8 lg:p-12 xl:py-20">
+  <section
+    class="bg-surface-100 dark:bg-surface-900 p-4 sm:p-8 lg:p-12 xl:py-20"
+  >
+    <div class="container">
       <InternalLinks />
       <hr />
+    </div>
+    <div class="max-w-7xl mx-auto">
+      <header class="text-center mb-12">
+        <h2 class="text-4xl sm:text-6xl font-bold">Looking for more?</h2>
+        <p class="sm:text-xl font-light">
+          Let us help you track the cyber-threat landscape
+        </p>
+      </header>
+      <Prices personalPrice={data.personalPrice} />
+    </div>
+  </section>
+  <section class="bg-surface-200 dark:bg-surface-800">
+    <div class="container p-4 sm:p-8 lg:p-12 xl:py-20">
       <header class="text-right mb-4">
         <h2 class="text-4xl sm:text-6xl font-bold">Trending CVE's</h2>
         <p class="sm:text-xl font-light">
@@ -63,7 +79,7 @@
     </div>
   </section>
 
-  <section class="bg-surface-200 dark:bg-surface-800">
+  <section class="bg-surface-100 dark:bg-surface-900">
     <div
       class="max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto p-10 sm:py-20"
     >
