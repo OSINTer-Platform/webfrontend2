@@ -176,6 +176,7 @@ export interface Survey {
 }
 
 export type AuthArea =
+  | "articles"
   | "assistant"
   | "cluster"
   | "dashboard"

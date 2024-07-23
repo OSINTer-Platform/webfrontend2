@@ -61,7 +61,7 @@ export const load: LayoutLoad = async ({ parent, url }) => {
           ],
           logo: false,
           actions: [
-            { title: "Subscribe", href: "/purchase" },
+            { title: "Subscribe", href: "/purchase?plan=pro" },
             { title: "Contact Us", href: `mailto:${contactEmail}` },
           ],
         });
@@ -77,8 +77,14 @@ export const load: LayoutLoad = async ({ parent, url }) => {
           ],
           logo: false,
           actions: [
-            { title: "Login", href: "/login" },
-            { title: "Go to news", href: "/news" },
+            {
+              title: "Login",
+              href: `/login?next=${encodeURIComponent("/purchase?plan=pro")}`,
+            },
+            {
+              title: "Signup",
+              href: `/signup?next=${encodeURIComponent("/purchase?plan=pro")}`,
+            },
           ],
         });
   });
