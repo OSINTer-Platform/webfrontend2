@@ -64,7 +64,7 @@
           Let us help you track the cyber-threat landscape
         </p>
       </header>
-      <Prices personalPrice={data.personalPrice} />
+      <Prices basePrice={data.basePrice} proPrice={data.proPrice} />
     </div>
   </section>
   <section class="bg-surface-200 dark:bg-surface-800">

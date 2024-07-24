@@ -19,18 +19,21 @@ export const load: PageLoad = async () => {
     return await r.json();
   }
 
-  async function getPrice() {
+  async function getPrices() {
     const prices: { [key: string]: Price } = await fetch(
       `${PUBLIC_API_BASE}/payment/prices`
     ).then((r) => r.json());
-    const price: undefined | Price = Object.values(prices).find(
+    const proPrice: undefined | Price = Object.values(prices).find(
       (price) => price.lookup_key == "pro-month"
     );
+    const basePrice: undefined | Price = Object.values(prices).find(
+      (price) => price.lookup_key == "base-month"
+    );
 
-    return price;
+    return { proPrice, basePrice };
   }
 
-  const [docs, price] = await Promise.all([getFrontpageStats(), getPrice()]);
+  const [docs, prices] = await Promise.all([getFrontpageStats(), getPrices()]);
 
   return {
     trendingArticles: docs.articles,
@@ -38,6 +41,7 @@ export const load: PageLoad = async () => {
     trendingClusters: docs.clusters,
     burgerMenu: false,
     topbar: false,
-    personalPrice: price,
+    proPrice: prices.proPrice,
+    basePrice: prices.basePrice,
   };
 };
