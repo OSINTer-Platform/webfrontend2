@@ -105,39 +105,59 @@
         text-sm sm:text-base
       "
       >
-        <a
-          href="/news"
-          class="
-          bg-primary-700
-          hover:bg-primary-600
+        {#if $user && $authorizer("articles")}
+          <a
+            href="/news"
+            class="
+            bg-primary-700
+            hover:bg-primary-600
 
-          transition-colors
-          duration-300
+            transition-colors
+            duration-300
 
-          px-4
-          py-2
-          text-white
-          font-semibold
-        ">Get started</a
-        >
-
-        {#if PUBLIC_PURCHASE_AVAILABLE && !$authorizer()}
+            px-4
+            py-2
+            text-white
+            font-semibold
+          ">News</a
+          >
+        {:else if $user && PUBLIC_PURCHASE_AVAILABLE}
           <a
             href="/purchase"
             class="
-              px-4 py-2 flex gap-3
-              border border-surface-400
-              bg-surface-200 hover:bg-surface-200
-              dark:bg-surface-900 dark:hover:bg-surface-700
-              font-light
-              transition-colors duration-300
-          "
+            bg-primary-700
+            hover:bg-primary-600
+
+            transition-colors
+            duration-300
+
+            px-4
+            py-2
+            text-white
+            font-semibold
+          ">Subscribe</a
           >
-            OSINTer Pro
-          </a>
-        {:else if !$user}
+        {:else}
           <a
             href="/login"
+            class="
+            bg-primary-700
+            hover:bg-primary-600
+
+            transition-colors
+            duration-300
+
+            px-4
+            py-2
+            text-white
+            font-semibold
+          ">Login</a
+          >
+        {/if}
+
+        {#if !$user}
+          <a
+            href="/signup"
             class="
               px-4 py-2 flex gap-3
               border border-surface-400
@@ -147,7 +167,7 @@
               transition-colors duration-300
           "
           >
-            Log in
+            Signup
           </a>
         {:else}
           <a
