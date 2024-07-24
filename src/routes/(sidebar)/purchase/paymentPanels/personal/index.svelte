@@ -15,7 +15,7 @@
   import { formatPrice } from "$lib/common/strings";
 
   export let stripe: Stripe;
-  export let personalPrice: Price;
+  export let price: Price;
 
   let paymentStatus: Promise<PaymentStatus> | undefined;
   let statusCheckTimeout: ReturnType<typeof setTimeout>;
@@ -120,7 +120,7 @@
   "
 >
   <h2 class="text-6xl font-bold my-4">
-    {formatPrice(personalPrice.unit_amount / 100, personalPrice.currency)}<span
+    {formatPrice(price.unit_amount / 100, price.currency)}<span
       class="text-xl font-light">/mo</span
     >
   </h2>
@@ -224,7 +224,7 @@
     {/if}
   {/if}
 {:else}
-  <StripeForm {stripe} {personalPrice} />
+  <StripeForm {stripe} personalPrice={price} />
 {/if}
 
 <style lang="postcss">
