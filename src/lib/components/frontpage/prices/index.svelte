@@ -96,7 +96,7 @@
       },
       {
         icon: faPeopleGroup,
-        text: "**Team-wide PRO access:** Onboard your whole team in OSINTer. No extra seat expenses, usage costs or other hidden fees",
+        text: "**Team-wide Pro access:** Onboard your whole team in OSINTer. No extra seat expenses, usage costs or other hidden fees",
       },
       {
         icon: faWrench,

@@ -17,3 +17,9 @@ export const formatPrice = (amount: number, currency: string) =>
     currency: currency,
     maximumFractionDigits: (amount | 0) < amount ? 2 : 0, // Remove trailing zeroes if present
   }).format(amount);
+
+export const capitalize = (s: string) =>
+  s
+    .split(" ")
+    .map((subS) => subS.charAt(0).toUpperCase() + subS.slice(1))
+    .join(" ");

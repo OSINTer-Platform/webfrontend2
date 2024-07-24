@@ -12,7 +12,7 @@
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { invalidateAll } from "$app/navigation";
   import { getReadableDate } from "$lib/common/math";
-  import { formatPrice } from "$lib/common/strings";
+  import { capitalize, formatPrice } from "$lib/common/strings";
 
   export let stripe: Stripe;
   export let price: Price;
@@ -105,7 +105,7 @@
   $: checkStatus($page.data.stripe.paymentIntentClientSecret);
 
   $: user = $page.data.user;
-  $: subName = $user?.payment.subscription.level.toUpperCase();
+  $: subName = $user ? capitalize($user.payment.subscription.level) : null;
   $: endDate = getReadableDate(
     ($user?.payment.subscription.current_period_end ?? 0) * 1000
   );
@@ -198,7 +198,7 @@
             on:click={() => (showSubscriptionState = false)}
             class="link-option"
           >
-            Subscribe to OSINTer PRO to ensure continued access.
+            Subscribe to OSINTer Pro to ensure continued access.
           </button>
         {/if}
       </ResultPanel>
@@ -218,7 +218,7 @@
           on:click={() => (showSubscriptionState = false)}
           class="link-option"
         >
-          Subscribe to OSINTer PRO anyway
+          Subscribe to OSINTer Pro anyway
         </button>
       </ResultPanel>
     {/if}

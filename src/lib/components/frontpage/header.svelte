@@ -133,7 +133,7 @@
               transition-colors duration-300
           "
           >
-            OSINTer PRO
+            OSINTer Pro
           </a>
         {:else if !$user}
           <a

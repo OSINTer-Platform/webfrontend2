@@ -44,9 +44,9 @@
   } = {
     enterprise: [
       {
-        title: "Team-wide PRO access",
+        title: "Team-wide Pro access",
         description:
-          "Get your whole team access to OSINTer PRO, hazzle-free. No extra seat expenses, usage costs or other hidden fees",
+          "Get your whole team access to OSINTer Pro, hazzle-free. No extra seat expenses, usage costs or other hidden fees",
         icon: faPeopleGroup,
       },
       {

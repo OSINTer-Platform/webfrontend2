@@ -53,11 +53,11 @@ export const load: LayoutLoad = async ({ parent, url }) => {
         error(403, {
           message: "",
           title:
-            "This page is reserved for OSINTer PRO users, and you're not subscribed",
+            "This page is reserved for OSINTer Pro users, and you're not subscribed",
           description: [
             "Some of the services from OSINTer are restricted to our paying (or selfhosting) users",
-            "As such, you have to be subscribed to a OSINTer PRO plan to access the following page",
-            "Signup for OSINTer PRO below, or contact us if you believe this is an error",
+            "As such, you have to be subscribed to a OSINTer Pro plan to access the following page",
+            "Signup for OSINTer Pro below, or contact us if you believe this is an error",
           ],
           logo: false,
           actions: [
@@ -69,10 +69,10 @@ export const load: LayoutLoad = async ({ parent, url }) => {
         error(403, {
           message: "",
           title:
-            "This page is reserved for OSINTer PRO users, and you're not logged in",
+            "This page is reserved for OSINTer Pro users, and you're not logged in",
           description: [
             "Some of the services from OSINTer are restricted to our paying (or selfhosting) users",
-            "As such, you have to be logged in with a OSINTer PRO user to be able to access the following page",
+            "As such, you have to be logged in with a OSINTer Pro user to be able to access the following page",
             "Do you already have a user? Login below.",
           ],
           logo: false,
