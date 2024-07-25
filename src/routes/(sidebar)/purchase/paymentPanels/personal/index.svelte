@@ -16,10 +16,12 @@
 
   export let stripe: Stripe;
   export let price: Price;
+  export let level: "base" | "pro";
 
   let paymentStatus: Promise<PaymentStatus> | undefined;
   let statusCheckTimeout: ReturnType<typeof setTimeout>;
   let showSubscriptionState = true;
+  let subscriptionChange: null | Promise<string> = null;
 
   type PaymentStatus = {
     status: "success" | "error" | "processing";
@@ -70,6 +72,26 @@
           return statusOptions[paymentIntent.status];
         else return statusOptions.default;
       });
+  }
+
+  async function changeSubscription() {
+    const r = await fetch(
+      `${PUBLIC_API_BASE}/my/user/payment/subscription/change`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(price.id),
+      }
+    );
+
+    if (r.ok) {
+      setTimeout(() => invalidateAll(), 5000);
+      return "Successfully updated subscription";
+    } else {
+      throw (await r.json())["detail"];
+    }
   }
 
   const renew = () =>
@@ -181,7 +203,32 @@
       Otherwise it expires on {endDate}
     </ResultPanel>
   {:else if $user.payment.subscription.level.length > 0}
-    <ResultPanel status="success" msg="You are subscribed to OSINTer" />
+    {#if $user.payment.subscription.level === level}
+      <ResultPanel
+        status="success"
+        msg="You are subscribed to OSINTer {subName}"
+      />
+    {:else if subscriptionChange}
+      {#await subscriptionChange}
+        <ResultPanel status="processing" msg="Updating subscription..." />
+      {:then msg}
+        <ResultPanel status="success" {msg} />
+      {:catch msg}
+        <ResultPanel status="error" {msg} />
+      {/await}
+    {:else}
+      <ResultPanel
+        status="warning"
+        msg="You are subscribed to OSINTer {subName}"
+      >
+        <button
+          on:click={() => (subscriptionChange = changeSubscription())}
+          class="link-option"
+        >
+          Change subscription to OSINTer {capitalize(level)}
+        </button>
+      </ResultPanel>
+    {/if}
   {:else if $user.premium.status}
     {#if $user.premium.expire_time * 1000 > Date.now() && $user.premium.expire_time * 1000 < Date.now() + 1000 * 60 * 60 * 24 * 14}
       <ResultPanel

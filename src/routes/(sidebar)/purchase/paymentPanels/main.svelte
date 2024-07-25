@@ -247,10 +247,13 @@
         <Loader text="Loading payment components" />
       {:then stripe}
         {#if stripe}
-          <Personal
-            {stripe}
-            price={selectedType === "base" ? basePrice : proPrice}
-          />
+          {#key selectedType}
+            <Personal
+              {stripe}
+              price={selectedType === "base" ? basePrice : proPrice}
+              level={selectedType}
+            />
+          {/key}
         {/if}
       {/await}
     {:else}
