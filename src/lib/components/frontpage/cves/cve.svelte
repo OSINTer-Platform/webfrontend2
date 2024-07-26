@@ -4,8 +4,8 @@
   import ListLimiter from "$com/itemList/limiter.svelte";
   import Loader from "$com/loader.svelte";
 
+  import { PUBLIC_API_BASE } from "$env/static/public";
   import { createSearchFromTag } from "$lib/common/searchQuery";
-  import { queryArticles } from "$lib/common/queryArticles";
   import { onMount } from "svelte";
 
   import type { ArticleBase, CVEBase } from "$shared/types/api";
@@ -14,19 +14,19 @@
 
   let mounted = false;
 
-  const getArticles = (cve: string, mounted: boolean) =>
-    mounted
-      ? queryArticles(
-          {
-            limit: 10000,
-            search_term: `"${cve}"`,
-            sort_by: "",
-            sort_order: "desc",
-            highlight: true,
-          },
-          false
-        ).then(({ documents }) => documents ?? [])
-      : Promise.resolve([] as ArticleBase[]);
+  async function getArticles(
+    cve: string,
+    mounted: boolean
+  ): Promise<ArticleBase[]> {
+    if (!mounted) return Promise.resolve([] as ArticleBase[]);
+
+    const r = await fetch(`${PUBLIC_API_BASE}/frontpage/cve-articles/${cve}`);
+    if (r.ok) {
+      return await r.json();
+    } else {
+      throw (await r.json())["detail"];
+    }
+  }
 
   $: cveBaseScore =
     cve.cvss3?.cvss_data.base_score ?? cve.cvss2?.cvss_data.base_score;
@@ -81,6 +81,15 @@
           readArticles={[]}
         />
       </ListLimiter>
+    {:catch err}
+      <div
+        class="w-full h-full flex flex-col justify-center items-center text-center mb-4"
+      >
+        <h4 class="text-2xl sm:text-4xl font-bold">
+          Error when querying articles
+        </h4>
+        <p>{err}</p>
+      </div>
     {/await}
   </section>
 </main>
