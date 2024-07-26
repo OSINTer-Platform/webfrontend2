@@ -7,7 +7,7 @@
 
   $: selectedCve = cves[0];
 
-  let viewLimit = 4;
+  let viewLimit = 2;
 </script>
 
 <div
