@@ -156,6 +156,10 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
           "large",
         { expires: dateInAnHour }
       ),
+      showPaywallNotice: cookieStore(
+        "settings-showPaywallNotice",
+        data.cookies.showPaywallNotice
+      ),
     },
     stripe: {
       paymentIntentClientSecret: url.searchParams.get(

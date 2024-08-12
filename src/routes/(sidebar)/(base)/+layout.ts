@@ -37,6 +37,10 @@ export const load: LayoutLoad = async ({ parent, url }) => {
       actions: [
         { title: "Subscribe", href: "/purchase?plan=base" },
         { title: "Contact Us", href: `mailto:${contactEmail}` },
+        {
+          title: "Explanation",
+          href: "/paywall-notice",
+        },
       ],
     });
   else
@@ -58,6 +62,10 @@ export const load: LayoutLoad = async ({ parent, url }) => {
         {
           title: "Signup",
           href: `/signup?next=${encodeURIComponent("/purchase?plan=base")}`,
+        },
+        {
+          title: "Explanation",
+          href: "/paywall-notice",
         },
       ],
     });
