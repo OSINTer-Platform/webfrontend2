@@ -168,6 +168,13 @@
       {/if}
     </ResultPanel>
   {/await}
+{:else if !$user}
+  <ResultPanel status="warning" msg="You need to be logged in to subscribe">
+    You can either
+    <a href="/login" class="link-option"> login </a>
+    or
+    <a href="/signup" class="link-option"> signup </a>
+  </ResultPanel>
 {:else if showSubscriptionState && $user && ($user.payment.subscription.state.length > 0 || $user.premium.status)}
   {#if $user.payment.subscription.state === "closed"}
     <ResultPanel
