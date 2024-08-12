@@ -10,22 +10,30 @@
 
   import { faSearchengin } from "@fortawesome/free-brands-svg-icons";
   import {
-    faBullseye,
-    faChartLine,
+    faBug,
     faClockRotateLeft,
+    faDashboard,
+    faMagnifyingGlass,
+    faNewspaper,
     faPeopleGroup,
+    faUser,
     faWrench,
   } from "@fortawesome/free-solid-svg-icons";
   import { onDestroy, onMount } from "svelte";
   import { fade } from "svelte/transition";
 
   export let stripe: null | Promise<null | Stripe>;
-  export let personalPrice: Price;
+  export let basePrice: Price;
+  export let proPrice: Price;
+  export let plan: string | null;
 
-  type PaymentType = "personal" | "enterprise";
-  const paymentTypes: PaymentType[] = ["personal", "enterprise"] as const;
+  type PaymentType = "base" | "pro" | "enterprise";
+  const paymentTypes: PaymentType[] = ["base", "pro", "enterprise"] as const;
 
-  let selectedType: PaymentType = "personal";
+  const isPayment = (s: string): s is PaymentType =>
+    paymentTypes.includes(s as any);
+
+  let selectedType: PaymentType = plan && isPayment(plan) ? plan : "base";
 
   const perks: {
     [key in PaymentType]: {
@@ -36,9 +44,9 @@
   } = {
     enterprise: [
       {
-        title: "Team-wide PRO access",
+        title: "Team-wide Pro access",
         description:
-          "Get your whole team access to OSINTer PRO, hazzle-free. No extra seat expenses, usage costs or other hidden fees",
+          "Get your whole team access to OSINTer Pro, hazzle-free. No extra seat expenses, usage costs or other hidden fees",
         icon: faPeopleGroup,
       },
       {
@@ -54,23 +62,43 @@
         icon: faWrench,
       },
     ],
-    personal: [
+    base: [
       {
-        title: "The big overview",
+        title: "Daily news",
         description:
-          "Get access to our dashboard options, to better track the ever-evolving threat landscape",
-        icon: faChartLine,
+          "Keep up to date on cyber-security and ensure that you are not going to miss any of the big news",
+        icon: faNewspaper,
       },
       {
-        title: "In depth research",
+        title: "Deep search",
         description:
-          "Experience our custom machine-learning, cutting out the noise and helping you focus on what is important",
-        icon: faBullseye,
+          "Get access to a large, historical archive of more than 50.000 news articles and a set of advanced search options",
+        icon: faMagnifyingGlass,
+      },
+      {
+        title: "User customization",
+        description:
+          "Gives you the ability to cut out the noise and focus on the important stuff",
+        icon: faUser,
+      },
+    ],
+    pro: [
+      {
+        title: "Dashboard access",
+        description:
+          "Keep up to date on the news-cycle and track the ever-evolving threat landscape",
+        icon: faDashboard,
+      },
+      {
+        title: "Trending CVE's",
+        description:
+          "See what CVE's are currently being exploited and researched, and get insights into how they appear in the wild",
+        icon: faBug,
       },
       {
         title: "Get a helping hand",
         description:
-          "Use our AI offerings to find, condense and summarize information, ensuring you find what you need",
+          "We don't pretend that AI is going to solve all your problems, but it sure does help.",
         icon: faSearchengin,
       },
     ],
@@ -121,7 +149,9 @@
   <p class="font-light tracking-wider text-xs sm:text-base">
     Get the overview. Tackle the threats of tomorrow.
   </p>
-  <h1 class="mb-4 sm:mb-10 text-4xl sm:text-6xl font-bold">Try OSINTer PRO</h1>
+  <h1 class="mb-4 sm:mb-10 text-4xl sm:text-6xl font-bold capitalize">
+    Try OSINTer {selectedType === "base" ? "base" : "pro"}
+  </h1>
 
   <ul class="flex-col gap-8 hidden xl:flex">
     {#each perks[selectedType] as { title, description, icon }}
@@ -169,33 +199,32 @@
 <section class="flex flex-col">
   <aside
     class="
-    relative mb-8 w-full h-14 sm:h-16 px-2
+    relative mb-8 w-full h-14 sm:h-16
     bg-white dark:bg-black/25 rounded-xl
-    flex flex-col
+    flex
   "
   >
     <div
       class="
-        grow w-1/2 my-2
-        rounded-xl bg-primary-500/25
+        absolute h-full w-1/3 p-2
         transition-transform
       "
-      style={selectedType === paymentTypes[1]
-        ? "transform: translateX(100%);"
-        : ""}
-    />
+      style="transform: translateX({paymentTypes.indexOf(selectedType) * 100}%)"
+    >
+      <div class="w-full h-full rounded-xl bg-primary-500/20" />
+    </div>
 
     <div
       class="
-      absolute w-full h-full
-      grid grid-cols-2 items-center
+      h-full grow
+      grid grid-cols-3 items-center
     "
     >
       {#each paymentTypes as paymentType}
         <label
           class="
           h-full flex items-center justify-center
-          text-center capitalize font-light
+          text-center capitalize font-bold
           text-sm sm:text-base
           rounded-xl cursor-pointer
         "
@@ -212,13 +241,19 @@
     </div>
   </aside>
 
-  {#if selectedType === "personal"}
+  {#if selectedType === "base" || selectedType === "pro"}
     {#if stripe}
       {#await stripe}
         <Loader text="Loading payment components" />
       {:then stripe}
         {#if stripe}
-          <Personal {stripe} {personalPrice} />
+          {#key selectedType}
+            <Personal
+              {stripe}
+              price={selectedType === "base" ? basePrice : proPrice}
+              level={selectedType}
+            />
+          {/key}
         {/if}
       {/await}
     {:else}

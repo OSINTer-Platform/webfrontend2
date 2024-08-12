@@ -11,7 +11,7 @@
   import { init as initApm } from "@elastic/apm-rum";
   import { env } from "$env/dynamic/public";
   import { page } from "$app/stores";
-  import { afterNavigate, beforeNavigate } from "$app/navigation";
+  import { afterNavigate, beforeNavigate, goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { spawnActionModal } from "./(sidebar)/purchase/modals";
   import { config } from "$shared/config";
@@ -24,6 +24,7 @@
   $: darkMode = $page.data.settings.darkMode;
   $: user = data.user;
   $: remindMePaymentUpdate = data.remindMe.paymentUpdate;
+  $: showPaywallNotice = data.settings.showPaywallNotice;
 
   let showProgressBar = true;
 
@@ -78,6 +79,12 @@
         environment: env.PUBLIC_APM_ENV,
       });
     }
+
+    if (
+      $showPaywallNotice &&
+      (!$user || $user.payment.subscription.level === "")
+    )
+      goto("/paywall-notice");
 
     if (!$page.url.pathname.startsWith("/purchase"))
       spawnActionModal(

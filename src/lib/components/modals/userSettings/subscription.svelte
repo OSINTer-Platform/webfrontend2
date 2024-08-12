@@ -5,6 +5,7 @@
     PUBLIC_PURCHASE_AVAILABLE,
   } from "$env/static/public";
   import { getReadableDate } from "$lib/common/math";
+  import { capitalize } from "$lib/common/strings";
   import { contactEmail } from "$shared/config";
   import { modalState } from "$shared/state/modals";
 
@@ -14,7 +15,7 @@
 
   export let user: User;
 
-  $: subName = user.payment.subscription.level.toUpperCase();
+  $: subName = capitalize(user.payment.subscription.level);
 
   const cancel = () =>
     modalState.append({
@@ -22,7 +23,7 @@
       modalContent: {
         type: "warning",
         title: "Cancel subscription?",
-        description: `Are you sure you want to cancel your subscription of OSINTer PRO? Your access post-cancellation will last until next payment date. If you are having problems, then you can also [contact support](mailto:${contactEmail})`,
+        description: `Are you sure you want to cancel your subscription of OSINTer Pro? Your access post-cancellation will last until next payment date. If you are having problems, then you can also [contact support](mailto:${contactEmail})`,
         options: async () => {
           const r = await fetch(
             `${PUBLIC_API_BASE}/my/user/payment/subscription`,
@@ -69,7 +70,7 @@
         )}. You can
         {#if PUBLIC_PURCHASE_AVAILABLE}
           <a
-            href="/purchase"
+            href={subName ? `/purchase?plan=${subName}` : "/purchase"}
             class="underline hover:text-primary-500 transition-colors"
           >
             renew it here

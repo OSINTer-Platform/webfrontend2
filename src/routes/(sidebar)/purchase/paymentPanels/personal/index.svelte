@@ -12,14 +12,16 @@
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { invalidateAll } from "$app/navigation";
   import { getReadableDate } from "$lib/common/math";
-  import { formatPrice } from "$lib/common/strings";
+  import { capitalize, formatPrice } from "$lib/common/strings";
 
   export let stripe: Stripe;
-  export let personalPrice: Price;
+  export let price: Price;
+  export let level: "base" | "pro";
 
   let paymentStatus: Promise<PaymentStatus> | undefined;
   let statusCheckTimeout: ReturnType<typeof setTimeout>;
   let showSubscriptionState = true;
+  let subscriptionChange: null | Promise<string> = null;
 
   type PaymentStatus = {
     status: "success" | "error" | "processing";
@@ -72,6 +74,26 @@
       });
   }
 
+  async function changeSubscription() {
+    const r = await fetch(
+      `${PUBLIC_API_BASE}/my/user/payment/subscription/change`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(price.id),
+      }
+    );
+
+    if (r.ok) {
+      setTimeout(() => invalidateAll(), 5000);
+      return "Successfully updated subscription";
+    } else {
+      throw (await r.json())["detail"];
+    }
+  }
+
   const renew = () =>
     modalState.append({
       modalType: "options",
@@ -105,7 +127,7 @@
   $: checkStatus($page.data.stripe.paymentIntentClientSecret);
 
   $: user = $page.data.user;
-  $: subName = $user?.payment.subscription.level.toUpperCase();
+  $: subName = $user ? capitalize($user.payment.subscription.level) : null;
   $: endDate = getReadableDate(
     ($user?.payment.subscription.current_period_end ?? 0) * 1000
   );
@@ -120,7 +142,7 @@
   "
 >
   <h2 class="text-6xl font-bold my-4">
-    {formatPrice(personalPrice.unit_amount / 100, personalPrice.currency)}<span
+    {formatPrice(price.unit_amount / 100, price.currency)}<span
       class="text-xl font-light">/mo</span
     >
   </h2>
@@ -146,6 +168,13 @@
       {/if}
     </ResultPanel>
   {/await}
+{:else if !$user}
+  <ResultPanel status="warning" msg="You need to be logged in to subscribe">
+    You can either
+    <a href="/login" class="link-option"> login </a>
+    or
+    <a href="/signup" class="link-option"> signup </a>
+  </ResultPanel>
 {:else if showSubscriptionState && $user && ($user.payment.subscription.state.length > 0 || $user.premium.status)}
   {#if $user.payment.subscription.state === "closed"}
     <ResultPanel
@@ -181,7 +210,32 @@
       Otherwise it expires on {endDate}
     </ResultPanel>
   {:else if $user.payment.subscription.level.length > 0}
-    <ResultPanel status="success" msg="You are subscribed to OSINTer" />
+    {#if $user.payment.subscription.level === level}
+      <ResultPanel
+        status="success"
+        msg="You are subscribed to OSINTer {subName}"
+      />
+    {:else if subscriptionChange}
+      {#await subscriptionChange}
+        <ResultPanel status="processing" msg="Updating subscription..." />
+      {:then msg}
+        <ResultPanel status="success" {msg} />
+      {:catch msg}
+        <ResultPanel status="error" {msg} />
+      {/await}
+    {:else}
+      <ResultPanel
+        status="warning"
+        msg="You are subscribed to OSINTer {subName}"
+      >
+        <button
+          on:click={() => (subscriptionChange = changeSubscription())}
+          class="link-option"
+        >
+          Change subscription to OSINTer {capitalize(level)}
+        </button>
+      </ResultPanel>
+    {/if}
   {:else if $user.premium.status}
     {#if $user.premium.expire_time * 1000 > Date.now() && $user.premium.expire_time * 1000 < Date.now() + 1000 * 60 * 60 * 24 * 14}
       <ResultPanel
@@ -198,7 +252,7 @@
             on:click={() => (showSubscriptionState = false)}
             class="link-option"
           >
-            Subscribe to OSINTer PRO to ensure continued access.
+            Subscribe to OSINTer Pro to ensure continued access.
           </button>
         {/if}
       </ResultPanel>
@@ -218,13 +272,13 @@
           on:click={() => (showSubscriptionState = false)}
           class="link-option"
         >
-          Subscribe to OSINTer PRO anyway
+          Subscribe to OSINTer Pro anyway
         </button>
       </ResultPanel>
     {/if}
   {/if}
 {:else}
-  <StripeForm {stripe} {personalPrice} />
+  <StripeForm {stripe} personalPrice={price} />
 {/if}
 
 <style lang="postcss">

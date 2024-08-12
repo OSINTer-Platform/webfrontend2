@@ -17,9 +17,12 @@
   import { contactEmail } from "$shared/config";
   import { goto } from "$app/navigation";
 
-  export let personalPrice: Price | undefined;
+  export let basePrice: Price | undefined;
+  export let proPrice: Price | undefined;
 
   $: user = $page.data.user;
+
+  $: hasBase = $user?.payment.subscription.level === "base";
   $: hasPro = $user?.payment.subscription.level === "pro";
 
   const enterpriseMailSubjet = "Interested in OSINTer Enterprise";
@@ -34,31 +37,37 @@
   md:grid-cols-2 lg:grid-cols-3
 "
 >
-  <PriceCom
-    index={0}
-    title="free"
-    bulletPoints={[
-      {
-        icon: faNewspaper,
-        text: "**Daily news:** Keep up to date on cyber-security and ensure that you are not going to miss any of the big news",
-      },
-      {
-        icon: faMagnifyingGlass,
-        text: "**Deep search:** Get access to a large, historical archive of more than 50.000 news articles and a set of advanced search options",
-      },
-      {
-        icon: faUser,
-        text: "**User customization:** Gives you the ability to cut out the noise and focus on the important stuff",
-      },
-    ]}
-    pricePanel={{ price: "Free", bottomText: "Free, forever" }}
-  >
-    <button disabled={!!$user} on:click={() => goto("/signup")}>
-      {$user ? "You are already logged in" : "Signup"}
-    </button>
-  </PriceCom>
-  {#if personalPrice}
-    {@const { unit_amount, currency } = personalPrice}
+  {#if basePrice}
+    {@const { unit_amount, currency } = basePrice}
+    <PriceCom
+      index={0}
+      title="base"
+      bulletPoints={[
+        {
+          icon: faNewspaper,
+          text: "**Daily news:** Keep up to date on cyber-security and ensure that you are not going to miss any of the big news",
+        },
+        {
+          icon: faMagnifyingGlass,
+          text: "**Deep search:** Get access to a large, historical archive of more than 50.000 news articles and a set of advanced search options",
+        },
+        {
+          icon: faUser,
+          text: "**User customization:** Gives you the ability to cut out the noise and focus on the important stuff",
+        },
+      ]}
+      pricePanel={{
+        price: { amount: unit_amount / 100, currency: currency, period: "mo" },
+        bottomText: "Cancel anytime",
+      }}
+    >
+      <button disabled={hasBase} on:click={() => goto("/purchase?plan=base")}>
+        {hasBase ? "You are already subscribed" : "Subscribe"}
+      </button>
+    </PriceCom>
+  {/if}
+  {#if proPrice}
+    {@const { unit_amount, currency } = proPrice}
     <PriceCom
       index={1}
       title="pro"
@@ -81,8 +90,12 @@
         bottomText: "Cancel anytime",
       }}
     >
-      <button disabled={hasPro} on:click={() => goto("/purchase")}>
-        {hasPro ? "You are already subscribed" : "Subscribe"}
+      <button disabled={hasPro} on:click={() => goto("/purchase?plan=pro")}>
+        {hasPro
+          ? "You are already subscribed"
+          : hasBase
+          ? "Upgrade to Pro"
+          : "Subscribe"}
       </button>
     </PriceCom>
   {/if}
@@ -96,7 +109,7 @@
       },
       {
         icon: faPeopleGroup,
-        text: "**Team-wide PRO access:** Onboard your whole team in OSINTer. No extra seat expenses, usage costs or other hidden fees",
+        text: "**Team-wide Pro access:** Onboard your whole team in OSINTer. No extra seat expenses, usage costs or other hidden fees",
       },
       {
         icon: faWrench,

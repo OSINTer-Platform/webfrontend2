@@ -33,6 +33,11 @@
     xl:first:[&>section]:pl-0 xl:last:[&>*]:pr-0
   "
   >
-    <PaymentPanel {stripe} personalPrice={data.personalPrice} />
+    <PaymentPanel
+      {stripe}
+      plan={data.plan}
+      proPrice={data.proPrice}
+      basePrice={data.basePrice}
+    />
   </main>
 </div>
