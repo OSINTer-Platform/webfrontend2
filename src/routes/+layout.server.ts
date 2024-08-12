@@ -2,7 +2,9 @@ import type { ArticleListRender } from "$shared/types/internal";
 import type { LayoutServerLoad } from "./$types";
 
 export const load: LayoutServerLoad = async ({ cookies }) => {
-  function parseCookie(key: string, isBoolean: boolean = false) {
+  function parseCookie(key: string, isBoolean: true): boolean | undefined;
+  function parseCookie(key: string, isBoolean: false): any | undefined;
+  function parseCookie(key: string, isBoolean: boolean) {
     const value = cookies.get(key, {
       decode: (s: string) => decodeURIComponent(s),
     });
@@ -28,11 +30,13 @@ export const load: LayoutServerLoad = async ({ cookies }) => {
 
   return {
     cookies: {
-      paymentUpdate: parseCookie("remindMe-paymentUpdate", true),
       showPaywallNotice:
         parseCookie("settings-showPaywallNotice", true) ?? true,
+      paymentUpdate: parseCookie("remindMe-paymentUpdate", false),
       darkMode: parseCookie("settings-darkMode", true),
-      listRenderMode: getRenderMode(parseCookie("settings-listRenderMode")),
+      listRenderMode: getRenderMode(
+        parseCookie("settings-listRenderMode", false)
+      ),
     },
   };
 };
