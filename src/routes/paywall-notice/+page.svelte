@@ -100,7 +100,7 @@
         it is certainly possible. We currently know of a handful of teams who have
         done this - some with our support through an
         <a href="/purchase?plan=enterprise" class="link">enterprise deal</a>
-        and some completely on your own. If you attempt this and have trouble with
+        and some completely on their own. If you attempt this and have trouble with
         it, feel free to reach out at
         <a href="mailto:{contactEmail}" class="link">{contactEmail}</a>.
       </p>
