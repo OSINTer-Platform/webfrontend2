@@ -24,6 +24,8 @@ export interface UserItems {
   clusters?: ItemBase;
 }
 
+export type SubscriptionLevel = "base" | "pro";
+
 export interface User {
   _id: string;
   username: string;
@@ -56,7 +58,7 @@ export interface User {
     };
     subscription: {
       last_updated: number;
-      level: "" | "base" | "pro";
+      level: "" | SubscriptionLevel;
       state: "" | "active" | "past_due" | "closed";
       cancel_at_period_end: boolean;
       current_period_end: number;

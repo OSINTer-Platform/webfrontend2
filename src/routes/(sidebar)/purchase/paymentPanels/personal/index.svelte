@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Stripe } from "@stripe/stripe-js";
   import type { Price } from "$shared/types/stripe";
+  import type { SubscriptionLevel } from "$shared/types/userItems";
 
   import StripeForm from "./stripeForm.svelte";
   import Loader from "$com/loader.svelte";
@@ -16,7 +17,7 @@
 
   export let stripe: Stripe;
   export let price: Price;
-  export let level: "base" | "pro";
+  export let level: SubscriptionLevel;
 
   let paymentStatus: Promise<PaymentStatus> | undefined;
   let statusCheckTimeout: ReturnType<typeof setTimeout>;
