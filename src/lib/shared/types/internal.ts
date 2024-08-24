@@ -131,10 +131,10 @@ export type Modal = (
   | {
       modalType: "custom";
       modalContent: {
-        data?: any;
+        data: any;
         class?: string;
         component: ComponentType<
-          SvelteComponent<{ modalId: string; data?: any }>
+          SvelteComponent<{ modalId: string; data: any }>
         >;
       };
     }

@@ -6,6 +6,8 @@
 
   import SubmitButton from "./submitButton.svelte";
 
+  // svelte-ignore unused-export-let
+  export let data: null;
   export let modalId: string;
 
   let signupCode = "";

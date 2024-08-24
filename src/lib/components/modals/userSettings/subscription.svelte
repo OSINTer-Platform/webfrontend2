@@ -54,7 +54,7 @@
   const spawnSignupCodePanel = () =>
     modalState.append({
       modalType: "custom",
-      modalContent: { component: SignupCode },
+      modalContent: { component: SignupCode, data: null },
     });
 </script>
 
