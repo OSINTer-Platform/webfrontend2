@@ -9,9 +9,11 @@
 
   import {
     faCircleDollarToSlot,
+    faRightFromBracket,
     faSliders,
   } from "@fortawesome/free-solid-svg-icons";
   import { modalState } from "$shared/state/modals";
+  import { enhance } from "$app/forms";
 
   export let data: PageData;
 
@@ -68,6 +70,26 @@
         <SubscriptionPanel {user} />
       </main>
     </section>
+
+    <form
+      method="POST"
+      action="/logout"
+      use:enhance
+      class="flex flex-col justify-center"
+    >
+      <button
+        title="Logout"
+        type="submit"
+        class="
+            btn rounded-sm h-32 grow
+            inline-flex items-center justify-center
+            transition-all duration-300
+            bg-primary-400/20
+        "
+      >
+        <Fa icon={faRightFromBracket} class="text-4xl text-primary-500" />
+      </button>
+    </form>
   </div>
 </main>
 
