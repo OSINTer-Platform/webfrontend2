@@ -101,17 +101,9 @@
 
     <section class="flex items-center md:gap-3 gap-2">
       {#if $user}
-        <button
-          on:click={() =>
-            modalState.append({
-              modalType: "user-settings",
-              modalContent: null,
-            })}
-          title="User settings"
-          class="btn p-2 rounded-full"
-        >
+        <a href="/settings" title="User settings" class="btn p-2 rounded-full">
           <Fa icon={faUser} class="text-xl" />
-        </button>
+        </a>
       {:else}
         <a
           data-sveltekit-preload-data="tap"

@@ -69,9 +69,8 @@
 
   {#if $user}
     <div class="mt-auto" title="Change user settings">
-      <button
-        on:click={() =>
-          modalState.append({ modalType: "user-settings", modalContent: null })}
+      <a
+        href="/settings"
         class="
           btn
           flex flex-col justify-center
@@ -81,7 +80,7 @@
       >
         <Fa icon={faGear} class="sm:text-2xl -mb-2" />
         <span class="sm:font-bold text-xs">Settings</span>
-      </button>
+      </a>
     </div>
   {:else}
     <a

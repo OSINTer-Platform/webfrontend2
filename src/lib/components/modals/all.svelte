@@ -4,7 +4,6 @@
   import Search from "./search.svelte";
   import AddCollection from "./addCollection.svelte";
   import ArticleList from "./articleList/index.svelte";
-  import UserSettings from "./userSettings/index.svelte";
   import Info from "./info.svelte";
   import Options from "./options/index.svelte";
   import Survey from "./survey//index.svelte";
@@ -33,8 +32,6 @@
     <AddCollection article={modal.modalContent.article} />
   {:else if modal.modalType == "article-list"}
     <ArticleList articles={modal.modalContent.articles} />
-  {:else if modal.modalType == "user-settings"}
-    <UserSettings {topModal} />
   {:else if modal.modalType == "info"}
     <Info
       title={modal.modalContent.title}
