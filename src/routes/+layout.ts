@@ -6,7 +6,7 @@ import {
   setLike,
 } from "$lib/common/customStores";
 import { derived, writable, type Readable } from "svelte/store";
-import type { AuthArea, MLAvailability } from "$shared/types/api";
+import type { AppStats, AuthArea } from "$shared/types/api";
 import type { ArticleListRender } from "$shared/types/internal";
 import type { Collection, User } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
@@ -20,18 +20,10 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     return r.ok ? r.json() : null;
   };
 
-  const getMlAvailability = async (): Promise<MLAvailability> => {
-    const r = await fetch(`${PUBLIC_API_BASE}/ml/`);
-    return r.ok
-      ? r.json()
-      : { cluster: false, map: false, elser: false, assistant: false };
-  };
-
-  const getAuthAreas = async (): Promise<{ [key: string]: AuthArea[] }> => {
-    const r = await fetch(`${PUBLIC_API_BASE}/auth/allowed-areas`);
-    const json = await r.json();
-    if (r.ok) return json;
-    else error(r.status, json.detail);
+  const getAppStats = async (): Promise<AppStats> => {
+    const r = await fetch(`${PUBLIC_API_BASE}/app-stats`);
+    if (r.ok) return r.json();
+    else error(r.status, (await r.json())["detail"]);
   };
 
   const updateCollectionList = async (
@@ -55,14 +47,13 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
 
   const userContents = await getUserObject();
   const user = writable(userContents);
-  const [mlAvailability, authAreas, userCollections] = await Promise.all([
-    getMlAvailability(),
-    getAuthAreas(),
+  const [appStats, userCollections] = await Promise.all([
+    getAppStats(),
     backgroundUpdatable(() => updateCollectionList(userContents)),
   ]);
 
   const allowedAreas = derived(user, ($user) => {
-    const areas = Object.entries(authAreas).find(
+    const areas = Object.entries(appStats.auth.allowed_areas).find(
       ([level, _]) => level === $user?.payment.subscription.level
     );
 
@@ -125,7 +116,7 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     readArticleIds: setLike(readArticleIds),
     readArticles,
     checkAuthorization,
-    mlAvailability,
+    appStats,
     userCollections,
     customSidebar: false,
     meta: {

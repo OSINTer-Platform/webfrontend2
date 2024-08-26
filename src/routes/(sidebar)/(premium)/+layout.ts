@@ -8,7 +8,7 @@ import { PUBLIC_PURCHASE_AVAILABLE } from "$env/static/public";
 import { capitalize } from "$lib/common/strings";
 
 export const load: LayoutLoad = async ({ parent, url }) => {
-  const { user, mlAvailability, checkAuthorization } = await parent();
+  const { user, appStats, checkAuthorization } = await parent();
   const userContent = get(user);
   const authorizer = get(checkAuthorization);
 
@@ -27,7 +27,7 @@ export const load: LayoutLoad = async ({ parent, url }) => {
   routeProtections.forEach(({ route, authArea, dependency }) => {
     if (!url.pathname.startsWith(route)) return;
 
-    if (dependency && !mlAvailability[dependency])
+    if (dependency && !appStats.ml_availability[dependency])
       error(421, {
         message: "",
         title: "Requested functionality isn't available",

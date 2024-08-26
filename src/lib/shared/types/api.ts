@@ -1,3 +1,5 @@
+import type { SubscriptionLevel } from "./userItems";
+
 export interface ArticleML {
   cluster: string;
   coordinates: [number, number];
@@ -159,13 +161,6 @@ export interface MLAssistantChat {
   reached_max: boolean;
 }
 
-export interface MLAvailability {
-  cluster: boolean;
-  map: boolean;
-  elser: boolean;
-  assistant: boolean;
-}
-
 export interface Survey {
   contents: {
     title: string;
@@ -274,4 +269,18 @@ export interface FullCVE extends CVEBase {
   documents: string[];
   dating: string[];
   references: CVEReference[];
+}
+
+export interface MLAvailability {
+  cluster: boolean;
+  map: boolean;
+  elser: boolean;
+  assistant: boolean;
+}
+
+export interface AppStats {
+  ml_availability: MLAvailability;
+  auth: {
+    allowed_areas: { [key in SubscriptionLevel]: AuthArea[] };
+  };
 }

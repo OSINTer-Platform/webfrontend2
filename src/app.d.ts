@@ -2,7 +2,7 @@
 
 import type { User } from "$shared/types/userItems";
 import type { BackgroundUpdatable, SetLike } from "$lib/common/customStores";
-import type { ArticleBase, MLAvailability } from "$shared/types/api";
+import type { AppStats, ArticleBase } from "$shared/types/api";
 import type { Collection } from "$shared/types/userItems";
 import type { Writable } from "svelte/store";
 import type { ArticleListRender } from "$shared/types/internal";
@@ -24,7 +24,7 @@ declare global {
     }
     // interface Locals {}
     interface PageData {
-      mlAvailability: MLAvailability;
+      appStats: AppStats;
       user: Writable<User | null>;
       checkAuthorization: Readable<(area?: AuthArea) => boolean>;
       customSidebar: boolean;
