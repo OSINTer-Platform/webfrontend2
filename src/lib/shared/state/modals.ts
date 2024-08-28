@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { listStore, type ListStore } from "$lib/common/customStores";
-import type { Modal } from "../types/internal";
+import type { Modal } from "../types/modal";
 
 type OptionalId<T> = Omit<T, "id"> & { id?: string };
 
