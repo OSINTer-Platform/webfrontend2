@@ -4,24 +4,28 @@ import type { ArticleListRender } from "./internal";
 export interface ItemBase {
   _id: string;
   name: string;
+  type: "feed" | "collection" | "webhook";
+  owner: string;
+}
+
+export interface FeedItemBase extends ItemBase {
   type: "feed" | "collection";
-  owner?: string;
   deleteable: boolean;
 }
 
-export interface Collection extends ItemBase {
+export interface Collection extends FeedItemBase {
   type: "collection";
   ids: string[];
 }
 
-export interface Feed extends ItemBase, ArticleSearchQuery {
+export interface Feed extends FeedItemBase, ArticleSearchQuery {
   type: "feed";
 }
 
 export interface UserItems {
-  feeds?: ItemBase;
-  collections?: ItemBase;
-  clusters?: ItemBase;
+  feeds?: FeedItemBase;
+  collections?: FeedItemBase;
+  clusters?: FeedItemBase;
 }
 
 export type SubscriptionLevel = "base" | "pro";

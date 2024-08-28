@@ -1,7 +1,7 @@
 import { goto, invalidate, invalidateAll } from "$app/navigation";
 import { PUBLIC_API_BASE } from "$env/static/public";
 import type { ArticleSearchQuery } from "$shared/types/api";
-import type { Collection, Feed, ItemBase } from "$shared/types/userItems";
+import type { Collection, Feed, FeedItemBase, ItemBase } from "$shared/types/userItems";
 
 export const sanitizeQuery = (query: ArticleSearchQuery) => {
   const keys = [
@@ -19,15 +19,12 @@ export const sanitizeQuery = (query: ArticleSearchQuery) => {
   return query;
 };
 
-type NavDest =
-  | "none"
-  | "invalidateAll"
-  | `invalidate:${string}`
-  | "current"
-  | "new";
+type NavDest = "none" | "invalidateAll" | `invalidate:${string}`;
+
+type FeedItemNavDest = NavDest | "current" | "new";
 
 async function nav(
-  dest: NavDest,
+  dest: FeedItemNavDest,
   id: string,
   genUrl = (id: string) => `/feed/${id}`
 ) {
@@ -42,14 +39,14 @@ export function createItem(
   feedName: string,
   contents: ArticleSearchQuery,
   type: "feed",
-  navigate?: NavDest,
+  navigate?: FeedItemNavDest,
   subscribe?: boolean
 ): Promise<Feed | undefined>;
 export function createItem(
   feedName: string,
   contents: string[],
   type: "collection",
-  navigate?: NavDest,
+  navigate?: FeedItemNavDest,
   subscribe?: boolean
 ): Promise<Collection | undefined>;
 
@@ -57,7 +54,7 @@ export async function createItem(
   feedName: string,
   contents: ArticleSearchQuery | string[],
   type: "feed" | "collection",
-  navigate: NavDest = "none",
+  navigate: FeedItemNavDest = "none",
   subscribe: boolean = true
 ): Promise<Feed | Collection | undefined> {
   const r = await fetch(
@@ -88,20 +85,20 @@ export function updateItem(
   itemId: string,
   contents: ArticleSearchQuery,
   type: "feed",
-  navigate?: NavDest
+  navigate?: FeedItemNavDest
 ): Promise<Feed | undefined>;
 export function updateItem(
   itemId: string,
   contents: string[],
   type: "collection",
-  navigate?: NavDest
+  navigate?: FeedItemNavDest
 ): Promise<Collection | undefined>;
 
 export async function updateItem(
   itemId: string,
   contents: ArticleSearchQuery | string[],
   type: "feed" | "collection",
-  navigate: NavDest = "none"
+  navigate: FeedItemNavDest = "none"
 ): Promise<Feed | Collection | undefined> {
   const r = await fetch(`${PUBLIC_API_BASE}/user-items/${type}/${itemId}`, {
     method: "PUT",
@@ -125,11 +122,10 @@ export async function updateItem(
 export const changeName = async (
   item: ItemBase,
   newName: string,
-  navigate: NavDest = "none"
+  navigate: FeedItemNavDest = "none"
 ): Promise<boolean> => {
   const r = await fetch(
-    `${PUBLIC_API_BASE}/user-items/${
-      item._id
+    `${PUBLIC_API_BASE}/user-items/${item._id
     }/name?new_name=${encodeURIComponent(newName)}`,
     {
       method: "PUT",
@@ -148,9 +144,9 @@ export const changeName = async (
 };
 
 export const modifySubscription = async (
-  item: ItemBase,
+  item: FeedItemBase,
   subscribe: boolean,
-  navigate: NavDest = "none"
+  navigate: FeedItemNavDest = "none"
 ): Promise<boolean> => {
   const r = await fetch(
     `${PUBLIC_API_BASE}/my/${item.type}s/subscription/${item._id}`,

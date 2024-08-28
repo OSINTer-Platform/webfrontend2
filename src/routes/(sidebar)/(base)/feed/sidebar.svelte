@@ -5,7 +5,7 @@
   import ItemsSection from "$com/sidebar/components/userItems/itemsSection.svelte";
   import SearchButton from "$com/sidebar/components/userItems/searchButton.svelte";
 
-  import type { ItemBase, User } from "$shared/types/userItems";
+  import type { FeedItemBase, User } from "$shared/types/userItems";
   import type { SidebarOption } from "$shared/types/internal";
   import type { ArticleSearchQuery } from "$shared/types/api";
 
@@ -13,12 +13,12 @@
   import { modalState } from "$shared/state/modals";
   import { createItem, sanitizeQuery } from "$lib/common/userItems";
 
-  export let feeds: ItemBase[];
-  export let collections: ItemBase[];
+  export let feeds: FeedItemBase[];
+  export let collections: FeedItemBase[];
   export let user: User | null;
 
   function convertToOption(
-    items: Array<ItemBase>
+    items: Array<FeedItemBase>
   ): Array<{ href: string; label: string }> {
     return items.map((item) => ({
       href: `/feed/${item._id}`,
