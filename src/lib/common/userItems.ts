@@ -1,7 +1,12 @@
 import { goto, invalidate, invalidateAll } from "$app/navigation";
 import { PUBLIC_API_BASE } from "$env/static/public";
 import type { ArticleSearchQuery } from "$shared/types/api";
-import type { Collection, Feed, FeedItemBase, ItemBase } from "$shared/types/userItems";
+import type {
+  Collection,
+  Feed,
+  FeedItemBase,
+  ItemBase,
+} from "$shared/types/userItems";
 
 export const sanitizeQuery = (query: ArticleSearchQuery) => {
   const keys = [
@@ -125,7 +130,8 @@ export const changeName = async (
   navigate: FeedItemNavDest = "none"
 ): Promise<boolean> => {
   const r = await fetch(
-    `${PUBLIC_API_BASE}/user-items/${item._id
+    `${PUBLIC_API_BASE}/user-items/${
+      item._id
     }/name?new_name=${encodeURIComponent(newName)}`,
     {
       method: "PUT",
@@ -138,6 +144,25 @@ export const changeName = async (
   } else {
     console.error(
       `Failed when attempting to change name of item with ID ${item._id}. Status-code and message: ${r.status} ${r.statusText}`
+    );
+    return false;
+  }
+};
+
+export const deleteItem = async (
+  item: ItemBase,
+  navigate: NavDest = "none"
+): Promise<boolean> => {
+  const r = await fetch(`${PUBLIC_API_BASE}/user-items/${item._id}`, {
+    method: "DELETE",
+  });
+
+  if (r.ok) {
+    await nav(navigate, item._id);
+    return true;
+  } else {
+    console.error(
+      `Failed when attempting to delete item with ID ${item._id}. Status-code and message: ${r.status} ${r.statusText}`
     );
     return false;
   }
