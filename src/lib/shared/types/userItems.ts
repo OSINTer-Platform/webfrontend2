@@ -28,6 +28,14 @@ export interface UserItems {
   clusters?: FeedItemBase;
 }
 
+export type WebhookTarget = "discord" | "slack";
+
+export interface Webhook extends ItemBase {
+  hook_type: WebhookTarget;
+  attached_feeds: string[];
+  type: "webhook";
+}
+
 export type SubscriptionLevel = "base" | "pro";
 
 export interface User {

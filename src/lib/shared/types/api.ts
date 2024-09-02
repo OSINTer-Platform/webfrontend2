@@ -271,6 +271,11 @@ export interface FullCVE extends CVEBase {
   references: CVEReference[];
 }
 
+export interface WebhookLimits {
+  max_count: number;
+  max_feeds_per_hook: number;
+}
+
 export interface MLAvailability {
   cluster: boolean;
   map: boolean;
@@ -282,5 +287,6 @@ export interface AppStats {
   ml_availability: MLAvailability;
   auth: {
     allowed_areas: { [key in SubscriptionLevel]: AuthArea[] };
+    webhook_limits: { [key in SubscriptionLevel | "premium"]: WebhookLimits };
   };
 }

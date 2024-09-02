@@ -1,6 +1,9 @@
 import type { ArticleSearchQuery } from "./types/api";
 import type { ArticleListRender, InbuiltFeed } from "./types/internal";
 import { PUBLIC_API_BASE } from "$env/static/public";
+import type { WebhookTarget } from "./types/userItems";
+import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+import { faDiscord, faSlack } from "@fortawesome/free-brands-svg-icons";
 
 export const contactEmail = "contact@osinter.dk";
 
@@ -22,6 +25,25 @@ export const ListRenderModes: { name: string; value: ArticleListRender }[] = [
   { name: "Large", value: "large" },
   { name: "Title-view", value: "title" },
 ];
+
+export const webhookDetails: {
+  [key in WebhookTarget]: {
+    name: WebhookTarget;
+    icon: IconDefinition;
+    urlFormat: string;
+  };
+} = {
+  discord: {
+    name: "discord",
+    icon: faDiscord,
+    urlFormat: "https://discord.com/api/webhooks/XXXXXX",
+  },
+  slack: {
+    name: "slack",
+    icon: faSlack,
+    urlFormat: "https://hooks.slack.com/services/XXXXXX",
+  },
+};
 
 const daySeconds = 24 * 60 * 60 * 1000;
 type Intervals = "day" | "week" | "month";

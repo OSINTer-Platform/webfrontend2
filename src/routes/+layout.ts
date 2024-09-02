@@ -60,6 +60,16 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     if (areas) return areas[1];
   });
 
+  const webhookLimits = derived(user, ($user) => {
+    if ($user?.premium.status) return appStats.auth.webhook_limits.premium;
+
+    const limits = Object.entries(appStats.auth.webhook_limits).find(
+      ([level, _]) => level === $user?.payment.subscription.level
+    );
+
+    return limits?.[1] ?? { max_count: 0, max_feeds_per_hook: 0 };
+  });
+
   const checkAuthorization: Readable<(area?: AuthArea) => boolean> = derived(
     [user, allowedAreas],
     ([$user, $allowedAreas]) => {
@@ -117,6 +127,7 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     readArticles,
     checkAuthorization,
     appStats,
+    webhookLimits,
     userCollections,
     customSidebar: false,
     meta: {
