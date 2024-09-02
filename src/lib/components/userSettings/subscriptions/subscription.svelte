@@ -56,7 +56,7 @@
 </script>
 
 <h3 class="text-lg sm:text-xl font-bold">OSINTer {formattedSubName}:</h3>
-{#if user.payment.subscription.level === "pro"}
+{#if user.payment.subscription.level === subName}
   {#if user.payment.subscription.cancel_at_period_end}
     <p>
       You have cancelled your OSINTer {formattedSubName} subscription. Your current
@@ -82,14 +82,14 @@
   {:else}
     <p>
       You are subscribed to OSINTer {formattedSubName}. You can
-      <button on:click={cancel}>cancel your subscription here</button>
+      <button on:click={cancel}>cancel your subscription here</button> or
       {#if user.payment.invoice.invoice_url.length > 0}
         <a
           href={user.payment.invoice.invoice_url}
           target="_blank"
           rel="noopener noreferrer"
         >
-          or see your last invoice here
+          see your last invoice here
         </a>
       {/if}
     </p>
@@ -111,7 +111,8 @@
 {/if}
 
 <style lang="postcss">
-  a {
+  a,
+  button {
     @apply transition-colors hover:text-primary-500 underline;
   }
 
