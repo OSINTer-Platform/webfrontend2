@@ -35,7 +35,6 @@
     in:fly|global={{ y: 50 }}
     out:fly|global={{ y: 50 }}
     class="
-      overflow-auto
       cursor-auto
       {classes}
 

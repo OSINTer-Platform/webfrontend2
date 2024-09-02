@@ -117,7 +117,7 @@
 <Modal
   class="
     p-6 shrink-0
-    w-[30rem] max-w-[90vw]
+    w-[30rem] max-w-[90vw] max-h-[90vh]
     flex flex-col
     overflow-y-auto
 
