@@ -11,6 +11,7 @@
   import Processing from "./processing.svelte";
   import Actions from "./actions.svelte";
   import Custom from "./custom.svelte";
+  import Webhook from "./webhook.svelte";
 </script>
 
 {#each $modalState as modal, i (modal.id)}
@@ -67,6 +68,12 @@
       class={modal.modalContent.class}
       data={modal.modalContent.data}
       modalId={modal.id}
+    />
+  {:else if modal.modalType == "webhook"}
+    <Webhook
+      modalId={modal.id}
+      data={modal.modalContent.data}
+      action={modal.modalContent.action}
     />
   {/if}
 {/each}

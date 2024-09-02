@@ -6,6 +6,7 @@ import type {
   ArticleSearchQuery,
 } from "./api";
 import type { ComponentType, SvelteComponent } from "svelte";
+import type { WebhookTarget } from "./userItems";
 
 type ModalBase = {
   id: string;
@@ -110,6 +111,18 @@ export type SurveyModal = {
   };
 } & ModalBase;
 
+export type WebhookModal = {
+  modalType: "webhook";
+  modalContent: {
+    data?: {
+      name?: string;
+      target?: WebhookTarget;
+      id: string;
+    };
+    action: "update" | "create";
+  };
+} & ModalBase;
+
 export type Modal =
   | ActionsModal
   | AddCollectionModal
@@ -122,3 +135,4 @@ export type Modal =
   | ProcessingModal
   | SearchModal
   | SurveyModal
+  | WebhookModal;
