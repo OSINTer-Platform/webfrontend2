@@ -3,12 +3,14 @@
   import PreferencePanel from "$com/userSettings/preferences/index.svelte";
   import SubscriptionPanel from "$com/userSettings/subscriptions/index.svelte";
   import Header from "$com/userSettings/header/index.svelte";
+  import Webhooks from "$com/userSettings/webhooks/index.svelte";
   import CodeSubmit from "$com/userSettings/subscriptions/codeSubmit.svelte";
 
   import type { PageData } from "./$types";
 
   import {
     faCircleDollarToSlot,
+    faDiagramProject,
     faRightFromBracket,
     faSliders,
   } from "@fortawesome/free-solid-svg-icons";
@@ -18,6 +20,7 @@
   export let data: PageData;
 
   $: user = data.userContents;
+  $: webhookLimits = data.webhookLimits;
 </script>
 
 <main class="bg-surface-100 dark:bg-surface-900 w-full h-full overflow-y-auto">
@@ -70,6 +73,20 @@
         <SubscriptionPanel {user} />
       </main>
     </section>
+
+    {#if $webhookLimits.max_count > 0}
+      <section>
+        <header>
+          <main>
+            <Fa icon={faDiagramProject} class="text-xl" />
+            Integrations
+          </main>
+        </header>
+        <main>
+          <Webhooks limits={$webhookLimits} webhooks={data.webhooks} />
+        </main>
+      </section>
+    {/if}
 
     <form
       method="POST"
