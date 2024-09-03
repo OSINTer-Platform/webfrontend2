@@ -9,6 +9,8 @@
 
   export let article: ArticleBase;
   let collectionSearch = "";
+
+  $: userCollections = $page.data.userCollections;
 </script>
 
 <Modal
@@ -39,7 +41,7 @@
     {collectionSearch}
   />
 
-  {#if Object.keys($page.data.userCollections).length > 6}
+  {#if Object.keys($userCollections).length > 6}
     <hr class="border-surface-400 my-4" />
 
     <Search
