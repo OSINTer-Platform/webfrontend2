@@ -110,17 +110,21 @@
     </button>
   </aside>
 
-  <button class="block sm:hidden" on:click={showWebhookActions}>
-    <Fa icon={faBars} />
-  </button>
+  <aside class="flex sm:hidden">
+    <button on:click={showWebhookActions}>
+      <Fa icon={faBars} />
+    </button>
+  </aside>
 </div>
 
 <style lang="postcss">
-  button {
-    @apply flex justify-center items-center
-      h-12 aspect-square
-      bg-black/20 hover:bg-black/10
-      border border-white/20
-      active:scale-95 transition-all;
+  aside {
+    button {
+      @apply flex justify-center items-center
+        h-12 aspect-square
+        bg-black/20 hover:bg-black/10
+        border border-white/20
+        active:scale-95 transition-all;
+    }
   }
 </style>
