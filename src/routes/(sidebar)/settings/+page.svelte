@@ -21,6 +21,7 @@
 
   $: user = data.userContents;
   $: webhookLimits = data.webhookLimits;
+  $: webhooks = data.webhooks;
 </script>
 
 <main class="bg-surface-100 dark:bg-surface-900 w-full h-full overflow-y-auto">
@@ -83,7 +84,7 @@
           </main>
         </header>
         <main>
-          <Webhooks limits={$webhookLimits} webhooks={data.webhooks} />
+          <Webhooks limits={$webhookLimits} {webhooks} />
         </main>
       </section>
     {/if}

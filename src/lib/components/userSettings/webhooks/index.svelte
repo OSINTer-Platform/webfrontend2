@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { WebhookLimits } from "$shared/types/api";
   import type { Webhook } from "$shared/types/userItems";
+  import type { BackgroundUpdatable } from "$lib/common/customStores";
 
   import Fa from "svelte-fa";
   import WebhookComponent from "./webhook.svelte";
@@ -12,14 +13,13 @@
   } from "@fortawesome/free-solid-svg-icons";
   import { modalState } from "$shared/state/modals";
   import { deleteItem } from "$lib/common/userItems";
-  import { invalidate } from "$app/navigation";
   import { slide } from "svelte/transition";
 
   export let limits: WebhookLimits;
-  export let webhooks: Webhook[];
+  export let webhooks: BackgroundUpdatable<Webhook[], void>;
 
-  $: webhookOptions = webhooks.map((webhook) => ({ webhook, checked: false }));
-  $: canCreate = webhooks.length < limits.max_count;
+  $: webhookOptions = $webhooks.map((webhook) => ({ webhook, checked: false }));
+  $: canCreate = $webhooks.length < limits.max_count;
   $: checkedWebhooks = webhookOptions
     .filter(({ checked }) => checked)
     .map((o) => o.webhook);
@@ -33,7 +33,7 @@
         description: `Are you sure you want to delete ${checkedWebhooks.length} webhooks"?`,
         options: async () => {
           await Promise.all(checkedWebhooks.map((w) => deleteItem(w, "none")));
-          await invalidate("data:webhook");
+          await webhooks.autoUpdate();
         },
       },
     });
@@ -90,7 +90,7 @@
       title={canCreate
         ? "Create webhook"
         : `Can not create more than ${limits.max_count} webhooks`}
-      style="--height-units: {Math.max(1, 2 - webhooks.length)}"
+      style="--height-units: {Math.max(1, 2 - $webhooks.length)}"
       class="
       create-button w-full flex flex-col justify-center items-center border
       border-dashed border-surface-400/50 hover:border-surface-400

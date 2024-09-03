@@ -13,6 +13,7 @@
   import { modalState } from "$shared/state/modals";
   import { deleteItem } from "$lib/common/userItems";
   import { webhookDetails } from "$shared/config";
+  import { page } from "$app/stores";
 
   export let webhook: Webhook;
   export let showCheckbox: boolean = false;
@@ -20,6 +21,8 @@
   const dispatch = createEventDispatcher<{ check: boolean }>();
 
   let hovered: boolean = false;
+
+  $: webhooks = $page.data.webhooks;
 
   const deleteWebhook = () =>
     modalState.append({
@@ -29,7 +32,8 @@
         title: "Delete webhook?",
         description: `Are you sure you want to delete the webhook by the name "${webhook.name}"?`,
         options: async () => {
-          await deleteItem(webhook, "invalidate:data:webhook");
+          await deleteItem(webhook, "none");
+          await webhooks.autoUpdate();
         },
       },
     });

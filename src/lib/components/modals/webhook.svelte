@@ -13,8 +13,8 @@
   import { webhookDetails } from "$shared/config";
   import { capitalize } from "$lib/common/strings";
   import { modalState } from "$shared/state/modals";
-  import { invalidate } from "$app/navigation";
   import { slide } from "svelte/transition";
+  import { page } from "$app/stores";
   import { PUBLIC_API_BASE } from "$env/static/public";
 
   export let data:
@@ -28,6 +28,8 @@
   let target: WebhookTarget | undefined = data?.target;
   let name: string = data?.name ?? "";
   let url: string = "";
+
+  $: webhooks = $page.data.webhooks;
 
   $: webhookUrlFormat = target
     ? webhookDetails[target].urlFormat
@@ -72,7 +74,7 @@
       const r = await query();
 
       if (r.ok) {
-        await invalidate("data:webhook");
+        await webhooks.autoUpdate();
         setTimeout(() => modalState.remove(modalId), 500);
         return;
       } else {

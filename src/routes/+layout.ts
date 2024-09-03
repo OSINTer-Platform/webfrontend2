@@ -8,7 +8,7 @@ import {
 import { derived, writable, type Readable } from "svelte/store";
 import type { AppStats, AuthArea } from "$shared/types/api";
 import type { ArticleListRender } from "$shared/types/internal";
-import type { Collection, User } from "$shared/types/userItems";
+import type { Collection, User, Webhook } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
 import { error } from "@sveltejs/kit";
 import { persisted } from "svelte-persisted-store";
@@ -45,11 +45,18 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     );
   };
 
+  async function getWebhooks(): Promise<Webhook[]> {
+    const r = await fetch(`${PUBLIC_API_BASE}/user-items/webhook/list`);
+    if (r.ok) return r.json();
+    else return [];
+  }
+
   const userContents = await getUserObject();
   const user = writable(userContents);
-  const [appStats, userCollections] = await Promise.all([
+  const [appStats, userCollections, webhooks] = await Promise.all([
     getAppStats(),
     backgroundUpdatable(() => updateCollectionList(userContents)),
+    backgroundUpdatable(getWebhooks),
   ]);
 
   const allowedAreas = derived(user, ($user) => {
@@ -129,6 +136,7 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
     appStats,
     webhookLimits,
     userCollections,
+    webhooks,
     customSidebar: false,
     meta: {
       title: {

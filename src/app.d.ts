@@ -1,6 +1,6 @@
 // See https://kit.svelte.dev/docs/types#app
 
-import type { User } from "$shared/types/userItems";
+import type { User, Webhook } from "$shared/types/userItems";
 import type { BackgroundUpdatable, SetLike } from "$lib/common/customStores";
 import type { AppStats, ArticleBase, WebhookLimits } from "$shared/types/api";
 import type { Collection } from "$shared/types/userItems";
@@ -32,6 +32,7 @@ declare global {
       readArticleIds: SetLike<string>;
       readArticles: Readable<Promise<ArticleBase[]>>;
       userCollections: BackgroundUpdatable<{ [key: string]: Collection }>;
+      webhooks: BackgroundUpdatable<Webhook[]>;
       meta: {
         title?: string | { visual: string; meta: string };
         description?: string;
