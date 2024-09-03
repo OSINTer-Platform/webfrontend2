@@ -12,6 +12,7 @@
   import Actions from "./actions.svelte";
   import Custom from "./custom.svelte";
   import Webhook from "./webhook.svelte";
+  import AttachWebhooks from "./attachWebhooks.svelte";
 </script>
 
 {#each $modalState as modal, i (modal.id)}
@@ -75,5 +76,7 @@
       data={modal.modalContent.data}
       action={modal.modalContent.action}
     />
+  {:else if modal.modalType === "attach-webhooks"}
+    <AttachWebhooks feed={modal.modalContent.feed} />
   {/if}
 {/each}

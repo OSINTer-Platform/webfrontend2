@@ -6,7 +6,7 @@ import type {
   ArticleSearchQuery,
 } from "./api";
 import type { ComponentType, SvelteComponent } from "svelte";
-import type { WebhookTarget } from "./userItems";
+import type { Feed, Webhook, WebhookTarget } from "./userItems";
 
 type ModalBase = {
   id: string;
@@ -43,6 +43,13 @@ export type ArticleModal = {
     article: FullArticle;
     articleList: Array<{ id: string }>;
     categories: ArticleCategories;
+  };
+} & ModalBase;
+
+export type AttachWebhooks = {
+  modalType: "attach-webhooks";
+  modalContent: {
+    feed: Feed;
   };
 } & ModalBase;
 
@@ -128,6 +135,7 @@ export type Modal =
   | AddCollectionModal
   | ArticleListModal
   | ArticleModal
+  | AttachWebhooks
   | CollectPaymentModal
   | CustomModal
   | InfoModal
