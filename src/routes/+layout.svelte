@@ -13,7 +13,7 @@
   import { page } from "$app/stores";
   import { afterNavigate, beforeNavigate, goto } from "$app/navigation";
   import { onMount } from "svelte";
-  import { spawnActionModal } from "./(sidebar)/purchase/modals";
+  import { spawnPaymentModal } from "$lib/common/modals";
   import { config } from "$shared/config";
   import { sideOpen, tooltip } from "$shared/state/state";
 
@@ -87,7 +87,7 @@
       goto("/paywall-notice");
 
     if (!$page.url.pathname.startsWith("/purchase"))
-      spawnActionModal(
+      spawnPaymentModal(
         $user,
         remindMePaymentUpdate,
         data.stripe.paymentIntentClientSecret

@@ -343,7 +343,7 @@ const spawnPremiumExpirationModal = (user: User) => {
   });
 };
 
-export function spawnActionModal(
+function spawnPaymentModal(
   user: User | null,
   remindDateStore: Writable<number>,
   paymentIntentClientSecret: string | null
@@ -381,3 +381,5 @@ export function spawnActionModal(
       `Invoice action type "${user.payment.invoice.action_type}" not recognized`
     );
 }
+
+export { spawnPaymentModal as default };
