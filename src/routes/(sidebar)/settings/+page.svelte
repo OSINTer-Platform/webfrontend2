@@ -38,7 +38,7 @@
 
     <section>
       <header>
-        <main>
+        <main id="preferences">
           <Fa icon={faSliders} class="text-xl" />
           Preferences
         </main>
@@ -50,7 +50,7 @@
     </section>
     <section>
       <header class="grow">
-        <main>
+        <main id="subscription">
           <Fa icon={faCircleDollarToSlot} class="text-xl" />
           Subscription
         </main>
@@ -78,7 +78,7 @@
     {#if $webhookLimits.max_count > 0}
       <section>
         <header>
-          <main>
+          <main id="integrations">
             <Fa icon={faDiagramProject} class="text-xl" />
             Integrations
           </main>
