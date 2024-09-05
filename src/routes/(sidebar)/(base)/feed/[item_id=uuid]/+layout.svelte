@@ -32,6 +32,7 @@
     faTrashCan,
   } from "@fortawesome/free-regular-svg-icons";
   import { page } from "$app/stores";
+  import { modifyFeed } from "$lib/common/modals";
 
   export let data: LayoutData;
 
@@ -108,26 +109,7 @@
           {
             title: `Modify ${data.currentItem.type}`,
             icon: faPenToSquare,
-            action: () => {
-              modalState.append({
-                modalType: "search",
-                modalContent: {
-                  searchText: "Update feed",
-                  searchAction: async (query: ArticleSearchQuery) => {
-                    await updateItem(
-                      data.currentItem._id,
-                      sanitizeQuery(query),
-                      "feed"
-                    );
-                    // Keept to avoid visual glitch with modal appearing and
-                    // then removed by the afterNavigate hook in root layout
-                    modalState.set([]);
-                    invalidateAll();
-                  },
-                  query: data.currentItem as Feed,
-                },
-              });
-            },
+            action: () => modifyFeed(data.currentItem as Feed),
           },
         ]
       : []),
