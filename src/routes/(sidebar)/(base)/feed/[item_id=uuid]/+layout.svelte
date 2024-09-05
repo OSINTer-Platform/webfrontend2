@@ -11,6 +11,7 @@
   import { modalState } from "$state/modals";
 
   import {
+    faDiagramProject,
     faDownload,
     faPenToSquare,
     faPlus,
@@ -53,7 +54,54 @@
     ($user.feed_ids.includes(data.currentItem._id) ||
       $user.collection_ids.includes(data.currentItem._id));
 
+  let ownsFeed: boolean;
+  $: ownsFeed = data.currentItem.owner === $user?._id;
+
+  $: webhookLimits = $page.data.webhookLimits;
+
   $: modOptions = [
+    ...(ownsFeed &&
+    data.currentItem.type === "feed" &&
+    $webhookLimits.max_count > 0 &&
+    $webhookLimits.max_feeds_per_hook > 0
+      ? [
+          {
+            title: "Attach webhook",
+            icon: faDiagramProject,
+            action: () => {
+              const feed = data.currentItem as Feed;
+              if (feed.sort_order != "desc" || feed.sort_by != "publish_date")
+                modalState.append({
+                  modalType: "options",
+                  modalContent: {
+                    type: "error",
+                    title: "Feed isn't sorted right",
+                    description: `Your feed "${feed.name}" is not sorted by publish date in descending order, and needs to be when attaching webhook.`,
+                    options: [
+                      {
+                        text: "Modify feed",
+                        type: "primary",
+                        action: () => modifyFeed(feed),
+                      },
+                      {
+                        text: "Cancel",
+                        type: "secondary",
+                        action: () => {},
+                      },
+                    ],
+                  },
+                });
+              else
+                modalState.append({
+                  modalType: "attach-webhooks",
+                  modalContent: {
+                    feed: data.currentItem as Feed,
+                  },
+                });
+            },
+          },
+        ]
+      : []),
     ...($page.data.articles && $page.data.articles.length > 0
       ? [
           {
@@ -140,9 +188,6 @@
           },
         ]),
   ];
-
-  let ownsFeed: boolean;
-  $: ownsFeed = data.currentItem.owner === $user?._id;
 </script>
 
 <HeaderShell
