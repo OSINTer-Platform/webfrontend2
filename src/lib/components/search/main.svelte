@@ -9,6 +9,7 @@
     faArrowsRotate,
     faDownload,
     faPlus,
+    faSpinner,
   } from "@fortawesome/free-solid-svg-icons";
 
   import type {
@@ -22,6 +23,9 @@
   import { createItem, sanitizeQuery } from "$lib/common/userItems";
   import { toUrl } from "$lib/common/searchQuery";
 
+  export let callback:
+    | null
+    | ((q: ArticleSearchQuery) => void | Promise<void>) = null;
   export let searchQuery: ArticleSearchQuery = getStandardSearch();
   export let sourceCategories: ArticleCategories | undefined = undefined;
   export let submitText: string = "Search content";
@@ -29,10 +33,24 @@
     limit: { disabled: true, text: "testing" },
   };
 
+  let loading = false;
+
   $: queryString = toUrl(searchQuery);
 </script>
 
-<form action="/news/search" method="get" class="h-full" on:submit>
+<form
+  action="/news/search"
+  method="get"
+  class="h-full"
+  on:submit={async (e) => {
+    if (callback) {
+      e.preventDefault();
+      loading = true;
+      await callback(searchQuery);
+      loading = false;
+    }
+  }}
+>
   <TwoHalfs>
     <svelte:fragment slot="first">
       <MajorSection title="Select Sources">
@@ -56,7 +74,16 @@
         />
 
         <section class="flex gap-4 mx-4">
-          <button class="btn grow">{submitText}</button>
+          {#if loading}
+            <div
+              class="button grow flex justify-center items-center"
+              title="Loading..."
+            >
+              <Fa icon={faSpinner} class="text-xl animate-spin" />
+            </div>
+          {:else}
+            <button class="btn grow">{submitText}</button>
+          {/if}
 
           <div class="flex shrink-0 w-fit side-buttons">
             <slot name="side-buttons">
@@ -99,20 +126,21 @@
 <style lang="postcss">
   section {
     :global(button),
-    :global(a) {
+    :global(a),
+    :global(div.button) {
       @apply border border-tertiary-700
 			h-16 p-2
 			font-light dark:font-bold;
-
-      :global(svg) {
-        @apply opacity-70 text-sm;
-      }
     }
 
     div.side-buttons {
       :global(button),
       :global(a) {
         @apply w-14 sm:w-16 h-16;
+
+        :global(svg) {
+          @apply opacity-70 text-sm;
+        }
       }
     }
   }

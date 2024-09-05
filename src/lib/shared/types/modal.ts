@@ -107,7 +107,7 @@ export type SearchModal = {
   modalType: "search";
   modalContent: {
     query?: ArticleSearchQuery;
-    searchAction?: (q: ArticleSearchQuery) => void;
+    searchAction?: (q: ArticleSearchQuery) => void | Promise<void>;
     searchText?: string;
     restrictFields?: SearchRestrictFields;
   };

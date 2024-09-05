@@ -8,7 +8,9 @@
   import { getStandardSearch } from "$shared/config";
 
   export let searchQuery: ArticleSearchQuery = getStandardSearch();
-  export let callback: null | ((q: ArticleSearchQuery) => void) = null;
+  export let callback:
+    | null
+    | ((q: ArticleSearchQuery) => void | Promise<void>) = null;
   export let searchText: string = "Search Content";
   export let restrictFields: SearchRestrictFields = {};
 
@@ -27,11 +29,6 @@
     {restrictFields}
     bind:searchQuery
     submitText={searchText}
-    on:submit={(e) => {
-      if (callback) {
-        e.preventDefault();
-        callback(searchQuery);
-      }
-    }}
+    {callback}
   />
 </Modal>
