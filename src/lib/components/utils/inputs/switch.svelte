@@ -10,15 +10,21 @@
   export let iconClass: string = "";
   export let title: string = "";
   export let value: string = "true";
+  export let disabled = false;
 
   export let icons: null | { off: IconDefinition; on: IconDefinition } = null;
 </script>
 
 <label
   {title}
-  class="group relative flex items-center cursor-pointer text-{size} {containerClass}"
+  class="
+    group relative flex items-center
+    text-{size} {containerClass}
+    {disabled ? 'saturate-50 opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+  "
 >
   <input
+    {disabled}
     type="checkbox"
     class="peer hidden"
     bind:checked

@@ -29,6 +29,7 @@
       searchQuery={modal.modalContent.query}
       callback={modal.modalContent.searchAction}
       searchText={modal.modalContent.searchText}
+      restrictFields={modal.modalContent.restrictFields}
     />
   {:else if modal.modalType == "add-collection"}
     <AddCollection article={modal.modalContent.article} />

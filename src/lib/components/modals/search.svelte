@@ -3,12 +3,17 @@
   import SearchFields from "$com/search/main.svelte";
 
   import type { ArticleSearchQuery } from "$shared/types/api";
+  import type { SearchRestrictFields } from "$shared/types/internal";
 
   import { getStandardSearch } from "$shared/config";
 
   export let searchQuery: ArticleSearchQuery = getStandardSearch();
   export let callback: null | ((q: ArticleSearchQuery) => void) = null;
   export let searchText: string = "Search Content";
+  export let restrictFields: SearchRestrictFields = {};
+
+  // See https://github.com/sveltejs/svelte/issues/11647
+  $: restrictFields = restrictFields ?? {};
 </script>
 
 <Modal
@@ -19,6 +24,7 @@
 "
 >
   <SearchFields
+    {restrictFields}
     bind:searchQuery
     submitText={searchText}
     on:submit={(e) => {

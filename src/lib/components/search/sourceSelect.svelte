@@ -11,6 +11,7 @@
 
   export let sourceCategories: ArticleCategories | undefined;
   export let selectedSources: string[] = [];
+  export let restrict: { disabled: boolean; text: string };
   let sourceSearch: string = "";
 
   $: allSelected =
@@ -36,6 +37,7 @@
 "
 >
   <Search
+    disabled={restrict.disabled}
     bind:value={sourceSearch}
     placeholder="Filter sources..."
     inputClass="w-26"
@@ -47,32 +49,34 @@
 
   <button
     type="button"
+    title={restrict.disabled ? restrict.text : ""}
     on:click={() => (selectedSources = [])}
+    disabled={restrict.disabled || noneSelected || !sourceCategories}
     class="
-		font-semibold
-		text-xs
-		@lg/half:text-base
-		{noneSelected || !sourceCategories
-      ? 'cursor-not-allowed opacity-75 text-surface-400 dark:text-white/80'
-      : 'text-primary-400'}
-	">Remove Selections ({selectedSources.length})</button
+      font-semibold text-primary-400
+      text-xs @lg/half:text-base
+      disabled:cursor-not-allowed disabled:opacity-75 disabled:saturate-0
+	"
   >
+    Remove Selections ({selectedSources.length})
+  </button>
   <button
+    title={restrict.disabled ? restrict.text : ""}
     type="button"
     on:click={() => {
       if (sourceCategories) {
         selectedSources = Object.keys(sourceCategories);
       }
     }}
+    disabled={restrict.disabled || allSelected || !sourceCategories}
     class="
-		font-semibold
-		text-xs
-		@lg/half:text-base
-		{allSelected || !sourceCategories
-      ? 'cursor-not-allowed opacity-75 text-surface-400 dark:text-white/80'
-      : 'text-primary-400'}
-	">Select All</button
+      font-semibold text-primary-400
+      text-xs @lg/half:text-base
+      disabled:cursor-not-allowed disabled:opacity-75 disabled:saturate-0
+	"
   >
+    Select All
+  </button>
 </div>
 
 <ul
@@ -98,21 +102,22 @@
           name="sources"
           value={profileName}
           class="hidden"
+          disabled={restrict.disabled}
         />
 
         <label
+          title={restrict.disabled ? restrict.text : ""}
           for="{profileName}-checkbox"
           class="
-              flex
-              items-center
-              @sm/half:gap-2
+              flex items-center @sm/half:gap-2
 
-              cursor-pointer
-
+              {restrict.disabled
+            ? 'cursor-not-allowed saturate-0'
+            : 'cursor-pointer'}
               {selected
             ? 'bg-primary-300/30 dark:bg-primary-500/30'
             : 'hover:bg-surface-200 dark:hover:bg-surface-500'}
-            "
+          "
         >
           <img
             alt="{name} icon"

@@ -7,6 +7,8 @@
   export let id: string = "";
   export let name: string = "";
   export let placeholder: string = "";
+  export let disabled = false;
+  export let title = "";
 
   let className: string = "";
   export { className as class };
@@ -43,6 +45,8 @@
   {id}
   {name}
   {placeholder}
+  {disabled}
+  {title}
   class={className}
   type="datetime-local"
   on:focus={focus}

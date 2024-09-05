@@ -8,7 +8,7 @@
     SortOrder,
   } from "$shared/types/api";
   import Datetime from "$inputs/datetime.svelte";
-  import { page } from "$app/stores";
+  import type { SearchRestrictFields } from "$shared/types/internal";
 
   const sortBy: Array<{ value: ArticleSortBy; name: string }> = [
     { value: "", name: "Best Match" },
@@ -27,6 +27,7 @@
   let limitEnabled = true;
 
   export let searchQuery: ArticleSearchQuery;
+  export let restrictFields: SearchRestrictFields;
 
   function limitEnabledChange(e: Event) {
     searchQuery.limit = (e.target as HTMLInputElement).checked ? 100 : 0;
@@ -40,6 +41,8 @@
   >
     <div class="input">
       <Datetime
+        disabled={restrictFields.first_date?.disabled ?? false}
+        title={restrictFields.first_date?.text ?? ""}
         id="first_date"
         name="first_date"
         placeholder=" "
@@ -51,6 +54,8 @@
 
     <div class="input">
       <Datetime
+        disabled={restrictFields.last_date?.disabled ?? false}
+        title={restrictFields.last_date?.text ?? ""}
         id="last_date"
         name="last_date"
         placeholder=" "
@@ -67,6 +72,8 @@
   >
     <div class="input">
       <select
+        disabled={restrictFields.sort_by?.disabled ?? false}
+        title={restrictFields.sort_by?.text ?? ""}
         bind:value={searchQuery.sort_by}
         id="sort_by"
         name="sort_by"
@@ -82,6 +89,8 @@
 
     <div class="input">
       <select
+        disabled={restrictFields.sort_order?.disabled ?? false}
+        title={restrictFields.sort_order?.text ?? ""}
         bind:value={searchQuery.sort_order}
         id="sort_order"
         name="sort_order"
@@ -102,6 +111,9 @@
   >
     <div class="input">
       <input
+        disabled={restrictFields.limit?.disabled ?? false}
+        title={restrictFields.limit?.text ??
+          (limitEnabled ? "" : "Flip switch to enable limit")}
         id="limit"
         name="limit"
         placeholder=" "
@@ -111,17 +123,19 @@
         min="0"
         readonly={!limitEnabled}
         bind:value={searchQuery.limit}
-        title={limitEnabled ? "" : "Flip switch to enable limit"}
       />
       <label for="limit" class="input">Limit</label>
 
-      <div
-        class="absolute top-1/2 -translate-y-1/2 right-3"
-        title={limitEnabled
-          ? "Disable limit. WARNING: Will load LARGE amounts of data."
-          : "Enable limit. Strongly recommended"}
-      >
-        <Switch bind:checked={limitEnabled} on:change={limitEnabledChange} />
+      <div class="absolute top-1/2 -translate-y-1/2 right-3">
+        <Switch
+          disabled={restrictFields.limit?.disabled ?? false}
+          title={restrictFields.limit?.text ??
+            (limitEnabled
+              ? "Disable limit. WARNING: Will load LARGE amounts of data."
+              : "Enable limit. Strongly recommended")}
+          bind:checked={limitEnabled}
+          on:change={limitEnabledChange}
+        />
       </div>
     </div>
   </OptionSection>
@@ -132,6 +146,8 @@
   >
     <div class="input">
       <input
+        disabled={restrictFields.search_term?.disabled ?? false}
+        title={restrictFields.search_term?.text ?? ""}
         id="search_term"
         name="search_term"
         placeholder=" "
@@ -141,13 +157,16 @@
       />
       <label for="search_term" class="input">Search Term</label>
 
-      <div
-        class="absolute top-1/2 -translate-y-1/2 right-3"
-        title="{searchQuery.highlight
-          ? 'Disable'
-          : 'Enable'} highlighting of search matches"
-      >
-        <Switch bind:checked={searchQuery.highlight} name="highlight" />
+      <div class="absolute top-1/2 -translate-y-1/2 right-3">
+        <Switch
+          title="{restrictFields.search_term?.text ??
+            (searchQuery.highlight
+              ? 'Disable'
+              : 'Enable')} highlighting of search matches"
+          bind:checked={searchQuery.highlight}
+          name="highlight"
+          disabled={restrictFields.highlight?.disabled ?? false}
+        />
       </div>
     </div>
   </OptionSection>

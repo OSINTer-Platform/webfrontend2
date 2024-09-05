@@ -6,7 +6,8 @@ import type {
   ArticleSearchQuery,
 } from "./api";
 import type { ComponentType, SvelteComponent } from "svelte";
-import type { Feed, Webhook, WebhookTarget } from "./userItems";
+import type { Feed, WebhookTarget } from "./userItems";
+import type { SearchRestrictFields } from "./internal";
 
 type ModalBase = {
   id: string;
@@ -108,6 +109,7 @@ export type SearchModal = {
     query?: ArticleSearchQuery;
     searchAction?: (q: ArticleSearchQuery) => void;
     searchText?: string;
+    restrictFields?: SearchRestrictFields;
   };
 } & ModalBase;
 

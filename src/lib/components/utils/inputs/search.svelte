@@ -9,6 +9,7 @@
   export let inputClass = "";
   export let inputName = "";
   export let infoText = "";
+  export let disabled = false;
 
   onMount(() => {
     value = "";
@@ -23,19 +24,28 @@
     rounded-sm
 
     border border-tertiary-600/50
-    hover:border-tertiary-600 focus:border-tertiary-600 focus-within:border-tertiary-600
+    {disabled
+    ? 'cursor-not-allowed'
+    : 'hover:border-tertiary-600 focus:border-tertiary-600 focus-within:border-tertiary-600'}
+
     transition-colors duration-300
 
     {containerClass}
   "
 >
-  <label class="flex gap-2 text-tertiary-800 m-2 w-full cursor-text">
+  <label
+    class="flex gap-2 text-tertiary-800 m-2 w-full {disabled
+      ? 'cursor-not-allowed'
+      : 'cursor-text'}"
+  >
     <Fa icon={faMagnifyingGlass} />
 
     <input
+      {disabled}
       name={inputName}
       bind:value
       {placeholder}
+      class:cursor-not-allowed={disabled}
       class="
         grow h-full min-w-0 shrink-1
         bg-transparent placeholder-tertiary-800

@@ -187,6 +187,16 @@ div.input {
       }
     }
   }
+
+  select.input {
+    &:disabled {
+      @apply text-surface-300 cursor-not-allowed;
+
+      & ~ label {
+        @apply text-surface-300;
+      }
+    }
+  }
 }
 
 div.article-content-render {

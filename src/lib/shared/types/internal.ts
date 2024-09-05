@@ -36,3 +36,7 @@ export type SidebarOption = {
     badge?: string;
   }>;
 };
+
+export type SearchRestrictFields = {
+  [key in keyof ArticleSearchQuery]?: { disabled: boolean; text: string };
+};

@@ -15,6 +15,7 @@
     ArticleCategories,
     ArticleSearchQuery,
   } from "$shared/types/api";
+  import type { SearchRestrictFields } from "$shared/types/internal";
 
   import { PUBLIC_API_BASE } from "$env/static/public";
   import { getStandardSearch } from "$shared/config";
@@ -24,6 +25,9 @@
   export let searchQuery: ArticleSearchQuery = getStandardSearch();
   export let sourceCategories: ArticleCategories | undefined = undefined;
   export let submitText: string = "Search content";
+  export let restrictFields: SearchRestrictFields = {
+    limit: { disabled: true, text: "testing" },
+  };
 
   $: queryString = toUrl(searchQuery);
 </script>
@@ -35,6 +39,7 @@
         <SourceSelect
           {sourceCategories}
           bind:selectedSources={searchQuery.sources}
+          restrict={restrictFields.sources ?? { disabled: false, text: "" }}
         />
       </MajorSection>
 
@@ -44,7 +49,7 @@
     </svelte:fragment>
     <svelte:fragment slot="last">
       <MajorSection title="Search Query">
-        <SearchPanel {searchQuery} />
+        <SearchPanel {searchQuery} {restrictFields} />
 
         <hr
           class="sm:mb-8 mb-3 mt-3 border-tertiary-500 dark:border-surface-400 @5xl/full:hidden"
