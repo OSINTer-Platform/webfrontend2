@@ -67,11 +67,11 @@
   on:pointerenter={() => (hovered = true)}
   on:pointerleave={() => (hovered = false)}
   class="
-    flex justify-between items-center
+    flex justify-between items-center gap-4
     bg-white/5 border border-white/10 p-4
   "
 >
-  <main class="grow flex gap-6 items-center">
+  <main class="grow flex gap-6 items-center min-w-0">
     <div class="h-full flex justify-center items-center sm:mx-2">
       <Fa
         fw
@@ -80,8 +80,8 @@
       />
     </div>
 
-    <div class="grow">
-      <h4 class="text-lg sm:text-2xl font-bold">{webhook.name}</h4>
+    <div class="grow min-w-0">
+      <h4 class="text-lg sm:text-2xl font-bold truncate">{webhook.name}</h4>
       <p class="font-light text-sm sm:text-base">
         Attached to {webhook.attached_feeds.length} feeds
       </p>
