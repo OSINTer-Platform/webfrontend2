@@ -6,6 +6,7 @@ export interface ItemBase {
   name: string;
   type: "feed" | "collection" | "webhook";
   owner: string;
+  creation_date: string;
 }
 
 export interface FeedItemBase extends ItemBase {
