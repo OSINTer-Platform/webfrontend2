@@ -71,9 +71,10 @@
     <div class="mt-auto" title="Change user settings">
       <a
         href="/settings"
+        class:bg-primary-500={$page.url.pathname.startsWith("/settings")}
+        class:btn={!$page.url.pathname.startsWith("/settings")}
         class="
-          btn
-          flex flex-col justify-center
+          flex flex-col justify-center items-center gap-3
           w-full aspect-square
           border-t border-surface-200 dark:border-surface-500
       "
