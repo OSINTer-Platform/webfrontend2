@@ -62,7 +62,7 @@
         <a
           target="_blank"
           rel="noopener noreferrer"
-          class="bg-white/5 p-2 grow btn justify-start"
+          class="p-2 grow btn justify-start"
           href="/feed/{feed._id}"
         >
           <Fa icon={faList} />
@@ -70,7 +70,7 @@
         </a>
         <button
           on:click={() => (feedQuery = removeFeed(feed))}
-          class="bg-white/5 btn aspect-square"
+          class="btn aspect-square"
           title="Detach webhook from feed"
         >
           <Fa icon={faXmark} />
@@ -81,3 +81,11 @@
 {:catch err}
   <p class="text-center italic text-error-500">{err}</p>
 {/await}
+
+<style lang="postcss">
+  button,
+  a {
+    @apply bg-black/5 dark:bg-white/5
+    border border-black/10 dark:border-0;
+  }
+</style>

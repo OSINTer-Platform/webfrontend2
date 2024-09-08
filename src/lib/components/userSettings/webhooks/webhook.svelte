@@ -70,8 +70,9 @@
   on:pointerenter={() => (hovered = true)}
   on:pointerleave={() => (hovered = false)}
   class="
-    flex justify-between items-center gap-4
-    bg-white/5 border border-white/10 p-4
+    flex justify-between items-center gap-4 p-4
+    bg-black/5 dark:bg-white/5
+    border border-black/10 dark:border-white/10
   "
 >
   <main class="grow flex gap-6 items-center min-w-0">
@@ -135,8 +136,13 @@
 
 {#if showAttachedFeeds && webhook.attached_feeds.length > 0}
   <div
-    class="bg-white/5 border border-t-0 border-white/10 p-4"
     transition:slide
+    class="
+      p-4
+      bg-black/5 dark:bg-white/5
+      border border-t-0
+      border-black/10 dark:border-white/10
+    "
   >
     <FeedList {webhook} />
   </div>
@@ -147,8 +153,9 @@
     button {
       @apply flex justify-center items-center
         h-12 aspect-square
-        bg-black/20 hover:bg-black/10
-        border border-white/20
+        bg-black/10 hover:bg-black/5
+        dark:bg-black/20 dark:hover:bg-black/10
+        border border-black/20 dark:border-white/20
         active:scale-95 transition-all;
     }
   }
