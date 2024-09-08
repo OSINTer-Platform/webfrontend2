@@ -2,9 +2,11 @@
   import type { Webhook } from "$shared/types/userItems";
 
   import Fa from "svelte-fa";
+  import FeedList from "./feedList.svelte";
 
   import {
     faBars,
+    faCaretDown,
     faGear,
     faTrashCan,
   } from "@fortawesome/free-solid-svg-icons";
@@ -21,6 +23,7 @@
   const dispatch = createEventDispatcher<{ check: boolean }>();
 
   let hovered: boolean = false;
+  let showAttachedFeeds: boolean = false;
 
   $: webhooks = $page.data.webhooks;
 
@@ -102,6 +105,19 @@
         "
       />
     {/if}
+    {#if webhook.attached_feeds.length > 0}
+      <button
+        title="Show attached feeds"
+        on:click={() => (showAttachedFeeds = !showAttachedFeeds)}
+      >
+        <Fa
+          icon={faCaretDown}
+          class="{showAttachedFeeds
+            ? 'rotate-180'
+            : ''} transition-transform duration-300"
+        />
+      </button>
+    {/if}
     <button title="Reconfigure webhook" on:click={updateWebhook}>
       <Fa icon={faGear} />
     </button>
@@ -116,6 +132,15 @@
     </button>
   </aside>
 </div>
+
+{#if showAttachedFeeds && webhook.attached_feeds.length > 0}
+  <div
+    class="bg-white/5 border border-t-0 border-white/10 p-4"
+    transition:slide
+  >
+    <FeedList {webhook} />
+  </div>
+{/if}
 
 <style lang="postcss">
   aside {
