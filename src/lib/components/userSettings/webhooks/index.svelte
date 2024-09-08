@@ -14,11 +14,18 @@
   import { modalState } from "$shared/state/modals";
   import { deleteItem } from "$lib/common/userItems";
   import { slide } from "svelte/transition";
+  import { sortWebhooks } from "$lib/common/sort";
+  import { webhookSortBy } from "$shared/state/state";
 
   export let limits: WebhookLimits;
   export let webhooks: BackgroundUpdatable<Webhook[], void>;
 
-  $: webhookOptions = $webhooks.map((webhook) => ({ webhook, checked: false }));
+  $: sortedWebhooks = sortWebhooks($webhooks, $webhookSortBy);
+  $: webhookOptions = sortedWebhooks.map((webhook) => ({
+    webhook,
+    checked: false,
+  }));
+
   $: canCreate = $webhooks.length < limits.max_count;
   $: checkedWebhooks = webhookOptions
     .filter(({ checked }) => checked)

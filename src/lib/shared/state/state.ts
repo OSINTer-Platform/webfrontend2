@@ -1,3 +1,8 @@
+import type {
+  CollectionSortBy,
+  ItemSortBy,
+  WebhookSortBy,
+} from "$lib/common/sort";
 import { persisted } from "svelte-persisted-store";
 import { writable, type Writable } from "svelte/store";
 
@@ -23,3 +28,7 @@ export const tooltip = writable<null | {
   x: number;
   y: number;
 }>(null);
+
+export const feedSortBy = writable<ItemSortBy>("creationTime");
+export const collectionSortBy = writable<CollectionSortBy>("creationTime");
+export const webhookSortBy = writable<WebhookSortBy>("creationTime");

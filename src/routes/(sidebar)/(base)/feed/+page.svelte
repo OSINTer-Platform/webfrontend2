@@ -25,6 +25,8 @@
   import type { PageData } from "./$types";
 
   import ItemList from "./itemList.svelte";
+  import { sortCollections, sortUserItems } from "$lib/common/sort";
+  import { collectionSortBy, feedSortBy } from "$shared/state/state";
 
   export let data: PageData;
 
@@ -35,73 +37,78 @@
     await invalidateAll();
   }
 
-  $: feedItems = Object.values(data.feeds).map((feed) => {
-    const own = feed.owner === $user?._id;
+  $: feedItems = sortUserItems(Object.values(data.feeds), $feedSortBy).map(
+    (feed) => {
+      const own = feed.owner === $user?._id;
 
-    const actions: {
-      title: string;
-      icon: IconDefinition;
-      requireOwn: boolean;
-      action: () => void;
-    }[] = [
-      {
-        title: "Copy feed",
-        icon: faFileClipboard,
-        requireOwn: false,
-        action: () =>
-          createItem(`Copy of "${feed.name}"`, feed, "feed", "invalidateAll"),
-      },
-      {
-        title: "Modify feed",
-        icon: faPenToSquare,
-        requireOwn: true,
-        action: () => {
-          const modalId = uuid();
-          modalState.append({
-            id: modalId,
-            modalType: "search",
-            modalContent: {
-              searchText: "Update feed",
-              searchAction: async (query: ArticleSearchQuery) => {
-                const r = await updateItem(
-                  feed._id,
-                  sanitizeQuery(query),
-                  "feed",
-                  "invalidateAll"
-                );
-
-                if (r) modalState.remove(modalId);
-              },
-              query: feed,
-            },
-          });
+      const actions: {
+        title: string;
+        icon: IconDefinition;
+        requireOwn: boolean;
+        action: () => void;
+      }[] = [
+        {
+          title: "Copy feed",
+          icon: faFileClipboard,
+          requireOwn: false,
+          action: () =>
+            createItem(`Copy of "${feed.name}"`, feed, "feed", "invalidateAll"),
         },
-      },
-      {
-        title: "Remove feed",
-        icon: faXmark,
-        requireOwn: false,
-        action: () => modifySubscription(feed, false, "invalidateAll"),
-      },
-    ];
+        {
+          title: "Modify feed",
+          icon: faPenToSquare,
+          requireOwn: true,
+          action: () => {
+            const modalId = uuid();
+            modalState.append({
+              id: modalId,
+              modalType: "search",
+              modalContent: {
+                searchText: "Update feed",
+                searchAction: async (query: ArticleSearchQuery) => {
+                  const r = await updateItem(
+                    feed._id,
+                    sanitizeQuery(query),
+                    "feed",
+                    "invalidateAll"
+                  );
 
-    return {
-      title: feed.name,
-      description: {
-        primary: `${own ? "Created" : "Not created"} by you`,
-      },
-      href: `/feed/${feed._id}`,
-      titleEdit: own
-        ? (newTitle: string) => changeTitle(feed, newTitle)
-        : undefined,
-      actions,
-      checked: false,
-      own,
-      item: feed,
-    };
-  });
+                  if (r) modalState.remove(modalId);
+                },
+                query: feed,
+              },
+            });
+          },
+        },
+        {
+          title: "Remove feed",
+          icon: faXmark,
+          requireOwn: false,
+          action: () => modifySubscription(feed, false, "invalidateAll"),
+        },
+      ];
 
-  $: collectionItems = Object.values(data.collections).map((collection) => {
+      return {
+        title: feed.name,
+        description: {
+          primary: `${own ? "Created" : "Not created"} by you`,
+        },
+        href: `/feed/${feed._id}`,
+        titleEdit: own
+          ? (newTitle: string) => changeTitle(feed, newTitle)
+          : undefined,
+        actions,
+        checked: false,
+        own,
+        item: feed,
+      };
+    }
+  );
+
+  $: collectionItems = sortCollections(
+    Object.values(data.collections),
+    $collectionSortBy
+  ).map((collection) => {
     const actions: {
       title: string;
       icon: IconDefinition;

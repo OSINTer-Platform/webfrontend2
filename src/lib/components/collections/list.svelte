@@ -7,6 +7,8 @@
     faArrowUpRightFromSquare,
     faPlus,
   } from "@fortawesome/free-solid-svg-icons";
+  import { sortCollections } from "$lib/common/sort";
+  import { collectionSortBy } from "$shared/state/state";
 
   import type { Collection } from "$shared/types/userItems";
   import type { Writable } from "svelte/store";
@@ -43,10 +45,15 @@
       });
     }
   };
+
+  $: sortedCollections = sortCollections(
+    Object.values($userCollections),
+    $collectionSortBy
+  );
 </script>
 
 <ul class={containerClass}>
-  {#each Object.values($userCollections) as { _id, ids, name }}
+  {#each sortedCollections as { _id, ids, name }}
     {#if collectionSearch.length == 0 || name
         .toLowerCase()
         .includes(collectionSearch.toLowerCase())}

@@ -5,16 +5,23 @@
   import ItemsSection from "$com/sidebar/components/userItems/itemsSection.svelte";
   import SearchButton from "$com/sidebar/components/userItems/searchButton.svelte";
 
-  import type { FeedItemBase, User } from "$shared/types/userItems";
+  import type {
+    Collection,
+    Feed,
+    FeedItemBase,
+    User,
+  } from "$shared/types/userItems";
   import type { SidebarOption } from "$shared/types/internal";
   import type { ArticleSearchQuery } from "$shared/types/api";
 
   import { goto } from "$app/navigation";
   import { modalState } from "$shared/state/modals";
   import { createItem, sanitizeQuery } from "$lib/common/userItems";
+  import { sortCollections, sortUserItems } from "$lib/common/sort";
+  import { collectionSortBy, feedSortBy } from "$shared/state/state";
 
-  export let feeds: FeedItemBase[];
-  export let collections: FeedItemBase[];
+  export let feeds: Feed[];
+  export let collections: Collection[];
   export let user: User | null;
 
   function convertToOption(
@@ -31,13 +38,13 @@
   $: feedOptions = {
     id: "feeds",
     title: "Your feeds",
-    list: convertToOption(feeds),
+    list: convertToOption(sortUserItems(feeds, $feedSortBy)),
   };
 
   $: collectionOptions = {
     id: "collections",
     title: "Your collections",
-    list: convertToOption(collections),
+    list: convertToOption(sortCollections(collections, $collectionSortBy)),
   };
 
   function initiateFeedCreation() {

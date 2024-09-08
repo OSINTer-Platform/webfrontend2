@@ -11,6 +11,8 @@
   import { modalState } from "$shared/state/modals";
   import { page } from "$app/stores";
   import { webhookDetails } from "$shared/config";
+  import { sortWebhooks } from "$lib/common/sort";
+  import { webhookSortBy } from "$shared/state/state";
   import { PUBLIC_API_BASE } from "$env/static/public";
 
   export let feed: Feed;
@@ -25,6 +27,8 @@
           w.name.toLowerCase().includes(webhookSearch.toLowerCase())
         )
       : $webhooks;
+
+  $: sortedSearchedWebhooks = sortWebhooks(searchedWebhooks, $webhookSortBy);
 
   $: webhookLimits = $page.data.webhookLimits;
 
@@ -84,7 +88,7 @@
   <hr class="border-surface-400 my-4" />
 
   <ul class="overflow-y-auto">
-    {#each searchedWebhooks as webhook}
+    {#each sortedSearchedWebhooks as webhook}
       {@const checked = webhook.attached_feeds.includes(feed._id)}
       {@const canToggle =
         webhook.attached_feeds.length < $webhookLimits.max_feeds_per_hook ||
