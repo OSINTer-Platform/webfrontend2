@@ -3,7 +3,11 @@ import type { ArticleListRender, InbuiltFeed } from "./types/internal";
 import { PUBLIC_API_BASE } from "$env/static/public";
 import type { WebhookTarget } from "./types/userItems";
 import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
-import { faDiscord, faSlack } from "@fortawesome/free-brands-svg-icons";
+import {
+  faDiscord,
+  faMicrosoft,
+  faSlack,
+} from "@fortawesome/free-brands-svg-icons";
 
 export const contactEmail = "contact@osinter.dk";
 
@@ -42,6 +46,11 @@ export const webhookDetails: {
     name: "slack",
     icon: faSlack,
     urlFormat: "https://hooks.slack.com/services/XXXXXX",
+  },
+  teams: {
+    name: "teams",
+    icon: faMicrosoft,
+    urlFormat: "https://prod-XX.XXXXXX.logic.azure.com:443/workflows/XXXXXX",
   },
 };
 

@@ -28,7 +28,7 @@ export interface UserItems {
   clusters?: FeedItemBase;
 }
 
-export type WebhookTarget = "discord" | "slack";
+export type WebhookTarget = "discord" | "slack" | "teams";
 
 export interface Webhook extends ItemBase {
   hook_type: WebhookTarget;

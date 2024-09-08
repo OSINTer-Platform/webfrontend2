@@ -105,7 +105,7 @@
     bulletPoints={[
       {
         icon: faLink,
-        text: "**Service integration:** Access a range of integration options, from API access to Slack integration",
+        text: "**Service integration:** Access a range of integration options, from API access to Slack and Teams integration",
       },
       {
         icon: faPeopleGroup,
