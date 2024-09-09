@@ -5,6 +5,7 @@
 
   import Fa from "svelte-fa";
   import WebhookComponent from "./webhook.svelte";
+  import SortOptions from "$com/utils/sortOptions/index.svelte";
 
   import {
     faArrowRotateLeft,
@@ -56,8 +57,8 @@
 
 <header class="flex justify-between items-center mb-2 sm:mb-6 h-12">
   <h3 class="font-bold text-lg sm:text-2xl">Webhooks</h3>
-  {#if checkedWebhooks.length > 0}
-    <aside>
+  <aside>
+    {#if checkedWebhooks.length > 0}
       <button
         class="btn p-2 text-lg h-10 w-10 hover:bg-white/20 hover:dark:text-white"
         title="Clear selection"
@@ -76,8 +77,13 @@
       >
         <Fa icon={faTrashCan} />
       </button>
-    </aside>
-  {/if}
+    {/if}
+    <SortOptions
+      itemType="webhook"
+      btnClass="btn p-2 text-lg h-10 w-10 hover:bg-white/20 hover:dark:text-white"
+      containerClass="bg-surface-600 border border-surface-400 saturate-50"
+    />
+  </aside>
 </header>
 
 <ul class="w-full flex flex-col gap-4">

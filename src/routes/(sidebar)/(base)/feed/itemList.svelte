@@ -4,6 +4,7 @@
   import Editable from "$com/utils/inputs/editable/editable.svelte";
   import EditableWrapper from "$com/utils/inputs/editable/wrapper.svelte";
   import Fa from "svelte-fa";
+  import SortOptions from "$com/utils/sortOptions/index.svelte";
 
   import {
     faArrowRotateLeft,
@@ -45,6 +46,8 @@
     action: () => void;
   };
 
+  export let itemType: "feed" | "collection";
+
   let customGlobalActions: GlobalAction[];
 
   let hoveredEl = -1;
@@ -81,8 +84,8 @@
 <section>
   <header class="flex justify-between">
     <h2 class="text-3xl sm:text-5xl">{title}</h2>
-    {#if globalActions.length > 0 && checkedItems.length > 0}
-      <div class="flex gap-2">
+    <div class="flex gap-2">
+      {#if globalActions.length > 0 && checkedItems.length > 0}
         {#each customGlobalActions as { title, icon, action, requireOwn }}
           {#if !requireOwn || !checkedItems.some(({ own }) => !own)}
             <button
@@ -99,8 +102,9 @@
             </button>
           {/if}
         {/each}
-      </div>
-    {/if}
+      {/if}
+      <SortOptions {itemType} />
+    </div>
   </header>
 
   <ul class="flex flex-col gap-4 mt-3 sm:mt-6">

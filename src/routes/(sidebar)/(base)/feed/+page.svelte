@@ -270,12 +270,14 @@
 "
 >
   <ItemList
+    itemType="feed"
     title="Your Feeds"
     create={{ text: "Create Feed", action: createFeed }}
     items={feedItems}
     globalActions={feedActions}
   />
   <ItemList
+    itemType="collection"
     title="Your Collections"
     create={{ text: "Create Collection", action: createCollection }}
     items={collectionItems}

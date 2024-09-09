@@ -6,6 +6,7 @@
   import Modal from "./modal.svelte";
   import CollectionList from "$com/collections/list.svelte";
   import Search from "$com/utils/inputs/search.svelte";
+  import SortOptions from "$com/utils/sortOptions/index.svelte";
 
   export let article: ArticleBase;
   let collectionSearch = "";
@@ -24,12 +25,18 @@
   "
   style="max-height: min(90vh, 40rem)"
 >
-  <h1 class="font-bold text-lg sm:text-xl md:text-2xl xl:text-3xl">
-    Add to collections:
-  </h1>
-  <h2 class="font-light text-xs sm:text-base xl:text-lg">
-    {article.title}
-  </h2>
+  <header class="flex justify-between">
+    <div>
+      <h1 class="font-bold text-lg sm:text-xl md:text-2xl xl:text-3xl">
+        Add to collections:
+      </h1>
+      <h2 class="font-light text-xs sm:text-base xl:text-lg">
+        {article.title}
+      </h2>
+    </div>
+
+    <SortOptions itemType="collection" />
+  </header>
 
   <hr class="border-surface-400 my-4" />
 
