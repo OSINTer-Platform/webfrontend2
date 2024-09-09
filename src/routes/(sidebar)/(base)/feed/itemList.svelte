@@ -1,4 +1,6 @@
-<script lang="ts">
+<script lang="ts" generics="Item extends ItemBase">
+  import { flip } from "svelte/animate";
+
   import { modalState } from "$shared/state/modals";
 
   import Editable from "$com/utils/inputs/editable/editable.svelte";
@@ -14,8 +16,8 @@
   import { slide } from "svelte/transition";
 
   import { type IconDefinition } from "@fortawesome/free-solid-svg-icons";
+  import type { ItemBase } from "$shared/types/userItems";
 
-  type Item = $$Generic;
   type Action = {
     title: string;
     icon: IconDefinition;
@@ -108,8 +110,8 @@
   </header>
 
   <ul class="flex flex-col gap-4 mt-3 sm:mt-6">
-    {#each items as { title, description, href, titleEdit, actions, checked, own }, i}
-      <li transition:slide>
+    {#each items as { title, description, href, titleEdit, actions, checked, own, item }, i (item._id)}
+      <li transition:slide animate:flip={{ duration: 500 }}>
         <a
           {href}
           on:pointerenter={() => (hoveredEl = i)}

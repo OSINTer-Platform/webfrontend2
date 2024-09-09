@@ -15,6 +15,7 @@
   import { sortWebhooks } from "$lib/common/sort";
   import { webhookSortBy } from "$shared/state/state";
   import { PUBLIC_API_BASE } from "$env/static/public";
+  import { flip } from "svelte/animate";
 
   export let feed: Feed;
 
@@ -94,13 +95,16 @@
 
   <hr class="border-surface-400 my-4" />
 
-  <ul class="overflow-y-auto">
-    {#each sortedSearchedWebhooks as webhook}
+  <ul class="overflow-y-auto mb-2">
+    {#each sortedSearchedWebhooks as webhook (webhook._id)}
       {@const checked = webhook.attached_feeds.includes(feed._id)}
       {@const canToggle =
         webhook.attached_feeds.length < $webhookLimits.max_feeds_per_hook ||
         checked}
-      <li class="w-full">
+      <li
+        class="w-full border-b border-surface-400/20 py-2 first:pt-0 last:pb-0 last:border-b-0"
+        animate:flip={{ duration: 500 }}
+      >
         <button
           on:click={() => handleCheckbox(webhook)}
           disabled={!canToggle}
@@ -153,9 +157,8 @@
           </div>
         </button>
       </li>
-      <hr class="border-surface-400/25 last:hidden my-2" />
     {/each}
-    <li class="flex items-center">
+    <li class="flex items-center pt-2">
       <button
         title={canCreateWebhook
           ? ""

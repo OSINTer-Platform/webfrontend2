@@ -17,6 +17,7 @@
   import { slide } from "svelte/transition";
   import { sortWebhooks } from "$lib/common/sort";
   import { webhookSortBy } from "$shared/state/state";
+  import { flip } from "svelte/animate";
 
   export let limits: WebhookLimits;
   export let webhooks: BackgroundUpdatable<Webhook[], void>;
@@ -88,7 +89,7 @@
 
 <ul class="w-full flex flex-col gap-4">
   {#each webhookOptions as option (option.webhook._id)}
-    <li transition:slide>
+    <li transition:slide animate:flip={{ duration: 500 }}>
       <WebhookComponent
         webhook={option.webhook}
         showCheckbox={checkedWebhooks.length > 0}
