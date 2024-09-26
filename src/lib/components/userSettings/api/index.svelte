@@ -9,6 +9,7 @@
 
   import Fa from "svelte-fa";
   import Loader from "$com/loader.svelte";
+  import { modalState } from "$shared/state/modals";
 
   type QueryStatus = { success: boolean; msg: string };
 
@@ -26,9 +27,29 @@
   }
 
   const getApiKey = () => (queryStatus = queryApiKey("GET"));
-  const regenApiKey = () => (queryStatus = queryApiKey("POST"));
 
-  onMount(getApiKey);
+  const visibilityChange = () => (showEntireKey = false);
+
+  const regenApiKey = () =>
+    modalState.append({
+      modalType: "options",
+      modalContent: {
+        title: "Regenerate API key",
+        description:
+          "Are you sure you want to regenrate your API key? This will invalidate the old one so be careful.",
+        options: () => {
+          queryStatus = queryApiKey("POST");
+          return;
+        },
+      },
+    });
+
+  onMount(() => {
+    getApiKey();
+
+    addEventListener("visibilitychange", visibilityChange);
+    return () => removeEventListener("visibilitychange", visibilityChange);
+  });
 </script>
 
 <header class="flex justify-between items-center mb-3 h-12">
@@ -73,7 +94,7 @@
   {:else}
     <p class="font-bold text-error-500 text-center">
       Error when querying API key.
-      <button class="underline" on:click={regenApiKey}>Try again</button>
+      <button class="underline" on:click={getApiKey}>Try again</button>
     </p>
   {/if}
 {/await}
