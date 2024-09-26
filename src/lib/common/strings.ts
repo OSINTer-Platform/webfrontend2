@@ -23,3 +23,9 @@ export const capitalize = (s: string) =>
     .split(" ")
     .map((subS) => subS.charAt(0).toUpperCase() + subS.slice(1))
     .join(" ");
+
+export const truncate = (
+  s: string,
+  length: number = 10,
+  eclipse: boolean = true
+) => s.slice(0, length) + (eclipse ? "..." : "");
