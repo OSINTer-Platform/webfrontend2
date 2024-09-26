@@ -1,4 +1,4 @@
-import type { SubscriptionLevel } from "./userItems";
+import type { AuthLevel, SubscriptionLevel } from "./userItems";
 
 export interface ArticleML {
   cluster: string;
@@ -171,6 +171,7 @@ export interface Survey {
 }
 
 export type AuthArea =
+  | "api"
   | "articles"
   | "assistant"
   | "cluster"
@@ -178,7 +179,8 @@ export type AuthArea =
   | "map"
   | "similar"
   | "summary"
-  | "cve";
+  | "cve"
+  | "webhook";
 
 export type CVEReference = {
   url: string;
@@ -286,7 +288,7 @@ export interface MLAvailability {
 export interface AppStats {
   ml_availability: MLAvailability;
   auth: {
-    allowed_areas: { [key in SubscriptionLevel]: AuthArea[] };
-    webhook_limits: { [key in SubscriptionLevel | "premium"]: WebhookLimits };
+    allowed_areas: { [key in AuthLevel]: AuthArea[] };
+    webhook_limits: { [key in AuthLevel]: WebhookLimits };
   };
 }

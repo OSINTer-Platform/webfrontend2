@@ -27,7 +27,7 @@ declare global {
       appStats: AppStats;
       webhookLimits: Readable<WebhookLimits>;
       user: Writable<User | null>;
-      checkAuthorization: Readable<(area?: AuthArea) => boolean>;
+      checkAuthorization: Readable<(area: AuthArea) => boolean>;
       customSidebar: boolean;
       readArticleIds: SetLike<string>;
       readArticles: Readable<Promise<ArticleBase[]>>;

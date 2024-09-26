@@ -38,6 +38,7 @@ export interface Webhook extends ItemBase {
 }
 
 export type SubscriptionLevel = "base" | "pro";
+export type AuthLevel = SubscriptionLevel | "premium" | "enterprise";
 
 export interface User {
   _id: string;
@@ -59,6 +60,9 @@ export interface User {
     render_external: boolean;
     list_render_mode: ArticleListRender;
   };
+
+  enterprise: boolean;
+  api_key: string | null;
 
   payment: {
     stripe_id: string;

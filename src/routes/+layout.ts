@@ -6,7 +6,7 @@ import {
   setLike,
 } from "$lib/common/customStores";
 import { derived, writable, type Readable } from "svelte/store";
-import type { AppStats, AuthArea } from "$shared/types/api";
+import type { AppStats, AuthArea, WebhookLimits } from "$shared/types/api";
 import type { ArticleListRender } from "$shared/types/internal";
 import type { Collection, User, Webhook } from "$shared/types/userItems";
 import type { LayoutLoad } from "./$types";
@@ -60,37 +60,46 @@ export const load: LayoutLoad = async ({ fetch, data, url }) => {
   ]);
 
   const allowedAreas = derived(user, ($user) => {
-    const areas = Object.entries(appStats.auth.allowed_areas).find(
+    const allowed: AuthArea[] = [];
+    const subscriptionAreas = Object.entries(appStats.auth.allowed_areas).find(
       ([level, _]) => level === $user?.payment.subscription.level
     );
 
-    if (areas) return areas[1];
+    if (subscriptionAreas) allowed.push(...subscriptionAreas[1]);
+    if ($user?.premium.status)
+      allowed.push(...appStats.auth.allowed_areas.premium);
+    if ($user?.enterprise)
+      allowed.push(...appStats.auth.allowed_areas.enterprise);
+
+    return [...new Set(allowed)];
   });
 
   const webhookLimits = derived(user, ($user) => {
-    if ($user?.premium.status) return appStats.auth.webhook_limits.premium;
+    const baseLimits: WebhookLimits = { max_count: 0, max_feeds_per_hook: 0 };
+    const addLimits = (limits: WebhookLimits) => {
+      baseLimits.max_count = Math.max(baseLimits.max_count, limits.max_count);
+      baseLimits.max_feeds_per_hook = Math.max(
+        baseLimits.max_feeds_per_hook,
+        limits.max_feeds_per_hook
+      );
+    };
+
+    if ($user?.premium.status) addLimits(appStats.auth.webhook_limits.premium);
+    if ($user?.enterprise) addLimits(appStats.auth.webhook_limits.enterprise);
 
     const limits = Object.entries(appStats.auth.webhook_limits).find(
       ([level, _]) => level === $user?.payment.subscription.level
     );
 
-    return limits?.[1] ?? { max_count: 0, max_feeds_per_hook: 0 };
+    if (limits) addLimits(limits[1]);
+
+    return baseLimits;
   });
 
-  const checkAuthorization: Readable<(area?: AuthArea) => boolean> = derived(
-    [user, allowedAreas],
-    ([$user, $allowedAreas]) => {
-      return (area?: AuthArea) => {
-        if ($user?.premium && $user.premium.status) return true;
-        else if (!area && Array.isArray($allowedAreas)) return true;
-        else if (
-          area &&
-          Array.isArray($allowedAreas) &&
-          $allowedAreas.includes(area)
-        )
-          return true;
-        else return false;
-      };
+  const checkAuthorization: Readable<(area: AuthArea) => boolean> = derived(
+    allowedAreas,
+    ($allowedAreas) => {
+      return (area: AuthArea) => $allowedAreas.includes(area);
     }
   );
 
