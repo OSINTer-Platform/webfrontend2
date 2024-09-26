@@ -5,6 +5,7 @@
   import Header from "$com/userSettings/header/index.svelte";
   import Webhooks from "$com/userSettings/webhooks/index.svelte";
   import CodeSubmit from "$com/userSettings/subscriptions/codeSubmit.svelte";
+  import ApiKey from "$com/userSettings/api/index.svelte";
 
   import type { PageData } from "./$types";
 
@@ -22,6 +23,10 @@
   $: user = data.userContents;
   $: webhookLimits = data.webhookLimits;
   $: webhooks = data.webhooks;
+  $: authorizer = data.checkAuthorization;
+
+  $: apiAccess = $authorizer("api");
+  $: webhookAccess = $authorizer("webhook");
 </script>
 
 <main class="bg-surface-100 dark:bg-surface-900 w-full h-full overflow-y-auto">
@@ -75,7 +80,7 @@
       </main>
     </section>
 
-    {#if $webhookLimits.max_count > 0}
+    {#if webhookAccess || apiAccess}
       <section>
         <header>
           <main id="integrations">
@@ -83,8 +88,17 @@
             Integrations
           </main>
         </header>
-        <main>
-          <Webhooks limits={$webhookLimits} {webhooks} />
+        <main class="flex flex-col gap-8">
+          {#if apiAccess}
+            <div>
+              <ApiKey />
+            </div>
+          {/if}
+          {#if webhookAccess}
+            <div>
+              <Webhooks limits={$webhookLimits} {webhooks} />
+            </div>
+          {/if}
         </main>
       </section>
     {/if}

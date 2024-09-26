@@ -56,9 +56,9 @@
     });
 </script>
 
-<header class="flex justify-between items-center mb-2 sm:mb-6 h-12">
+<header class="flex justify-between items-center mb-3 h-12">
   <h3 class="font-bold text-lg sm:text-2xl">Webhooks</h3>
-  <aside>
+  <aside class="flex gap-2">
     {#if checkedWebhooks.length > 0}
       <button
         class="btn p-2 text-lg h-10 w-10 hover:bg-white/20 hover:dark:text-white"
