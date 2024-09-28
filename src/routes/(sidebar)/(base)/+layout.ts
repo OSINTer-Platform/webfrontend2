@@ -5,7 +5,7 @@ import { contactEmail } from "$shared/config";
 import type { LayoutLoad } from "./$types";
 import { PUBLIC_PURCHASE_AVAILABLE } from "$env/static/public";
 
-export const load: LayoutLoad = async ({ parent, url }) => {
+export const load: LayoutLoad = async ({ parent }) => {
   const { user, checkAuthorization } = await parent();
   const userContent = get(user);
   const authorizer = get(checkAuthorization);
@@ -37,10 +37,6 @@ export const load: LayoutLoad = async ({ parent, url }) => {
       actions: [
         { title: "Subscribe", href: "/purchase?plan=base" },
         { title: "Contact Us", href: `mailto:${contactEmail}` },
-        {
-          title: "Explanation",
-          href: "/paywall-notice",
-        },
       ],
     });
   else
@@ -62,10 +58,6 @@ export const load: LayoutLoad = async ({ parent, url }) => {
         {
           title: "Signup",
           href: `/signup?next=${encodeURIComponent("/purchase?plan=base")}`,
-        },
-        {
-          title: "Explanation",
-          href: "/paywall-notice",
         },
       ],
     });

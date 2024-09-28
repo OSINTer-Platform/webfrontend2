@@ -24,7 +24,6 @@
   $: darkMode = $page.data.settings.darkMode;
   $: user = data.user;
   $: remindMePaymentUpdate = data.remindMe.paymentUpdate;
-  $: showPaywallNotice = data.settings.showPaywallNotice;
 
   let showProgressBar = true;
 
@@ -79,12 +78,6 @@
         environment: env.PUBLIC_APM_ENV,
       });
     }
-
-    if (
-      $showPaywallNotice &&
-      (!$user || $user.payment.subscription.level === "")
-    )
-      goto("/paywall-notice");
 
     if (!$page.url.pathname.startsWith("/purchase"))
       spawnPaymentModal(

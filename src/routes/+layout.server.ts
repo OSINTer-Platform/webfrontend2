@@ -30,8 +30,6 @@ export const load: LayoutServerLoad = async ({ cookies }) => {
 
   return {
     cookies: {
-      showPaywallNotice:
-        parseCookie("settings-showPaywallNotice", true) ?? true,
       paymentUpdate: parseCookie("remindMe-paymentUpdate", false),
       darkMode: parseCookie("settings-darkMode", true),
       listRenderMode: getRenderMode(
