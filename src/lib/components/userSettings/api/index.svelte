@@ -92,7 +92,7 @@
           min-w-0
         "
       >
-        <p class="grow text-nowrap truncate">
+        <p class="grow text-nowrap truncate text-sm">
           {showEntireKey || status.preventCopy
             ? status.msg
             : truncate(status.msg)}
