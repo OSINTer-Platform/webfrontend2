@@ -11,7 +11,7 @@
   import Loader from "$com/loader.svelte";
   import { modalState } from "$shared/state/modals";
 
-  type QueryStatus = { success: boolean; msg: string };
+  type QueryStatus = { success: boolean; msg: string; preventCopy?: boolean };
 
   let queryStatus: Promise<QueryStatus> = Promise.resolve({
     success: false,
@@ -22,8 +22,16 @@
 
   async function queryApiKey(method: "GET" | "POST"): Promise<QueryStatus> {
     const r = await fetch(`${PUBLIC_API_BASE}/my/user/api-key`, { method });
-    if (r.ok) return { success: true, msg: await r.json() };
-    else return { success: false, msg: await r.json().then((r) => r.detail) };
+    if (r.ok) {
+      const response: string | null = await r.json();
+      if (response) return { success: true, msg: response };
+      else
+        return {
+          success: true,
+          msg: "No API key generate yet",
+          preventCopy: true,
+        };
+    } else return { success: false, msg: await r.json().then((r) => r.detail) };
   }
 
   const getApiKey = () => (queryStatus = queryApiKey("GET"));
@@ -70,10 +78,12 @@
       <button
         class="aspect-square p-4"
         on:click={() => navigator.clipboard.writeText(status.msg)}
+        disabled={status.preventCopy}
       >
         <Fa icon={faClipboard} />
       </button>
       <button
+        disabled={status.preventCopy}
         on:click={() => (showEntireKey = !showEntireKey)}
         class="
           border-black/10 dark:border-white/10
@@ -83,7 +93,9 @@
         "
       >
         <p class="grow text-nowrap truncate">
-          {showEntireKey ? status.msg : truncate(status.msg)}
+          {showEntireKey || status.preventCopy
+            ? status.msg
+            : truncate(status.msg)}
         </p>
         <Fa icon={showEntireKey ? faEye : faEyeSlash} class="text-sm ml-2" />
       </button>
@@ -104,6 +116,7 @@
     @apply h-full
     flex items-center
     hover:bg-black/5 dark:hover:bg-white/5
-    active:scale-[98%] transition-all;
+    active:scale-[98%] transition-all
+    disabled:active:scale-100 disabled:cursor-not-allowed;
   }
 </style>
