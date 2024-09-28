@@ -11,7 +11,7 @@
     You have been granted premium access
   </h3>
   <p class="font-light">
-    You have been granted free access to the entirety of the OSINTer interface
+    You have been granted free access to parts of the OSINTer interface
   </p>
   {#if user.premium.expire_time > 0}
     <p class="font-light">
@@ -20,6 +20,17 @@
       >
     </p>
   {/if}
+  <hr />
+{/if}
+
+{#if user.enterprise}
+  <h3 class="font-bold text-xl sm:text-2xl">
+    You have been granted enterprise access
+  </h3>
+  <p class="font-light">
+    You have been granted enterprise access to the entirety of the OSINTer
+    interface
+  </p>
   <hr />
 {/if}
 

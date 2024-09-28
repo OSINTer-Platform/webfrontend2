@@ -260,7 +260,7 @@
     {:else}
       <ResultPanel
         status="success"
-        msg="You have been granted a free access to the entirety of the OSINTer interface"
+        msg="You have been granted free access to parts of the OSINTer interface"
       >
         {#if $user.premium.expire_time > 0}
           <p class="mb-2">

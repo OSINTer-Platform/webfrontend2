@@ -335,7 +335,7 @@ const spawnPremiumExpirationModal = (user: User) => {
     modalContent: {
       type: "warning",
       title: "Your premium is expiring",
-      description: `Your premium status, enabling you to access the entirety of the OSINTer interface is set to expire on ${getReadableDate(
+      description: `Your premium status, enabling you to access parts of the OSINTer interface is set to expire on ${getReadableDate(
         user.premium.expire_time * 1000
       )}. If you believe that this is an error you can [contact support](mailto:${contactEmail})`,
       options,
