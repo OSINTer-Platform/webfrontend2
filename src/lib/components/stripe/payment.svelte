@@ -22,6 +22,8 @@
   export let submissionState: SubmissionState;
   export let submitText: string;
 
+  export let hidden: boolean;
+
   let wrapper: HTMLElement;
 
   onMount(() => {
@@ -44,7 +46,7 @@
     });
 </script>
 
-<form on:submit|preventDefault id="paymentForm">
+<form on:submit|preventDefault id="paymentForm" class:hidden>
   {#if collectEmail}
     <!-- svelte-ignore a11y-label-has-associated-control -->
     <label class="stripe-input relative mb-3 block">

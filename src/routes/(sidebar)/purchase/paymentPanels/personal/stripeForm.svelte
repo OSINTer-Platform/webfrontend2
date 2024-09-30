@@ -15,8 +15,24 @@
   let email = "";
   let emailError = false;
 
+  let stripeMode: {
+    payment?: "shown";
+    address: "hidden" | "shown";
+  } = { address: "shown" };
+
   $: user = $page.data.user;
   $: collectEmail = !($user && $user.payment.stripe_id.length > 0);
+
+  async function addressSubmit() {
+    const r = await elements.submit();
+    if (r.error) {
+      if (r.error.type === "validation_error" || r.error.type === "card_error")
+        return r.error.message;
+      else return "An unknown error occurred. Please try again";
+    }
+    stripeMode = { payment: "shown", address: "hidden" };
+    return undefined;
+  }
 
   async function paymentSubmit() {
     if (!elements || (collectEmail && emailError)) return;
@@ -74,7 +90,8 @@
   bind:email
   bind:emailError
   elementsMode={"subscription"}
-  mode="payment"
+  mode={stripeMode}
+  {addressSubmit}
   {paymentSubmit}
   price={{
     amount: personalPrice.unit_amount,

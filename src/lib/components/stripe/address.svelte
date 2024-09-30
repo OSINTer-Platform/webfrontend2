@@ -12,6 +12,7 @@
   export let options: StripeAddressElementOptions = { mode: "billing" };
   export let submissionState: SubmissionState;
   export let submitText: string;
+  export let hidden: boolean;
 
   let wrapper: HTMLElement;
 
@@ -23,7 +24,7 @@
   });
 </script>
 
-<form on:submit|preventDefault id="addressForm">
+<form on:submit|preventDefault id="addressForm" class:hidden>
   <div bind:this={wrapper} />
   <SubmitButton {submissionState} {submitText} />
 </form>

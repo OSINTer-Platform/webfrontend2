@@ -29,7 +29,10 @@
 
   export let submitText = "Pay";
 
-  export let mode: "payment" | "address";
+  export let mode: {
+    payment?: "hidden" | "shown";
+    address?: "hidden" | "shown";
+  };
 
   let submissionState: SubmissionState = undefined;
 
@@ -67,30 +70,25 @@
   }
 </script>
 
-{#if mode === "payment"}
+{#if mode.payment}
   <Payment
     bind:email
     bind:emailError
+    hidden={mode.payment === "hidden"}
     on:submit={() => submit(paymentSubmit)}
     options={{
       layout: "tabs",
-
-      fields: {
-        billingDetails: {
-          address: {
-            country: "never",
-            postalCode: "never",
-          },
-        },
-      },
     }}
     {collectEmail}
     {elements}
     {submissionState}
     {submitText}
   />
-{:else if mode === "address"}
+{/if}
+
+{#if mode.address}
   <Address
+    hidden={mode.address === "hidden"}
     on:submit={() => submit(addressSubmit)}
     {elements}
     {submissionState}
