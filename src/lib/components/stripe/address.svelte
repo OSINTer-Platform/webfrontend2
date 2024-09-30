@@ -1,0 +1,29 @@
+<script lang="ts">
+  import type {
+    StripeAddressElementOptions,
+    StripeElements,
+  } from "@stripe/stripe-js";
+
+  import SubmitButton from "./submitBtn.svelte";
+
+  import { onMount } from "svelte";
+
+  export let elements: StripeElements;
+  export let options: StripeAddressElementOptions = { mode: "billing" };
+  export let submissionState: SubmissionState;
+  export let submitText: string;
+
+  let wrapper: HTMLElement;
+
+  onMount(() => {
+    const el = elements.create("address", options);
+    el.mount(wrapper);
+
+    () => el.destroy();
+  });
+</script>
+
+<form on:submit|preventDefault id="addressForm">
+  <div bind:this={wrapper} />
+  <SubmitButton {submissionState} {submitText} />
+</form>

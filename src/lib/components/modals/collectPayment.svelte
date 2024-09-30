@@ -1,5 +1,5 @@
 <script lang="ts">
-  import StripeForm from "$com/stripeForm.svelte";
+  import StripeForm from "$com/stripe/index.svelte";
   import Modal from "./modal.svelte";
   import Loader from "$com/loader.svelte";
 
@@ -71,7 +71,7 @@
     stripeDetails = getStripeDetails();
   });
 
-  async function onSubmit() {
+  async function paymentSubmit() {
     function handleError(error: StripeError | undefined) {
       if (error) {
         if (error.type === "card_error" || error.type === "validation_error")
@@ -155,12 +155,13 @@
       <Loader text="Loading payment options" containerClass="my-14" />
     {:then stripeAndPrice}
       <StripeForm
-        {onSubmit}
-        stripe={stripeAndPrice.stripe}
         bind:elements
-        collectEmail={false}
-        submitText={"Confirm"}
         clientSecret={stripeAndPrice.clientSecret}
+        collectEmail={false}
+        mode="payment"
+        stripe={stripeAndPrice.stripe}
+        submitText={"Confirm"}
+        {paymentSubmit}
       />
     {:catch msg}
       <p>An error occured:</p>

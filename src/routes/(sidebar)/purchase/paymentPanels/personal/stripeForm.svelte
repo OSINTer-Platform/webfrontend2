@@ -5,7 +5,7 @@
   import { PUBLIC_API_BASE } from "$env/static/public";
 
   import type { Stripe, StripeElements } from "@stripe/stripe-js";
-  import StripeForm from "$com/stripeForm.svelte";
+  import StripeForm from "$com/stripe/index.svelte";
 
   export let stripe: Stripe;
   export let personalPrice: Price;
@@ -18,7 +18,7 @@
   $: user = $page.data.user;
   $: collectEmail = !($user && $user.payment.stripe_id.length > 0);
 
-  async function onSubmit() {
+  async function paymentSubmit() {
     if (!elements || (collectEmail && emailError)) return;
     elements.submit();
 
@@ -70,15 +70,16 @@
 </script>
 
 <StripeForm
-  {onSubmit}
   bind:elements
+  bind:email
+  bind:emailError
   elementsMode={"subscription"}
-  {stripe}
+  mode="payment"
+  {paymentSubmit}
   price={{
     amount: personalPrice.unit_amount,
     currency: personalPrice.currency,
   }}
   {collectEmail}
-  bind:email
-  bind:emailError
+  {stripe}
 />
