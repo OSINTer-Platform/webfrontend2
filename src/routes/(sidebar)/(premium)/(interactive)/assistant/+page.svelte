@@ -64,7 +64,6 @@
           <PromptStats
             bind:newSearch={initialValue}
             articles={initialPrompts.article_base}
-            {previousSearch}
             on:submit={() => (initialRequest = askInitial())}
           />
         </svelte:fragment>

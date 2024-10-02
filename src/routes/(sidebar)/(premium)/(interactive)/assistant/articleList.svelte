@@ -11,6 +11,7 @@
 
 <ul
   class="
+    overflow-y-auto shrink
     flex flex-col gap-4
     {classes}
   "
