@@ -1,10 +1,15 @@
 <script lang="ts">
   import type { Price } from "$shared/types/stripe";
+  import type {
+    PaymentMethodCreateParams,
+    Stripe,
+    StripeElements,
+  } from "@stripe/stripe-js";
 
   import { page } from "$app/stores";
+  import { onMount } from "svelte";
   import { PUBLIC_API_BASE } from "$env/static/public";
 
-  import type { Stripe, StripeElements } from "@stripe/stripe-js";
   import StripeForm from "$com/stripe/index.svelte";
 
   export let stripe: Stripe;
@@ -17,30 +22,62 @@
 
   let stripeMode: {
     payment?: "shown";
-    address: "hidden" | "shown";
+    address?: "hidden" | "shown";
   } = { address: "shown" };
 
   $: user = $page.data.user;
-  $: collectEmail = !($user && $user.payment.stripe_id.length > 0);
 
   async function addressSubmit() {
-    const r = await elements.submit();
-    if (r.error) {
-      if (r.error.type === "validation_error" || r.error.type === "card_error")
-        return r.error.message;
+    const addr = elements.getElement("address");
+    if (!addr) return "An unknown error occurred. Please contact support";
+
+    const elSub = await elements.submit();
+    if (elSub.error) {
+      if (
+        elSub.error.type === "validation_error" ||
+        elSub.error.type === "card_error"
+      )
+        return elSub.error.message;
       else return "An unknown error occurred. Please try again";
     }
-    stripeMode = { payment: "shown", address: "hidden" };
+
+    const values = await addr.getValue();
+
+    const addrUpdate = await fetch(
+      `${PUBLIC_API_BASE}/my/user/payment/address`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...values.value.address,
+          customer_name: values.value.name,
+        }),
+      }
+    );
+
+    const response = await addrUpdate.json();
+
+    if (!addrUpdate.ok) {
+      return response["detail"];
+    } else {
+      user.set(response);
+    }
+
     return undefined;
   }
 
   async function paymentSubmit() {
-    if (!elements || (collectEmail && emailError)) return;
+    if (!elements || emailError) return;
     elements.submit();
+
+    if (!$user?.payment.address)
+      return "Your address is missing. Please contact support";
 
     const content: { [key: string]: string } = { price_id: personalPrice.id };
 
-    if (collectEmail) content["email"] = email;
+    content["email"] = email;
 
     const r = await fetch(`${PUBLIC_API_BASE}/my/user/payment/subscription`, {
       method: "POST",
@@ -66,12 +103,29 @@
     const confirmIntent =
       rData.type === "setup" ? stripe.confirmSetup : stripe.confirmPayment;
 
+    const address: PaymentMethodCreateParams.BillingDetails.Address = {
+      city: $user.payment.address.city,
+      country: $user.payment.address.country,
+      line1: $user.payment.address.line1,
+      line2: $user.payment.address.line2,
+      postal_code: $user.payment.address.postal_code,
+      state: $user.payment.address.state,
+    };
+
     const { error } = await confirmIntent({
       elements,
       clientSecret: rData.client_secret,
       redirect: "always",
       confirmParams: {
         return_url: $page.url.href,
+        payment_method_data: {
+          billing_details: {
+            address,
+            email,
+            name: $user.payment.address.customer_name,
+            phone: "",
+          },
+        },
       },
     });
 
@@ -83,12 +137,21 @@
 
     return undefined;
   }
+
+  onMount(() => {
+    return user.subscribe((u) => {
+      if (u?.payment.address) {
+        stripeMode = { payment: "shown" };
+      }
+    });
+  });
 </script>
 
 <StripeForm
   bind:elements
   bind:email
   bind:emailError
+  collectEmail={true}
   elementsMode={"subscription"}
   mode={stripeMode}
   {addressSubmit}
@@ -97,6 +160,5 @@
     amount: personalPrice.unit_amount,
     currency: personalPrice.currency,
   }}
-  {collectEmail}
   {stripe}
 />

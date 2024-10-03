@@ -78,6 +78,9 @@
     on:submit={() => submit(paymentSubmit)}
     options={{
       layout: "tabs",
+      fields: {
+        billingDetails: "never",
+      },
     }}
     {collectEmail}
     {elements}
