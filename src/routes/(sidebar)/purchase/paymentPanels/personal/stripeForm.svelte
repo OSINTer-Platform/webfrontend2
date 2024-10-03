@@ -11,6 +11,7 @@
   import { PUBLIC_API_BASE } from "$env/static/public";
 
   import StripeForm from "$com/stripe/index.svelte";
+  import { faAddressBook } from "@fortawesome/free-solid-svg-icons";
 
   export let stripe: Stripe;
   export let personalPrice: Price;
@@ -26,6 +27,14 @@
   } = { address: "shown" };
 
   $: user = $page.data.user;
+
+  const paymentBtns = [
+    {
+      title: "Change address",
+      icon: faAddressBook,
+      action: () => (stripeMode = { address: "shown" }),
+    },
+  ];
 
   async function addressSubmit() {
     const addr = elements.getElement("address");
@@ -156,6 +165,7 @@
   mode={stripeMode}
   {addressSubmit}
   {paymentSubmit}
+  {paymentBtns}
   price={{
     amount: personalPrice.unit_amount,
     currency: personalPrice.currency,

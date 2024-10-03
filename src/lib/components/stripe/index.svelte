@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Appearance, Stripe, StripeElements } from "@stripe/stripe-js";
+  import type { SideButtons, SubmissionState } from "./shared";
 
   import Payment from "./payment.svelte";
   import Address from "./address.svelte";
@@ -12,6 +13,9 @@
 
   export let paymentSubmit: Submit | undefined = undefined;
   export let addressSubmit: Submit | undefined = undefined;
+
+  export let paymentBtns: SideButtons = undefined;
+  export let addressBtns: SideButtons = undefined;
 
   export let stripe: Stripe;
   export let elementsMode: "payment" | "setup" | "subscription" | undefined =
@@ -82,6 +86,7 @@
         billingDetails: "never",
       },
     }}
+    sideButtons={paymentBtns}
     {collectEmail}
     {elements}
     {submissionState}
@@ -93,6 +98,7 @@
   <Address
     hidden={mode.address === "hidden"}
     on:submit={() => submit(addressSubmit)}
+    sideButtons={addressBtns}
     {elements}
     {submissionState}
     {submitText}

@@ -3,6 +3,7 @@
     StripeElements,
     StripePaymentElementOptions,
   } from "@stripe/stripe-js";
+  import type { SubmissionState, SideButtons } from "./shared";
 
   import Email from "$com/utils/inputs/email.svelte";
   import Fa from "svelte-fa";
@@ -23,6 +24,8 @@
   export let submitText: string;
 
   export let hidden: boolean;
+
+  export let sideButtons: SideButtons;
 
   let wrapper: HTMLElement;
 
@@ -86,5 +89,5 @@
     </label>
   {/if}
   <div bind:this={wrapper} />
-  <SubmitButton {submissionState} {submitText} />
+  <SubmitButton {submissionState} {submitText} {sideButtons} />
 </form>

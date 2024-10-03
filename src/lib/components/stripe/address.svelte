@@ -7,12 +7,15 @@
   import SubmitButton from "./submitBtn.svelte";
 
   import { onMount } from "svelte";
+  import type { SideButtons, SubmissionState } from "./shared";
 
   export let elements: StripeElements;
   export let options: StripeAddressElementOptions = { mode: "billing" };
   export let submissionState: SubmissionState;
   export let submitText: string;
   export let hidden: boolean;
+
+  export let sideButtons: SideButtons;
 
   let wrapper: HTMLElement;
 
@@ -26,5 +29,5 @@
 
 <form on:submit|preventDefault id="addressForm" class:hidden>
   <div bind:this={wrapper} />
-  <SubmitButton {submissionState} {submitText} />
+  <SubmitButton {submissionState} {submitText} {sideButtons} />
 </form>
