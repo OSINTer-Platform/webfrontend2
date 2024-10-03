@@ -30,7 +30,7 @@
     const el = elements.create("payment", options);
     el.mount(wrapper);
 
-    () => el.destroy();
+    return () => el.destroy();
   });
 
   const showEmailInfoModal = () =>

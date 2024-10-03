@@ -20,7 +20,7 @@
     const el = elements.create("address", options);
     el.mount(wrapper);
 
-    () => el.destroy();
+    return () => el.destroy();
   });
 </script>
 
