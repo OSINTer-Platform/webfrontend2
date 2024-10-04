@@ -169,12 +169,13 @@
   collectEmail={true}
   elementsMode={"subscription"}
   mode={stripeMode}
-  {addressSubmit}
-  {paymentSubmit}
-  {paymentBtns}
   price={{
     amount: price.amount,
     currency: price.currency,
   }}
+  submitText={{ address: "Next" }}
+  {addressSubmit}
+  {paymentBtns}
+  {paymentSubmit}
   {stripe}
 />

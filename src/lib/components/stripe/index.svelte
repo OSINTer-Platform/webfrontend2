@@ -31,7 +31,8 @@
   export let emailError = false;
   export let collectEmail: boolean;
 
-  export let submitText = "Pay";
+  export let submitText: { address?: string; payment?: string } | undefined =
+    undefined;
 
   export let mode: {
     payment?: "hidden" | "shown";
@@ -90,7 +91,7 @@
     {collectEmail}
     {elements}
     {submissionState}
-    {submitText}
+    submitText={submitText?.payment ?? "Pay"}
   />
 {/if}
 
@@ -101,6 +102,6 @@
     sideButtons={addressBtns}
     {elements}
     {submissionState}
-    {submitText}
+    submitText={submitText?.address ?? "Submit"}
   />
 {/if}
