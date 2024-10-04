@@ -1,23 +1,39 @@
 <script lang="ts">
   import type { Stripe } from "@stripe/stripe-js";
-  import type { Price } from "$shared/types/stripe";
+  import type { PriceCalculation } from "$shared/types/stripe";
+  import type { PriceLookupKey } from "$shared/types/userItems";
+  import type { PaymentType } from "../common";
 
   import Personal from "./personal/index.svelte";
   import Enterprise from "./enterprise.svelte";
   import Loader from "$com/loader.svelte";
   import PaymentInfo from "./paymentInfo.svelte";
+  import ResultPanel from "../resultPanel.svelte";
 
   import { isPaymentType, paymentTypes } from "../common";
+  import { updatable } from "$lib/common/customStores";
+  import { PUBLIC_API_BASE } from "$env/static/public";
 
   export let stripe: null | Promise<null | Stripe>;
-  export let basePrice: Price;
-  export let proPrice: Price;
   export let plan: string | null;
 
+  async function getPrice(
+    priceKey: PriceLookupKey
+  ): Promise<PriceCalculation | null> {
+    const r = await fetch(
+      `${PUBLIC_API_BASE}/payment/price/calc/${encodeURIComponent(priceKey)}`
+    );
 
+    if (r.ok) return r.json();
+    else return null;
+  }
 
+  const basePrice = updatable(() => getPrice("base-month"));
+  const proPrice = updatable(() => getPrice("pro-month"));
 
   let selectedType: PaymentType = plan && isPaymentType(plan) ? plan : "base";
+
+  $: selectedPrice = selectedType === "base" ? basePrice : proPrice;
 </script>
 
 <PaymentInfo {selectedType} />
@@ -73,13 +89,23 @@
         <Loader text="Loading payment components" />
       {:then stripe}
         {#if stripe}
-          {#key selectedType}
-            <Personal
-              {stripe}
-              price={selectedType === "base" ? basePrice : proPrice}
-              level={selectedType}
-            />
-          {/key}
+          {#await $selectedPrice}
+            <Loader text="Loading payment components" />
+          {:then price}
+            {#if price}
+              <Personal
+                {stripe}
+                {price}
+                level={selectedType}
+                on:addressChange={() => selectedPrice.autoUpdate()}
+              />
+            {:else}
+              <ResultPanel
+                status="error"
+                msg="Unknown error occurred when loading price"
+              />
+            {/if}
+          {/await}
         {/if}
       {/await}
     {:else}

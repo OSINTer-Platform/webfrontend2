@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { Price } from "$shared/types/stripe";
   import type {
     PaymentMethodCreateParams,
     Stripe,
@@ -7,14 +6,14 @@
   } from "@stripe/stripe-js";
 
   import { page } from "$app/stores";
-  import { onMount } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   import { PUBLIC_API_BASE } from "$env/static/public";
 
   import StripeForm from "$com/stripe/index.svelte";
   import { faAddressBook } from "@fortawesome/free-solid-svg-icons";
 
   export let stripe: Stripe;
-  export let personalPrice: Price;
+  export let price: { id: string; amount: number; currency: string };
 
   let elements: StripeElements;
 
@@ -35,6 +34,11 @@
       action: () => (stripeMode = { address: "shown" }),
     },
   ];
+
+  const dispatch = createEventDispatcher<{
+    addressSuccess: undefined;
+    paymentSuccess: undefined;
+  }>();
 
   async function addressSubmit() {
     const addr = elements.getElement("address");
@@ -74,6 +78,7 @@
       user.set(response);
     }
 
+    dispatch("addressSuccess");
     return undefined;
   }
 
@@ -84,7 +89,7 @@
     if (!$user?.payment.address)
       return "Your address is missing. Please contact support";
 
-    const content: { [key: string]: string } = { price_id: personalPrice.id };
+    const content: { [key: string]: string } = { price_id: price.id };
 
     content["email"] = email;
 
@@ -95,7 +100,7 @@
       },
       body: JSON.stringify({
         email: email,
-        price_id: personalPrice.id,
+        price_id: price.id,
       }),
     });
 
@@ -144,6 +149,7 @@
       else return "An unknown error occurred. Please try again";
     }
 
+    dispatch("paymentSuccess");
     return undefined;
   }
 
@@ -167,8 +173,8 @@
   {paymentSubmit}
   {paymentBtns}
   price={{
-    amount: personalPrice.unit_amount,
-    currency: personalPrice.currency,
+    amount: price.amount,
+    currency: price.currency,
   }}
   {stripe}
 />

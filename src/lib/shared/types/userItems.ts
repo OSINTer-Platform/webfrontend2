@@ -39,6 +39,7 @@ export interface Webhook extends ItemBase {
 
 export type SubscriptionLevel = "base" | "pro";
 export type AuthLevel = SubscriptionLevel | "premium" | "enterprise";
+export type PriceLookupKey = "base-month" | "pro-month";
 
 export interface UserAddress {
   city: string;

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Stripe } from "@stripe/stripe-js";
-  import type { Price } from "$shared/types/stripe";
+  import type { PriceCalculation } from "$shared/types/stripe";
   import type { SubscriptionLevel } from "$shared/types/userItems";
 
   import StripeForm from "./stripeForm.svelte";
@@ -14,10 +14,13 @@
   import { invalidateAll } from "$app/navigation";
   import { getReadableDate } from "$lib/common/math";
   import { capitalize, formatPrice } from "$lib/common/strings";
+  import { createEventDispatcher } from "svelte";
 
   export let stripe: Stripe;
-  export let price: Price;
+  export let price: PriceCalculation;
   export let level: SubscriptionLevel;
+
+  const dispatch = createEventDispatcher<{ addressChange: undefined }>();
 
   let paymentStatus: Promise<PaymentStatus> | undefined;
   let statusCheckTimeout: ReturnType<typeof setTimeout>;
@@ -83,7 +86,7 @@
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(price.id),
+        body: JSON.stringify(price.price_id),
       }
     );
 
@@ -132,6 +135,12 @@
   $: endDate = getReadableDate(
     ($user?.payment.subscription.current_period_end ?? 0) * 1000
   );
+
+  $: formattedPrice = formatPrice(
+    price.total_unit_amount / 100,
+    price.currency
+  );
+  $: formattedTax = formatPrice(price.tax_amount / 100, price.currency);
 </script>
 
 <div
@@ -143,13 +152,23 @@
   "
 >
   <h2 class="text-6xl font-bold my-4">
-    {formatPrice(price.unit_amount / 100, price.currency)}<span
-      class="text-xl font-light">/mo</span
-    >
+    {formattedPrice}<span class="text-xl font-light">/mo</span>
   </h2>
 
-  <p class="font-bold text-sm">Cancel anytime</p>
-  <p class="font-light text-sm">Billed monthly.</p>
+  <p class="font-bold text-sm">
+    {#if price.tax_amount > 0}
+      Including {formattedTax} tax
+    {:else}
+      Cancel anytime
+    {/if}
+  </p>
+  <p class="font-light text-sm">
+    {#if price.estimate}
+      Estimate
+    {:else}
+      Billed monthly.
+    {/if}
+  </p>
 </div>
 
 {#if paymentStatus}
@@ -279,7 +298,15 @@
     {/if}
   {/if}
 {:else}
-  <StripeForm {stripe} personalPrice={price} />
+  <StripeForm
+    on:addressSuccess={() => dispatch("addressChange")}
+    {stripe}
+    price={{
+      amount: price.total_unit_amount,
+      currency: price.currency,
+      id: price.price_id,
+    }}
+  />
 {/if}
 
 <style lang="postcss">
