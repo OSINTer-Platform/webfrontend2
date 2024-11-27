@@ -39,6 +39,17 @@ export interface Webhook extends ItemBase {
 
 export type SubscriptionLevel = "base" | "pro";
 export type AuthLevel = SubscriptionLevel | "premium" | "enterprise";
+export type PriceLookupKey = "base-month" | "pro-month";
+
+export interface UserAddress {
+  city: string;
+  country: string;
+  line1: string;
+  line2: string;
+  postal_code: string;
+  state: string;
+  customer_name: string;
+}
 
 export interface User {
   _id: string;
@@ -65,6 +76,7 @@ export interface User {
   api_key: string | null;
 
   payment: {
+    address: UserAddress | null;
     stripe_id: string;
     invoice: {
       last_updated: number;

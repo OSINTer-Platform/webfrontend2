@@ -54,6 +54,13 @@ export type AttachWebhooks = {
   };
 } & ModalBase;
 
+export type CollectAddressModal = {
+  modalType: "collect-address";
+  modalContent: {
+    title?: string;
+  };
+} & ModalBase;
+
 export type CollectPaymentModal = {
   modalType: "collect-payment";
   modalContent: {
@@ -138,6 +145,7 @@ export type Modal =
   | ArticleListModal
   | ArticleModal
   | AttachWebhooks
+  | CollectAddressModal
   | CollectPaymentModal
   | CustomModal
   | InfoModal

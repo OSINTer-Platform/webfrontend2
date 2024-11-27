@@ -1,5 +1,12 @@
 <script lang="ts">
-  import StripeForm from "$com/stripeForm.svelte";
+  import type {
+    PaymentMethodCreateParams,
+    Stripe,
+    StripeElements,
+    StripeError,
+  } from "@stripe/stripe-js";
+
+  import StripeForm from "$com/stripe/index.svelte";
   import Modal from "./modal.svelte";
   import Loader from "$com/loader.svelte";
 
@@ -7,13 +14,15 @@
   import { onMount } from "svelte";
   import { PUBLIC_API_BASE, PUBLIC_STRIPE_KEY } from "$env/static/public";
 
-  import type { Stripe, StripeElements, StripeError } from "@stripe/stripe-js";
   import { page } from "$app/stores";
   import { modalState } from "$shared/state/modals";
+  import { formatPrice } from "$lib/common/strings";
 
   export let title: string | undefined = undefined;
   export let clientSecret: string | undefined = undefined;
   export let modalId: string;
+
+  $: user = $page.data.user;
 
   let elements: StripeElements;
   let stripeDetails: Promise<{
@@ -21,6 +30,9 @@
     clientSecret: string;
     price: { amount: number; currency: string };
   }> | null = null;
+
+  let email = "";
+  let emailError = false;
 
   async function getStripe() {
     const stripe = await loadStripe(PUBLIC_STRIPE_KEY);
@@ -71,7 +83,7 @@
     stripeDetails = getStripeDetails();
   });
 
-  async function onSubmit() {
+  async function paymentSubmit() {
     function handleError(error: StripeError | undefined) {
       if (error) {
         if (error.type === "card_error" || error.type === "validation_error")
@@ -84,16 +96,37 @@
       return "An unknown error occurred during initialization. If error persists, please contact support";
     }
 
+    if (!$user?.payment.address) {
+      return "User is missing address. Please contact support";
+    }
+
     const { stripe, clientSecret } = await stripeDetails;
 
     const valError = handleError((await elements.submit()).error);
     if (valError) return valError;
+
+    const address: PaymentMethodCreateParams.BillingDetails.Address = {
+      city: $user.payment.address.city,
+      country: $user.payment.address.country,
+      line1: $user.payment.address.line1,
+      line2: $user.payment.address.line2,
+      postal_code: $user.payment.address.postal_code,
+      state: $user.payment.address.state,
+    };
 
     const r = await stripe.confirmPayment({
       elements,
       clientSecret,
       confirmParams: {
         return_url: $page.url.origin,
+        payment_method_data: {
+          billing_details: {
+            address,
+            email,
+            name: $user.payment.address.customer_name,
+            phone: "",
+          },
+        },
       },
       redirect: "always",
     });
@@ -134,33 +167,38 @@
     {title ?? "Enter new credentials"}
   </h1>
 
-  <div
-    class="
-      py-6 mb-8
-      rounded-xl text-center
-      bg-white dark:bg-gray-900
-      shadow shadow-gray-400 dark:shadow-black
-    "
-  >
-    <h2 class="text-5xl sm:text-6xl font-bold my-4">
-      $15<span class="text-base sm:text-xl font-light">/mo</span>
-    </h2>
-
-    <p class="font-bold text-xs sm:text-sm">Cancel anytime</p>
-    <p class="font-light text-xs sm:text-sm">Billed montly.</p>
-  </div>
-
   {#if stripeDetails}
     {#await stripeDetails}
       <Loader text="Loading payment options" containerClass="my-14" />
-    {:then stripeAndPrice}
+    {:then { stripe, clientSecret, price }}
+      <div
+        class="
+          py-6 mb-8
+          rounded-xl text-center
+          bg-white dark:bg-gray-900
+          shadow shadow-gray-400 dark:shadow-black
+        "
+      >
+        <h2 class="text-5xl sm:text-6xl font-bold my-4">
+          {formatPrice(price.amount / 100, price.currency)}<span
+            class="text-base sm:text-xl font-light">/mo</span
+          >
+        </h2>
+
+        <p class="font-bold text-xs sm:text-sm">Cancel anytime</p>
+        <p class="font-light text-xs sm:text-sm">Billed montly.</p>
+      </div>
+
       <StripeForm
-        {onSubmit}
-        stripe={stripeAndPrice.stripe}
+        bind:email
+        bind:emailError
         bind:elements
-        collectEmail={false}
-        submitText={"Confirm"}
-        clientSecret={stripeAndPrice.clientSecret}
+        collectEmail={true}
+        {clientSecret}
+        mode={{ payment: "shown" }}
+        {stripe}
+        submitText={{ payment: "Cornfirm" }}
+        {paymentSubmit}
       />
     {:catch msg}
       <p>An error occured:</p>
