@@ -16,7 +16,7 @@
   export let title: string | undefined;
   export let modalId: string;
 
-  let stripe: Promise<Stripe>;
+  let stripe: Promise<Stripe> | null = null;
   let elements: StripeElements;
   let emailError = false;
 
@@ -67,7 +67,8 @@
     }
 
     const taxUpdate = await fetch(
-      `${PUBLIC_API_BASE}/my/user/payment/subscription/enable-tax`
+      `${PUBLIC_API_BASE}/my/user/payment/subscription/enable-tax`,
+      { method: "POST" }
     );
 
     if (!taxUpdate.ok) {
@@ -79,7 +80,7 @@
 
       modalContent: {
         title: "Success!",
-        description: `Your address have been updated and your OSINTer subscription will continue unchanged. Do however keep in mind that for those of you living in the EU, your monthly subscription price may have increased by up to 25% for tax reasons. To learn more, please contact [support at ${contactEmail}](mailto:${contactEmail})`,
+        description: `Your address have been updated and your OSINTer subscription will continue unchanged`,
       },
     });
 
@@ -94,7 +95,7 @@
 <Modal
   class="
     p-6 shrink-0
-    w-[30rem] max-w-[90vw] max-h-[90vh]
+    w-[40rem] max-w-[90vw] max-h-[90vh]
     flex flex-col
     overflow-y-auto
 
@@ -108,23 +109,39 @@
     text-xl sm:text-3xl
   "
   >
-    {title ?? "Enter billing address"}
+    {title ?? "Billing address"}
   </h1>
+  <p class="font-light mb-2">
+    We are missing a billing address for your OSINTer subscription - please
+    enter your billing address below. This will not change your subscription
+    price.
+  </p>
+  <p class="font-light mb-4">
+    If you believe this is an error, please
+    <a
+      href="mailto:{contactEmail}"
+      class="underline hover:text-primary-500 transition-colors"
+    >
+      contact support
+    </a>
+  </p>
 
-  {#await stripe}
-    <Loader text="Loading payment options" containerClass="my-14" />
-  {:then stripe}
-    <StripeForm
-      bind:emailError
-      bind:elements
-      collectEmail={true}
-      mode={{ address: "shown" }}
-      submitText={{ payment: "Submit" }}
-      {stripe}
-      {addressSubmit}
-    />
-  {:catch msg}
-    <p>An error occured:</p>
-    <p>{msg}</p>
-  {/await}
+  {#if stripe}
+    {#await stripe}
+      <Loader text="Loading payment options" containerClass="my-14" />
+    {:then stripe}
+      <StripeForm
+        bind:emailError
+        bind:elements
+        collectEmail={true}
+        mode={{ address: "shown" }}
+        submitText={{ payment: "Submit" }}
+        {stripe}
+        {addressSubmit}
+      />
+    {:catch msg}
+      <p>An error occured:</p>
+      <p>{msg}</p>
+    {/await}
+  {/if}
 </Modal>

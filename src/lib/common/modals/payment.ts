@@ -343,6 +343,12 @@ const spawnPremiumExpirationModal = (user: User) => {
   });
 };
 
+const showAddressCollection = () =>
+  modalState.append({
+    modalType: "collect-address",
+    modalContent: {},
+  });
+
 function spawnPaymentModal(
   user: User | null,
   remindDateStore: Writable<number>,
@@ -352,6 +358,11 @@ function spawnPaymentModal(
     showPaymentResults(paymentIntentClientSecret, user?.username);
 
   if (!user) return;
+
+  if (!user.payment.address) {
+    return showAddressCollection();
+  }
+
   if (
     !user.premium.acknowledged["expiry"] &&
     user.payment.subscription.level.length < 1 &&
