@@ -13,6 +13,7 @@
   import Custom from "./custom.svelte";
   import Webhook from "./webhook.svelte";
   import AttachWebhooks from "./attachWebhooks.svelte";
+  import CollectAddress from "./collectAddress.svelte";
 </script>
 
 {#each $modalState as modal, i (modal.id)}
@@ -79,5 +80,7 @@
     />
   {:else if modal.modalType === "attach-webhooks"}
     <AttachWebhooks feed={modal.modalContent.feed} />
+  {:else if modal.modalType === "collect-address"}
+    <CollectAddress title={modal.modalContent.title} modalId={modal.id} />
   {/if}
 {/each}

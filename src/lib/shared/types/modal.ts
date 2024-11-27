@@ -54,6 +54,13 @@ export type AttachWebhooks = {
   };
 } & ModalBase;
 
+export type CollectAddressModal = {
+  modalType: "collect-address";
+  modalContent: {
+    title?: string
+  }
+} & ModalBase;
+
 export type CollectPaymentModal = {
   modalType: "collect-payment";
   modalContent: {
@@ -86,12 +93,12 @@ export type OptionsModal = {
     title: string;
     description: string | string[];
     options:
-      | {
-          text: string;
-          type: "primary" | "secondary" | "yes" | "no" | "cancel";
-          action: () => boolean | void | Promise<boolean> | Promise<void>;
-        }[]
-      | (() => boolean | void | Promise<boolean> | Promise<void>);
+    | {
+      text: string;
+      type: "primary" | "secondary" | "yes" | "no" | "cancel";
+      action: () => boolean | void | Promise<boolean> | Promise<void>;
+    }[]
+    | (() => boolean | void | Promise<boolean> | Promise<void>);
   };
 } & ModalBase;
 
@@ -138,6 +145,7 @@ export type Modal =
   | ArticleListModal
   | ArticleModal
   | AttachWebhooks
+  | CollectAddressModal
   | CollectPaymentModal
   | CustomModal
   | InfoModal
