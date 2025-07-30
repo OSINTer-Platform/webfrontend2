@@ -359,7 +359,7 @@ function spawnPaymentModal(
 
   if (!user) return;
 
-  if (!user.payment.address) {
+  if (!user.payment.address && user.payment.subscription.state === "active") {
     return showAddressCollection();
   }
 
